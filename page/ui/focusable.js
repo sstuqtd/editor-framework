@@ -4,7 +4,7 @@ EditorUI.focusable = (function () {
     //
     function _removeTabIndexRecursively ( el ) {
         if ( el.focused !== undefined && el._initTabIndex !== undefined ) {
-            el.focused = false;
+            el._setFocused(false);
             el._removeTabIndex();
         }
 
@@ -35,15 +35,17 @@ EditorUI.focusable = (function () {
             focused: {
                 type: Boolean,
                 value: false,
+                notify: true,
+                readOnly: true,
                 reflectToAttribute: true,
-                observer: '_focusedChanged',
             },
 
             disabled: {
                 type: Boolean,
                 value: false,
-                reflectToAttribute: true,
+                notify: true,
                 observer: '_disabledChanged',
+                reflectToAttribute: true,
             },
 
             noNavigate: {
@@ -54,8 +56,8 @@ EditorUI.focusable = (function () {
         },
 
         listeners: {
-            'focusin': '_onFocusIn',
-            'focusout': '_onFocusOut',
+            // 'focusin': '_onFocusIn',
+            // 'focusout': '_onFocusOut',
             'focus': '_onFocus',
             'blur': '_onBlur',
         },
@@ -102,7 +104,7 @@ EditorUI.focusable = (function () {
 
             for ( var i = 0; i < this.focusEls.length; ++i ) {
                 var el = this.focusEls[i];
-                el.removeAttribute('tabindex');
+                el.tabIndex = -1;
             }
         },
 
@@ -122,12 +124,12 @@ EditorUI.focusable = (function () {
 
         _focusedChanged: function () {
             if ( this.disabled ) {
-                this.focused = false;
+                this._setFocused(false);
             }
         },
 
-        _disabledChanged: function () {
-            if ( this.disabled ) {
+        _disabledChanged: function ( disabled, old ) {
+            if ( disabled ) {
                 this.style.pointerEvents = 'none';
                 _removeTabIndexRecursively(this);
             }
@@ -137,20 +139,20 @@ EditorUI.focusable = (function () {
             }
         },
 
-        _onFocusIn: function ( event ) {
-            this.focused = true;
-        },
+        // _onFocusIn: function ( event ) {
+        //     this._setFocused(true);
+        // },
 
-        _onFocusOut: function ( event ) {
-            this.focused = false;
-        },
+        // _onFocusOut: function ( event ) {
+        //     this._setFocused(false);
+        // },
 
         _onFocus: function ( event ) {
-            this.focused = true;
+            this._setFocused(true);
         },
 
         _onBlur: function ( event ) {
-            this.focused = false;
+            this._setFocused(false);
         },
 
         setFocus: function () {
@@ -160,7 +162,7 @@ EditorUI.focusable = (function () {
             if ( this.focusEls.length > 0 ) {
                 this.focusEls[0].focus();
             }
-            this.focused = true;
+            this._setFocused(true);
         },
 
         setBlur: function () {
@@ -170,7 +172,7 @@ EditorUI.focusable = (function () {
             if ( this.focusEls.length > 0 ) {
                 this.focusEls[0].blur();
             }
-            this.focused = false;
+            this._setFocused(false);
         },
     };
     return focusable;

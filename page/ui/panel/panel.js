@@ -12,6 +12,11 @@ EditorUI.Panel = Polymer({
         minHeight: { type: String, value: '200', },
     },
 
+    listeners: {
+        'focusin': '_onFocusIn',
+        'focusout': '_onFocusOut',
+    },
+
     ready: function () {
         this._initFocusable(null); // NOTE: panel's focus element is variable (a.k.a frameEL)
         this._initResizable();
@@ -73,6 +78,14 @@ EditorUI.Panel = Polymer({
             event.stopPropagation();
             this.setFocus();
         }
+    },
+
+    _onFocusIn: function ( event ) {
+        this._setFocused(true);
+    },
+
+    _onFocusOut: function ( event ) {
+        this._setFocused(false);
     },
 
     _initTabs: function () {
