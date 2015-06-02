@@ -13,8 +13,14 @@ else {
 
 var files;
 var indexFile = './test/index.js';
+var singleTestFile = process.argv[2];
 
-if ( Fs.existsSync(indexFile) ) {
+// accept
+if (singleTestFile) {
+  singleTestFile = ('./test/' + process.argv[2] + '.js').replace('.js.js', '.js');
+  SpawnSync(exePath, ['./', '--test', singleTestFile], {stdio: 'inherit'});
+}
+else if ( Fs.existsSync(indexFile) ) {
     files = require(indexFile);
     files.forEach(function ( file ) {
         console.log( Chalk.magenta( 'Start test (' + file + ')') );
