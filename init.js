@@ -216,11 +216,12 @@ Winston.add( Winston.transports.Console, {
 //       it doesn't touch the page level, so it should not put into App.on('ready')
 Commander
     .version(App.getVersion())
-    .option('--dev', 'Run in development mode')
-    .option('--test <path>', 'Run tests in path' )
+    .option('--dev', 'Run in development environment')
+    .option('--dev-mode <mode>', 'Run in specific dev-mode')
     .option('--show-devtools', 'Open devtools automatically when main window loaded')
     .option('--debug <port>', 'Open in browser context debug mode', parseInt )
     .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
+    .option('--test <path>', 'Run tests in path' )
     ;
 
 // EXAMPLE:
@@ -247,6 +248,7 @@ Commander.parse(process.argv);
 
 // apply argv to Editor
 Editor.isDev = Commander.dev;
+Editor.devMode = Commander.devMode;
 Editor.showDevtools = Commander.showDevtools;
 Editor.test = Commander.test;
 
@@ -365,6 +367,9 @@ App.on('ready', function() {
     // register package path
     Editor.registerPackagePath( Path.join( Editor.App.path, 'builtin' ) );
     Editor.registerPackagePath( Path.join( Editor.appHome, 'packages' ) );
+
+    // register default layout
+    Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
 
     // init user App
     if ( !Editor.App.init ) {

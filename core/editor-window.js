@@ -3,6 +3,7 @@ var BrowserWindow = require('browser-window');
 var Screen = require('screen');
 var Url = require('fire-url');
 var Ipc = require('ipc');
+var Fs = require('fire-fs');
 
 /**
  * Window class for operating editor window
@@ -367,6 +368,7 @@ EditorWindow.loadLayouts = function () {
     var profile = Editor.loadProfile( 'layout.windows', 'local', {
         windows: {},
     });
+
     for ( var name in profile.windows ) {
         var info = profile.windows[name];
         _windowLayouts[name] = info;
@@ -561,11 +563,26 @@ Ipc.on('window:query-layout', function ( event, reply ) {
     }
 
     var layout = null;
+
     var winInfo = _windowLayouts[editorWin.name];
     if ( winInfo && winInfo.layout ) {
         layout = winInfo.layout;
     }
 
+    // if no layout found, and it is main window, reload layout
+    if ( editorWin.isMainWindow && !layout ) {
+        if ( Fs.existsSync(Editor._defaultLayout) ) {
+            try {
+                layout = JSON.parse(Fs.readFileSync(Editor._defaultLayout));
+            }
+            catch (err) {
+                Editor.error( 'Failed to load default layout: %s', err.message );
+                layout = null;
+            }
+        }
+    }
+
+    //
     reply(layout);
 });
 

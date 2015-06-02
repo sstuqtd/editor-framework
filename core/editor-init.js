@@ -391,6 +391,7 @@ Editor.watchPackages = function ( cb ) {
 
 Editor._type2profilepath = {};
 Editor._packagePathList = [];
+Editor._defaultLayout = '';
 
 /**
  * Register profile type with the path you provide.
@@ -409,6 +410,15 @@ Editor.registerProfilePath = function ( type, path ) {
  */
 Editor.registerPackagePath = function ( path ) {
     Editor._packagePathList.push(path);
+};
+
+/**
+ * Register a path, when loading packages, it will search the path you registerred.
+ * @param {string} path - A absolute path for searching your packages.
+ * @see Editor.loadPackages
+ */
+Editor.registerDefaultLayout = function ( path ) {
+    Editor._defaultLayout = path;
 };
 
 // ==========================
