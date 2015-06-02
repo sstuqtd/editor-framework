@@ -1,5 +1,4 @@
 var gulp = require('gulp');
-var utils = require('./tasks/utils');
 
 // require tasks
 require('./tasks/download-shell');
@@ -9,6 +8,7 @@ require('./tasks/build-api');
 
 gulp.task('update-config', function ( done ) {
     var Fs = require('fs');
+    var utils = require('./tasks/utils');
 
     var appJson = JSON.parse(Fs.readFileSync('./package.json'));
     var frameworkJson = JSON.parse(Fs.readFileSync('./editor-framework/package.json'));

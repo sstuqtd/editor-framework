@@ -5,10 +5,6 @@ var sequence = require('gulp-sequence');
 var watch = require('gulp-watch');
 var del = require('del');
 
-// special tasks
-var stylus = require('gulp-stylus');
-var jshint = require('gulp-jshint');
-
 // modules
 var Path = require('path');
 var Chalk = require('chalk');
@@ -45,6 +41,8 @@ var extnameMappings = {
 
 // js
 gulp.task('js', function () {
+    var jshint = require('gulp-jshint');
+
     return gulp.src(paths.js)
         .pipe(changed(dest))
         .pipe(jshint({
@@ -74,11 +72,23 @@ gulp.task('css', function () {
 
 // styl
 gulp.task('styl', function() {
+    var stylus = require('gulp-stylus');
+
     return gulp.src(paths.styl)
     .pipe(changed(dest))
     .pipe(stylus({
         compress: false,
         include: 'src'
+    }))
+    .pipe(gulp.dest(dest));
+});
+
+// less
+gulp.task('less', function() {
+    var less = require('gulp-less');
+
+    return gulp.src(paths.less)
+    .pipe(less({
     }))
     .pipe(gulp.dest(dest));
 });

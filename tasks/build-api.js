@@ -1,6 +1,5 @@
 // general
 var gulp = require('gulp');
-var changed = require('gulp-changed');
 var watch = require('gulp-watch');
 var del = require('del');
 

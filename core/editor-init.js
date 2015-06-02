@@ -5,6 +5,7 @@ var Path = require('fire-path');
 var Winston = require('winston');
 var Globby = require('globby');
 var Chokidar = require('chokidar');
+var Async = require('async');
 
 // ==========================
 // console log API
@@ -295,16 +296,25 @@ Editor.quit = function () {
  * Search and load all packages from the path you registerred
  * @see Editor.registerPackagePath
  */
-Editor.loadPackages = function () {
+Editor.loadPackages = function ( cb ) {
     var i, src = [];
     for ( i = 0; i < Editor._packagePathList.length; ++i ) {
         src.push( Editor._packagePathList[i] + '/*/package.json' );
     }
 
     var paths = Globby.sync( src );
-    for ( i = 0; i < paths.length; ++i ) {
-        Editor.Package.load( Path.dirname(paths[i]) );
-    }
+
+    Async.eachSeries( paths, function ( path, done ) {
+        var packagePath = Path.dirname(path);
+        Editor.Package.load( packagePath, function ( err ) {
+            if ( err ) {
+                Editor.failed('Failed to load package at %s', packagePath );
+            }
+            done();
+        });
+    }, function () {
+        if ( cb ) cb ();
+    });
 };
 
 /**
@@ -313,10 +323,11 @@ Editor.loadPackages = function () {
 Editor.watchPackages = function ( cb ) {
     var src = [];
     for ( i = 0; i < Editor._packagePathList.length; ++i ) {
-        src.push( Editor._packagePathList[i] );
+        var packagePath = Editor._packagePathList[i];
+        src.push( packagePath );
     }
     _packageWatcher = Chokidar.watch(src, {
-        ignored: /[\/\\]\./,
+        ignored: [/[\/\\]\./, /[\/\\]bin/],
         ignoreInitial: true,
         persistent: true,
     });

@@ -43,6 +43,7 @@ var Url = require('fire-url');
 var Commander = require('commander');
 var Chalk = require('chalk');
 var Winston = require('winston');
+var Async = require('async');
 
 // this will prevent default atom-shell uncaughtException
 process.removeAllListeners('uncaughtException');
@@ -396,30 +397,38 @@ App.on('ready', function() {
     // load windows layout after local profile registered
     Editor.Window.loadLayouts();
 
-    // before run the app, we start loading packages
-    Winston.normal('Loading packages');
-    Editor.loadPackages();
+    // before run the app, we start load and watch all packages
+    Async.series([
+        function ( next ) {
+            Winston.normal('Loading packages');
+            Editor.loadPackages( next );
+        },
 
-    Winston.normal('Prepare for watching packages');
-    Editor.watchPackages( function () {
-        Editor.success('Watch ready');
+        function ( next ) {
+            Winston.normal('Prepare for watching packages');
+            Editor.watchPackages( next );
+        },
 
-        // connect to console to sending ipc to it
-        Editor.connectToConsole();
+        function ( next ) {
+            Editor.success('Watch ready');
 
-        // run user App
-        if ( !Editor.App.run ) {
-            Winston.error('Can not find function "run" in your App');
-            App.terminate();
-            return;
-        }
+            // connect to console to sending ipc to it
+            Editor.connectToConsole();
 
-        try {
-            Editor.App.run();
-        } catch ( error ) {
-            Winston.error(error.stack || error);
-            App.terminate();
-            return;
-        }
-    });
+            // run user App
+            if ( !Editor.App.run ) {
+                Winston.error('Can not find function "run" in your App');
+                App.terminate();
+                return;
+            }
+
+            try {
+                Editor.App.run();
+            } catch ( error ) {
+                Winston.error(error.stack || error);
+                App.terminate();
+                return;
+            }
+        },
+    ]);
 });

@@ -13,15 +13,27 @@ var _name2packagePath = {};
 var _panel2info = {};
 var _widget2info = {};
 
+function _build ( packageObj, cb ) {
+    if ( packageObj.build ) {
+        Editor.log( 'Building ' + packageObj.name );
+        Package.build( packageObj._path, cb );
+        return;
+    }
+
+    if ( cb ) cb ( null, packageObj._path );
+}
+
 /**
  * Load a package at path
  * @param {string} path - An absolute path point to a package folder
  * @method load
  * @memberof Editor.Package
  */
-Package.load = function ( path ) {
-    if ( _path2package[path] )
+Package.load = function ( path, cb ) {
+    if ( _path2package[path] ) {
+        if ( cb ) cb ();
         return;
+    }
 
     var packageJsonPath = Path.join( path, 'package.json' );
     var packageObj;
@@ -30,106 +42,113 @@ Package.load = function ( path ) {
     }
     catch (err) {
         Editor.error( 'Failed to load package.json at %s, message: %s', path, err.message );
+        if ( cb ) cb ();
         return;
     }
 
     packageObj._path = path;
+    _build ( packageObj, function ( err, destPath ) {
+        packageObj._destPath = destPath;
 
-    // load main.js
-    if ( packageObj.main ) {
-        var main;
-        var mainPath = Path.join( path, packageObj.main );
-        try {
-            main = require(mainPath);
-            if ( main && main.load ) {
-                main.load();
+        // load main.js
+        if ( packageObj.main ) {
+            var main;
+            var mainPath = Path.join( destPath, packageObj.main );
+            try {
+                main = require(mainPath);
+                if ( main && main.load ) {
+                    main.load();
+                }
             }
-        }
-        catch (err) {
-            Editor.failed( 'Failed to load %s from %s. %s.', packageObj.main, packageObj.name, err.stack );
-            return;
-        }
-
-        // register main ipcs
-        var ipcListener = new Editor.IpcListener();
-        for ( var prop in main ) {
-            if ( prop === 'load' || prop === 'unload' )
-                continue;
-
-            if ( typeof main[prop] === 'function' ) {
-                ipcListener.on( prop, main[prop].bind(main) );
-            }
-        }
-        packageObj._ipc = ipcListener;
-    }
-
-    // register menu
-    if ( packageObj.menus && typeof packageObj.menus === 'object' ) {
-        for ( var menuPath in packageObj.menus ) {
-            var parentMenuPath = Path.dirname(menuPath);
-            if ( parentMenuPath === '.' ) {
-                Editor.error( 'Can not add menu %s at root.', menuPath );
-                continue;
+            catch (e) {
+                Editor.failed( 'Failed to load %s from %s. %s.', packageObj.main, packageObj.name, e.stack );
+                if ( cb ) cb ();
+                return;
             }
 
-            var menuOpts = packageObj.menus[menuPath];
-            var template = Editor.JS.mixin( {
-                label: Path.basename(menuPath),
-            }, menuOpts );
+            // register main ipcs
+            var ipcListener = new Editor.IpcListener();
+            for ( var prop in main ) {
+                if ( prop === 'load' || prop === 'unload' )
+                    continue;
 
-            // create NativeImage for icon
-            if ( menuOpts.icon ) {
-                var icon = NativeImage.createFromPath( Path.join(path, menuOpts.icon) );
-                template.icon = icon;
+                if ( typeof main[prop] === 'function' ) {
+                    ipcListener.on( prop, main[prop].bind(main) );
+                }
             }
-
-            Editor.MainMenu.add( parentMenuPath, template );
+            packageObj._ipc = ipcListener;
         }
-    }
 
-    // register panel
-    if ( packageObj.panels && typeof packageObj.panels === 'object' ) {
-        for ( var panelName in packageObj.panels ) {
-            var panelID = packageObj.name + '.' + panelName;
-            if ( _panel2info[panelID] ) {
-                Editor.error( 'Failed to load panel \'%s\' from \'%s\', already exists.', panelName, packageObj.name );
-                continue;
+        // register menu
+        if ( packageObj.menus && typeof packageObj.menus === 'object' ) {
+            for ( var menuPath in packageObj.menus ) {
+                var parentMenuPath = Path.dirname(menuPath);
+                if ( parentMenuPath === '.' ) {
+                    Editor.error( 'Can not add menu %s at root.', menuPath );
+                    continue;
+                }
+
+                var menuOpts = packageObj.menus[menuPath];
+                var template = Editor.JS.mixin( {
+                    label: Path.basename(menuPath),
+                }, menuOpts );
+
+                // create NativeImage for icon
+                if ( menuOpts.icon ) {
+                    var icon = NativeImage.createFromPath( Path.join(destPath, menuOpts.icon) );
+                    template.icon = icon;
+                }
+
+                Editor.MainMenu.add( parentMenuPath, template );
             }
-
-            // setup default properties
-            var panelInfo = packageObj.panels[panelName];
-            Editor.JS.addon(panelInfo, {
-                type: 'dockable',
-                title: panelID,
-                popable: true,
-                messages: [],
-                path: path,
-            });
-
-            //
-            _panel2info[panelID] = panelInfo;
         }
-    }
 
-    // register widget
-    if ( packageObj.widgets && typeof packageObj.widgets === 'object' ) {
-        for ( var widgetName in packageObj.widgets ) {
-            if ( _widget2info[widgetName] ) {
-                Editor.error( 'Failed to register widget \'%s\' from \'%s\', already exists.', widgetName, packageObj.name );
-                continue;
+        // register panel
+        if ( packageObj.panels && typeof packageObj.panels === 'object' ) {
+            for ( var panelName in packageObj.panels ) {
+                var panelID = packageObj.name + '.' + panelName;
+                if ( _panel2info[panelID] ) {
+                    Editor.error( 'Failed to load panel \'%s\' from \'%s\', already exists.', panelName, packageObj.name );
+                    continue;
+                }
+
+                // setup default properties
+                var panelInfo = packageObj.panels[panelName];
+                Editor.JS.addon(panelInfo, {
+                    type: 'dockable',
+                    title: panelID,
+                    popable: true,
+                    messages: [],
+                    path: destPath,
+                });
+
+                //
+                _panel2info[panelID] = panelInfo;
             }
-            var widgetPath = packageObj.widgets[widgetName];
-            _widget2info[widgetName] = {
-                path: Path.join( path, Path.dirname(widgetPath) ),
-            };
         }
-    }
 
-    //
-    _path2package[path] = packageObj;
-    _name2packagePath[packageObj.name] = path;
-    Editor.success('%s loaded', packageObj.name);
-    Editor.sendToWindows('package:loaded', packageObj.name);
+        // register widget
+        if ( packageObj.widgets && typeof packageObj.widgets === 'object' ) {
+            for ( var widgetName in packageObj.widgets ) {
+                if ( _widget2info[widgetName] ) {
+                    Editor.error( 'Failed to register widget \'%s\' from \'%s\', already exists.', widgetName, packageObj.name );
+                    continue;
+                }
+                var widgetPath = packageObj.widgets[widgetName];
+                _widget2info[widgetName] = {
+                    path: Path.join( destPath, Path.dirname(widgetPath) ),
+                };
+            }
+        }
+
+        //
+        _path2package[path] = packageObj;
+        _name2packagePath[packageObj.name] = path;
+        Editor.success('%s loaded', packageObj.name);
+        Editor.sendToWindows('package:loaded', packageObj.name);
+
+        if ( cb ) cb ();
+    });
 };
 
 /**
@@ -172,7 +191,7 @@ Package.unload = function ( path ) {
 
         // unload main
         var cache = require.cache;
-        var mainPath = Path.join( path, packageObj.main );
+        var mainPath = Path.join( packageObj._destPath, packageObj.main );
         var module = cache[mainPath];
         try {
             if ( module ) {
@@ -201,9 +220,9 @@ Package.unload = function ( path ) {
  * @method reload
  * @memberof Editor.Package
  */
-Package.reload = function ( path ) {
+Package.reload = function ( path, cb ) {
     Package.unload(path);
-    Package.load(path);
+    Package.load(path, cb);
 };
 
 /**
@@ -255,6 +274,28 @@ Package.packageInfo = function ( path ) {
  */
 Package.packagePath = function ( packageName ) {
     return _name2packagePath[packageName];
+};
+
+/**
+ * Build package at path
+ * @param {string} path
+ * @param {function} callback
+ * @return {string}
+ * @method build
+ * @memberof Editor.Package
+ */
+Package.build = function ( path, cb ) {
+    var BuildPackage = require('./build-package');
+    BuildPackage.start({
+        path: path,
+        minify: false,
+        babel: false,
+    }, function ( err ) {
+        if ( err ) {
+            Editor.error('Failed to build package at %s, %s', path, err.message );
+        }
+        if ( cb ) cb ( err, Path.join(path, 'bin/dev') );
+    });
 };
 
 // ========================================
