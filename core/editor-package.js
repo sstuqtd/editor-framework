@@ -231,6 +231,15 @@ Package.unload = function ( path, cb ) {
             if ( cb ) cb ();
         });
     }
+    else {
+        //
+        delete _path2package[path];
+        delete _name2packagePath[packageObj.name];
+        Editor.success('%s unloaded', packageObj.name);
+        Editor.sendToWindows('package:unloaded', packageObj.name);
+
+        if ( cb ) cb ();
+    }
 };
 
 /**
