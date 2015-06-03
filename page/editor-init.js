@@ -165,14 +165,14 @@ Editor.error = function ( text ) {
 // pre-require modules
 // ==========================
 
-Editor.require('editor-framework://share/platform');
-Editor.JS = Editor.require('editor-framework://share/js-utils');
-Editor.Utils = Editor.require('editor-framework://share/editor-utils');
-Editor.require('editor-framework://share/math');
-Editor.Easing = Editor.require('editor-framework://share/easing');
-Editor.require('editor-framework://page/ipc-init');
-Editor.Selection = Editor.require('editor-framework://share/selection');
-Editor.KeyCode = Editor.require('editor-framework://share/keycode');
+require('../share/platform');
+Editor.JS = require('../share/js-utils');
+Editor.Utils = require('../share/editor-utils');
+require('../share/math');
+Editor.Easing = require('../share/easing');
+require('./ipc-init');
+Editor.Selection = require('../share/selection');
+Editor.KeyCode = require('../share/keycode');
 
 // ==========================
 // Layout API
@@ -289,12 +289,12 @@ Editor.registerWidget = function ( widgetName, obj ) {
 // load modules
 // ==========================
 
-Editor.Window = Editor.require('editor-framework://page/editor-window' );
-Editor.Menu = Editor.require('editor-framework://page/editor-menu');
-Editor.Panel = Editor.require('editor-framework://page/editor-panel');
-Editor.Package = Editor.require('editor-framework://page/editor-package');
+Editor.Window = require('./editor-window' );
+Editor.Menu = require('./editor-menu');
+Editor.Panel = require('./editor-panel');
+Editor.Package = require('./editor-package');
 
-Editor.MainMenu = Editor.require('editor-framework://page/main-menu');
-Editor.CmdP = Editor.require('editor-framework://page/cmdp');
+Editor.MainMenu = require('./main-menu');
+Editor.CmdP = require('./cmdp');
 
 })();

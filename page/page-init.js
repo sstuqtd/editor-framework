@@ -66,6 +66,11 @@ try {
         // Just let default handler run.
         return false;
     };
+
+    //
+    var Remote = require('remote');
+    var frameworkPath = Remote.getGlobal('Editor').url('editor-framework://');
+    require( frameworkPath + '/page/editor-init' );
 }
 catch ( error ) {
     window.onload = function () {
