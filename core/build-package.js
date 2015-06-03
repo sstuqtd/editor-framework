@@ -1,3 +1,4 @@
+var Fs = require('fire-fs');
 var Chalk = require('chalk');
 
 var minimalDesc = ['h', 'min', 's', 'ms', 'μs', 'ns'];
@@ -166,8 +167,9 @@ exports.start = function ( opts, done ) {
         css: [Path.join(root,'**/*.css')].concat(ignores),
         less: [Path.join(root,'**/*.less')].concat(ignores),
         styl: [Path.join(root,'**/*.styl')].concat(ignores),
-        json: [Path.join(root,'**/*.json')].concat(ignores),
+        json: [Path.join(root,'**/*.json'), '!'+Path.join(root,'package.json')].concat(ignores),
         image: [Path.join(root,'**/*.{png,jpg}')].concat(ignores),
+        pkgJson: Path.join(root,'package.json'),
     };
     var extnameMappings = {
         '.styl': '.css',
@@ -237,6 +239,13 @@ exports.start = function ( opts, done ) {
             .pipe(gulp.dest(dest));
     });
 
+    // package.json
+    gulp.task('package.json', function () {
+        var pkgJsonObj = JSON.parse(Fs.readFileSync(paths.pkgJson));
+        pkgJsonObj.build = false;
+        Fs.writeFileSync(Path.join(dest,'package.json'), JSON.stringify(pkgJsonObj,null,2), 'utf8');
+    });
+
     // clean
     gulp.task('clean', function(cb) {
         var del = require('del');
@@ -251,7 +260,8 @@ exports.start = function ( opts, done ) {
         'html',
         [ 'css', 'styl', 'less' ],
         'json',
-        'image'
+        'image',
+        'package.json'
     ));
 
     gulp.start('build', function ( err ) {

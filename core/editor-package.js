@@ -2,6 +2,8 @@ var NativeImage = require('native-image');
 var Ipc = require('ipc');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
+var Del = require('del');
+var Async = require('async');
 
 /**
  * Package module for manipulating packages
@@ -15,6 +17,13 @@ var _widget2info = {};
 
 function _build ( packageObj, cb ) {
     if ( packageObj.build ) {
+        // check if we rebuild the package
+        var binPath = Path.join( packageObj._path, 'bin/dev' );
+        if ( Fs.existsSync(binPath) ) {
+            if ( cb ) cb ( null, binPath );
+            return;
+        }
+
         Editor.log( 'Building ' + packageObj.name );
         Package.build( packageObj._path, cb );
         return;
@@ -157,10 +166,12 @@ Package.load = function ( path, cb ) {
  * @method unload
  * @memberof Editor.Package
  */
-Package.unload = function ( path ) {
+Package.unload = function ( path, cb ) {
     var packageObj = _path2package[path];
-    if ( !packageObj )
+    if ( !packageObj ) {
+        if ( cb ) cb ();
         return;
+    }
 
     // unregister panel
     if ( packageObj.panels && typeof packageObj.panels === 'object' ) {
@@ -207,11 +218,19 @@ Package.unload = function ( path ) {
         delete cache[mainPath];
     }
 
-    //
-    delete _path2package[path];
-    delete _name2packagePath[packageObj.name];
-    Editor.success('%s unloaded', packageObj.name);
-    Editor.sendToWindows('package:unloaded', packageObj.name);
+    // del compiled files
+    var binPath = Path.join(path, 'bin');
+    if ( Fs.existsSync(binPath) ) {
+        Del(binPath, function ( err ) {
+            //
+            delete _path2package[path];
+            delete _name2packagePath[packageObj.name];
+            Editor.success('%s unloaded', packageObj.name);
+            Editor.sendToWindows('package:unloaded', packageObj.name);
+
+            if ( cb ) cb ();
+        });
+    }
 };
 
 /**
@@ -221,8 +240,17 @@ Package.unload = function ( path ) {
  * @memberof Editor.Package
  */
 Package.reload = function ( path, cb ) {
-    Package.unload(path);
-    Package.load(path, cb);
+    Async.series([
+        function ( next ) {
+            Package.unload(path, next);
+        },
+
+        function ( next ) {
+            Package.load(path, next);
+        },
+    ], function ( err ) {
+        if (cb) cb ( err );
+    });
 };
 
 /**

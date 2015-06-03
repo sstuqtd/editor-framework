@@ -10,6 +10,7 @@ Each package uses a `package.json` file to describe itself. Just create this fil
   - `version` *String* - The version number that follows [semver](http://semver.org/) pattern.
   - `description` *String* (Optional) - A simple description of what your package does.
   - `author` *String* (Optional) - Who created this package.
+  - `build` *Boolean* (Optional) - If build the package to `bin/dev`
   - `hosts` *Object* (Optional) - The version of the hosts required for this package.
   - `main` *String* (Optional) - A file path to the main entry javascript.
   - `menus` *Object* (Optional) - The menu list.
