@@ -54,6 +54,9 @@ process.on('uncaughtException', function(error) {
     Winston.uncaught( error.stack || error );
 });
 
+var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.cwd,'package.json')));
+var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
+
 // ---------------------------
 // initialize minimal Editor
 // ---------------------------
@@ -64,13 +67,20 @@ process.on('uncaughtException', function(error) {
  */
 Editor.name = App.getName();
 
-var _packageJsonPath = Path.join( Editor.cwd, 'package.json' );
-var _packageJson = JSON.parse(Fs.readFileSync(_packageJsonPath));
+/**
+ * versions of your app and submodules
+ * @type Object
+ */
+Editor.versions = {
+    'editor-framework': _editorFrameworkPackageJson.version,
+};
+Editor.versions[Editor.name] = App.getVersion();
+
 /**
  * The absolute path of your main entry file. Usually it is `{your-app}/app.js`.
  * @type string
  */
-Editor.mainEntry = Path.join( Editor.cwd, _packageJson.main );
+Editor.mainEntry = Path.join( Editor.cwd, _appPackageJson.main );
 
 /**
  * The editor framework module path. Usually it is `{your-app}/editor-framework/`
