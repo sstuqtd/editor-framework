@@ -331,11 +331,13 @@ Package.build = function ( path, cb ) {
 // ========================================
 
 Ipc.on('package:query-infos', function ( reply ) {
+    var builtinPath = Path.join( Editor.App.path, 'builtin' );
     var results = [];
+
     for ( var path in _path2package ) {
         results.push({
             path: path,
-            builtin: false, // TODO:
+            builtin: Path.contains( builtinPath, path ),
             enabled: true, // TODO:
             info: _path2package[path],
         });
@@ -347,10 +349,11 @@ Ipc.on('package:query-infos', function ( reply ) {
 Ipc.on('package:query-info', function ( reply, name ) {
     var path = _name2packagePath[name];
     var info = _path2package[path];
+    var builtinPath = Path.join( Editor.App.path, 'builtin' );
 
     reply({
         path: path,
-        builtin: false, // TODO:
+        builtin: Path.contains( builtinPath, path ),
         enabled: true, // TODO:
         info: info,
     });
