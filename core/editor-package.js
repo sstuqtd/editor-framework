@@ -35,6 +35,7 @@ function _build ( packageObj, cb ) {
 /**
  * Load a package at path
  * @param {string} path - An absolute path point to a package folder
+ * @param {function} cb - Callback
  * @method load
  * @memberof Editor.Package
  */
@@ -163,6 +164,7 @@ Package.load = function ( path, cb ) {
 /**
  * Unload a package at path
  * @param {string} path - An absolute path point to a package folder
+ * @param {function} cb - Callback
  * @method unload
  * @memberof Editor.Package
  */
@@ -218,38 +220,45 @@ Package.unload = function ( path, cb ) {
         delete cache[mainPath];
     }
 
-    // del compiled files
-    var binPath = Path.join(path, 'bin');
-    if ( Fs.existsSync(binPath) ) {
-        Del(binPath, function ( err ) {
-            //
-            delete _path2package[path];
-            delete _name2packagePath[packageObj.name];
-            Editor.success('%s unloaded', packageObj.name);
-            Editor.sendToWindows('package:unloaded', packageObj.name);
+    //
+    delete _path2package[path];
+    delete _name2packagePath[packageObj.name];
+    Editor.success('%s unloaded', packageObj.name);
+    Editor.sendToWindows('package:unloaded', packageObj.name);
 
-            if ( cb ) cb ();
-        });
-    }
-    else {
-        //
-        delete _path2package[path];
-        delete _name2packagePath[packageObj.name];
-        Editor.success('%s unloaded', packageObj.name);
-        Editor.sendToWindows('package:unloaded', packageObj.name);
-
-        if ( cb ) cb ();
-    }
+    if ( cb ) cb ();
 };
 
 /**
  * Reload a package at path
  * @param {string} path - An absolute path point to a package folder
+ * @param {object} opts - Options
+ * @param {boolean} opts.rebuild - If rebuild the project
+ * @param {function} cb - callback
  * @method reload
  * @memberof Editor.Package
  */
-Package.reload = function ( path, cb ) {
+Package.reload = function ( path, opts, cb ) {
+    opts = opts || {};
+    var rebuild = (typeof opts.rebuild === 'boolean') ? opts.rebuild : true;
+
     Async.series([
+        function ( next ) {
+            var packageObj = _path2package[path];
+            if ( !packageObj ) {
+                next ();
+                return;
+            }
+
+            if ( rebuild && packageObj.build ) {
+                Editor.log( 'Rebuilding ' + packageObj.name );
+                Package.build( path, next );
+            }
+            else {
+                next ();
+            }
+        },
+
         function ( next ) {
             Package.unload(path, next);
         },

@@ -371,9 +371,8 @@ App.on('ready', function() {
     Editor.MainMenu.apply();
 
     // register profile path
-    var defaultProfilePath = Path.join( Editor.appHome, 'settings' );
-    Editor.registerProfilePath( 'global', defaultProfilePath );
-    Editor.registerProfilePath( 'local', defaultProfilePath );
+    Editor.registerProfilePath( 'global', Editor.appHome );
+    Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
 
     // register package path
     Editor.registerPackagePath( Path.join( Editor.App.path, 'builtin' ) );

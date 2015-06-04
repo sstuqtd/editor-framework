@@ -348,42 +348,65 @@ Editor.watchPackages = function ( cb ) {
     .on('change', function (path) {
         var packageInfo = Editor.Package.packageInfo(path);
         if ( packageInfo ) {
-            var testerWin = Editor.Panel.findWindow('tester.panel');
+            Async.series([
+                function ( next ) {
+                    if ( packageInfo.build ) {
+                        Editor.log( 'Rebuilding ' + packageInfo.name );
+                        Editor.Package.build( packageInfo._path, next );
+                    }
+                    else {
+                        next ();
+                    }
+                },
 
-            // reload test
-            var testPath = Path.join(packageInfo._path, 'test');
-            if ( Path.contains(testPath , path) ) {
-                if ( testerWin ) {
-                    testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                }
-                return;
-            }
+                function ( next ) {
+                    var testerWin = Editor.Panel.findWindow('tester.panel');
 
-            // reload panel
-            var panelPath = Path.join(packageInfo._path, 'panel');
-            if ( Path.contains(panelPath, path) ) {
-                for ( var panelName in packageInfo.panels ) {
-                    var panelID = packageInfo.name + '.' + panelName;
-                    Editor.sendToWindows( 'panel:out-of-date', panelID );
-                }
+                    // reload test
+                    var testPath = Path.join(packageInfo._path, 'test');
+                    if ( Path.contains(testPath , path) ) {
+                        if ( testerWin ) {
+                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
+                        }
+                        next();
+                        return;
+                    }
 
-                if ( testerWin ) {
-                    testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                }
-                return;
-            }
+                    // reload panel
+                    var panelPath = Path.join(packageInfo._path, 'panel');
+                    if ( Path.contains(panelPath, path) ) {
+                        for ( var panelName in packageInfo.panels ) {
+                            var panelID = packageInfo.name + '.' + panelName;
+                            Editor.sendToWindows( 'panel:out-of-date', panelID );
+                        }
 
-            // reload widget
-            var widgetPath = Path.join(packageInfo._path, 'widget');
-            if ( Path.contains(widgetPath, path) ) {
-                if ( testerWin ) {
-                    testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                }
-                return;
-            }
+                        if ( testerWin ) {
+                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
+                        }
+                        next();
+                        return;
+                    }
 
-            // reload core
-            Editor.Package.reload(packageInfo._path);
+                    // reload widget
+                    var widgetPath = Path.join(packageInfo._path, 'widget');
+                    if ( Path.contains(widgetPath, path) ) {
+                        if ( testerWin ) {
+                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
+                        }
+                        next();
+                        return;
+                    }
+
+                    // reload core
+                    Editor.Package.reload(packageInfo._path, {
+                        rebuild: false
+                    });
+                    next();
+                },
+            ], function ( err ) {
+                if ( err )
+                    Editor.error( 'Failed to reload package %s: %s', packageInfo.name, err.message );
+            });
         }
     })
     .on('error', function (error) {
