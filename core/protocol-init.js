@@ -48,8 +48,9 @@ Protocol.registerProtocol('packages', function(request) {
     var data = Url.parse(url);
 
     var packagePath = Editor.Package.packagePath(data.hostname);
-    if ( packagePath ) {
-        var file = Path.join( packagePath, data.pathname );
+    var packageInfo = Editor.Package.packageInfo(packagePath);
+    if ( packageInfo ) {
+        var file = Path.join( packageInfo._destPath, data.pathname );
         return new Protocol.RequestFileJob(file);
     }
     return new Protocol.RequestErrorJob(-6); // net::ERR_FILE_NOT_FOUND
