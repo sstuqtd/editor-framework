@@ -67,10 +67,10 @@ var _mousemove = function ( event ) {
 
     //
     document.body.appendChild(_maskEL);
-    _maskEL.style.top = rect.top + 'px';
-    _maskEL.style.left = rect.left + 'px';
-    _maskEL.style.width = rect.width + 'px';
-    _maskEL.style.height = rect.height + 'px';
+    _maskEL.style.top = (rect.top+1) + 'px';
+    _maskEL.style.left = (rect.left+1) + 'px';
+    _maskEL.style.width = (rect.width-2) + 'px';
+    _maskEL.style.height = (rect.height-2) + 'px';
 };
 
 var _mousedown = function ( event ) {
