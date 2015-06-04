@@ -21,12 +21,12 @@ function getDefaultMainMenu () {
             submenu: [
                 {
                     label: 'Hide',
-                    accelerator: 'Command+H',
+                    accelerator: 'CmdOrCtrl+H',
                     selector: 'hide:'
                 },
                 {
                     label: 'Hide Others',
-                    accelerator: 'Command+Shift+H',
+                    accelerator: 'CmdOrCtrl+Shift+H',
                     selector: 'hideOtherApplications:'
                 },
                 {
@@ -51,33 +51,33 @@ function getDefaultMainMenu () {
             submenu: [
                 {
                    label: 'Undo',
-                   accelerator: 'Command+Z',
+                   accelerator: 'CmdOrCtrl+Z',
                    selector: 'undo:'
                 },
                 {
                    label: 'Redo',
-                   accelerator: 'Shift+Command+Z',
+                   accelerator: 'Shift+CmdOrCtrl+Z',
                    selector: 'redo:'
                 },
                 { type: 'separator' },
                 {
                    label: 'Cut',
-                   accelerator: 'Command+X',
+                   accelerator: 'CmdOrCtrl+X',
                    selector: 'cut:'
                 },
                 {
                    label: 'Copy',
-                   accelerator: 'Command+C',
+                   accelerator: 'CmdOrCtrl+C',
                    selector: 'copy:'
                 },
                 {
                    label: 'Paste',
-                   accelerator: 'Command+V',
+                   accelerator: 'CmdOrCtrl+V',
                    selector: 'paste:'
                 },
                 {
                    label: 'Select All',
-                   accelerator: 'Command+A',
+                   accelerator: 'CmdOrCtrl+A',
                    selector: 'selectAll:'
                 },
             ]
@@ -91,12 +91,12 @@ function getDefaultMainMenu () {
             [
                 {
                     label: 'Minimize',
-                    accelerator: 'Command+M',
+                    accelerator: 'CmdOrCtrl+M',
                     selector: 'performMiniaturize:',
                 },
                 {
                     label: 'Close',
-                    accelerator: 'Command+W',
+                    accelerator: 'CmdOrCtrl+W',
                     selector: 'performClose:',
                 },
                 { type: 'separator' },
@@ -108,7 +108,7 @@ function getDefaultMainMenu () {
             [
                 {
                     label: "Close",
-                    accelerator: 'Command+W',
+                    accelerator: 'CmdOrCtrl+W',
                     click: function () {
                         Editor.Window.saveWindowStates();
                         Editor.quit();
@@ -153,7 +153,7 @@ function getDefaultMainMenu () {
             id: 'developer',
             submenu: [
                 {
-                    label: 'Command-P',
+                    label: 'Command Palette',
                     accelerator: 'CmdOrCtrl+P',
                     click: function() {
                         Editor.mainWindow.focus();
