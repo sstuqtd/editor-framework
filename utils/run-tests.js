@@ -4,34 +4,36 @@ var Chalk = require('chalk');
 var SpawnSync = require('child_process').spawnSync;
 
 var exePath = '';
+var cwd = process.cwd();
+
 if ( process.platform === 'darwin' ) {
-    exePath = './bin/electron/Electron.app/Contents/MacOS/Electron';
+    exePath = Path.join(cwd, 'bin/electron/Electron.app/Contents/MacOS/Electron');
 }
 else {
-    exePath = './bin/electron/Electron.exe';
+    exePath = Path.join(cwd, 'bin/electron/Electron.exe');
 }
 
 var files;
-var indexFile = './test/index.js';
+var indexFile = Path.join( cwd, 'test/index.js' );
 var singleTestFile = process.argv[2];
 
 // accept
 if (singleTestFile) {
   singleTestFile = ('./test/' + process.argv[2] + '.js').replace('.js.js', '.js');
-  SpawnSync(exePath, ['./', '--test', singleTestFile], {stdio: 'inherit'});
+  SpawnSync(exePath, [cwd, '--test', singleTestFile], {stdio: 'inherit'});
 }
 else if ( Fs.existsSync(indexFile) ) {
     files = require(indexFile);
     files.forEach(function ( file ) {
         console.log( Chalk.magenta( 'Start test (' + file + ')') );
-        SpawnSync(exePath, ['./', '--test', file], {stdio: 'inherit'});
+        SpawnSync(exePath, [cwd, '--test', file], {stdio: 'inherit'});
     });
 }
 else {
     Globby ( Path.join(path, '**/*.js'), function ( err, files ) {
         files.forEach(function (file) {
             console.log( Chalk.magenta( 'Start test (' + file + ')') );
-            SpawnSync(exePath, ['./', '--test', file], {stdio: 'inherit'});
+            SpawnSync(exePath, [cwd, '--test', file], {stdio: 'inherit'});
         });
     });
 }
