@@ -1,6 +1,6 @@
 {
   "name": "editor-framework",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A simple framework for making panel based applications.",
   "homepage": "http://fireball-x.com",
   "repository": {
