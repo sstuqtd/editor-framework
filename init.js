@@ -99,8 +99,8 @@ if ( !Fs.existsSync(Editor.appHome) ) {
     Fs.makeTreeSync(Editor.appHome);
 }
 
-// initialize ~/.{app-name}/settings/
-var settingsPath = Path.join(Editor.appHome, 'settings');
+// initialize ~/.{app-name}/local/
+var settingsPath = Path.join(Editor.appHome, 'local');
 if ( !Fs.existsSync(settingsPath) ) {
     Fs.mkdirSync(settingsPath);
 }
