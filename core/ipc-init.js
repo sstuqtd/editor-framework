@@ -44,7 +44,7 @@ Ipc.on ( 'editor:send2core', function ( event, message ) {
     // jshint validthis:true
     'use strict';
     if ( ! _sendToCore.apply ( Ipc, arguments ) ) {
-        Editor.failed( 'editor:send2core@' + message + ' failed.' );
+        Editor.failed( 'send2core "%s" failed, listener not found for "%s" in core-level', message, message );
     }
 });
 

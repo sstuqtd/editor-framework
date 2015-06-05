@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>Packages Page Tester</title>
+    <script type="text/javascript" src="editor-framework://page/page-init.js"></script>
+    <link rel="import" href="editor-framework://page/ui/ui.html">
+
+    <script type="text/javascript" src="editor-framework://test/page-utils/ipc-forward.js"></script>
+  </head>
+
+  <body>
+    <h2>Testing Packages...</h2>
+    <script>
+        var ipcforward = new IpcForward();
+        ipcforward.on('package:loaded');
+        ipcforward.on('package:unloaded');
+
+        Editor.sendToCore('page:ready');
+    </script>
+  </body>
+</html>

@@ -1,11 +1,11 @@
 {
-  "name": "demo-simple",
+  "name": "test-simple",
   "version": "0.0.1",
-  "description": "Simple Demo",
+  "description": "A Simple Package Test Fixture",
   "author": "Firebox Technology",
   "main": "main.js",
   "menus": {
-    "Demos/Simple": {
+    "Test Case/Simple": {
       "message": "demo-simple:open"
     }
   },
