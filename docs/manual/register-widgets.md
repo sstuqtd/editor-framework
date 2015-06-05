@@ -1,4 +1,4 @@
-## Register Your Widgets
+# Register Your Widgets
 
 Define a widget in `page-level`, then save it to your package's `widget` folder.
 

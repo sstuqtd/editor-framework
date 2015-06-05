@@ -1,4 +1,4 @@
-## Register Shortcuts for Your Panel
+# Register Shortcuts for Your Panel
 
 You can define keyboard shortcuts for your panel in `package.json`. Here is a simple example:
 
