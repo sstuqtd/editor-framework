@@ -242,27 +242,27 @@
             _loadingMask.style.bottom = '0';
             _loadingMask.style.left = '0';
             _loadingMask.oncontextmenu = function() { return false; };
+        }
 
-            if ( options && typeof options.zindex === 'string' ) {
-                _loadingMask.style.zIndex = options.zindex;
-            }
-            else {
-                _loadingMask.style.zIndex = '999';
-            }
+        if ( options && typeof options.zindex === 'string' ) {
+            _loadingMask.style.zIndex = options.zindex;
+        }
+        else {
+            _loadingMask.style.zIndex = '999';
+        }
 
-            if ( options && typeof options.background === 'string' ) {
-                _loadingMask.style.backgroundColor = options.background;
-            }
-            else {
-                _loadingMask.style.backgroundColor = 'rgba(0,0,0,0.2)';
-            }
+        if ( options && typeof options.background === 'string' ) {
+            _loadingMask.style.backgroundColor = options.background;
+        }
+        else {
+            _loadingMask.style.backgroundColor = 'rgba(0,0,0,0.2)';
+        }
 
-            if ( options && typeof options.cursor === 'string' ) {
-                _loadingMask.style.cursor = options.cursor;
-            }
-            else {
-                _loadingMask.style.cursor = 'default';
-            }
+        if ( options && typeof options.cursor === 'string' ) {
+            _loadingMask.style.cursor = options.cursor;
+        }
+        else {
+            _loadingMask.style.cursor = 'default';
         }
 
         _loadingMask.addEventListener('mousedown', function (event) {
