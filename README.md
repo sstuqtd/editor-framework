@@ -106,7 +106,7 @@ npm run api-page # for page-level docs
  - Logs
    - Use Winston for low level logs
    - Log to file
-   - Integrate with [Console](https://github.com/fireball-packages/console) for display and query your logs
+   - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
  - Global Selection
    - Selection cached and synced among windows
    - User can register his own selection type
