@@ -47,6 +47,22 @@ Ipc.on('editor:sendreq2page', function (request, args, sessionId) {
 
 // Communication Patterns
 
+/**
+ * Send message to core-level synchronized and return a result which is responded from core-level
+ * @param {string} message - the message to send
+ * @param {...*} [arg] - whatever arguments the message needs
+ * @return results
+ */
+Editor.sendToCoreSync = function ( message ) {
+    'use strict';
+    if ( typeof message === 'string' ) {
+        var args = [].slice.call( arguments );
+        return Ipc.sendSync.apply( Ipc, [message].concat(args) );
+    }
+    else {
+        Editor.error('The message must be provided');
+    }
+};
 
 /**
  * Send message to editor-core, which is so called as main app, or atom shell's browser side.

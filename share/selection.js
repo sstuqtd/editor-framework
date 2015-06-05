@@ -609,7 +609,7 @@ if ( Editor.isCoreLevel ) {
 
 if ( Editor.isPageLevel ) {
     (function () {
-        var results = Ipc.sendSync('selection:get-registers');
+        var results = Editor.sendToCoreSync('selection:get-registers');
         for ( var i = 0; i < results.length; ++i ) {
             var info = results[i];
             if ( _units[info.type] )
