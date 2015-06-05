@@ -1,4 +1,4 @@
-## Define Your App
+# Define Your App
 
 To run your app with editor-framework, you should download and put `editor-framework` into your app folder. You also need to create a `package.json` file in your app's root folder, and set its main to your app.js.
 

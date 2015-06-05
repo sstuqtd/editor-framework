@@ -1,4 +1,4 @@
-## Editor Default Settings
+# Editor Default Settings
 
 ## Paths
 

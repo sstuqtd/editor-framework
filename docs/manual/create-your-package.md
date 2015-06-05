@@ -1,10 +1,40 @@
-## Create Your Package
+# Create Your Package
 
-Editor Framework loads package before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`. You can customize the location it loads package from through the method `Editor.registerPackagePath` in your `App.init` function.
+Editor Framework loads package before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`. If you are working with [Fireball](https://github.com/fireball-x/fireball), then it will load packages from `fireball/builtin` and `~/.fireball/packages` folder.
+
+You can customize the location it loads package from through the method `Editor.registerPackagePath` in your `App.init` function.
+
+## Structure
+
+In general, packages should have the following structure:
+
+```plain
+MyPackage
+  |--(optional)panel
+  |   |--mypanel.html
+  |   |--(optional)mypanel.js
+  |   |--(optional)mypanel.css
+  |--(optional)widget
+  | 	|--mywidget
+  |       |--mywidget.html
+  |       |--(optional)mywidget.js
+  |       |--(optional)mywidget.css
+  |--main.js
+  |--package.json
+```
+
+Some key parts explained:
+
+- `main.js`: main entry file, read the [Main Entry](#Main-Entry) section.
+- `package.json`: package description file, not used for [npm](https://www.npmjs.com/), read [Package Description](#Package-Description) section.
+- `panel`: this folder is necessary if your package need to open a panel to work. You can create any number of panel html files or sub-folders in this `panel` folder, if you need more than one panel for your package.
+- `widget`: this folder is optional, it contains 'elements' you can use in your panels or in panels of other packages. For example buttons, drop-down menu, tabs, etc. You can organize widgets in this folder any way you like. We recommend creating a folder for each of your widget element.
+
+For panels and widgets, you can combine script and styles to a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.html) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](building-packages.md) documentation for details. 
+
+## Package Description
 
 Each package uses a `package.json` file to describe itself. Just create this file in your package project folder.
-
-## Options
 
   - `name` *String* - Name of the package, this name must be unique, otherwise it can not be published online.
   - `version` *String* - The version number that follows [semver](http://semver.org/) pattern.
@@ -38,7 +68,7 @@ Each package uses a `package.json` file to describe itself. Just create this fil
   - `widgets` *Object* (Optional) - The widget list.
     - `key` *String* - Widget name, this name will be used as host name in `widgets://{host-name}/` protocol.
     - `value` *Object* - The widget folder path
-  - `dependencies` *Object* [Optional] - The dependencies list.
+  - `dependencies` *Object* (Optional) - The dependencies list.
   - `npmDependencies??` *Object* (Optional) - The npm dependencies list.
   - `bowerDependencies??` *Object* (Optional) - The bower dependencies list.
 
