@@ -83,8 +83,9 @@ npm run api-page # for page-level docs
 
  - Package Management
    - Dynamically load and unload packages
+   - Can use any web language (less, sass, coffeescript, typescript, ...) for your package, editor-framework will build it first before loading the package.
    - Watch package changes and reload or notify changes immediately
-   - Manage your packages in package manager window
+   - Manage your packages in [package manager](https://github.com/fireball-packages/package-manager)
  - Panel Management
    - Freely docks panel anywhere in multiple windows
    - Dynamically load user define panels from package
@@ -96,7 +97,7 @@ npm run api-page # for page-level docs
    - Dynamically add and remove menu item
    - Dynamically change menu item state ( enabled, checked, visible, ... )
    - Load user menu from packages
- - Commands
+ - Commands (Under Developing)
    - Register and customize commands for your App
    - A powerful command window (CmdP) for searching and executing your commands
  - Profiles
@@ -105,20 +106,25 @@ npm run api-page # for page-level docs
  - Logs
    - Use Winston for low level logs
    - Log to file
-   - A powerful console window for display and query your logs
+   - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
  - Global Selection
    - Selection cached and synced among windows
    - User can register his own selection type
    - Automatically filtering selections
- - Global Undo and Redo
- - Enhance the native Dialog
+ - Global Undo and Redo (Under Developing)
+ - Enhance the native Dialog (Under Developing)
    - Remember dialog last edit position
  - Enhance Ipc Programming Experience
    - Add more Ipc methods to help sending and recieving ipc messages in different level
    - Allow sending ipc message to specific panel
    - Allow sending ipc message to specific window
    - Allow sending ipc request and waiting for the reply in callback function
-   - An ipc-debugger to help you writing better ipc code
+   - Integrate with [ipc-debugger](https://github.com/fireball-packages/ipc-debugger) to help you writing better ipc code
+ - An Auto-Test Workflow
+   - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
+   - Integrate [Mocha](mochajs.org), [Chai](http://chaijs.com/) and [Sinon](sinonjs.org) to our test framework
+   - A ghost-tester to simulate UI events and behaviours for testing
+   - Automatically recreate your test target (widgets, panels) after each test case
 
 ## License
 
