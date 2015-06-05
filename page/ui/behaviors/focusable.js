@@ -84,7 +84,7 @@ EditorUI.focusable = (function () {
 
             var el, i;
 
-            if ( this.noNavigate ) {
+            if ( this.noNavigate || this.disabled ) {
                 for ( i = 0; i < this.focusEls.length; ++i ) {
                     el = this.focusEls[i];
                     el.tabIndex = -1;
