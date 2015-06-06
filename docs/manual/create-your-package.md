@@ -25,12 +25,12 @@ MyPackage
 
 Some key parts explained:
 
-- `main.js`: main entry file, read the [Main Entry](#Main-Entry) section.
-- `package.json`: package description file, not used for [npm](https://www.npmjs.com/), read [Package Description](#Package-Description) section.
+- `main.js`: main entry file, read the [Main Entry](#main-entry) section.
+- `package.json`: package description file, not used for [npm](https://www.npmjs.com/), read [Package Description](#package-description) section.
 - `panel`: this folder is necessary if your package need to open a panel to work. You can create any number of panel html files or sub-folders in this `panel` folder, if you need more than one panel for your package.
 - `widget`: this folder is optional, it contains 'elements' you can use in your panels or in panels of other packages. For example buttons, drop-down menu, tabs, etc. You can organize widgets in this folder any way you like. We recommend creating a folder for each of your widget element.
 
-For panels and widgets, you can combine script and styles to a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.html) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](building-packages.md) documentation for details. 
+For panels and widgets, you can combine script and styles to a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.html) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](load-and-build-packages.md) documentation for details. 
 
 ## Package Description
 
