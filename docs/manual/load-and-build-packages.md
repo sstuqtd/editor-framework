@@ -45,7 +45,7 @@ When Editor-framework is running, it will watch all loaded packages. If you modi
 
 - File change notification fired by package watcher.
 - If package has building enabled, rebuild the package.
-- If rebuild success, go through the dirty notify pipeline, otherwise stopped.
+- If building disabled or rebuild success, go through the dirty notify pipeline. If rebuild failed, stop the process.
 
 Dirty notification has different pipeline for `page-level` changes and `core-level` changes:
 
