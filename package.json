@@ -51,6 +51,6 @@
     "vulcanize": "1.8.1"
   },
   "fire-shell-version": "0.24.0",
-  "electron-version": "0.27.2",
+  "electron-version": "0.27.3",
   "main": "demo.js"
 }
