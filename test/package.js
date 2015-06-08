@@ -47,7 +47,7 @@ describe('Editor.Package', function() {
                 'min-width': 400,
                 'min-height': 400,
                 'show': true,
-                'resizable': true,
+                'resizable': false,
             });
             win.load(pageUrl);
         });
