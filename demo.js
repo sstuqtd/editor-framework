@@ -19,6 +19,7 @@ global.__app = {
         // TODO: load your profile, and disable packages here
 
         Editor.registerPackagePath( Editor.url('app://demo/') );
+        Editor.registerPackagePath( Editor.url('app://benchmark/') );
     },
 
     run: function () {
