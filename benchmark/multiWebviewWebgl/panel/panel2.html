@@ -81,31 +81,28 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
     },
 
     _onAddText: function () {
-        Editor.sendToAll('texts:add');
+        Editor.sendToAll('benchmark:add-texts');
     },
 
     _onAddBunnies: function () {
-        Editor.sendToAll('bunnies:add');
+        Editor.sendToAll('benchmark:add-bunnies');
     },
 
     _onClear: function () {
-        Editor.sendToAll('panel:clear');
+        Editor.sendToAll('benchmark:clear-panel');
     },
 
-    'bunnies:add': function () {
+    'benchmark:add-bunnies': function () {
         this.$.view.send('add-bunnies');
     },
 
-    'texts:add': function () {
+    'benchmark:add-texts': function () {
         this.texts.length += 100;
     },
 
-    'panel:clear': function () {
-        this.texts.length = 0;
+    'benchmark:clear-panel': function () {
+        this.texts = [];
         this.$.view.send('clear-bunnies');
-
-        EditorUI.update( this, 'texts' );
-        EditorUI.update( this, 'bunnies' );
     }
 });
 </script>

@@ -142,18 +142,18 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel2', {
     },
 
     _onAddText: function () {
-        Editor.sendToAll('texts:add');
+        Editor.sendToAll('benchmark:add-texts');
     },
 
     _onAddBunnies: function () {
-        Editor.sendToAll('bunnies:add');
+        Editor.sendToAll('benchmark:add-bunnies');
     },
 
     _onClear: function () {
-        Editor.sendToAll('panel:clear');
+        Editor.sendToAll('benchmark:clear-panel');
     },
 
-    'bunnies:add': function () {
+    'benchmark:add-bunnies': function () {
         var width  = this.$.canvas.width;
         var height = this.$.canvas.height;
 
@@ -177,21 +177,19 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel2', {
         EditorUI.update( this, 'bunnies' );
     },
 
-    'texts:add': function () {
+    'benchmark:add-texts': function () {
         this.texts.length += 100;
     },
 
-    'panel:clear': function () {
+    'benchmark:clear-panel': function () {
         this.texts.length = 0;
         
         for (var i = 0; i < this.bunnies.length; i++) {
             this.stage.removeChild(this.bunnies[i]);
         }
 
-        this.bunnies.splice(0, this.bunnies.length);
-
-        EditorUI.update( this, 'texts' );
-        EditorUI.update( this, 'bunnies' );
+        this.bunnies = [];
+        this.texts   = [];
     }
 });
 </script>

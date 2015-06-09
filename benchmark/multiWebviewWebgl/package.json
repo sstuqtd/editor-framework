@@ -22,9 +22,9 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-          "bunnies:add",
-          "texts:add",
-          "panel:clear"
+          "benchmark:add-bunnies",
+          "benchmark:add-texts",
+          "benchmark:clear-panel"
       ]
     },
     "panel2": {
@@ -36,9 +36,9 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-          "bunnies:add",
-          "texts:add",
-          "panel:clear"
+          "benchmark:add-bunnies",
+          "benchmark:add-texts",
+          "benchmark:clear-panel"
       ]
     }
   }
