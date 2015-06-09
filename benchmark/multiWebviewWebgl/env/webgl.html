@@ -15,7 +15,7 @@
     </body>
 
     <script type="text/javascript">
-        var ipc = require('Ipc');
+        var Ipc = require('ipc');
 
         var canvas = document.getElementById('canvas');
 
@@ -36,7 +36,7 @@
         document.body.appendChild( this.stats.domElement );
 
         // create a texture from an image path
-        var texture = PIXI.Texture.fromImage('app://benchmark/images/bunny.png');
+        var texture = PIXI.Texture.fromImage('editor-framework://benchmark/images/bunny.png');
 
         this.bunnies = [];        
 
@@ -66,7 +66,7 @@
         window.onresize = resize;
         resize();
 
-        ipc.on('add-bunnies', function() {
+        Ipc.on('add-bunnies', function() {
             for (var i = 0; i < 5000; i++) {
                 // create a new Sprite using the texture
                 var bunny = new PIXI.Sprite(texture);
@@ -84,10 +84,10 @@
                 this.bunnies.push(bunny);
             }
 
-            ipc.sendToHost('bunnies-length:changed', this.bunnies.length);
+            Ipc.sendToHost('bunnies-length:changed', this.bunnies.length);
         }.bind(this));
 
-        ipc.on('clear-bunnies', function() {
+        Ipc.on('clear-bunnies', function() {
 
             for (var i = 0; i < this.bunnies.length; i++) {
                 stage.removeChild(this.bunnies[i]);
@@ -95,7 +95,7 @@
 
             this.bunnies.splice(0, this.bunnies.length);
 
-            ipc.sendToHost('bunnies-length:changed', this.bunnies.length);
+            Ipc.sendToHost('bunnies-length:changed', this.bunnies.length);
         }.bind(this));
 
     </script>
