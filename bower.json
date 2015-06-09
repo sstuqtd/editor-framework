@@ -20,7 +20,8 @@
     "pixi": "3.0.6",
     "polymer": "Polymer/polymer#^1.0.2",
     "svg.js": "1.0.1",
-    "web-animations-js": "web-animations/web-animations-js#master"
+    "web-animations-js": "web-animations/web-animations-js#master",
+    "stats.js": "mrdoob/stats.js#master"
   },
   "devDependencies": {}
 }
