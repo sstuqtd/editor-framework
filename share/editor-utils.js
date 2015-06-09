@@ -52,4 +52,16 @@ Utils.smoothScale = function ( curScale, delta ) {
     return scale;
 };
 
+/**
+ * Wrap error so that it can be sent between core and page level
+ * @memberof Editor.Utils
+ * @method wrapError
+ */
+Utils.wrapError = function ( err ) {
+    return {
+        message: err.message,
+        stack: err.stack,
+    };
+};
+
 module.exports = Utils;
