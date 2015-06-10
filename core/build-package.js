@@ -242,7 +242,7 @@ exports.start = function ( opts, done ) {
     // package.json
     gulp.task('package.json', function () {
         var pkgJsonObj = JSON.parse(Fs.readFileSync(paths.pkgJson));
-        pkgJsonObj.build = false;
+        delete pkgJsonObj.build;
         Fs.writeFileSync(Path.join(dest,'package.json'), JSON.stringify(pkgJsonObj,null,2), 'utf8');
     });
 

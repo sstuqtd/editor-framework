@@ -17,11 +17,15 @@ var _widget2info = {};
 
 function _build ( packageObj, cb ) {
     if ( packageObj.build ) {
-        // check if we rebuild the package
+        // check if bin/dev exists
         var binPath = Path.join( packageObj._path, 'bin/dev' );
         if ( Fs.existsSync(binPath) ) {
-            if ( cb ) cb ( null, binPath );
-            return;
+            // check if bin/dev/package.json have the same version
+            var binPackageObj = JSON.parse(Fs.readFileSync( Path.join( binPath, 'package.json')));
+            if ( packageObj.version === binPackageObj.version ) {
+                if ( cb ) cb ( null, binPath );
+                return;
+            }
         }
 
         Editor.log( 'Building ' + packageObj.name );

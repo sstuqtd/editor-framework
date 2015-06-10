@@ -10,6 +10,9 @@
       "message": "demo-simple:open"
     }
   },
+  "widgets": {
+    "simple-widget": "widget/simple.html"
+  },
   "panels": {
     "panel": {
       "frame": "panel/panel.html",
@@ -17,8 +20,7 @@
       "title": "Simple",
       "width": 800,
       "height": 600,
-      "messages": [
-      ]
+      "messages": []
     }
   }
 }
