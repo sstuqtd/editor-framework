@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="import" href="editor-framework://test/page-utils/page-runner.html">
+
+        <dom-module id="test-focusable">
+            <template>
+                <div id="focus"
+                    on-focus="_onFocus"
+                    on-blur="_onBlur"
+                    >Test Focusable</div>
+            </template>
+            <script>
+                var TestFocusable = Polymer({
+                    is: 'test-focusable',
+                    behaviors: [EditorUI.focusable],
+                    ready: function () {
+                        this._initFocusable(this.$.focus);
+                    },
+                });
+            </script>
+        </dom-module>
+    </head>
+
+    <body>
+        <h1>Testing Behaviours</h1>
+        <div id="test-area"></div>
+        <script>
+            describe('focusable', function () {
+                var testAreaEL = document.getElementById('test-area');
+                var targetEL = null;
+                beforeEach(function ( done ) {
+                    targetEL = new TestFocusable();
+                    testAreaEL.appendChild(targetEL);
+                    done();
+                });
+                afterEach(function ( done ) {
+                    testAreaEL.removeChild(targetEL);
+                    targetEL = null;
+                    done();
+                });
+
+                it( 'should focus target when focus event invoked', function ( done ) {
+                    sinon.spy(targetEL, '_onFocus');
+                    targetEL.setFocus();
+
+                    assert( targetEL._onFocus.calledOnce );
+                    expect( targetEL.focused ).to.be.equal(true);
+                    done();
+                });
+
+                it( 'should blur target when blur event invoked', function ( done ) {
+                    sinon.spy(targetEL, '_onBlur');
+                    targetEL.setFocus();
+                    targetEL.setBlur();
+
+                    assert( targetEL._onBlur.calledOnce );
+                    expect( targetEL.focused ).to.be.equal(false);
+                    done();
+                });
+
+                it( 'should focus target when $.focus.focus() called', function ( done ) {
+                    sinon.spy(targetEL, '_onFocus');
+                    targetEL.$.focus.focus();
+
+                    assert( targetEL._onFocus.calledOnce );
+                    expect( targetEL.focused ).to.be.equal(true);
+                    done();
+                });
+
+                it( 'should focus target when $.focus.blur() called', function ( done ) {
+                    sinon.spy(targetEL, '_onBlur');
+                    targetEL.$.focus.focus();
+                    targetEL.$.focus.blur();
+
+                    assert( targetEL._onBlur.calledOnce );
+                    setTimeout( function () {
+                        expect( targetEL.focused ).to.be.equal(false);
+                        done();
+                    }, 1);
+                });
+
+                it( 'should not invoke _onBlur when target already focused', function ( done ) {
+                    sinon.spy(targetEL, '_onBlur');
+                    targetEL.$.focus.focus();
+                    targetEL.$.focus.focus();
+
+                    expect( targetEL._onBlur.callCount ).to.be.equal(0);
+                    done();
+                });
+            });
+        </script>
+    </body>
+</html>

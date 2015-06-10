@@ -55,12 +55,12 @@ EditorUI.focusable = (function () {
             },
         },
 
-        listeners: {
-            // 'focusin': '_onFocusIn',
-            // 'focusout': '_onFocusOut',
-            'focus': '_onFocus',
-            'blur': '_onBlur',
-        },
+        // listeners: {
+        //     'focusin': '_onFocusIn',
+        //     'focusout': '_onFocusOut',
+        //     'focus': '_onFocus',
+        //     'blur': '_onBlur',
+        // },
 
         _initFocusable: function ( focusEls ) {
             if ( focusEls ) {
@@ -76,6 +76,7 @@ EditorUI.focusable = (function () {
             }
 
             this._initTabIndex();
+            this._losingFocus = false;
         },
 
         _initTabIndex: function () {
@@ -147,12 +148,22 @@ EditorUI.focusable = (function () {
         //     this._setFocused(false);
         // },
 
+        // NOTE: do not overwrite these events, instead listen to 'on-focused-changed'
+
         _onFocus: function ( event ) {
+            this._losingFocus = false;
             this._setFocused(true);
         },
 
         _onBlur: function ( event ) {
-            this._setFocused(false);
+            this._losingFocus = true;
+            // NOTE: this is because user may mouse-click on the same target,
+            //       the browser will send blur, focus event without reason
+            this.async(function () {
+                if ( this._losingFocus ) {
+                    this._setFocused(false);
+                }
+            }.bind(this),1);
         },
 
         setFocus: function () {

@@ -67,6 +67,21 @@
     };
 
     //
+    EditorUI.focusParent = function ( element ) {
+        // NOTE: DO NOT use Polymer.dom(element).parentNode
+        var parent = element.parentElement;
+        while ( parent ) {
+            if ( parent.tabIndex !== null &&
+                 parent.tabIndex !== undefined &&
+                 parent.tabIndex !== -1 ) {
+                parent.focus();
+                return;
+            }
+            parent = parent.parentElement;
+        }
+    };
+
+    //
     EditorUI.getSelfOrAncient = function ( element, parentType ) {
         var parent = element;
         while ( parent ) {

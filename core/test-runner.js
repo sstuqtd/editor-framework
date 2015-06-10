@@ -9,11 +9,13 @@ var Chalk = require('chalk');
 
 var Mocha = require('mocha');
 var Chai = require('chai');
+var Chai = require('chai');
 var Base = Mocha.reporters.Base;
 
 //
 global.assert = Chai.assert;
 global.expect = Chai.expect;
+global.sinon = require('sinon');
 
 var Test = {};
 Test.liveRun = function ( path ) {
@@ -64,11 +66,10 @@ Test.run = function ( path ) {
     });
     mocha.addFile(path);
 
-    mocha.run(function(failures){
+    mocha.run(function (failures) {
         process.exit(failures);
     });
 };
-
 
 function Spec(runner) {
     Base.call(this, runner);
@@ -84,25 +85,20 @@ function Spec(runner) {
         return Array(indents).join('  ');
     }
 
-    runner.on('start', function(){
-    });
-
-    runner.on('suite', function(suite){
+    function _onStart () {}
+    function _onSuite ( suite ) {
         ++indents;
         console.log(color('suite', '%s%s'), indent(), suite.title);
-    });
-
-    runner.on('suite end', function(suite){
+    }
+    function _onSuiteEnd ( suite ) {
         --indents;
         if (1 == indents) console.log();
-    });
-
-    runner.on('pending', function(test){
+    }
+    function _onPending ( test ) {
         var fmt = indent() + color('pending', '  - %s');
         console.log(fmt, test.title);
-    });
-
-    runner.on('pass', function(test){
+    }
+    function _onPass ( test ) {
         var fmt;
         if ('fast' == test.speed) {
             fmt = indent() +
@@ -118,14 +114,44 @@ function Spec(runner) {
             cursor.CR();
             console.log(fmt, test.title, test.duration);
         }
-    });
+    }
+    function _onFail ( test, err ) {
+        var fmt = indent() +
+            color('fail', '  ' + Base.symbols.err) +
+            color('fail', ' %s')
+            ;
+        cursor.CR();
+        console.log(fmt, test.title);
+    }
 
-    runner.on('fail', function(test, err){
-        // cursor.CR();
-        // console.log(indent() + color('fail', '  %d) %s'), ++n, test.title);
-    });
-
+    runner.on('start', _onStart);
+    runner.on('suite', _onSuite);
+    runner.on('suite end', _onSuiteEnd);
+    runner.on('pending', _onPending);
+    runner.on('pass', _onPass);
+    runner.on('fail', _onFail);
     runner.on('end', self.epilogue.bind(self));
+
+    // IPC
+    Ipc.on('runner:start', _onStart);
+    Ipc.on('runner:suite', function ( event, suite ) { _onSuite(suite); });
+    Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
+    Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
+    Ipc.on('runner:pass', function ( event, test ) { _onPass(test); });
+    Ipc.on('runner:fail', function ( event, test, err ) {
+        cursor.CR();
+        var fmt = indent() +
+            color('fail', '  ' + Base.symbols.err) +
+            color('error title', ' %s')
+            ;
+        console.log(fmt, test.title);
+        cursor.CR();
+
+        fmt = color('error message', ' %s')
+            ;
+        console.log(fmt, err.stack);
+    });
+    Ipc.on('runner:end', function ( event ) {});
 }
 Spec.prototype = Base.prototype;
 
