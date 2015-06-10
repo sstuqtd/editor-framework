@@ -19,7 +19,11 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-        "benchmark:ipc-renderers-message"
+        "benchmark:ipc-messages-renderer-to-from-renderer",
+        "benchmark:ipc-messages-main-to-renderer",
+        "benchmark:end-ipc-messages-main-from-renderer",
+        "benchmark:end-ipc-messages-renderer-to-renderer"
+
       ]
     },
     "panel2": {
@@ -31,7 +35,10 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-        "benchmark:ipc-renderers-message"
+        "benchmark:ipc-messages-renderer-to-from-renderer",
+        
+        "benchmark:begin-ipc-messages-renderer-to-renderer",
+        "benchmark:ipc-messages-renderer-to-renderer"
       ]
     }
   }

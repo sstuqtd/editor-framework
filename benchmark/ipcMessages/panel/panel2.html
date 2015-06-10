@@ -16,8 +16,22 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel2', {
         
     },
 
-    "benchmark:ipc-renderers-message": function () {
-        Editor.sendToAll('benchmark:ipc-renderers-message', Editor.selfExcluded);
+    "benchmark:ipc-messages-renderer-to-from-renderer": function () {
+        Editor.sendToAll('benchmark:ipc-messages-renderer-to-from-renderer', Editor.selfExcluded);
+    },
+
+    "benchmark:begin-ipc-messages-renderer-to-renderer": function (messagesLength) {
+        this.current = 0;
+        this.messagesLength = messagesLength;
+    },    
+
+    "benchmark:ipc-messages-renderer-to-renderer": function () {
+
+        this.current ++;
+
+        if (this.current === this.messagesLength) {
+            Editor.sendToAll("benchmark:end-ipc-messages-renderer-to-renderer");
+        }
     }
 });
 </script>

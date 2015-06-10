@@ -12,21 +12,28 @@
 
         #view-wrapper {
             width: 100%;
-            height: 200px;
+            height: 100px;
             min-height: 200px;
             max-height: 200px;
         }
 
         webview {
             width: 100%;
-            height: 200px;
+            height: 100px;
         }
 
-        .result {
+        #final-result, .result {
             margin-bottom: 10px;
             padding: 5px;
             padding-left: 10px;
             background: #333;
+        }
+
+        #final-result {
+            margin-top: 5px;
+            margin-left: 20px;
+            margin-right: 20px;
+            min-height: 220px;
         }
 
         #results {
@@ -40,6 +47,7 @@
         #buttons {
             margin-left: 20px;
             margin-top: 5px;
+            min-height: 20px;
         }
 
         li {
@@ -66,20 +74,39 @@
             <button on-click='_onBegin'>Begin</button>
 
             <button on-click='_onReset'>Reset</button>
+        </div>
+        <div id='final-result'> 
+                <div class='message'>Final Result: </div>
+                <div class='message'>Messages:          <em>{{result.messagesLength}}</em></div>
+                <br>
 
-            <span> Result: 
-                    <span class='message'>Messages:          <em>{{result.messagesLength}}</em></span>
-                    <span class='message'>Main And Renderer: <em>{{result.mainAndRenderer}}</em>s</span>
-                    <span class='message'>Rendders:          <em>{{result.renderers}}</em>s      </span>
-                    <span class='message'>Host And Webview:  <em>{{result.hostAndWebview}}</em>s </span>
-            </span>
+                <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.mainAndRenderer}}</em>s</div>
+                <div class='message'>Main ---&gt; Renderer: <em>{{result.mainToRenderer}}</em>s</div>
+                <div class='message'>Main &lt;--- Renderer: <em>{{result.mainFromRenderer}}</em>s</div>
+                <br>
+
+                <div class='message'>Renderer &lt;--&gt; Renderer:          <em>{{result.renderers}}</em>s      </div>
+                <div class='message'>Renderer ---&gt; Renderer:          <em>{{result.rendererToRenderer}}</em>s      </div>
+                <br>
+
+                <div class='message'>Host &lt;--&gt; Webview:  <em>{{result.hostAndWebview}}</em>s </div>
+                <div class='message'>Host ---&gt; Webview:  <em>{{result.hostToWebview}}</em>s </div>
+                <div class='message'>Host &lt;-- Webview:  <em>{{result.hostFromWebview}}</em>s </div>
         </div>
         <ul id='results'>
             <template is="dom-repeat" id="list" items="{{results}}">
                 <li class='result'>
-                    <div>Main And Renderer: <em>{{item.mainAndRenderer}}</em>s</div>
-                    <div>Rendders:          <em>{{item.renderers}}</em>s      </div>
-                    <div>Host And Webview:  <em>{{item.hostAndWebview}}</em>s </div>
+                    <div>Main &lt;--&gt; Renderer: <em>{{item.mainAndRenderer}}</em>s</div>
+                    <div>Main ---&gt; Renderer:  <em>{{item.mainToRenderer}}</em>s</div>
+                    <div>Main &lt;--- Renderer:<em>{{item.mainFromRenderer}}</em>s</div>
+                    <br>
+                    <div>Rendder &lt;--&gt; Render:          <em>{{item.renderers}}</em>s      </div>
+                    <div>Rendder ---&gt; Render:          <em>{{item.rendererToRenderer}}</em>s      </div>
+                    <br>
+
+                    <div>Host &lt;--&gt; Webview:  <em>{{item.hostAndWebview}}</em>s </div>
+                    <div>Host ---&gt; Webview:  <em>{{item.hostToWebview}}</em>s </div>
+                    <div>Host &lt;--- Webview:  <em>{{item.hostFromWebview}}</em>s </div>
                 </li>
             </template>
         </ul>
@@ -89,6 +116,8 @@
 <script>
 
 var Async = require('async');
+var Fs = require('fs');
+var message = JSON.parse(Fs.readFileSync('benchmark/ipcMessages/message.json')).message;
 
 Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     is: 'benchmark-ipc-messages-panel1',
@@ -113,9 +142,17 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             value: function() {
                 return {
                     messagesLength: 0,
+                    
                     mainAndRenderer: 0,
+                    mainFromRenderer: 0,
+                    mainToRenderer: 0,
+
                     renderers: 0,
-                    hostAndWebview: 0
+                    rendererToRenderer: 0,
+
+                    hostAndWebview: 0,
+                    hostToWebview: 0,
+                    hostFromWebview: 0
                 };
             }
         }
@@ -129,17 +166,34 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this._onAddMessages();
 
         this.tests = [
-            this._testMainWithRender.bind(this),
-            this._testRenders.bind(this),
-            this._testHostWithWebview.bind(this)
+            this._testMainToFromRender.bind(this),
+            this._testMainToRender.bind(this),
+            this._testMainFromRender.bind(this),
+
+            this._testRenderToFromRender.bind(this),
+            this._testRenderToRender.bind(this),
+
+            this._testHostToFromWebview.bind(this),
+            this._testHostToWebview.bind(this),
+            this._testHostFromWebview.bind(this),
         ];
 
         this.$.view.addEventListener('ipc-message', function(event) {
-            if (event.channel === 'benchmark:ipc-webview-message-reply') {
+            if (event.channel === 'benchmark:ipc-messages-host-to-from-webview') {
                 this.webviewMessages ++;
 
-                if(this.webviewMessages === this.messages.length) {
-                    this._endTestWebview();
+                if (this.webviewMessages === this.messages.length) {
+                    this._endTestHostToFromWebview();
+                }
+            }
+            else if (event.channel === 'benchmark:end-ipc-messages-host-to-webview') {
+                this._endTestHostToWebview();
+            }
+            else if (event.channel === 'benchmark:ipc-messages-host-from-webview') {
+                this.hostFromWebviewMessages ++;
+
+                if (this.hostFromWebviewMessages === this.messages.length) {
+                    this._endTestHostFromWebview();
                 }
             }
         }.bind(this));
@@ -148,8 +202,8 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     _onAddMessages: function () {
         if(this.testing) return;
 
-        for (var i = 0; i < 200; i++) {
-            this.messages.push('Test Ipc Messgae');
+        for (var i = 0; i < 500; i++) {
+            this.messages.push(message);
         }
 
         EditorUI.update( this, 'messages' );
@@ -183,47 +237,60 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     },
 
     _calcFinalResult: function () {
-        var result = {
-            messagesLength: this.messages.length,
-            mainAndRenderer: 0,
-            renderers: 0,
-            hostAndWebview: 0
-        };
+
+        var result = this.result;
+        var begin = true;
 
         this.results.map( function (item) {
-            result.mainAndRenderer += item.mainAndRenderer;
-            result.renderers += item.renderers;
-            result.hostAndWebview += item.hostAndWebview;
+
+            for (var key in result) {
+                if (key === 'messagesLength') { continue; }
+
+                if (begin) {
+                    result[key] = 0;    
+                }
+
+                result[key] += item[key];
+            }
+
+            begin = false;
         }.bind(this));
 
-        result.mainAndRenderer /= this.results.length;
-        result.renderers /= this.results.length;
-        result.hostAndWebview /= this.results.length;
+        for (var key in result) {
+            if (key === 'messagesLength') { continue; }
 
-        this.result = result;
+            this.set('result.' + key, result[key] / this.results.length);
+        }
+
+        this.set('result.messagesLength', this.messages.length);
     },
 
     _testOnce: function (cb) {
 
         var result = {};
+        var current = 0;
 
-        Async.each( this.tests, function (test, done) {
-            var last = Date.now();
+        var runTestCallBack = function () {
+            current ++;
 
-            test(function (key) {
-                var now  = Date.now();
-                var time = (now - last) / 1000.0;
+            if (current === this.tests.length) {
+                this.results.push(result);
+                EditorUI.update( this, 'results' );
 
-                result[key] = time;
+                cb();
+            } 
+            else {
+                runTest();
+            }
 
-                done();
-            });
-        }, function (err) {
-            this.results.push(result);
-            EditorUI.update( this, 'results' );
+        }.bind(this);
 
-            cb();
-        }.bind(this));
+        var runTest = function () {
+            var test = this.tests[current];
+            test(result, runTestCallBack);
+        }.bind(this);
+
+        runTest();
     },
 
     _onReset: function () {
@@ -233,54 +300,209 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this.results  = [];
     },
 
-    _testMainWithRender: function (cb) {
+    _testMainToRender: function (result, cb) {
 
-        Async.each( this.messages, function ( message, done ) {
-            Editor.sendRequestToCore('benchmark-ipc-messages:test-main', function (result) {
-                done();
-            });
-        }, function ( err ) {
-            cb('mainAndRenderer');
-        }.bind(this));
-        
+        // send to main to begin this test
+        var args = this.messages[0].slice(0);
+        args.splice(0, 0, 'benchmark:ipc-messages-main-to-renderer');
+        args.push(this.messages.length);
+
+        Editor.sendToCore.apply(Editor, args);
+
+        // init values
+        this.mainToRenderMessages = 0;
+
+        var last = Date.now();
+
+        this._endTestMainToRender = function () {
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.mainToRenderer = time;
+            cb();
+        }
     },
 
-    _testRenders: function (cb) {
+    _testMainFromRender: function (result, cb) {
+        var onReply = function () {
+            for (var i = 0; i < this.messages.length; i++) {
+                var args = this.messages[i].slice(0);
+                args.splice(0, 0, 'benchmark:ipc-messages-main-from-renderer');
+                
+                Editor.sendToCore.apply(Editor, args);
+            }
 
-        this.rendererMessages = 0;
+            this._endTestMainFromRender = function (time) {
+                result.mainFromRenderer = time;
+                cb();
+            }
+        }.bind(this);
 
-        Async.each( this.messages, function ( message, done ) {
-            Editor.sendToAll('benchmark:ipc-renderers-message', Editor.selfExcluded);
-            done();
-        }, function ( err ) {
-        });
+        // send to main to begin this test
+        var args = this.messages[0].slice(0);
+        args.splice(0, 0, 'benchmark:begin-ipc-messages-main-from-renderer');
+        args.push(this.messages.length);
+        args.push(onReply);
+
+        Editor.sendRequestToCore.apply(Editor, args);
+    },
+
+    _testMainToFromRender: function (result, cb) {
+        var last = Date.now();
+        var current = 0;
+
+        var onReply = function () {
+            current ++;
+
+            if (current === this.messages.length) {
+                var now  = Date.now();
+                var time = (now - last) / 1000.0;
+
+                result.mainAndRenderer = time;
+                cb();
+            }
+        }.bind(this);
+
+        for (var i = 0; i < this.messages.length; i++) {
+
+            var args = this.messages[i].slice(0);
+            args.splice(0, 0, 'benchmark:ipc-messages-main-to-from-renderer');
+            args.push( onReply );
+
+            Editor.sendRequestToCore.apply(Editor, args);
+        }
+    },
+
+    _testRenderToRender: function (result, cb) {
+
+        Editor.sendToAll('benchmark:begin-ipc-messages-renderer-to-renderer', this.messages.length);
+
+        var last = Date.now();
+
+        for (var i = 0; i < this.messages.length; i++) {
+            var args = this.messages[i].slice(0);
+            args.splice(0, 0, 'benchmark:ipc-messages-renderer-to-renderer');
+            args.push(Editor.selfExcluded);
+
+            Editor.sendToAll.apply(Editor, args);
+        }
+
+        this._endTestRenderToRender = function () {
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.rendererToRenderer = time;
+            cb();
+        }
+    },
+
+    _testRenderToFromRender: function (result, cb) {
+        this.renderersMessages = 0;
+        var last = Date.now();
+
+        for (var i = 0; i < this.messages.length; i++) {
+            var args = this.messages[i].slice(0);
+            args.splice(0, 0, 'benchmark:ipc-messages-renderer-to-from-renderer');
+            args.push(Editor.selfExcluded);
+
+            Editor.sendToAll.apply(Editor, args);
+        }
         
         this._endTestRenders = function () {
-            cb('renderers');
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.renderers = time;
+            cb();
         }
     },
 
-    _testHostWithWebview: function (cb) {
+    'benchmark:ipc-messages-renderer-to-from-renderer': function () {
+        this.renderersMessages ++;
 
-        this.webviewMessages = 0;
-        
-        Async.each( this.messages, function ( message, done ) {
-            this.$.view.send('benchmark:ipc-webview-message');
-            done();
-        }.bind(this), function ( err ) {
-        });
-        
-        this._endTestWebview = function () {
-            cb('hostAndWebview');
-        }
-    },
-
-    'benchmark:ipc-renderers-message': function () {
-        this.rendererMessages ++;
-
-        if(this.rendererMessages === this.messages.length) {
+        if(this.renderersMessages === this.messages.length) {
             this._endTestRenders();
         }
+    },
+
+    _testHostToFromWebview: function (result, cb) {
+
+        this.webviewMessages = 0;
+        var last = Date.now();
+        
+        for (var i = 0; i < this.messages.length; i++) {
+            var args = this.messages[i].slice(0);
+            args.splice(0, 0, 'benchmark:ipc-messages-host-to-from-webview');
+
+            this.$.view.send.apply(this.$.view, args);
+        }
+        
+        this._endTestHostToFromWebview = function () {
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.hostAndWebview = time;
+            cb();
+        }
+    },
+
+    _testHostToWebview: function (result, cb) {
+        this.$.view.send('benchmark:begin-ipc-messages-host-to-webview', this.messages.length);
+
+        var last = Date.now();
+        var view = this.$.view;
+
+        for (var i = 0; i < this.messages.length; i++) {
+            var args = this.messages[i].slice(0);
+            args.splice(0, 0, 'benchmark:ipc-messages-host-to-webview');
+
+            view.send.apply(view, args);
+        }
+
+        this._endTestHostToWebview = function () {
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.hostToWebview = time;
+            cb();
+        }
+    },
+
+    _testHostFromWebview: function (result, cb) {
+        this.hostFromWebviewMessages = 0;
+
+        var args = this.messages[0].slice(0);
+        args.splice(0, 0, 'benchmark:begin-ipc-messages-host-from-webview');
+        args.push(this.messages.length);
+
+        this.$.view.send.apply(this.$.view, args);
+
+        var last = Date.now();
+
+        this._endTestHostFromWebview = function () {
+            var now  = Date.now();
+            var time = (now - last) / 1000.0;
+
+            result.hostFromWebview = time;
+            cb();
+        }
+    },
+
+
+    "benchmark:ipc-messages-main-to-renderer" : function () {
+        this.mainToRenderMessages ++;
+
+        if(this.mainToRenderMessages === this.messages.length) {
+            this._endTestMainToRender();
+        }
+    },    
+
+    "benchmark:end-ipc-messages-main-from-renderer": function (time) {
+        this._endTestMainFromRender(time);
+    },
+
+    "benchmark:end-ipc-messages-renderer-to-renderer": function () {
+        this._endTestRenderToRender();
     }
 });
 </script>
