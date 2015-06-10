@@ -97,12 +97,15 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel2', {
         // create a texture from an image path
         this.texture = PIXI.Texture.fromImage('editor-framework://benchmark/images/bunny.png');
 
+        // Open comment to use requestAnimationFrame.
         this.update();
+        // setInterval(this.update.bind(this), 1000/60);
     },
 
     update: function () {
         this.stats.begin();
 
+        // Open comment to use requestAnimationFrame.
         requestAnimationFrame(this.update.bind(this));
 
         for (var i = 0; i < this.bunnies.length; i++) {

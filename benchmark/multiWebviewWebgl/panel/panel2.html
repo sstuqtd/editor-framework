@@ -35,6 +35,7 @@
     </template>
 </dom-module>
 
+<script type="text/javascript" src="app://bower_components/stats.js/build/stats.min.js"></script>
 
 <script>
 Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
@@ -58,17 +59,28 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
         this.current = 0;
         this.bunnies = 0;
 
-        setInterval(this.update.bind(this), 1000/60);
-
         this.$.view.addEventListener('ipc-message', function(event) {
             if (event.channel === 'bunnies-length:changed') {
                 this.bunnies = event.args[0];
                 EditorUI.update( this, 'bunnies' );
             }
         }.bind(this));
+
+        // create Stats
+        this.stats = new Stats();
+        this.stats.domElement.style.position = "absolute";
+        this.stats.domElement.style.top = "10px";
+        this.stats.domElement.style.right = "10px";
+        this.$.content.appendChild( this.stats.domElement );
+
+        // setInterval(this.update.bind(this), 1000/60);
+        // Open comment to use requestAnimationFrame.
+        this.update();
     },
 
     update: function () {
+        this.stats.begin();
+
         this.current ++;
 
         if (this.texts.length > 0) {
@@ -77,7 +89,12 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
             }
 
             EditorUI.update( this, 'texts' );
-        } 
+        }
+
+        // Open comment to use requestAnimationFrame.
+        requestAnimationFrame(this.update.bind(this));
+
+        this.stats.end();
     },
 
     _onAddText: function () {
