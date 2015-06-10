@@ -1,0 +1,23 @@
+<dom-module id="benchmark-ipc-messages-panel2">
+   
+    <style type="text/css">
+    </style>
+
+    <template>
+    </template>
+</dom-module>
+
+<script>
+
+Editor.registerPanel( 'benchmark-ipc-messages.panel2', {
+    is: 'benchmark-ipc-messages-panel2',
+
+    ready: function () {
+        
+    },
+
+    "benchmark:ipc-renderers-message": function () {
+        Editor.sendToAll('benchmark:ipc-renderers-message', Editor.selfExcluded);
+    }
+});
+</script>

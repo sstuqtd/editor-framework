@@ -1,0 +1,286 @@
+<dom-module id="benchmark-ipc-messages-panel1">
+   
+    <style type="text/css">
+        :host {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: stretch;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+        #view-wrapper {
+            width: 100%;
+            height: 200px;
+            min-height: 200px;
+            max-height: 200px;
+        }
+
+        webview {
+            width: 100%;
+            height: 200px;
+        }
+
+        .result {
+            margin-bottom: 10px;
+            padding: 5px;
+            padding-left: 10px;
+            background: #333;
+        }
+
+        #results {
+            overflow-x: hidden;
+            overflow-y: auto;
+
+            margin-left: -20px;
+            margin-right: 15px;
+        }
+
+        #buttons {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .message {
+            margin-left: 5px; 
+        }
+
+        em {
+            color: red;
+        }
+    </style>
+
+    <template>
+        <div id='view-wrapper'>
+            <webview id="view" src="../env/view.html" nodeintegration >
+        </div>
+        <div id='buttons'>
+            <button on-click='_onAddMessages'>Add Messages</button>
+            <span>{{messages.length}}</span>
+
+            <button on-click='_onBegin'>Begin</button>
+
+            <button on-click='_onReset'>Reset</button>
+
+            <span> Result: 
+                    <span class='message'>Messages:          <em>{{result.messagesLength}}</em></span>
+                    <span class='message'>Main And Renderer: <em>{{result.mainAndRenderer}}</em>s</span>
+                    <span class='message'>Rendders:          <em>{{result.renderers}}</em>s      </span>
+                    <span class='message'>Host And Webview:  <em>{{result.hostAndWebview}}</em>s </span>
+            </span>
+        </div>
+        <ul id='results'>
+            <template is="dom-repeat" id="list" items="{{results}}">
+                <li class='result'>
+                    <div>Main And Renderer: <em>{{item.mainAndRenderer}}</em>s</div>
+                    <div>Rendders:          <em>{{item.renderers}}</em>s      </div>
+                    <div>Host And Webview:  <em>{{item.hostAndWebview}}</em>s </div>
+                </li>
+            </template>
+        </ul>
+    </template>
+</dom-module>
+
+<script>
+
+var Async = require('async');
+
+Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
+    is: 'benchmark-ipc-messages-panel1',
+
+    properties: {
+        messages: {
+            type: Array,
+            value: function() {
+                return [];
+            }
+        },
+
+        results: {
+            type: Array,
+            value: function() {
+                return [];
+            }
+        },
+
+        result: {
+            type: Object,
+            value: function() {
+                return {
+                    messagesLength: 0,
+                    mainAndRenderer: 0,
+                    renderers: 0,
+                    hostAndWebview: 0
+                };
+            }
+        }
+    },
+
+    created: function () {
+        this.testing = false;
+    },
+
+    ready: function () {
+        this._onAddMessages();
+
+        this.tests = [
+            this._testMainWithRender.bind(this),
+            this._testRenders.bind(this),
+            this._testHostWithWebview.bind(this)
+        ];
+
+        this.$.view.addEventListener('ipc-message', function(event) {
+            if (event.channel === 'benchmark:ipc-webview-message-reply') {
+                this.webviewMessages ++;
+
+                if(this.webviewMessages === this.messages.length) {
+                    this._endTestWebview();
+                }
+            }
+        }.bind(this));
+    },
+
+    _onAddMessages: function () {
+        if(this.testing) return;
+
+        for (var i = 0; i < 200; i++) {
+            this.messages.push('Test Ipc Messgae');
+        }
+
+        EditorUI.update( this, 'messages' );
+    },
+
+    _onBegin: function () {
+        if (this.testing || this.messages.length === 0) {
+            return;
+        }
+
+        this.results = [];
+        this.testing = true;
+
+        var current = 0;
+        var testTimes = 10;
+
+
+        var testOnceCallBack = function () {
+            current ++;
+
+            if (current === testTimes) {
+                this._calcFinalResult();
+                this.testing = false;
+            }
+            else {
+                this._testOnce(testOnceCallBack);
+            }
+        }.bind(this);
+
+        this._testOnce(testOnceCallBack);
+    },
+
+    _calcFinalResult: function () {
+        var result = {
+            messagesLength: this.messages.length,
+            mainAndRenderer: 0,
+            renderers: 0,
+            hostAndWebview: 0
+        };
+
+        this.results.map( function (item) {
+            result.mainAndRenderer += item.mainAndRenderer;
+            result.renderers += item.renderers;
+            result.hostAndWebview += item.hostAndWebview;
+        }.bind(this));
+
+        result.mainAndRenderer /= this.results.length;
+        result.renderers /= this.results.length;
+        result.hostAndWebview /= this.results.length;
+
+        this.result = result;
+    },
+
+    _testOnce: function (cb) {
+
+        var result = {};
+
+        Async.each( this.tests, function (test, done) {
+            var last = Date.now();
+
+            test(function (key) {
+                var now  = Date.now();
+                var time = (now - last) / 1000.0;
+
+                result[key] = time;
+
+                done();
+            });
+        }, function (err) {
+            this.results.push(result);
+            EditorUI.update( this, 'results' );
+
+            cb();
+        }.bind(this));
+    },
+
+    _onReset: function () {
+        if(this.testing) return;
+
+        this.messages = [];
+        this.results  = [];
+    },
+
+    _testMainWithRender: function (cb) {
+
+        Async.each( this.messages, function ( message, done ) {
+            Editor.sendRequestToCore('benchmark-ipc-messages:test-main', function (result) {
+                done();
+            });
+        }, function ( err ) {
+            cb('mainAndRenderer');
+        }.bind(this));
+        
+    },
+
+    _testRenders: function (cb) {
+
+        this.rendererMessages = 0;
+
+        Async.each( this.messages, function ( message, done ) {
+            Editor.sendToAll('benchmark:ipc-renderers-message', Editor.selfExcluded);
+            done();
+        }, function ( err ) {
+        });
+        
+        this._endTestRenders = function () {
+            cb('renderers');
+        }
+    },
+
+    _testHostWithWebview: function (cb) {
+
+        this.webviewMessages = 0;
+        
+        Async.each( this.messages, function ( message, done ) {
+            this.$.view.send('benchmark:ipc-webview-message');
+            done();
+        }.bind(this), function ( err ) {
+        });
+        
+        this._endTestWebview = function () {
+            cb('hostAndWebview');
+        }
+    },
+
+    'benchmark:ipc-renderers-message': function () {
+        this.rendererMessages ++;
+
+        if(this.rendererMessages === this.messages.length) {
+            this._endTestRenders();
+        }
+    }
+});
+</script>
