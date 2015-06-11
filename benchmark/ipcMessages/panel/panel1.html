@@ -80,31 +80,31 @@
                 <div class='message'>Messages:          <em>{{result.messagesLength}}</em></div>
                 <br>
 
-                <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.mainAndRenderer}}</em>s</div>
+                <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.mainQueryFromRenderer}}</em>s</div>
                 <div class='message'>Main ---&gt; Renderer: <em>{{result.mainToRenderer}}</em>s</div>
                 <div class='message'>Main &lt;--- Renderer: <em>{{result.mainFromRenderer}}</em>s</div>
                 <br>
 
-                <div class='message'>Renderer &lt;--&gt; Renderer:          <em>{{result.renderers}}</em>s      </div>
+                <div class='message'>Renderer &lt;--&gt; Renderer:          <em>{{result.rendererQueryFromRenderer}}</em>s      </div>
                 <div class='message'>Renderer ---&gt; Renderer:          <em>{{result.rendererToRenderer}}</em>s      </div>
                 <br>
 
-                <div class='message'>Host &lt;--&gt; Webview:  <em>{{result.hostAndWebview}}</em>s </div>
+                <div class='message'>Host &lt;--&gt; Webview:  <em>{{result.hostQueryFromWebview}}</em>s </div>
                 <div class='message'>Host ---&gt; Webview:  <em>{{result.hostToWebview}}</em>s </div>
                 <div class='message'>Host &lt;-- Webview:  <em>{{result.hostFromWebview}}</em>s </div>
         </div>
         <ul id='results'>
             <template is="dom-repeat" id="list" items="{{results}}">
                 <li class='result'>
-                    <div>Main &lt;--&gt; Renderer: <em>{{item.mainAndRenderer}}</em>s</div>
+                    <div>Main &lt;--&gt; Renderer: <em>{{item.mainQueryFromRenderer}}</em>s</div>
                     <div>Main ---&gt; Renderer:  <em>{{item.mainToRenderer}}</em>s</div>
                     <div>Main &lt;--- Renderer:<em>{{item.mainFromRenderer}}</em>s</div>
                     <br>
-                    <div>Rendder &lt;--&gt; Render:          <em>{{item.renderers}}</em>s      </div>
-                    <div>Rendder ---&gt; Render:          <em>{{item.rendererToRenderer}}</em>s      </div>
+                    <div>Renderer &lt;--&gt; Renderer:          <em>{{item.rendererQueryFromRenderer}}</em>s      </div>
+                    <div>Renderer ---&gt; Renderer:          <em>{{item.rendererToRenderer}}</em>s      </div>
                     <br>
 
-                    <div>Host &lt;--&gt; Webview:  <em>{{item.hostAndWebview}}</em>s </div>
+                    <div>Host &lt;--&gt; Webview:  <em>{{item.hostQueryFromWebview}}</em>s </div>
                     <div>Host ---&gt; Webview:  <em>{{item.hostToWebview}}</em>s </div>
                     <div>Host &lt;--- Webview:  <em>{{item.hostFromWebview}}</em>s </div>
                 </li>
@@ -143,14 +143,14 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                 return {
                     messagesLength: 0,
                     
-                    mainAndRenderer: 0,
+                    mainQueryFromRenderer: 0,
                     mainFromRenderer: 0,
                     mainToRenderer: 0,
 
-                    renderers: 0,
+                    rendererQueryFromRenderer: 0,
                     rendererToRenderer: 0,
 
-                    hostAndWebview: 0,
+                    hostQueryFromWebview: 0,
                     hostToWebview: 0,
                     hostFromWebview: 0
                 };
@@ -166,7 +166,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this._onAddMessages();
 
         this.tests = [
-            this._testMainToFromRender.bind(this),
+            this._testMainQueryFromRender.bind(this),
             this._testMainToRender.bind(this),
             this._testMainFromRender.bind(this),
 
@@ -344,7 +344,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         Editor.sendRequestToCore.apply(Editor, args);
     },
 
-    _testMainToFromRender: function (result, cb) {
+    _testMainQueryFromRender: function (result, cb) {
         var last = Date.now();
         var current = 0;
 
@@ -355,7 +355,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                 var now  = Date.now();
                 var time = (now - last) / 1000.0;
 
-                result.mainAndRenderer = time;
+                result.mainQueryFromRenderer = time;
                 cb();
             }
         }.bind(this);
@@ -409,7 +409,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
-            result.renderers = time;
+            result.rendererQueryFromRenderer = time;
             cb();
         }
     },
@@ -438,7 +438,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
-            result.hostAndWebview = time;
+            result.hostQueryFromWebview = time;
             cb();
         }
     },
