@@ -80,7 +80,7 @@
                 <div class='message'>Messages:          <em>{{result.messagesLength}}</em></div>
                 <br>
 
-                <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.mainQueryFromRenderer}}</em>s</div>
+                <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.rendererQueryFromMain}}</em>s</div>
                 <div class='message'>Main ---&gt; Renderer: <em>{{result.mainToRenderer}}</em>s</div>
                 <div class='message'>Main &lt;--- Renderer: <em>{{result.rendererToMain}}</em>s</div>
                 <br>
@@ -96,7 +96,7 @@
         <ul id='results'>
             <template is="dom-repeat" id="list" items="{{results}}">
                 <li class='result'>
-                    <div>Main &lt;--&gt; Renderer: <em>{{item.mainQueryFromRenderer}}</em>s</div>
+                    <div>Main &lt;--&gt; Renderer: <em>{{item.rendererQueryFromMain}}</em>s</div>
                     <div>Main ---&gt; Renderer:  <em>{{item.mainToRenderer}}</em>s</div>
                     <div>Main &lt;--- Renderer:<em>{{item.rendererToMain}}</em>s</div>
                     <br>
@@ -143,7 +143,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                 return {
                     messagesLength: 0,
                     
-                    mainQueryFromRenderer: 0,
+                    rendererQueryFromMain: 0,
                     rendererToMain: 0,
                     mainToRenderer: 0,
 
@@ -166,7 +166,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this._onAddMessages();
 
         this.tests = [
-            this._testMainQueryFromRenderer.bind(this),
+            this._testRendererQueryFromMain.bind(this),
             this._testMainToRenderer.bind(this),
             this._testRendererToMain.bind(this),
 
@@ -344,7 +344,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         Editor.sendRequestToCore.apply(Editor, args);
     },
 
-    _testMainQueryFromRenderer: function (result, cb) {
+    _testRendererQueryFromMain: function (result, cb) {
         var last = Date.now();
         var current = 0;
 
@@ -355,7 +355,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                 var now  = Date.now();
                 var time = (now - last) / 1000.0;
 
-                result.mainQueryFromRenderer = time;
+                result.rendererQueryFromMain = time;
                 cb();
             }
         }.bind(this);
@@ -363,7 +363,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         for (var i = 0; i < this.messages.length; i++) {
 
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:main-query-from-renderer');
+            args.splice(0, 0, 'benchmark:renderer-query-from-main');
             args.push( onReply );
 
             Editor.sendRequestToCore.apply(Editor, args);

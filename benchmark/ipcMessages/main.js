@@ -15,7 +15,7 @@ module.exports = {
         Editor.Panel.open(_panel2);
     },
 
-    'benchmark:main-query-from-renderer': function (reply) {
+    'benchmark:renderer-query-from-main': function (reply) {
         reply();
     },
 
