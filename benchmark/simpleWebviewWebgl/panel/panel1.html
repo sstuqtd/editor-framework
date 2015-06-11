@@ -77,7 +77,7 @@ Editor.registerPanel( 'benchmark-simple-webview-webgl.panel1', {
                 this.texts[i] = 'current : ' + this.current;
             }
 
-            EditorUI.update( this, 'texts' );
+            this.set('texts', this.texts.slice(0));
         }
 
         this.stats.end();

@@ -120,7 +120,7 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel1', {
                 this.texts[i] = 'current : ' + this.current;
             }
 
-            EditorUI.update( this, 'texts' );
+            this.set('texts', this.texts.slice(0));
         }
 
         // render the container
@@ -177,7 +177,7 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel1', {
             this.bunnies.push(bunny);
         }
 
-        EditorUI.update( this, 'bunnies' );
+        this.set('bunnies', this.bunnies.slice(0));
     },
 
     'benchmark:add-texts': function () {

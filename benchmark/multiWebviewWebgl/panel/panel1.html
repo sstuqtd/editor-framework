@@ -62,8 +62,7 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
 
         this.$.view.addEventListener('ipc-message', function(event) {
             if (event.channel === 'bunnies-length:changed') {
-                this.bunnies = event.args[0];
-                EditorUI.update( this, 'bunnies' );  
+                this.set('bunnies', event.args[0]);
             }
         }.bind(this));
 
@@ -89,7 +88,7 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
                 this.texts[i] = 'current : ' + this.current;
             }
 
-            EditorUI.update( this, 'texts' );
+            this.set('texts', this.texts.slice(0));
         }
 
         // Open comment to use requestAnimationFrame.
@@ -115,7 +114,7 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
     },
 
     'benchmark:add-texts': function () {
-        this.texts.length += 100;
+        this.set('texts.length', this.texts.length + 100);
     },
 
     'benchmark:clear-panel': function () {

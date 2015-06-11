@@ -179,17 +179,17 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         ];
 
         this.$.view.addEventListener('ipc-message', function(event) {
-            if (event.channel === 'benchmark:ipc-messages-host-to-from-webview') {
+            if (event.channel === 'benchmark:host-query-from-webview') {
                 this.webviewMessages ++;
 
                 if (this.webviewMessages === this.messages.length) {
                     this._endTestHostToFromWebview();
                 }
             }
-            else if (event.channel === 'benchmark:end-ipc-messages-host-to-webview') {
+            else if (event.channel === 'benchmark:end-host-to-webview') {
                 this._endTestHostToWebview();
             }
-            else if (event.channel === 'benchmark:ipc-messages-host-from-webview') {
+            else if (event.channel === 'benchmark:host-from-webview') {
                 this.hostFromWebviewMessages ++;
 
                 if (this.hostFromWebviewMessages === this.messages.length) {
@@ -203,10 +203,8 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         if(this.testing) return;
 
         for (var i = 0; i < 200; i++) {
-            this.messages.push(message);
+            this.push('messages', message);
         }
-
-        EditorUI.update( this, 'messages' );
     },
 
     _onBegin: function () {
@@ -274,8 +272,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             current ++;
 
             if (current === this.tests.length) {
-                this.results.push(result);
-                EditorUI.update( this, 'results' );
+                this.push('results', result);
 
                 cb();
             } 
@@ -304,7 +301,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
         // send to main to begin this test
         var args = this.messages[0].slice(0);
-        args.splice(0, 0, 'benchmark:ipc-messages-main-to-renderer');
+        args.splice(0, 0, 'benchmark:main-to-renderer');
         args.push(this.messages.length);
 
         Editor.sendToCore.apply(Editor, args);
@@ -327,7 +324,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         var onReply = function () {
             for (var i = 0; i < this.messages.length; i++) {
                 var args = this.messages[i].slice(0);
-                args.splice(0, 0, 'benchmark:ipc-messages-main-from-renderer');
+                args.splice(0, 0, 'benchmark:main-from-renderer');
                 
                 Editor.sendToCore.apply(Editor, args);
             }
@@ -340,7 +337,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
         // send to main to begin this test
         var args = this.messages[0].slice(0);
-        args.splice(0, 0, 'benchmark:begin-ipc-messages-main-from-renderer');
+        args.splice(0, 0, 'benchmark:begin-main-from-renderer');
         args.push(this.messages.length);
         args.push(onReply);
 
@@ -366,7 +363,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         for (var i = 0; i < this.messages.length; i++) {
 
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:ipc-messages-main-to-from-renderer');
+            args.splice(0, 0, 'benchmark:main-query-from-renderer');
             args.push( onReply );
 
             Editor.sendRequestToCore.apply(Editor, args);
@@ -375,13 +372,13 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
     _testRenderToRender: function (result, cb) {
 
-        Editor.sendToAll('benchmark:begin-ipc-messages-renderer-to-renderer', this.messages.length);
+        Editor.sendToAll('benchmark:begin-renderer-to-renderer', this.messages.length);
 
         var last = Date.now();
 
         for (var i = 0; i < this.messages.length; i++) {
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:ipc-messages-renderer-to-renderer');
+            args.splice(0, 0, 'benchmark:renderer-to-renderer');
             args.push(Editor.selfExcluded);
 
             Editor.sendToAll.apply(Editor, args);
@@ -402,7 +399,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
         for (var i = 0; i < this.messages.length; i++) {
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:ipc-messages-renderer-to-from-renderer');
+            args.splice(0, 0, 'benchmark:renderer-query-from-renderer');
             args.push(Editor.selfExcluded);
 
             Editor.sendToAll.apply(Editor, args);
@@ -417,7 +414,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },
 
-    'benchmark:ipc-messages-renderer-to-from-renderer': function () {
+    'benchmark:renderer-query-from-renderer': function () {
         this.renderersMessages ++;
 
         if(this.renderersMessages === this.messages.length) {
@@ -432,7 +429,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         
         for (var i = 0; i < this.messages.length; i++) {
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:ipc-messages-host-to-from-webview');
+            args.splice(0, 0, 'benchmark:host-query-from-webview');
 
             this.$.view.send.apply(this.$.view, args);
         }
@@ -447,14 +444,14 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     },
 
     _testHostToWebview: function (result, cb) {
-        this.$.view.send('benchmark:begin-ipc-messages-host-to-webview', this.messages.length);
+        this.$.view.send('benchmark:begin-host-to-webview', this.messages.length);
 
         var last = Date.now();
         var view = this.$.view;
 
         for (var i = 0; i < this.messages.length; i++) {
             var args = this.messages[i].slice(0);
-            args.splice(0, 0, 'benchmark:ipc-messages-host-to-webview');
+            args.splice(0, 0, 'benchmark:host-to-webview');
 
             view.send.apply(view, args);
         }
@@ -472,7 +469,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this.hostFromWebviewMessages = 0;
 
         var args = this.messages[0].slice(0);
-        args.splice(0, 0, 'benchmark:begin-ipc-messages-host-from-webview');
+        args.splice(0, 0, 'benchmark:begin-host-from-webview');
         args.push(this.messages.length);
 
         this.$.view.send.apply(this.$.view, args);
@@ -489,7 +486,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     },
 
 
-    "benchmark:ipc-messages-main-to-renderer" : function () {
+    "benchmark:main-to-renderer" : function () {
         this.mainToRenderMessages ++;
 
         if(this.mainToRenderMessages === this.messages.length) {
@@ -497,11 +494,11 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },    
 
-    "benchmark:end-ipc-messages-main-from-renderer": function (time) {
+    "benchmark:end-main-from-renderer": function (time) {
         this._endTestMainFromRender(time);
     },
 
-    "benchmark:end-ipc-messages-renderer-to-renderer": function () {
+    "benchmark:end-renderer-to-renderer": function () {
         this._endTestRenderToRender();
     }
 });

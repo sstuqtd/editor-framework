@@ -19,10 +19,10 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-        "benchmark:ipc-messages-renderer-to-from-renderer",
-        "benchmark:ipc-messages-main-to-renderer",
-        "benchmark:end-ipc-messages-main-from-renderer",
-        "benchmark:end-ipc-messages-renderer-to-renderer"
+        "benchmark:renderer-query-from-renderer",
+        "benchmark:main-to-renderer",
+        "benchmark:end-main-from-renderer",
+        "benchmark:end-renderer-to-renderer"
 
       ]
     },
@@ -35,10 +35,10 @@
       "min-width": 600,
       "min-height": 400,
       "messages": [
-        "benchmark:ipc-messages-renderer-to-from-renderer",
+        "benchmark:renderer-query-from-renderer",
         
-        "benchmark:begin-ipc-messages-renderer-to-renderer",
-        "benchmark:ipc-messages-renderer-to-renderer"
+        "benchmark:begin-renderer-to-renderer",
+        "benchmark:renderer-to-renderer"
       ]
     }
   }

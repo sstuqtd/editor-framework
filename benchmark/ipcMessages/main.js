@@ -13,17 +13,15 @@ module.exports = {
     'benchmark-ipc-messages:open': function () {
         Editor.Panel.open(_panel1);
         Editor.Panel.open(_panel2);
-
-        ths.win = Editor.Panel.findWindow(_panel1);
     },
 
-    'benchmark:ipc-messages-main-to-from-renderer': function (reply) {
+    'benchmark:main-query-from-renderer': function (reply) {
         reply();
     },
 
-    'benchmark:ipc-messages-main-to-renderer': function () {
+    'benchmark:main-to-renderer': function () {
         var messageTimes = [].pop.call(arguments);
-        [].splice.call(arguments, 0, 0, 'benchmark:ipc-messages-main-to-renderer');
+        [].splice.call(arguments, 0, 0, 'benchmark:main-to-renderer');
 
         var win = Editor.Panel.findWindow(_panel1);
         for (var i = 0; i < messageTimes; i++) {
@@ -31,14 +29,14 @@ module.exports = {
         }
     },
 
-    'benchmark:begin-ipc-messages-main-from-renderer': function (reply) {
+    'benchmark:begin-main-from-renderer': function (reply) {
         this.current = 0;
         this.messagesLength = [].pop.call(arguments);
 
         reply();
     },
 
-    'benchmark:ipc-messages-main-from-renderer': function () {
+    'benchmark:main-from-renderer': function () {
         if (this.current === 0) {
             this.lastTime = Date.now();
         }
@@ -51,7 +49,7 @@ module.exports = {
             var now = Date.now();
             var time = (now - this.lastTime) / 1000.0;
 
-            win.sendToPage('benchmark:end-ipc-messages-main-from-renderer', time);
+            win.sendToPage('benchmark:end-main-from-renderer', time);
         }
     }
 };
