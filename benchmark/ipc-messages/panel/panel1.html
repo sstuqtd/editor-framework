@@ -116,7 +116,8 @@
 <script>
 
 var Fs = require('fs');
-var message = JSON.parse(Fs.readFileSync('benchmark/ipcMessages/message.json')).message;
+var path = Editor.url('editor-framework://benchmark/ipc-messages/message.json');
+var message = JSON.parse(Fs.readFileSync(path)).message;
 
 Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     is: 'benchmark-ipc-messages-panel1',
