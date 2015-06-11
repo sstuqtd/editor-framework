@@ -97,13 +97,15 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel1', {
         // create a texture from an image path
         this.texture = PIXI.Texture.fromImage('editor-framework://benchmark/images/bunny.png');
 
+        // Open comment to use requestAnimationFrame.
         this.update();
-
+        // setInterval(this.update.bind(this), 1000/60);
     },
 
     update: function () {
         this.stats.begin();
 
+        // Open comment to use requestAnimationFrame.
         requestAnimationFrame(this.update.bind(this));
 
         for (var i = 0; i < this.bunnies.length; i++) {
@@ -118,7 +120,7 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel1', {
                 this.texts[i] = 'current : ' + this.current;
             }
 
-            EditorUI.update( this, 'texts' );
+            this.set('texts', this.texts.slice(0));
         }
 
         // render the container
@@ -175,7 +177,7 @@ Editor.registerPanel( 'benchmark-multiple-normal-webgl.panel1', {
             this.bunnies.push(bunny);
         }
 
-        EditorUI.update( this, 'bunnies' );
+        this.set('bunnies', this.bunnies.slice(0));
     },
 
     'benchmark:add-texts': function () {

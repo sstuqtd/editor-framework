@@ -1,4 +1,4 @@
-<dom-module id="benchmark-multi-webview-webgl-panel2">
+<dom-module id="benchmark-simple-webview-webgl-panel1">
     <style type="text/css">
         #view-wrapper {
             width: 60%;
@@ -13,17 +13,12 @@
     </style>
     <template>
         <div id='view-wrapper'>
-            <webview id="view" src="../env/webgl.html" nodeintegration >
+            <webview id="view" src="../env/webgl.html" nodeintegration disablewebsecurity>
         </div>
         <div id='content'>
             <div>
-                <button on-click='_onAddText'>Add Text</button>
+                <div>Texts</div>
                 <span>{{texts.length}}</span>
-
-                <button on-click='_onAddBunnies'>Add Bunnies</button>
-                <span>{{bunnies}}</span>
-                
-                <button on-click='_onClear'>Clear</button>
             </div>
             
             <ul id='texts'>
@@ -38,8 +33,8 @@
 <script type="text/javascript" src="app://bower_components/stats.js/build/stats.min.js"></script>
 
 <script>
-Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
-    is: 'benchmark-multi-webview-webgl-panel2',
+Editor.registerPanel( 'benchmark-simple-webview-webgl.panel1', {
+    is: 'benchmark-simple-webview-webgl-panel1',
 
     listeners: {
     },
@@ -57,23 +52,16 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
     ready: function() {
 
         this.current = 0;
-        this.bunnies = 0;
+        this.texts.length = 1500;
 
-        this.$.view.addEventListener('ipc-message', function(event) {
-            if (event.channel === 'bunnies-length:changed') {
-                this.set('bunnies', event.args[0]);
-            }
-        }.bind(this));
-
-        // create Stats
         this.stats = new Stats();
         this.stats.domElement.style.position = "absolute";
-        this.stats.domElement.style.top = "10px";
         this.stats.domElement.style.right = "10px";
+        this.stats.domElement.style.top = "10px";
         this.$.content.appendChild( this.stats.domElement );
 
         // setInterval(this.update.bind(this), 1000/60);
-        // Open comment to use requestAnimationFrame.
+        
         this.update();
     },
 
@@ -81,6 +69,8 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
         this.stats.begin();
 
         this.current ++;
+
+        requestAnimationFrame(this.update.bind(this));
 
         if (this.texts.length > 0) {
             for (var i = 0; i < this.texts.length; i++) {
@@ -90,35 +80,7 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel2', {
             this.set('texts', this.texts.slice(0));
         }
 
-        // Open comment to use requestAnimationFrame.
-        requestAnimationFrame(this.update.bind(this));
-
         this.stats.end();
-    },
-
-    _onAddText: function () {
-        Editor.sendToAll('benchmark:add-texts');
-    },
-
-    _onAddBunnies: function () {
-        Editor.sendToAll('benchmark:add-bunnies');
-    },
-
-    _onClear: function () {
-        Editor.sendToAll('benchmark:clear-panel');
-    },
-
-    'benchmark:add-bunnies': function () {
-        this.$.view.send('add-bunnies');
-    },
-
-    'benchmark:add-texts': function () {
-        this.set('texts.length', this.texts.length + 100);
-    },
-
-    'benchmark:clear-panel': function () {
-        this.texts = [];
-        this.$.view.send('clear-bunnies');
     }
 });
 </script>

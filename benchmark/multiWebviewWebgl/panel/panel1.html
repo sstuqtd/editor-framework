@@ -35,6 +35,7 @@
     </template>
 </dom-module>
 
+<script type="text/javascript" src="app://bower_components/stats.js/build/stats.min.js"></script>
 
 <script>
 Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
@@ -58,17 +59,28 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
         this.current = 0;
         this.bunnies = 0;
 
-        setInterval(this.update.bind(this), 1000/60);
 
         this.$.view.addEventListener('ipc-message', function(event) {
             if (event.channel === 'bunnies-length:changed') {
-                this.bunnies = event.args[0];
-                EditorUI.update( this, 'bunnies' );  
+                this.set('bunnies', event.args[0]);
             }
         }.bind(this));
+
+        // create Stats
+        this.stats = new Stats();
+        this.stats.domElement.style.position = "absolute";
+        this.stats.domElement.style.top = "10px";
+        this.stats.domElement.style.right = "10px";
+        this.$.content.appendChild( this.stats.domElement );
+
+        // setInterval(this.update.bind(this), 1000/60);
+        // Open comment to use requestAnimationFrame.
+        this.update();
     },
 
     update: function () {
+        this.stats.begin();
+
         this.current ++;
 
         if (this.texts.length > 0) {
@@ -76,8 +88,13 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
                 this.texts[i] = 'current : ' + this.current;
             }
 
-            EditorUI.update( this, 'texts' );
+            this.set('texts', this.texts.slice(0));
         }
+
+        // Open comment to use requestAnimationFrame.
+        requestAnimationFrame(this.update.bind(this));
+
+        this.stats.end();
     },
 
     _onAddText: function () {
@@ -97,7 +114,7 @@ Editor.registerPanel( 'benchmark-multi-webview-webgl.panel1', {
     },
 
     'benchmark:add-texts': function () {
-        this.texts.length += 100;
+        this.set('texts.length', this.texts.length + 100);
     },
 
     'benchmark:clear-panel': function () {

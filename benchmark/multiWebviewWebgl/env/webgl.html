@@ -44,6 +44,7 @@
         var animate = function () {
             this.stats.begin();
 
+            // Open comment to use requestAnimationFrame.
             requestAnimationFrame(animate);
 
             for (var i = 0; i < this.bunnies.length; i++) {
@@ -56,6 +57,8 @@
             this.stats.end();
         }.bind(this);
 
+        // setInterval(animate, 1000/60);
+        // Open comment to use requestAnimationFrame.
         animate();
 
 
