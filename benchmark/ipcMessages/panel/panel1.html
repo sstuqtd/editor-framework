@@ -82,7 +82,7 @@
 
                 <div class='message'>Main &lt;--&gt; Renderer: <em>{{result.mainQueryFromRenderer}}</em>s</div>
                 <div class='message'>Main ---&gt; Renderer: <em>{{result.mainToRenderer}}</em>s</div>
-                <div class='message'>Main &lt;--- Renderer: <em>{{result.mainFromRenderer}}</em>s</div>
+                <div class='message'>Main &lt;--- Renderer: <em>{{result.rendererToMain}}</em>s</div>
                 <br>
 
                 <div class='message'>Renderer &lt;--&gt; Renderer:          <em>{{result.rendererQueryFromRenderer}}</em>s      </div>
@@ -91,14 +91,14 @@
 
                 <div class='message'>Host &lt;--&gt; Webview:  <em>{{result.hostQueryFromWebview}}</em>s </div>
                 <div class='message'>Host ---&gt; Webview:  <em>{{result.hostToWebview}}</em>s </div>
-                <div class='message'>Host &lt;-- Webview:  <em>{{result.hostFromWebview}}</em>s </div>
+                <div class='message'>Host &lt;-- Webview:  <em>{{result.webviewToHostFrom}}</em>s </div>
         </div>
         <ul id='results'>
             <template is="dom-repeat" id="list" items="{{results}}">
                 <li class='result'>
                     <div>Main &lt;--&gt; Renderer: <em>{{item.mainQueryFromRenderer}}</em>s</div>
                     <div>Main ---&gt; Renderer:  <em>{{item.mainToRenderer}}</em>s</div>
-                    <div>Main &lt;--- Renderer:<em>{{item.mainFromRenderer}}</em>s</div>
+                    <div>Main &lt;--- Renderer:<em>{{item.rendererToMain}}</em>s</div>
                     <br>
                     <div>Renderer &lt;--&gt; Renderer:          <em>{{item.rendererQueryFromRenderer}}</em>s      </div>
                     <div>Renderer ---&gt; Renderer:          <em>{{item.rendererToRenderer}}</em>s      </div>
@@ -106,7 +106,7 @@
 
                     <div>Host &lt;--&gt; Webview:  <em>{{item.hostQueryFromWebview}}</em>s </div>
                     <div>Host ---&gt; Webview:  <em>{{item.hostToWebview}}</em>s </div>
-                    <div>Host &lt;--- Webview:  <em>{{item.hostFromWebview}}</em>s </div>
+                    <div>Host &lt;--- Webview:  <em>{{item.webviewToHostFrom}}</em>s </div>
                 </li>
             </template>
         </ul>
@@ -144,7 +144,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                     messagesLength: 0,
                     
                     mainQueryFromRenderer: 0,
-                    mainFromRenderer: 0,
+                    rendererToMain: 0,
                     mainToRenderer: 0,
 
                     rendererQueryFromRenderer: 0,
@@ -152,7 +152,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
                     hostQueryFromWebview: 0,
                     hostToWebview: 0,
-                    hostFromWebview: 0
+                    webviewToHostFrom: 0
                 };
             }
         }
@@ -166,34 +166,34 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this._onAddMessages();
 
         this.tests = [
-            this._testMainQueryFromRender.bind(this),
-            this._testMainToRender.bind(this),
-            this._testMainFromRender.bind(this),
+            this._testMainQueryFromRenderer.bind(this),
+            this._testMainToRenderer.bind(this),
+            this._testRendererToMain.bind(this),
 
-            this._testRenderToFromRender.bind(this),
-            this._testRenderToRender.bind(this),
+            this._testRendererQueryFromRenderer.bind(this),
+            this._testRendererToRenderer.bind(this),
 
-            this._testHostToFromWebview.bind(this),
+            this._testHostQueryFromWebview.bind(this),
             this._testHostToWebview.bind(this),
-            this._testHostFromWebview.bind(this),
+            this._testWebviewToHost.bind(this),
         ];
 
         this.$.view.addEventListener('ipc-message', function(event) {
             if (event.channel === 'benchmark:host-query-from-webview') {
-                this.webviewMessages ++;
+                this.hostQueryFromWebviewMessages ++;
 
-                if (this.webviewMessages === this.messages.length) {
-                    this._endTestHostToFromWebview();
+                if (this.hostQueryFromWebviewMessages === this.messages.length) {
+                    this._endTestHostQueryFromWebview();
                 }
             }
             else if (event.channel === 'benchmark:end-host-to-webview') {
                 this._endTestHostToWebview();
             }
             else if (event.channel === 'benchmark:webview-to-host') {
-                this.hostFromWebviewMessages ++;
+                this.webviewToHostMessages ++;
 
-                if (this.hostFromWebviewMessages === this.messages.length) {
-                    this._endTestHostFromWebview();
+                if (this.webviewToHostMessages === this.messages.length) {
+                    this._endTestWebviewToHost();
                 }
             }
         }.bind(this));
@@ -297,7 +297,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this.results  = [];
     },
 
-    _testMainToRender: function (result, cb) {
+    _testMainToRenderer: function (result, cb) {
 
         // send to main to begin this test
         var args = this.messages[0].slice(0);
@@ -307,11 +307,11 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         Editor.sendToCore.apply(Editor, args);
 
         // init values
-        this.mainToRenderMessages = 0;
+        this.mainToRendererMessages = 0;
 
         var last = Date.now();
 
-        this._endTestMainToRender = function () {
+        this._endTestMainToRenderer = function () {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
@@ -320,7 +320,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },
 
-    _testMainFromRender: function (result, cb) {
+    _testRendererToMain: function (result, cb) {
         var onReply = function () {
             for (var i = 0; i < this.messages.length; i++) {
                 var args = this.messages[i].slice(0);
@@ -329,8 +329,8 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
                 Editor.sendToCore.apply(Editor, args);
             }
 
-            this._endTestMainFromRender = function (time) {
-                result.mainFromRenderer = time;
+            this._endTestRendererToMain = function (time) {
+                result.rendererToMain = time;
                 cb();
             }
         }.bind(this);
@@ -344,7 +344,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         Editor.sendRequestToCore.apply(Editor, args);
     },
 
-    _testMainQueryFromRender: function (result, cb) {
+    _testMainQueryFromRenderer: function (result, cb) {
         var last = Date.now();
         var current = 0;
 
@@ -370,7 +370,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },
 
-    _testRenderToRender: function (result, cb) {
+    _testRendererToRenderer: function (result, cb) {
 
         Editor.sendToAll('benchmark:begin-renderer-to-renderer', this.messages.length);
 
@@ -384,7 +384,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             Editor.sendToAll.apply(Editor, args);
         }
 
-        this._endTestRenderToRender = function () {
+        this._endTestRendererToRenderer = function () {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
@@ -393,8 +393,8 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },
 
-    _testRenderToFromRender: function (result, cb) {
-        this.renderersMessages = 0;
+    _testRendererQueryFromRenderer: function (result, cb) {
+        this.rendererQueryFromRendererMessages = 0;
         var last = Date.now();
 
         for (var i = 0; i < this.messages.length; i++) {
@@ -405,7 +405,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             Editor.sendToAll.apply(Editor, args);
         }
         
-        this._endTestRenders = function () {
+        this._endTestRendererQueryFromRenderer = function () {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
@@ -415,16 +415,16 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
     },
 
     'benchmark:renderer-query-from-renderer': function () {
-        this.renderersMessages ++;
+        this.rendererQueryFromRendererMessages ++;
 
-        if(this.renderersMessages === this.messages.length) {
-            this._endTestRenders();
+        if(this.rendererQueryFromRendererMessages === this.messages.length) {
+            this._endTestRendererQueryFromRenderer();
         }
     },
 
-    _testHostToFromWebview: function (result, cb) {
+    _testHostQueryFromWebview: function (result, cb) {
 
-        this.webviewMessages = 0;
+        this.hostQueryFromWebviewMessages = 0;
         var last = Date.now();
         
         for (var i = 0; i < this.messages.length; i++) {
@@ -434,7 +434,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             this.$.view.send.apply(this.$.view, args);
         }
         
-        this._endTestHostToFromWebview = function () {
+        this._endTestHostQueryFromWebview = function () {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
@@ -465,8 +465,8 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },
 
-    _testHostFromWebview: function (result, cb) {
-        this.hostFromWebviewMessages = 0;
+    _testWebviewToHost: function (result, cb) {
+        this.webviewToHostMessages = 0;
 
         var args = this.messages[0].slice(0);
         args.splice(0, 0, 'benchmark:begin-webview-to-host');
@@ -476,30 +476,30 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
         var last = Date.now();
 
-        this._endTestHostFromWebview = function () {
+        this._endTestWebviewToHost = function () {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
-            result.hostFromWebview = time;
+            result.webviewToHostFrom = time;
             cb();
         }
     },
 
 
     "benchmark:main-to-renderer" : function () {
-        this.mainToRenderMessages ++;
+        this.mainToRendererMessages ++;
 
-        if(this.mainToRenderMessages === this.messages.length) {
-            this._endTestMainToRender();
+        if(this.mainToRendererMessages === this.messages.length) {
+            this._endTestMainToRenderer();
         }
     },    
 
     "benchmark:end-renderer-to-main": function (time) {
-        this._endTestMainFromRender(time);
+        this._endTestRendererToMain(time);
     },
 
     "benchmark:end-renderer-to-renderer": function () {
-        this._endTestRenderToRender();
+        this._endTestRendererToRenderer();
     }
 });
 </script>
