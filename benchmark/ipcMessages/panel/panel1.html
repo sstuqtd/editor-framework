@@ -189,7 +189,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             else if (event.channel === 'benchmark:end-host-to-webview') {
                 this._endTestHostToWebview();
             }
-            else if (event.channel === 'benchmark:host-from-webview') {
+            else if (event.channel === 'benchmark:webview-to-host') {
                 this.hostFromWebviewMessages ++;
 
                 if (this.hostFromWebviewMessages === this.messages.length) {
@@ -324,7 +324,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         var onReply = function () {
             for (var i = 0; i < this.messages.length; i++) {
                 var args = this.messages[i].slice(0);
-                args.splice(0, 0, 'benchmark:main-from-renderer');
+                args.splice(0, 0, 'benchmark:renderer-to-main');
                 
                 Editor.sendToCore.apply(Editor, args);
             }
@@ -337,7 +337,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
         // send to main to begin this test
         var args = this.messages[0].slice(0);
-        args.splice(0, 0, 'benchmark:begin-main-from-renderer');
+        args.splice(0, 0, 'benchmark:begin-renderer-to-main');
         args.push(this.messages.length);
         args.push(onReply);
 
@@ -469,7 +469,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         this.hostFromWebviewMessages = 0;
 
         var args = this.messages[0].slice(0);
-        args.splice(0, 0, 'benchmark:begin-host-from-webview');
+        args.splice(0, 0, 'benchmark:begin-webview-to-host');
         args.push(this.messages.length);
 
         this.$.view.send.apply(this.$.view, args);
@@ -494,7 +494,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
         }
     },    
 
-    "benchmark:end-main-from-renderer": function (time) {
+    "benchmark:end-renderer-to-main": function (time) {
         this._endTestMainFromRender(time);
     },
 

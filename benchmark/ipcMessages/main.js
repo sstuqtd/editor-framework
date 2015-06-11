@@ -29,14 +29,14 @@ module.exports = {
         }
     },
 
-    'benchmark:begin-main-from-renderer': function (reply) {
+    'benchmark:begin-renderer-to-main': function (reply) {
         this.current = 0;
         this.messagesLength = [].pop.call(arguments);
 
         reply();
     },
 
-    'benchmark:main-from-renderer': function () {
+    'benchmark:renderer-to-main': function () {
         if (this.current === 0) {
             this.lastTime = Date.now();
         }
@@ -49,7 +49,7 @@ module.exports = {
             var now = Date.now();
             var time = (now - this.lastTime) / 1000.0;
 
-            win.sendToPage('benchmark:end-main-from-renderer', time);
+            win.sendToPage('benchmark:end-renderer-to-main', time);
         }
     }
 };

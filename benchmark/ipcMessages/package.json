@@ -21,7 +21,7 @@
       "messages": [
         "benchmark:renderer-query-from-renderer",
         "benchmark:main-to-renderer",
-        "benchmark:end-main-from-renderer",
+        "benchmark:end-renderer-to-main",
         "benchmark:end-renderer-to-renderer"
 
       ]

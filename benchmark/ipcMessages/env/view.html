@@ -55,9 +55,9 @@
             }
         }.bind(this));
 
-        Ipc.on('benchmark:begin-host-from-webview', function() {
+        Ipc.on('benchmark:begin-webview-to-host', function() {
             var messageTimes = [].pop.call(arguments);
-            [].splice.call(arguments, 0, 0, 'benchmark:host-from-webview');
+            [].splice.call(arguments, 0, 0, 'benchmark:webview-to-host');
 
             for (var i = 0; i < messageTimes; i++) {
                 Ipc.sendToHost.apply(Ipc, arguments);                
