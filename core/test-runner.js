@@ -9,7 +9,6 @@ var Chalk = require('chalk');
 
 var Mocha = require('mocha');
 var Chai = require('chai');
-var Chai = require('chai');
 var Base = Mocha.reporters.Base;
 
 //
