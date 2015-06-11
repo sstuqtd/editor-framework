@@ -91,7 +91,7 @@
 
                 <div class='message'>Host &lt;--&gt; Webview:  <em>{{result.hostQueryFromWebview}}</em>s </div>
                 <div class='message'>Host ---&gt; Webview:  <em>{{result.hostToWebview}}</em>s </div>
-                <div class='message'>Host &lt;-- Webview:  <em>{{result.webviewToHostFrom}}</em>s </div>
+                <div class='message'>Host &lt;-- Webview:  <em>{{result.webviewToHost}}</em>s </div>
         </div>
         <ul id='results'>
             <template is="dom-repeat" id="list" items="{{results}}">
@@ -106,7 +106,7 @@
 
                     <div>Host &lt;--&gt; Webview:  <em>{{item.hostQueryFromWebview}}</em>s </div>
                     <div>Host ---&gt; Webview:  <em>{{item.hostToWebview}}</em>s </div>
-                    <div>Host &lt;--- Webview:  <em>{{item.webviewToHostFrom}}</em>s </div>
+                    <div>Host &lt;--- Webview:  <em>{{item.webviewToHost}}</em>s </div>
                 </li>
             </template>
         </ul>
@@ -152,7 +152,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
 
                     hostQueryFromWebview: 0,
                     hostToWebview: 0,
-                    webviewToHostFrom: 0
+                    webviewToHost: 0
                 };
             }
         }
@@ -480,7 +480,7 @@ Editor.registerPanel( 'benchmark-ipc-messages.panel1', {
             var now  = Date.now();
             var time = (now - last) / 1000.0;
 
-            result.webviewToHostFrom = time;
+            result.webviewToHost = time;
             cb();
         }
     },
