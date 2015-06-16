@@ -223,8 +223,8 @@ Winston.add( Winston.transports.Console, {
 // initialize Commander
 // ---------------------------
 
-function parseList(listStr) {
-  return listStr.split(',');
+function _parseList(listStr) {
+    return listStr.split(',');
 }
 // NOTE: commander only get things done barely in core level,
 //       it doesn't touch the page level, so it should not put into App.on('ready')
@@ -236,7 +236,7 @@ Commander
     .option('--debug <port>', 'Open in browser context debug mode', parseInt )
     .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
     .option('--test <path>', 'Run tests in path' )
-    .option('--test-list <items>', 'Run tests with multiple test files', parseList)
+    .option('--test-list <items>', 'Run tests with multiple test files', _parseList)
     ;
 
 // EXAMPLE:

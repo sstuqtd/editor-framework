@@ -52,29 +52,29 @@ Test.liveRun = function ( path ) {
 };
 
 Test.run = function ( path ) {
-  var mocha = new Mocha({
-      ui: 'bdd',
-      reporter: Spec,
-  });
-
-  //check if input is an array
-  if (Object.prototype.toString.call( path ) === '[object Array]') {
-    path.map(function(file) {
-      mocha.addFile(file);
+    var mocha = new Mocha({
+        ui: 'bdd',
+        reporter: Spec,
     });
-  } else {
-    var stats = Fs.statSync(path);
-    if ( !stats.isFile() ) {
-        console.error('The path %s you provide is not a file', path);
-        process.exit(0);
-        return;
-    }
-    mocha.addFile(path);
-  }
 
-  mocha.run(function (failures) {
-      process.exit(failures);
-  });
+    // check if input is an array
+    if ( Array.isArray( path ) ) {
+        path.forEach(function(file) {
+            mocha.addFile(file);
+        });
+    } else {
+        var stats = Fs.statSync(path);
+        if ( !stats.isFile() ) {
+            console.error('The path %s you provide is not a file', path);
+            process.exit(0);
+            return;
+        }
+        mocha.addFile(path);
+    }
+
+    mocha.run(function (failures) {
+        process.exit(failures);
+    });
 };
 
 function Spec(runner) {
