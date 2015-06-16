@@ -8,6 +8,7 @@ describe('behaviors', function () {
         win.close();
         win.nativeWin.on('closed', function () {
             win.dispose();
+            done();
         });
     });
 

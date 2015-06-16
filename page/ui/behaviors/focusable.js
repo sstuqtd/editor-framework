@@ -55,13 +55,6 @@ EditorUI.focusable = (function () {
             },
         },
 
-        // listeners: {
-        //     'focusin': '_onFocusIn',
-        //     'focusout': '_onFocusOut',
-        //     'focus': '_onFocus',
-        //     'blur': '_onBlur',
-        // },
-
         _initFocusable: function ( focusEls ) {
             if ( focusEls ) {
                 if ( Array.isArray(focusEls) ) {
