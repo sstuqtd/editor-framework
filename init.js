@@ -223,6 +223,9 @@ Winston.add( Winston.transports.Console, {
 // initialize Commander
 // ---------------------------
 
+function parseList(listStr) {
+  return listStr.split(',');
+}
 // NOTE: commander only get things done barely in core level,
 //       it doesn't touch the page level, so it should not put into App.on('ready')
 Commander
@@ -233,6 +236,7 @@ Commander
     .option('--debug <port>', 'Open in browser context debug mode', parseInt )
     .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
     .option('--test <path>', 'Run tests in path' )
+    .option('--test-list <items>', 'Run tests with multiple test files', parseList)
     ;
 
 // EXAMPLE:
@@ -262,6 +266,7 @@ Editor.isDev = Commander.dev;
 Editor.devMode = Commander.devMode;
 Editor.showDevtools = Commander.showDevtools;
 Editor.test = Commander.test;
+Editor.testList = Commander.testList;
 
 // ---------------------------
 // Define Editor.App APIs
@@ -360,10 +365,10 @@ App.on('ready', function() {
     Winston.normal( 'Initializing editor' );
     require('./core/editor-init');
 
-    if ( Commander.test ) {
+    if ( Commander.test || Commander.testList) {
         var Test = require('./core/test-runner');
-        Test.run(Commander.test);
 
+        Test.run(Commander.test || Commander.testList);
         return;
     }
 
