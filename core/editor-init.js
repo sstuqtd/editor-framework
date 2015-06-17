@@ -455,6 +455,14 @@ Editor.registerDefaultLayout = function ( path ) {
     Editor._defaultLayout = path;
 };
 
+/**
+ * register default main menu template function
+ * @param {function} tmplFn
+ */
+Editor.registerDefaultMainMenu = function ( tmplFn ) {
+    Editor._defaultMainMenu = tmplFn;
+};
+
 // ==========================
 // load modules
 // ==========================

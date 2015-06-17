@@ -241,7 +241,8 @@ function getDefaultMainMenu () {
     ];
 }
 
-var _mainMenu = new Editor.Menu( getDefaultMainMenu() );
+Editor._defaultMainMenu = getDefaultMainMenu;
+var _mainMenu = new Editor.Menu( Editor._defaultMainMenu() );
 
 /**
  * The main menu module for manipulating main menu items
@@ -264,7 +265,7 @@ MainMenu.apply = function () {
  * @method reset
  */
 MainMenu.reset = function () {
-    _mainMenu.reset( getDefaultMainMenu() );
+    _mainMenu.reset( Editor._defaultMainMenu() );
     MainMenu.apply();
 };
 
