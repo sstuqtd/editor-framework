@@ -563,6 +563,7 @@ Ipc.on('window:query-layout', function ( event, reply ) {
     }
 
     var layout = null;
+    var needReset = false;
 
     var winInfo = _windowLayouts[editorWin.name];
     if ( winInfo && winInfo.layout ) {
@@ -574,6 +575,7 @@ Ipc.on('window:query-layout', function ( event, reply ) {
         if ( Fs.existsSync(Editor._defaultLayout) ) {
             try {
                 layout = JSON.parse(Fs.readFileSync(Editor._defaultLayout));
+                needReset = true;
             }
             catch (err) {
                 Editor.error( 'Failed to load default layout: %s', err.message );
@@ -583,7 +585,7 @@ Ipc.on('window:query-layout', function ( event, reply ) {
     }
 
     //
-    reply(layout);
+    reply(layout, needReset);
 });
 
 Ipc.on('window:save-layout', function ( event, layoutInfo ) {

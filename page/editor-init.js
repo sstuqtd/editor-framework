@@ -179,13 +179,16 @@ Editor.KeyCode = require('../share/keycode');
 // ==========================
 
 Editor.loadLayout = function ( anchorEL, cb ) {
-    Editor.sendRequestToCore( 'window:query-layout', Editor.requireIpcEvent, function (layout) {
+    Editor.sendRequestToCore( 'window:query-layout', Editor.requireIpcEvent, function (layout, needReset) {
         if ( !layout ) {
-            cb();
+            if (cb) cb ( false );
             return;
         }
 
-        Editor.resetLayout( anchorEL, layout, cb );
+        // NOTE: needReset implies this is a default layout
+        Editor.resetLayout( anchorEL, layout, function () {
+            if (cb) cb ( needReset );
+        });
     });
 };
 
