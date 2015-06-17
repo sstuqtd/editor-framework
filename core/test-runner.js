@@ -51,31 +51,76 @@ Test.liveRun = function ( path ) {
     }
 };
 
-Test.run = function ( path ) {
-    var mocha = new Mocha({
-        ui: 'bdd',
-        reporter: Spec,
-    });
-
-    // check if input is an array
-    if ( Array.isArray( path ) ) {
-        path.forEach(function(file) {
-            mocha.addFile(file);
-        });
-    } else {
-        var stats = Fs.statSync(path);
-        if ( !stats.isFile() ) {
-            console.error('The path %s you provide is not a file', path);
-            process.exit(0);
-            return;
-        }
-        mocha.addFile(path);
+Test.run = function ( path, opts ) {
+    var stats = Fs.statSync(path);
+    if ( !stats.isFile() ) {
+        console.error('The path %s you provide is not a file', path);
+        process.exit(0);
+        return;
     }
 
+    var reporter = null;
+    if (opts && opts.fulltest) {
+        reporter = SpecFull;
+    } else {
+        reporter = Spec;
+    }
+
+    var mocha = new Mocha({
+        ui: 'bdd',
+        reporter: reporter,
+    });
+
+    mocha.addFile(path);
+
     mocha.run(function (failures) {
+        if (opts && opts.fulltest && failures > 0) {
+            process.send(path);
+        }
         process.exit(failures);
     });
 };
+
+function SpecFull(runner) {
+    Base.call(this, runner);
+
+    var self = this,
+        stats = this.stats,
+        indents = 0,
+        n = 0,
+        cursor = Base.cursor,
+        color = Base.color;
+
+    function indent() {
+        return Array(indents).join('  ');
+    }
+
+    function _onStart () {}
+    function _onSuite ( suite ) {
+        ++indents;
+        //console.log(color('suite', '%s%s'), indent(), suite.title);
+    }
+    function _onSuiteEnd ( suite ) {
+        --indents;
+        if (1 == indents) console.log();
+    }
+    function _onPending ( test ) {
+        var fmt = indent() + color('pending', '  - %s');
+        console.log(fmt, test.title);
+    }
+    runner.on('start', _onStart);
+    runner.on('suite', _onSuite);
+    runner.on('suite end', _onSuiteEnd);
+    runner.on('pending', _onPending);
+    runner.on('end', self.epilogue.bind(self));
+
+    // IPC
+    Ipc.on('runner:start', _onStart);
+    Ipc.on('runner:suite', function ( event, suite ) { _onSuite(suite); });
+    Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
+    Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
+    Ipc.on('runner:end', function ( event ) {});
+}
 
 function Spec(runner) {
     Base.call(this, runner);
@@ -160,5 +205,6 @@ function Spec(runner) {
     Ipc.on('runner:end', function ( event ) {});
 }
 Spec.prototype = Base.prototype;
+SpecFull.prototype = Base.prototype;
 
 module.exports = Test;

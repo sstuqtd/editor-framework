@@ -236,7 +236,7 @@ Commander
     .option('--debug <port>', 'Open in browser context debug mode', parseInt )
     .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
     .option('--test <path>', 'Run tests in path' )
-    .option('--test-list <items>', 'Run tests with multiple test files', _parseList)
+    .option('--test-full <path>', 'Run full test with all indexed test files')
     ;
 
 // EXAMPLE:
@@ -266,7 +266,6 @@ Editor.isDev = Commander.dev;
 Editor.devMode = Commander.devMode;
 Editor.showDevtools = Commander.showDevtools;
 Editor.test = Commander.test;
-Editor.testList = Commander.testList;
 
 // ---------------------------
 // Define Editor.App APIs
@@ -365,10 +364,15 @@ App.on('ready', function() {
     Winston.normal( 'Initializing editor' );
     require('./core/editor-init');
 
-    if ( Commander.test || Commander.testList) {
+    if ( Commander.test || Commander.testFull) {
         var Test = require('./core/test-runner');
 
-        Test.run(Commander.test || Commander.testList);
+        if (Commander.test) {
+            Test.run(Commander.test);
+        } else if (Commander.testFull) {
+            Test.run(Commander.testFull, {fulltest:true});
+        }
+
         return;
     }
 
