@@ -8,7 +8,7 @@ global.__app = {
         // TODO:
     },
 
-    init: function ( options ) {
+    init: function ( options, cb ) {
         // initialize ./.settings
         var settingsPath = Path.join(Editor.cwd, '.settings');
         if ( !Fs.existsSync(settingsPath) ) {
@@ -20,6 +20,8 @@ global.__app = {
 
         Editor.registerPackagePath( Editor.url('app://demo/') );
         Editor.registerPackagePath( Editor.url('app://benchmark/') );
+
+        if ( cb ) cb ();
     },
 
     run: function () {

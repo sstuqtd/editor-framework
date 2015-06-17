@@ -376,7 +376,7 @@ App.on('ready', function() {
     Editor.MainMenu.apply();
 
     // register profile path
-    Editor.registerProfilePath( 'global', Editor.appHome );
+    Editor.registerProfilePath( 'app', Editor.appHome );
     Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
 
     // register package path
@@ -386,33 +386,39 @@ App.on('ready', function() {
     // register default layout
     Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
 
-    // init user App
-    if ( !Editor.App.init ) {
-        Winston.error('Can not find function "init" in your App');
-        App.terminate();
-        return;
-    }
-
-    try {
-        Editor.App.init(Commander);
-    } catch ( error ) {
-        Winston.error(error.stack || error);
-        App.terminate();
-        return;
-    }
-
-    // register user App Ipcs
-    _loadEditorApp();
-    Editor.App.reload = _reloadEditorApp;
-
-    //
-    Winston.success('Initial success!');
-
-    // load windows layout after local profile registered
-    Editor.Window.loadLayouts();
-
     // before run the app, we start load and watch all packages
     Async.series([
+        // init app
+        function ( next ) {
+            // init user App
+            if ( !Editor.App.init ) {
+                Winston.error('Can not find function "init" in your App');
+                App.terminate();
+                return;
+            }
+
+            try {
+                Editor.App.init(Commander, next);
+            } catch ( error ) {
+                Winston.error(error.stack || error);
+                App.terminate();
+                return;
+            }
+        },
+
+        // post init
+        function ( next ) {
+            Winston.success('Initial success!');
+
+            // register user App Ipcs after App.init
+            _loadEditorApp();
+            Editor.App.reload = _reloadEditorApp;
+
+            // load windows layout after local profile registered
+            Editor.Window.loadLayouts();
+            next ();
+        },
+
         function ( next ) {
             Winston.normal('Loading packages');
             Editor.loadPackages( next );
@@ -444,5 +450,10 @@ App.on('ready', function() {
                 return;
             }
         },
-    ]);
+    ], function ( error ) {
+        if ( error ) {
+            Winston.error(error.stack || error);
+            App.terminate();
+        }
+    });
 });
