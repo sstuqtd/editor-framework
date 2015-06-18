@@ -1,0 +1,4934 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Namespace: Editor</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false},"applicationName":"Editor (Core-Level)","footer":"Made with ♥ by <a href='http://fireball-x.com'>Fireball Team</a>","copyright":"Fireball Copyright © 2013-2015.","disqus":"","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":true};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">Editor (Core-Level)</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Editor">
+            <span class="title">
+                <a href="Editor.html">Editor</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Editor.App"><a href="Editor.html#.App">App</a></li>
+            
+                <li data-name="Editor.appHome"><a href="Editor.html#.appHome">appHome</a></li>
+            
+                <li data-name="Editor.cwd"><a href="Editor.html#.cwd">cwd</a></li>
+            
+                <li data-name="Editor.frameworkPath"><a href="Editor.html#.frameworkPath">frameworkPath</a></li>
+            
+                <li data-name="Editor.isCoreLevel"><a href="Editor.html#.isCoreLevel">isCoreLevel</a></li>
+            
+                <li data-name="Editor.isDarwin"><a href="Editor.html#.isDarwin">isDarwin</a></li>
+            
+                <li data-name="Editor.isElectron"><a href="Editor.html#.isElectron">isElectron</a></li>
+            
+                <li data-name="Editor.isNative"><a href="Editor.html#.isNative">isNative</a></li>
+            
+                <li data-name="Editor.isNode"><a href="Editor.html#.isNode">isNode</a></li>
+            
+                <li data-name="Editor.isPureWeb"><a href="Editor.html#.isPureWeb">isPureWeb</a></li>
+            
+                <li data-name="Editor.isWin32"><a href="Editor.html#.isWin32">isWin32</a></li>
+            
+                <li data-name="Editor.mainEntry"><a href="Editor.html#.mainEntry">mainEntry</a></li>
+            
+                <li data-name="Editor.name"><a href="Editor.html#.name">name</a></li>
+            
+                <li data-name="Editor.requireIpcEvent"><a href="Editor.html#.requireIpcEvent">requireIpcEvent</a></li>
+            
+                <li data-name="Editor.selfExcluded"><a href="Editor.html#.selfExcluded">selfExcluded</a></li>
+            
+                <li data-name="Editor.versions"><a href="Editor.html#.versions">versions</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.clearLog"><a href="Editor.html#.clearLog">clearLog</a></li>
+            
+                <li data-name="Editor.connectToConsole"><a href="Editor.html#.connectToConsole">connectToConsole</a></li>
+            
+                <li data-name="Editor.error"><a href="Editor.html#.error">error</a></li>
+            
+                <li data-name="Editor.failed"><a href="Editor.html#.failed">failed</a></li>
+            
+                <li data-name="Editor.fatal"><a href="Editor.html#.fatal">fatal</a></li>
+            
+                <li data-name="Editor.info"><a href="Editor.html#.info">info</a></li>
+            
+                <li data-name="Editor.KeyCode"><a href="Editor.html#.KeyCode">KeyCode</a></li>
+            
+                <li data-name="Editor.loadPackages"><a href="Editor.html#.loadPackages">loadPackages</a></li>
+            
+                <li data-name="Editor.loadProfile"><a href="Editor.html#.loadProfile">loadProfile</a></li>
+            
+                <li data-name="Editor.log"><a href="Editor.html#.log">log</a></li>
+            
+                <li data-name="Editor.quit"><a href="Editor.html#.quit">quit</a></li>
+            
+                <li data-name="Editor.registerDefaultLayout"><a href="Editor.html#.registerDefaultLayout">registerDefaultLayout</a></li>
+            
+                <li data-name="Editor.registerDefaultMainMenu"><a href="Editor.html#.registerDefaultMainMenu">registerDefaultMainMenu</a></li>
+            
+                <li data-name="Editor.registerPackagePath"><a href="Editor.html#.registerPackagePath">registerPackagePath</a></li>
+            
+                <li data-name="Editor.registerProfilePath"><a href="Editor.html#.registerProfilePath">registerProfilePath</a></li>
+            
+                <li data-name="Editor.registerProtocol"><a href="Editor.html#.registerProtocol">registerProtocol</a></li>
+            
+                <li data-name="Editor.require"><a href="Editor.html#.require">require</a></li>
+            
+                <li data-name="Editor.sendToAll"><a href="Editor.html#.sendToAll">sendToAll</a></li>
+            
+                <li data-name="Editor.sendToCore"><a href="Editor.html#.sendToCore">sendToCore</a></li>
+            
+                <li data-name="Editor.sendToMainWindow"><a href="Editor.html#.sendToMainWindow">sendToMainWindow</a></li>
+            
+                <li data-name="Editor.sendToPanel"><a href="Editor.html#.sendToPanel">sendToPanel</a></li>
+            
+                <li data-name="Editor.sendToWindows"><a href="Editor.html#.sendToWindows">sendToWindows</a></li>
+            
+                <li data-name="Editor.sendToWindowsExclude"><a href="Editor.html#.sendToWindowsExclude">sendToWindowsExclude</a></li>
+            
+                <li data-name="Editor.success"><a href="Editor.html#.success">success</a></li>
+            
+                <li data-name="Editor.url"><a href="Editor.html#.url">url</a></li>
+            
+                <li data-name="Editor.warn"><a href="Editor.html#.warn">warn</a></li>
+            
+                <li data-name="Editor.watchPackages"><a href="Editor.html#.watchPackages">watchPackages</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Debugger">
+            <span class="title">
+                <a href="Editor.Debugger.html">Editor.Debugger</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Debugger.close"><a href="Editor.Debugger.html#.close">close</a></li>
+            
+                <li data-name="Editor.Debugger.open"><a href="Editor.Debugger.html#.open">open</a></li>
+            
+                <li data-name="Editor.Debugger.toggle"><a href="Editor.Debugger.html#.toggle">toggle</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.JS">
+            <span class="title">
+                <a href="Editor.JS.html">Editor.JS</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.JS.addon"><a href="Editor.JS.html#.addon">addon</a></li>
+            
+                <li data-name="Editor.JS.clear"><a href="Editor.JS.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.JS.copyprop"><a href="Editor.JS.html#.copyprop">copyprop</a></li>
+            
+                <li data-name="Editor.JS.extend"><a href="Editor.JS.html#.extend">extend</a></li>
+            
+                <li data-name="Editor.JS.extract"><a href="Editor.JS.html#.extract">extract</a></li>
+            
+                <li data-name="Editor.JS.mixin"><a href="Editor.JS.html#.mixin">mixin</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.MainMenu">
+            <span class="title">
+                <a href="Editor.MainMenu.html">Editor.MainMenu</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.MainMenu.add"><a href="Editor.MainMenu.html#.add">add</a></li>
+            
+                <li data-name="Editor.MainMenu.apply"><a href="Editor.MainMenu.html#.apply">apply</a></li>
+            
+                <li data-name="Editor.MainMenu.remove"><a href="Editor.MainMenu.html#.remove">remove</a></li>
+            
+                <li data-name="Editor.MainMenu.reset"><a href="Editor.MainMenu.html#.reset">reset</a></li>
+            
+                <li data-name="Editor.MainMenu.set"><a href="Editor.MainMenu.html#.set">set</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Package">
+            <span class="title">
+                <a href="Editor.Package.html">Editor.Package</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Package.build"><a href="Editor.Package.html#.build">build</a></li>
+            
+                <li data-name="Editor.Package.load"><a href="Editor.Package.html#.load">load</a></li>
+            
+                <li data-name="Editor.Package.packageInfo"><a href="Editor.Package.html#.packageInfo">packageInfo</a></li>
+            
+                <li data-name="Editor.Package.packagePath"><a href="Editor.Package.html#.packagePath">packagePath</a></li>
+            
+                <li data-name="Editor.Package.panelInfo"><a href="Editor.Package.html#.panelInfo">panelInfo</a></li>
+            
+                <li data-name="Editor.Package.reload"><a href="Editor.Package.html#.reload">reload</a></li>
+            
+                <li data-name="Editor.Package.unload"><a href="Editor.Package.html#.unload">unload</a></li>
+            
+                <li data-name="Editor.Package.widgetInfo"><a href="Editor.Package.html#.widgetInfo">widgetInfo</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Panel">
+            <span class="title">
+                <a href="Editor.Panel.html">Editor.Panel</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Panel.close"><a href="Editor.Panel.html#.close">close</a></li>
+            
+                <li data-name="Editor.Panel.closeAll"><a href="Editor.Panel.html#.closeAll">closeAll</a></li>
+            
+                <li data-name="Editor.Panel.findPanels"><a href="Editor.Panel.html#.findPanels">findPanels</a></li>
+            
+                <li data-name="Editor.Panel.findWindow"><a href="Editor.Panel.html#.findWindow">findWindow</a></li>
+            
+                <li data-name="Editor.Panel.findWindows"><a href="Editor.Panel.html#.findWindows">findWindows</a></li>
+            
+                <li data-name="Editor.Panel.open"><a href="Editor.Panel.html#.open">open</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Selection">
+            <span class="title">
+                <a href="Editor.Selection.html">Editor.Selection</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Selection.cancel"><a href="Editor.Selection.html#.cancel">cancel</a></li>
+            
+                <li data-name="Editor.Selection.clear"><a href="Editor.Selection.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.Selection.confirm"><a href="Editor.Selection.html#.confirm">confirm</a></li>
+            
+                <li data-name="Editor.Selection.contexts"><a href="Editor.Selection.html#.contexts">contexts</a></li>
+            
+                <li data-name="Editor.Selection.curActivate"><a href="Editor.Selection.html#.curActivate">curActivate</a></li>
+            
+                <li data-name="Editor.Selection.curSelection"><a href="Editor.Selection.html#.curSelection">curSelection</a></li>
+            
+                <li data-name="Editor.Selection.filter"><a href="Editor.Selection.html#.filter">filter</a></li>
+            
+                <li data-name="Editor.Selection.hover"><a href="Editor.Selection.html#.hover">hover</a></li>
+            
+                <li data-name="Editor.Selection.hovering"><a href="Editor.Selection.html#.hovering">hovering</a></li>
+            
+                <li data-name="Editor.Selection.select"><a href="Editor.Selection.html#.select">select</a></li>
+            
+                <li data-name="Editor.Selection.setContext"><a href="Editor.Selection.html#.setContext">setContext</a></li>
+            
+                <li data-name="Editor.Selection.unselect"><a href="Editor.Selection.html#.unselect">unselect</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Utils">
+            <span class="title">
+                <a href="Editor.Utils.html">Editor.Utils</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Utils.formatFrame"><a href="Editor.Utils.html#.formatFrame">formatFrame</a></li>
+            
+                <li data-name="Editor.Utils.padLeft"><a href="Editor.Utils.html#.padLeft">padLeft</a></li>
+            
+                <li data-name="Editor.Utils.smoothScale"><a href="Editor.Utils.html#.smoothScale">smoothScale</a></li>
+            
+                <li data-name="Editor.Utils.wrapError"><a href="Editor.Utils.html#.wrapError">wrapError</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Math">
+            <span class="title">
+                <a href="Math.html">Math</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Math.D2R"><a href="Math.html#.D2R">D2R</a></li>
+            
+                <li data-name="Math.HALF_PI"><a href="Math.html#.HALF_PI">HALF_PI</a></li>
+            
+                <li data-name="Math.R2D"><a href="Math.html#.R2D">R2D</a></li>
+            
+                <li data-name="Math.TWO_PI"><a href="Math.html#.TWO_PI">TWO_PI</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Math.calculateMaxRect"><a href="Math.html#.calculateMaxRect">calculateMaxRect</a></li>
+            
+                <li data-name="Math.clamp"><a href="Math.html#.clamp">clamp</a></li>
+            
+                <li data-name="Math.clamp01"><a href="Math.html#.clamp01">clamp01</a></li>
+            
+                <li data-name="Math.deg2rad"><a href="Math.html#.deg2rad">deg2rad</a></li>
+            
+                <li data-name="Math.deg180"><a href="Math.html#.deg180">deg180</a></li>
+            
+                <li data-name="Math.deg360"><a href="Math.html#.deg360">deg360</a></li>
+            
+                <li data-name="Math.lerp"><a href="Math.html#.lerp">lerp</a></li>
+            
+                <li data-name="Math.rad2deg"><a href="Math.html#.rad2deg">rad2deg</a></li>
+            
+                <li data-name="Math.rad180"><a href="Math.html#.rad180">rad180</a></li>
+            
+                <li data-name="Math.rad360"><a href="Math.html#.rad360">rad360</a></li>
+            
+                <li data-name="Math.randomRange"><a href="Math.html#.randomRange">randomRange</a></li>
+            
+                <li data-name="Math.randomRangeInt"><a href="Math.html#.randomRangeInt">randomRangeInt</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.IpcListener">
+            <span class="title">
+                <a href="Editor.IpcListener.html">Editor.IpcListener</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.IpcListener#clear"><a href="Editor.IpcListener.html#clear">clear</a></li>
+            
+                <li data-name="Editor.IpcListener#on"><a href="Editor.IpcListener.html#on">on</a></li>
+            
+                <li data-name="Editor.IpcListener#once"><a href="Editor.IpcListener.html#once">once</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Menu">
+            <span class="title">
+                <a href="Editor.Menu.html">Editor.Menu</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Menu.parseTemplate"><a href="Editor.Menu.html#.parseTemplate">parseTemplate</a></li>
+            
+                <li data-name="Editor.Menu#add"><a href="Editor.Menu.html#add">add</a></li>
+            
+                <li data-name="Editor.Menu#clear"><a href="Editor.Menu.html#clear">clear</a></li>
+            
+                <li data-name="Editor.Menu#dispose"><a href="Editor.Menu.html#dispose">dispose</a></li>
+            
+                <li data-name="Editor.Menu#remove"><a href="Editor.Menu.html#remove">remove</a></li>
+            
+                <li data-name="Editor.Menu#reset"><a href="Editor.Menu.html#reset">reset</a></li>
+            
+                <li data-name="Editor.Menu#set"><a href="Editor.Menu.html#set">set</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Window">
+            <span class="title">
+                <a href="Editor.Window.html">Editor.Window</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Editor.Window.windows"><a href="Editor.Window.html#.windows">windows</a></li>
+            
+                <li data-name="Editor.Window#isFocused"><a href="Editor.Window.html#isFocused">isFocused</a></li>
+            
+                <li data-name="Editor.Window#isLoaded"><a href="Editor.Window.html#isLoaded">isLoaded</a></li>
+            
+                <li data-name="Editor.Window#isMainWindow"><a href="Editor.Window.html#isMainWindow">isMainWindow</a></li>
+            
+                <li data-name="Editor.Window#isMinimized"><a href="Editor.Window.html#isMinimized">isMinimized</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Window.addWindow"><a href="Editor.Window.html#.addWindow">addWindow</a></li>
+            
+                <li data-name="Editor.Window.commitWindowStates"><a href="Editor.Window.html#.commitWindowStates">commitWindowStates</a></li>
+            
+                <li data-name="Editor.Window.find"><a href="Editor.Window.html#.find">find</a></li>
+            
+                <li data-name="Editor.Window.removeWindow"><a href="Editor.Window.html#.removeWindow">removeWindow</a></li>
+            
+                <li data-name="Editor.Window.saveWindowStates"><a href="Editor.Window.html#.saveWindowStates">saveWindowStates</a></li>
+            
+                <li data-name="Editor.Window#adjust"><a href="Editor.Window.html#adjust">adjust</a></li>
+            
+                <li data-name="Editor.Window#cancelRequestToPage"><a href="Editor.Window.html#cancelRequestToPage">cancelRequestToPage</a></li>
+            
+                <li data-name="Editor.Window#close"><a href="Editor.Window.html#close">close</a></li>
+            
+                <li data-name="Editor.Window#commitWindowState"><a href="Editor.Window.html#commitWindowState">commitWindowState</a></li>
+            
+                <li data-name="Editor.Window#dispose"><a href="Editor.Window.html#dispose">dispose</a></li>
+            
+                <li data-name="Editor.Window#focus"><a href="Editor.Window.html#focus">focus</a></li>
+            
+                <li data-name="Editor.Window#load"><a href="Editor.Window.html#load">load</a></li>
+            
+                <li data-name="Editor.Window#minimize"><a href="Editor.Window.html#minimize">minimize</a></li>
+            
+                <li data-name="Editor.Window#openDevTools"><a href="Editor.Window.html#openDevTools">openDevTools</a></li>
+            
+                <li data-name="Editor.Window#restore"><a href="Editor.Window.html#restore">restore</a></li>
+            
+                <li data-name="Editor.Window#restorePositionAndSize"><a href="Editor.Window.html#restorePositionAndSize">restorePositionAndSize</a></li>
+            
+                <li data-name="Editor.Window#sendRequestToPage"><a href="Editor.Window.html#sendRequestToPage">sendRequestToPage</a></li>
+            
+                <li data-name="Editor.Window#sendToPage"><a href="Editor.Window.html#sendToPage">sendToPage</a></li>
+            
+                <li data-name="Editor.Window#show"><a href="Editor.Window.html#show">show</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="Editor.html">Namespace: Editor</h1>
+        
+
+
+
+<section>
+    
+<header>
+    <h2>
+    Editor
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Classes</h3>
+        
+        <dl>
+            <dt><a href="Editor.IpcListener.html">IpcListener</a></dt>
+            <dd></dd>
+        
+            <dt><a href="Editor.Menu.html">Menu</a></dt>
+            <dd></dd>
+        
+            <dt><a href="Editor.Window.html">Window</a></dt>
+            <dd></dd>
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Namespaces</h3>
+        
+        <dl>
+            <dt><a href="namespaces.html#Editor.Debugger"><a href="Editor.Debugger.html">Debugger</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.JS"><a href="Editor.JS.html">JS</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.MainMenu"><a href="Editor.MainMenu.html">MainMenu</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.Package"><a href="Editor.Package.html">Package</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.Panel"><a href="Editor.Panel.html">Panel</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.Selection"><a href="Editor.Selection.html">Selection</a></a></dt>
+            <dd></dd>
+        
+            <dt><a href="namespaces.html#Editor.Utils"><a href="Editor.Utils.html">Utils</a></a></dt>
+            <dd></dd>
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".App"><span class="type-signature static">static</span>Editor.App<span class="type-signature type object">object</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The Editor.App is your app.js module. Read more details in
+<a href="https://github.com/fireball-x/editor-framework/blob/master/docs/manual/define-your-app.md">Define your application</a>.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".appHome"><span class="type-signature static">static</span>Editor.appHome<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>Your application's data path. Usually it is <code>~/.{your-app-name}</code></p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".cwd"><span class="type-signature static">static</span>Editor.cwd<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The current app.js running directory.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".frameworkPath"><span class="type-signature static">static</span>Editor.frameworkPath<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The editor framework module path. Usually it is <code>{your-app}/editor-framework/</code></p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isCoreLevel"><span class="type-signature static">static</span>Editor.isCoreLevel<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in editor's core process(electron's browser context)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isDarwin"><span class="type-signature static">static</span>Editor.isDarwin<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in OSX</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isElectron"><span class="type-signature static">static</span>Editor.isElectron<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in electron</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isNative"><span class="type-signature static">static</span>Editor.isNative<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in native environment (compare to web-browser)</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isNode"><span class="type-signature static">static</span>Editor.isNode<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in node.js application</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isPureWeb"><span class="type-signature static">static</span>Editor.isPureWeb<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in common web browser</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".isWin32"><span class="type-signature static">static</span>Editor.isWin32<span class="type-signature type boolean">boolean</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>indicates whether executes in Windows</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".mainEntry"><span class="type-signature static">static</span>Editor.mainEntry<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The absolute path of your main entry file. Usually it is <code>{your-app}/app.js</code>.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".name"><span class="type-signature static">static</span>Editor.name<span class="type-signature type string">string</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>The name of your app. It is defined in the <code>name</code> field in package.json</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".requireIpcEvent"><span class="type-signature static">static</span>Editor.requireIpcEvent</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This option is used to indicate that the message listener should receive a ipc event as its first argument.
+It must be supplied as the last argument of your message if you want.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".selfExcluded"><span class="type-signature static">static</span>Editor.selfExcluded</h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>This option is used to indicate that the message should not send to self.
+It must be supplied as the last argument of your message if you want.</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".versions"><span class="type-signature static">static</span>Editor.versions<span class="type-signature type object">Object</span> </h4>
+    </div>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        <p>versions of your app and submodules</p>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".clearLog">
+            
+            <span class="type-signature static">static</span>Editor.clearLog<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 147
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Clear the logs</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".connectToConsole">
+            
+            <span class="type-signature static">static</span>Editor.connectToConsole<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 140
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Connect to console panel. Once the console connected, all logs will kept in <code>core-level</code> and display
+on the console panel in <code>page-level</code>.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".error">
+            
+            <span class="type-signature static">static</span>Editor.error<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 103
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the error message and show on the console,
+it also shows the call stack start from the function call it.
+The method will sends ipc message <code>console:error</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".failed">
+            
+            <span class="type-signature static">static</span>Editor.failed<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 52
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the failed message and show on the console
+The method will send ipc message <code>console:failed</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".fatal">
+            
+            <span class="type-signature static">static</span>Editor.fatal<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 122
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the fatal message and show on the console,
+the app will quit immediately after that.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".info">
+            
+            <span class="type-signature static">static</span>Editor.info<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 67
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the info message and show on the console
+The method will send ipc message <code>console:info</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".KeyCode">
+            
+            <span class="type-signature static">static</span>Editor.KeyCode<span class="signature">(key)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{number|string}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            share/keycode.js, line 5
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Conenience method returns corresponding value for given keyName or keyCode.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+|
+
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>Can be number(key-code) or string(key-name)</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".loadPackages">
+            
+            <span class="type-signature static">static</span>Editor.loadPackages<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 299
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Search and load all packages from the path you registerred</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Editor.html#.registerPackagePath">Editor.registerPackagePath</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".loadProfile">
+            
+            <span class="type-signature static">static</span>Editor.loadProfile<span class="signature">(name, type, defaultProfile)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{object}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 209
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Load profile via <code>name</code> and <code>type</code>, if no profile found, it will use the <code>defaultProfile</code> and save it to the disk.
+You must register your profile path with <code>type</code> via <a href="Editor.html#.registerProfilePath">Editor.registerProfilePath</a> before you
+can use it. The Editor Framework will search a profile under your register path with the <code>name</code>.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>name</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The name of the profile.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The type of the profile, make sure you register the type via <a href="Editor.html#.registerProfilePath">Editor.registerProfilePath</a>.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>defaultProfile</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The default profile to use if the profile is not found.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Editor.html#.registerProfilePath">Editor.registerProfilePath</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+<h5>Returns:</h5>
+profile object with two additional function:
+<ul>
+<li>save: save the profile.</li>
+<li>clear: clear all properties in the profile.</li>
+</ul>
+<br />
+
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>// register a project profile
+Editor.registerProfilePath( 'project', '~/foo/bar');
+
+// load the profile at ~/foo/bar/foobar.json
+var foobarProfile = Editor.loadProfile( 'foobar', 'project', {
+  foo: 'foo',
+  bar: 'bar',
+});
+
+// change and save your profile
+foobarProfile.foo = 'hello foo';
+foobarProfile.save();</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".log">
+            
+            <span class="type-signature static">static</span>Editor.log<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 22
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the normal message and show on the console.
+The method will send ipc message <code>console:log</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".quit">
+            
+            <span class="type-signature static">static</span>Editor.quit<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 284
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Quit the App</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".registerDefaultLayout">
+            
+            <span class="type-signature static">static</span>Editor.registerDefaultLayout<span class="signature">(path)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 454
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Register a path, when loading packages, it will search the path you registerred.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>A absolute path for searching your packages.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Editor.html#.loadPackages">Editor.loadPackages</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".registerDefaultMainMenu">
+            
+            <span class="type-signature static">static</span>Editor.registerDefaultMainMenu<span class="signature">(tmplFn)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 462
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>register default main menu template function</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>tmplFn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".registerPackagePath">
+            
+            <span class="type-signature static">static</span>Editor.registerPackagePath<span class="signature">(path)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 445
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Register a path, when loading packages, it will search the path you registerred.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>A absolute path for searching your packages.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Editor.html#.loadPackages">Editor.loadPackages</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".registerProfilePath">
+            
+            <span class="type-signature static">static</span>Editor.registerProfilePath<span class="signature">(type, path)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 436
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Register profile type with the path you provide.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The type of the profile you want to register.</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>path</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>The path for the register type.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a href="Editor.html#.loadProfile">Editor.loadProfile</a></li>
+        </ul>
+    </dd>
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".registerProtocol">
+            
+            <span class="type-signature static">static</span>Editor.registerProtocol<span class="signature">(protocol, fn)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/protocol-init.js, line 147
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Register a protocol so that <a href="Editor.html#.url">Editor.url</a> can use it to convert an url to the filesystem path.
+The <code>fn</code> accept an url Object via <a href="https://iojs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost">url.parse</a></p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>protocol</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>fn</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>var Path = require('path');
+
+var _url2path = function ( base ) {
+    return function ( urlInfo ) {
+        if ( urlInfo.pathname ) {
+            return Path.join( base, urlInfo.host, urlInfo.pathname );
+        }
+        return Path.join( base, urlInfo.host );
+    };
+};
+
+Editor.registerProtocol('editor-framework', _url2path(Editor.frameworkPath));</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".require">
+            
+            <span class="type-signature static">static</span>Editor.require<span class="signature">(url)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/protocol-init.js, line 124
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Require module through url path</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToAll">
+            
+            <span class="type-signature static">static</span>Editor.sendToAll<span class="signature">(channel, <span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 205
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to all opened window and core via <code>channel</code> in asynchronous message.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToCore">
+            
+            <span class="type-signature static">static</span>Editor.sendToCore<span class="signature">(channel, <span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 194
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to core itself via <code>channel</code> in asynchronous message.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToMainWindow">
+            
+            <span class="type-signature static">static</span>Editor.sendToMainWindow<span class="signature">(channel, <span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 266
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to main window via <code>channel</code> in asynchronous message.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToPanel">
+            
+            <span class="type-signature static">static</span>Editor.sendToPanel<span class="signature">(panelID, channel, <span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 249
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to specific panel via <code>channel</code> in asynchronous message.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>panelID</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>Editor.sendToPanel( 'package.panel', 'ipc-foo-bar', 'arg1', 'arg2', ... );</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToWindows">
+            
+            <span class="type-signature static">static</span>Editor.sendToWindows<span class="signature">(channel, <span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 180
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to all opened windows via <code>channel</code> in asynchronous message. The <code>page-level</code>
+can handle it by listening to the channel event of the ipc module.</p>
+<p>In <code>core-level</code>:</p>
+<pre class="prettyprint source lang-javascript"><code>Editor.sendToWindows('foo:bar', 'Hello World!');</code></pre><p>In <code>page-level</code>:</p>
+<pre class="prettyprint source lang-html"><code>// index.html
+&lt;html>
+&lt;body>
+  &lt;script>
+    require('ipc').on('foo:bar', function(message) {
+      console.log(message);  // Prints &quot;Hello World!&quot;
+    });
+  &lt;/script>
+&lt;/body>
+&lt;/html></code></pre>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".sendToWindowsExclude">
+            
+            <span class="type-signature static">static</span>Editor.sendToWindowsExclude<span class="signature">(channel, <span class="optional">args</span>, excluded)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/ipc-init.js, line 142
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Send <code>args...</code> to windows except the excluded</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>channel</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>excluded</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">object</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                <p>A <a href="https://github.com/atom/electron/blob/master/docs/api/browser-window.md#class-webcontents">WebContents</a> object.</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".success">
+            
+            <span class="type-signature static">static</span>Editor.success<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 37
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the success message and show on the console
+The method will send ipc message <code>console:success</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".url">
+            
+            <span class="type-signature static">static</span>Editor.url<span class="signature">(url)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/protocol-init.js, line 103
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Convert a url by its protocol to a filesystem path. This function is useful when you try to
+get some internal file. You can use <a href="Editor.html#.registerProtocol">Editor.registerProtocol</a> to register and map your filesystem
+path to url. By default, Editor Framework register <code>editor-framework://</code> and <code>app://</code> protocol.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>url</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+        <h5>Example</h5>
+        
+
+    
+    <pre class="prettyprint"><code>// it will return "{your-app-path}/foobar/foobar.js"
+Editor.url('app://foobar/foobar.js');</code></pre>
+    
+
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".warn">
+            
+            <span class="type-signature static">static</span>Editor.warn<span class="signature">(<span class="optional">args</span>)</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 83
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Log the warnning message and show on the console,
+it also shows the call stack start from the function call it.
+The method will send ipc message <code>console:warn</code> to all windows.</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">*</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                        <span class="repeatable">repeatable</span>
+                    
+                
+                <p>whatever arguments the message needs</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".watchPackages">
+            
+            <span class="type-signature static">static</span>Editor.watchPackages<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            core/editor-init.js, line 323
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Watch packages</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Thu Jun 18 2015 14:03:05 GMT+0800 (CST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

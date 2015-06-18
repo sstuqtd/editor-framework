@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Namespace: Utils</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":false},"applicationName":"Editor (Core-Level)","footer":"Made with ♥ by <a href='http://fireball-x.com'>Fireball Team</a>","copyright":"Fireball Copyright © 2013-2015.","disqus":"","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":true};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">Editor (Core-Level)</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Editor">
+            <span class="title">
+                <a href="Editor.html">Editor</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Editor.App"><a href="Editor.html#.App">App</a></li>
+            
+                <li data-name="Editor.appHome"><a href="Editor.html#.appHome">appHome</a></li>
+            
+                <li data-name="Editor.cwd"><a href="Editor.html#.cwd">cwd</a></li>
+            
+                <li data-name="Editor.frameworkPath"><a href="Editor.html#.frameworkPath">frameworkPath</a></li>
+            
+                <li data-name="Editor.isCoreLevel"><a href="Editor.html#.isCoreLevel">isCoreLevel</a></li>
+            
+                <li data-name="Editor.isDarwin"><a href="Editor.html#.isDarwin">isDarwin</a></li>
+            
+                <li data-name="Editor.isElectron"><a href="Editor.html#.isElectron">isElectron</a></li>
+            
+                <li data-name="Editor.isNative"><a href="Editor.html#.isNative">isNative</a></li>
+            
+                <li data-name="Editor.isNode"><a href="Editor.html#.isNode">isNode</a></li>
+            
+                <li data-name="Editor.isPureWeb"><a href="Editor.html#.isPureWeb">isPureWeb</a></li>
+            
+                <li data-name="Editor.isWin32"><a href="Editor.html#.isWin32">isWin32</a></li>
+            
+                <li data-name="Editor.mainEntry"><a href="Editor.html#.mainEntry">mainEntry</a></li>
+            
+                <li data-name="Editor.name"><a href="Editor.html#.name">name</a></li>
+            
+                <li data-name="Editor.requireIpcEvent"><a href="Editor.html#.requireIpcEvent">requireIpcEvent</a></li>
+            
+                <li data-name="Editor.selfExcluded"><a href="Editor.html#.selfExcluded">selfExcluded</a></li>
+            
+                <li data-name="Editor.versions"><a href="Editor.html#.versions">versions</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.clearLog"><a href="Editor.html#.clearLog">clearLog</a></li>
+            
+                <li data-name="Editor.connectToConsole"><a href="Editor.html#.connectToConsole">connectToConsole</a></li>
+            
+                <li data-name="Editor.error"><a href="Editor.html#.error">error</a></li>
+            
+                <li data-name="Editor.failed"><a href="Editor.html#.failed">failed</a></li>
+            
+                <li data-name="Editor.fatal"><a href="Editor.html#.fatal">fatal</a></li>
+            
+                <li data-name="Editor.info"><a href="Editor.html#.info">info</a></li>
+            
+                <li data-name="Editor.KeyCode"><a href="Editor.html#.KeyCode">KeyCode</a></li>
+            
+                <li data-name="Editor.loadPackages"><a href="Editor.html#.loadPackages">loadPackages</a></li>
+            
+                <li data-name="Editor.loadProfile"><a href="Editor.html#.loadProfile">loadProfile</a></li>
+            
+                <li data-name="Editor.log"><a href="Editor.html#.log">log</a></li>
+            
+                <li data-name="Editor.quit"><a href="Editor.html#.quit">quit</a></li>
+            
+                <li data-name="Editor.registerDefaultLayout"><a href="Editor.html#.registerDefaultLayout">registerDefaultLayout</a></li>
+            
+                <li data-name="Editor.registerDefaultMainMenu"><a href="Editor.html#.registerDefaultMainMenu">registerDefaultMainMenu</a></li>
+            
+                <li data-name="Editor.registerPackagePath"><a href="Editor.html#.registerPackagePath">registerPackagePath</a></li>
+            
+                <li data-name="Editor.registerProfilePath"><a href="Editor.html#.registerProfilePath">registerProfilePath</a></li>
+            
+                <li data-name="Editor.registerProtocol"><a href="Editor.html#.registerProtocol">registerProtocol</a></li>
+            
+                <li data-name="Editor.require"><a href="Editor.html#.require">require</a></li>
+            
+                <li data-name="Editor.sendToAll"><a href="Editor.html#.sendToAll">sendToAll</a></li>
+            
+                <li data-name="Editor.sendToCore"><a href="Editor.html#.sendToCore">sendToCore</a></li>
+            
+                <li data-name="Editor.sendToMainWindow"><a href="Editor.html#.sendToMainWindow">sendToMainWindow</a></li>
+            
+                <li data-name="Editor.sendToPanel"><a href="Editor.html#.sendToPanel">sendToPanel</a></li>
+            
+                <li data-name="Editor.sendToWindows"><a href="Editor.html#.sendToWindows">sendToWindows</a></li>
+            
+                <li data-name="Editor.sendToWindowsExclude"><a href="Editor.html#.sendToWindowsExclude">sendToWindowsExclude</a></li>
+            
+                <li data-name="Editor.success"><a href="Editor.html#.success">success</a></li>
+            
+                <li data-name="Editor.url"><a href="Editor.html#.url">url</a></li>
+            
+                <li data-name="Editor.warn"><a href="Editor.html#.warn">warn</a></li>
+            
+                <li data-name="Editor.watchPackages"><a href="Editor.html#.watchPackages">watchPackages</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Debugger">
+            <span class="title">
+                <a href="Editor.Debugger.html">Editor.Debugger</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Debugger.close"><a href="Editor.Debugger.html#.close">close</a></li>
+            
+                <li data-name="Editor.Debugger.open"><a href="Editor.Debugger.html#.open">open</a></li>
+            
+                <li data-name="Editor.Debugger.toggle"><a href="Editor.Debugger.html#.toggle">toggle</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.JS">
+            <span class="title">
+                <a href="Editor.JS.html">Editor.JS</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.JS.addon"><a href="Editor.JS.html#.addon">addon</a></li>
+            
+                <li data-name="Editor.JS.clear"><a href="Editor.JS.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.JS.copyprop"><a href="Editor.JS.html#.copyprop">copyprop</a></li>
+            
+                <li data-name="Editor.JS.extend"><a href="Editor.JS.html#.extend">extend</a></li>
+            
+                <li data-name="Editor.JS.extract"><a href="Editor.JS.html#.extract">extract</a></li>
+            
+                <li data-name="Editor.JS.mixin"><a href="Editor.JS.html#.mixin">mixin</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.MainMenu">
+            <span class="title">
+                <a href="Editor.MainMenu.html">Editor.MainMenu</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.MainMenu.add"><a href="Editor.MainMenu.html#.add">add</a></li>
+            
+                <li data-name="Editor.MainMenu.apply"><a href="Editor.MainMenu.html#.apply">apply</a></li>
+            
+                <li data-name="Editor.MainMenu.remove"><a href="Editor.MainMenu.html#.remove">remove</a></li>
+            
+                <li data-name="Editor.MainMenu.reset"><a href="Editor.MainMenu.html#.reset">reset</a></li>
+            
+                <li data-name="Editor.MainMenu.set"><a href="Editor.MainMenu.html#.set">set</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Package">
+            <span class="title">
+                <a href="Editor.Package.html">Editor.Package</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Package.build"><a href="Editor.Package.html#.build">build</a></li>
+            
+                <li data-name="Editor.Package.load"><a href="Editor.Package.html#.load">load</a></li>
+            
+                <li data-name="Editor.Package.packageInfo"><a href="Editor.Package.html#.packageInfo">packageInfo</a></li>
+            
+                <li data-name="Editor.Package.packagePath"><a href="Editor.Package.html#.packagePath">packagePath</a></li>
+            
+                <li data-name="Editor.Package.panelInfo"><a href="Editor.Package.html#.panelInfo">panelInfo</a></li>
+            
+                <li data-name="Editor.Package.reload"><a href="Editor.Package.html#.reload">reload</a></li>
+            
+                <li data-name="Editor.Package.unload"><a href="Editor.Package.html#.unload">unload</a></li>
+            
+                <li data-name="Editor.Package.widgetInfo"><a href="Editor.Package.html#.widgetInfo">widgetInfo</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Panel">
+            <span class="title">
+                <a href="Editor.Panel.html">Editor.Panel</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Panel.close"><a href="Editor.Panel.html#.close">close</a></li>
+            
+                <li data-name="Editor.Panel.closeAll"><a href="Editor.Panel.html#.closeAll">closeAll</a></li>
+            
+                <li data-name="Editor.Panel.findPanels"><a href="Editor.Panel.html#.findPanels">findPanels</a></li>
+            
+                <li data-name="Editor.Panel.findWindow"><a href="Editor.Panel.html#.findWindow">findWindow</a></li>
+            
+                <li data-name="Editor.Panel.findWindows"><a href="Editor.Panel.html#.findWindows">findWindows</a></li>
+            
+                <li data-name="Editor.Panel.open"><a href="Editor.Panel.html#.open">open</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Selection">
+            <span class="title">
+                <a href="Editor.Selection.html">Editor.Selection</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Selection.cancel"><a href="Editor.Selection.html#.cancel">cancel</a></li>
+            
+                <li data-name="Editor.Selection.clear"><a href="Editor.Selection.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.Selection.confirm"><a href="Editor.Selection.html#.confirm">confirm</a></li>
+            
+                <li data-name="Editor.Selection.contexts"><a href="Editor.Selection.html#.contexts">contexts</a></li>
+            
+                <li data-name="Editor.Selection.curActivate"><a href="Editor.Selection.html#.curActivate">curActivate</a></li>
+            
+                <li data-name="Editor.Selection.curSelection"><a href="Editor.Selection.html#.curSelection">curSelection</a></li>
+            
+                <li data-name="Editor.Selection.filter"><a href="Editor.Selection.html#.filter">filter</a></li>
+            
+                <li data-name="Editor.Selection.hover"><a href="Editor.Selection.html#.hover">hover</a></li>
+            
+                <li data-name="Editor.Selection.hovering"><a href="Editor.Selection.html#.hovering">hovering</a></li>
+            
+                <li data-name="Editor.Selection.select"><a href="Editor.Selection.html#.select">select</a></li>
+            
+                <li data-name="Editor.Selection.setContext"><a href="Editor.Selection.html#.setContext">setContext</a></li>
+            
+                <li data-name="Editor.Selection.unselect"><a href="Editor.Selection.html#.unselect">unselect</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Utils">
+            <span class="title">
+                <a href="Editor.Utils.html">Editor.Utils</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Utils.formatFrame"><a href="Editor.Utils.html#.formatFrame">formatFrame</a></li>
+            
+                <li data-name="Editor.Utils.padLeft"><a href="Editor.Utils.html#.padLeft">padLeft</a></li>
+            
+                <li data-name="Editor.Utils.smoothScale"><a href="Editor.Utils.html#.smoothScale">smoothScale</a></li>
+            
+                <li data-name="Editor.Utils.wrapError"><a href="Editor.Utils.html#.wrapError">wrapError</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Math">
+            <span class="title">
+                <a href="Math.html">Math</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Math.D2R"><a href="Math.html#.D2R">D2R</a></li>
+            
+                <li data-name="Math.HALF_PI"><a href="Math.html#.HALF_PI">HALF_PI</a></li>
+            
+                <li data-name="Math.R2D"><a href="Math.html#.R2D">R2D</a></li>
+            
+                <li data-name="Math.TWO_PI"><a href="Math.html#.TWO_PI">TWO_PI</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Math.calculateMaxRect"><a href="Math.html#.calculateMaxRect">calculateMaxRect</a></li>
+            
+                <li data-name="Math.clamp"><a href="Math.html#.clamp">clamp</a></li>
+            
+                <li data-name="Math.clamp01"><a href="Math.html#.clamp01">clamp01</a></li>
+            
+                <li data-name="Math.deg2rad"><a href="Math.html#.deg2rad">deg2rad</a></li>
+            
+                <li data-name="Math.deg180"><a href="Math.html#.deg180">deg180</a></li>
+            
+                <li data-name="Math.deg360"><a href="Math.html#.deg360">deg360</a></li>
+            
+                <li data-name="Math.lerp"><a href="Math.html#.lerp">lerp</a></li>
+            
+                <li data-name="Math.rad2deg"><a href="Math.html#.rad2deg">rad2deg</a></li>
+            
+                <li data-name="Math.rad180"><a href="Math.html#.rad180">rad180</a></li>
+            
+                <li data-name="Math.rad360"><a href="Math.html#.rad360">rad360</a></li>
+            
+                <li data-name="Math.randomRange"><a href="Math.html#.randomRange">randomRange</a></li>
+            
+                <li data-name="Math.randomRangeInt"><a href="Math.html#.randomRangeInt">randomRangeInt</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.IpcListener">
+            <span class="title">
+                <a href="Editor.IpcListener.html">Editor.IpcListener</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.IpcListener#clear"><a href="Editor.IpcListener.html#clear">clear</a></li>
+            
+                <li data-name="Editor.IpcListener#on"><a href="Editor.IpcListener.html#on">on</a></li>
+            
+                <li data-name="Editor.IpcListener#once"><a href="Editor.IpcListener.html#once">once</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Menu">
+            <span class="title">
+                <a href="Editor.Menu.html">Editor.Menu</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Menu.parseTemplate"><a href="Editor.Menu.html#.parseTemplate">parseTemplate</a></li>
+            
+                <li data-name="Editor.Menu#add"><a href="Editor.Menu.html#add">add</a></li>
+            
+                <li data-name="Editor.Menu#clear"><a href="Editor.Menu.html#clear">clear</a></li>
+            
+                <li data-name="Editor.Menu#dispose"><a href="Editor.Menu.html#dispose">dispose</a></li>
+            
+                <li data-name="Editor.Menu#remove"><a href="Editor.Menu.html#remove">remove</a></li>
+            
+                <li data-name="Editor.Menu#reset"><a href="Editor.Menu.html#reset">reset</a></li>
+            
+                <li data-name="Editor.Menu#set"><a href="Editor.Menu.html#set">set</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Window">
+            <span class="title">
+                <a href="Editor.Window.html">Editor.Window</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Editor.Window.windows"><a href="Editor.Window.html#.windows">windows</a></li>
+            
+                <li data-name="Editor.Window#isFocused"><a href="Editor.Window.html#isFocused">isFocused</a></li>
+            
+                <li data-name="Editor.Window#isLoaded"><a href="Editor.Window.html#isLoaded">isLoaded</a></li>
+            
+                <li data-name="Editor.Window#isMainWindow"><a href="Editor.Window.html#isMainWindow">isMainWindow</a></li>
+            
+                <li data-name="Editor.Window#isMinimized"><a href="Editor.Window.html#isMinimized">isMinimized</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Window.addWindow"><a href="Editor.Window.html#.addWindow">addWindow</a></li>
+            
+                <li data-name="Editor.Window.commitWindowStates"><a href="Editor.Window.html#.commitWindowStates">commitWindowStates</a></li>
+            
+                <li data-name="Editor.Window.find"><a href="Editor.Window.html#.find">find</a></li>
+            
+                <li data-name="Editor.Window.removeWindow"><a href="Editor.Window.html#.removeWindow">removeWindow</a></li>
+            
+                <li data-name="Editor.Window.saveWindowStates"><a href="Editor.Window.html#.saveWindowStates">saveWindowStates</a></li>
+            
+                <li data-name="Editor.Window#adjust"><a href="Editor.Window.html#adjust">adjust</a></li>
+            
+                <li data-name="Editor.Window#cancelRequestToPage"><a href="Editor.Window.html#cancelRequestToPage">cancelRequestToPage</a></li>
+            
+                <li data-name="Editor.Window#close"><a href="Editor.Window.html#close">close</a></li>
+            
+                <li data-name="Editor.Window#commitWindowState"><a href="Editor.Window.html#commitWindowState">commitWindowState</a></li>
+            
+                <li data-name="Editor.Window#dispose"><a href="Editor.Window.html#dispose">dispose</a></li>
+            
+                <li data-name="Editor.Window#focus"><a href="Editor.Window.html#focus">focus</a></li>
+            
+                <li data-name="Editor.Window#load"><a href="Editor.Window.html#load">load</a></li>
+            
+                <li data-name="Editor.Window#minimize"><a href="Editor.Window.html#minimize">minimize</a></li>
+            
+                <li data-name="Editor.Window#openDevTools"><a href="Editor.Window.html#openDevTools">openDevTools</a></li>
+            
+                <li data-name="Editor.Window#restore"><a href="Editor.Window.html#restore">restore</a></li>
+            
+                <li data-name="Editor.Window#restorePositionAndSize"><a href="Editor.Window.html#restorePositionAndSize">restorePositionAndSize</a></li>
+            
+                <li data-name="Editor.Window#sendRequestToPage"><a href="Editor.Window.html#sendRequestToPage">sendRequestToPage</a></li>
+            
+                <li data-name="Editor.Window#sendToPage"><a href="Editor.Window.html#sendToPage">sendToPage</a></li>
+            
+                <li data-name="Editor.Window#show"><a href="Editor.Window.html#show">show</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="Editor.Utils.html">Namespace: Utils</h1>
+        
+
+
+
+<section>
+    
+<header>
+    <h2>
+        <span class="ancestors"><a href="Editor.html">Editor</a>.</span>
+    
+    Utils
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+        
+        
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+        
+        
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".formatFrame">
+            
+            <span class="type-signature static">static</span>Editor.Utils.formatFrame<span class="signature">(frame, frameRate)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{string}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            share/editor-utils.js, line 23
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>frame</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>frameRate</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".padLeft">
+            
+            <span class="type-signature static">static</span>Editor.Utils.padLeft<span class="signature">(text, width, ch)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{string}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            share/editor-utils.js, line 6
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>text</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>ch</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                <p>the character used to pad</p></td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".smoothScale">
+            
+            <span class="type-signature static">static</span>Editor.Utils.smoothScale<span class="signature">(curScale, delta)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{number}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            share/editor-utils.js, line 42
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>curScale</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>delta</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
+        <h4 class="name" id=".wrapError">
+            
+            <span class="type-signature static">static</span>Editor.Utils.wrapError<span class="signature">()</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            share/editor-utils.js, line 55
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>Wrap error so that it can be sent between core and page level</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Thu Jun 18 2015 14:03:05 GMT+0800 (CST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

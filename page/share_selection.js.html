@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: share/selection.js</title>
+    
+    
+    
+    
+    
+    <meta property="og:title" content=""/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content=""/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true},"applicationName":"Editor (Page-Level)","footer":"Made with ♥ by <a href='http://fireball-x.com'>Fireball Team</a>","copyright":"Fireball Copyright © 2013-2015.","disqus":"","googleAnalytics":"","openGraph":{"title":"","type":"website","image":"","site_name":"","url":""},"meta":{"title":"","description":"","keyword":""},"linenums":true};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html">Editor (Page-Level)</a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Editor.JS">
+            <span class="title">
+                <a href="Editor.JS.html">Editor.JS</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.JS.addon"><a href="Editor.JS.html#.addon">addon</a></li>
+            
+                <li data-name="Editor.JS.clear"><a href="Editor.JS.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.JS.copyprop"><a href="Editor.JS.html#.copyprop">copyprop</a></li>
+            
+                <li data-name="Editor.JS.extend"><a href="Editor.JS.html#.extend">extend</a></li>
+            
+                <li data-name="Editor.JS.extract"><a href="Editor.JS.html#.extract">extract</a></li>
+            
+                <li data-name="Editor.JS.mixin"><a href="Editor.JS.html#.mixin">mixin</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Selection">
+            <span class="title">
+                <a href="Editor.Selection.html">Editor.Selection</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Selection.cancel"><a href="Editor.Selection.html#.cancel">cancel</a></li>
+            
+                <li data-name="Editor.Selection.clear"><a href="Editor.Selection.html#.clear">clear</a></li>
+            
+                <li data-name="Editor.Selection.confirm"><a href="Editor.Selection.html#.confirm">confirm</a></li>
+            
+                <li data-name="Editor.Selection.contexts"><a href="Editor.Selection.html#.contexts">contexts</a></li>
+            
+                <li data-name="Editor.Selection.curActivate"><a href="Editor.Selection.html#.curActivate">curActivate</a></li>
+            
+                <li data-name="Editor.Selection.curSelection"><a href="Editor.Selection.html#.curSelection">curSelection</a></li>
+            
+                <li data-name="Editor.Selection.filter"><a href="Editor.Selection.html#.filter">filter</a></li>
+            
+                <li data-name="Editor.Selection.hover"><a href="Editor.Selection.html#.hover">hover</a></li>
+            
+                <li data-name="Editor.Selection.hovering"><a href="Editor.Selection.html#.hovering">hovering</a></li>
+            
+                <li data-name="Editor.Selection.select"><a href="Editor.Selection.html#.select">select</a></li>
+            
+                <li data-name="Editor.Selection.setContext"><a href="Editor.Selection.html#.setContext">setContext</a></li>
+            
+                <li data-name="Editor.Selection.unselect"><a href="Editor.Selection.html#.unselect">unselect</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.Utils">
+            <span class="title">
+                <a href="Editor.Utils.html">Editor.Utils</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.Utils.formatFrame"><a href="Editor.Utils.html#.formatFrame">formatFrame</a></li>
+            
+                <li data-name="Editor.Utils.padLeft"><a href="Editor.Utils.html#.padLeft">padLeft</a></li>
+            
+                <li data-name="Editor.Utils.smoothScale"><a href="Editor.Utils.html#.smoothScale">smoothScale</a></li>
+            
+                <li data-name="Editor.Utils.wrapError"><a href="Editor.Utils.html#.wrapError">wrapError</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Math">
+            <span class="title">
+                <a href="Math.html">Math</a>
+                
+                <span class="static">static</span>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Math.D2R"><a href="Math.html#.D2R">D2R</a></li>
+            
+                <li data-name="Math.HALF_PI"><a href="Math.html#.HALF_PI">HALF_PI</a></li>
+            
+                <li data-name="Math.R2D"><a href="Math.html#.R2D">R2D</a></li>
+            
+                <li data-name="Math.TWO_PI"><a href="Math.html#.TWO_PI">TWO_PI</a></li>
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Math.calculateMaxRect"><a href="Math.html#.calculateMaxRect">calculateMaxRect</a></li>
+            
+                <li data-name="Math.clamp"><a href="Math.html#.clamp">clamp</a></li>
+            
+                <li data-name="Math.clamp01"><a href="Math.html#.clamp01">clamp01</a></li>
+            
+                <li data-name="Math.deg2rad"><a href="Math.html#.deg2rad">deg2rad</a></li>
+            
+                <li data-name="Math.deg180"><a href="Math.html#.deg180">deg180</a></li>
+            
+                <li data-name="Math.deg360"><a href="Math.html#.deg360">deg360</a></li>
+            
+                <li data-name="Math.lerp"><a href="Math.html#.lerp">lerp</a></li>
+            
+                <li data-name="Math.rad2deg"><a href="Math.html#.rad2deg">rad2deg</a></li>
+            
+                <li data-name="Math.rad180"><a href="Math.html#.rad180">rad180</a></li>
+            
+                <li data-name="Math.rad360"><a href="Math.html#.rad360">rad360</a></li>
+            
+                <li data-name="Math.randomRange"><a href="Math.html#.randomRange">randomRange</a></li>
+            
+                <li data-name="Math.randomRangeInt"><a href="Math.html#.randomRangeInt">randomRangeInt</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Editor.IpcListener">
+            <span class="title">
+                <a href="Editor.IpcListener.html">Editor.IpcListener</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Editor.IpcListener#clear"><a href="Editor.IpcListener.html#clear">clear</a></li>
+            
+                <li data-name="Editor.IpcListener#on"><a href="Editor.IpcListener.html#on">on</a></li>
+            
+                <li data-name="Editor.IpcListener#once"><a href="Editor.IpcListener.html#once">once</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="share_selection.js.html">Source: share/selection.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var Ipc = require('ipc');
+
+var _lastActiveUnit = null;
+var _units = {};
+
+// SelectionUnit
+
+function SelectionUnit(type) {
+    this.type = type;
+    this.selection = [];
+    this.lastActive = null;
+    this.lastHover = null;
+    this._context = null; // NOTE: it is better to use lastHover, but some platform have bug with lastHover
+
+    this.ipc_selected = 'selection:selected';       // argument is an array of ids
+    this.ipc_unselected = 'selection:unselected';   // argument is an array of ids
+    this.ipc_activated = 'selection:activated';     // argument is an id
+    this.ipc_deactivated = 'selection:deactivated'; // argument is an id
+    this.ipc_hoverin = 'selection:hoverin';         // argument is an id
+    this.ipc_hoverout = 'selection:hoverout';       // argument is an id
+    this.ipc_changed = 'selection:changed';
+}
+
+SelectionUnit.prototype._activate = function (id) {
+    if (this.lastActive !== id) {
+        if (this.lastActive) {
+            Editor.sendToAll( this.ipc_deactivated, this.type, this.lastActive );
+        }
+        this.lastActive = id;
+        Editor.sendToAll( this.ipc_activated, this.type, id );
+        _lastActiveUnit = this;
+    }
+};
+
+SelectionUnit.prototype._unselectOthers = function (id) {
+    var changed = false;
+
+    if (Array.isArray(id)) {
+        var unselected = [];
+        for (var j = this.selection.length - 1; j >= 0; j--) {
+            var selected = this.selection[j];
+            if (id.indexOf(selected) === -1) {
+                this.selection.splice(j, 1);
+                unselected.push(selected);
+            }
+        }
+        if (unselected.length > 0) {
+            Editor.sendToAll(this.ipc_unselected, this.type, unselected);
+            changed = true;
+        }
+    }
+    else {
+        var index = this.selection.indexOf(id);
+        if (index !== -1) {
+            this.selection.splice(index, 1);
+            if (this.selection.length > 0) {
+                Editor.sendToAll(this.ipc_unselected, this.type, this.selection);
+                changed = true;
+            }
+            this.selection = [id];
+        }
+        else {
+            if (this.selection.length > 0) {
+                Editor.sendToAll(this.ipc_unselected, this.type, this.selection);
+                changed = true;
+            }
+            this.selection.length = 0;
+        }
+    }
+
+    return changed;
+};
+
+SelectionUnit.prototype.select = function (id, unselectOthers) {
+    var changed = false;
+
+    if (unselectOthers) {
+        changed = this._unselectOthers(id);
+    }
+
+    if ( !Array.isArray(id) ) {
+        // single
+        if (this.selection.indexOf(id) === -1) {
+            this.selection.push(id);
+            Editor.sendToAll(this.ipc_selected, this.type, [id]);
+            changed = true;
+        }
+        this._activate(id);
+    }
+    else if (id.length > 0) {
+        // array
+        var diff = [];
+        for (var i = 0; i &lt; id.length; i++) {
+            if (this.selection.indexOf(id[i]) === -1) {
+                this.selection.push(id[i]);
+                diff.push(id[i]);
+            }
+        }
+        if (diff.length > 0) {
+            Editor.sendToAll(this.ipc_selected, this.type, diff);
+            changed = true;
+        }
+        this._activate(id[id.length - 1]);
+    }
+
+    if ( changed )
+        Editor.sendToAll(this.ipc_changed, this.type);
+};
+
+SelectionUnit.prototype.unselect = function (id) {
+    var changed = false;
+    var unselectActiveObj = false;
+
+    if ( !Array.isArray(id) ) {
+        // single
+        var index = this.selection.indexOf(id);
+        if (index !== -1) {
+            this.selection.splice(index, 1);
+            Editor.sendToAll(this.ipc_unselected, this.type, [id]);
+            unselectActiveObj = (id === this.lastActive);
+            changed = true;
+        }
+    }
+    else if (id.length > 0) {
+        // array
+        var diff = [];
+        for (var i = 0; i &lt; id.length; i++) {
+            var index2 = this.selection.indexOf(id[i]);
+            if (index2 !== -1) {
+                this.selection.splice(index2, 1);
+                diff.push(id[i]);
+                unselectActiveObj = unselectActiveObj || (id[i] === this.lastActive);
+            }
+        }
+        if (diff.length > 0) {
+            Editor.sendToAll(this.ipc_unselected, this.type, diff);
+            changed = true;
+        }
+    }
+
+    if (unselectActiveObj) {
+        // activate another
+        if (this.selection.length > 0) {
+            this._activate(this.selection[this.selection.length - 1]);
+        }
+        else {
+            this._activate('');
+        }
+    }
+
+    if ( changed )
+        Editor.sendToAll(this.ipc_changed, this.type);
+};
+
+SelectionUnit.prototype.hover = function (id) {
+    if ( this.lastHover !== id ) {
+        if ( this.lastHover ) {
+            Editor.sendToAll(this.ipc_hoverout, this.type, this.lastHover);
+        }
+        this.lastHover = id;
+        if ( id ) {
+            Editor.sendToAll(this.ipc_hoverin, this.type, id);
+        }
+    }
+};
+
+SelectionUnit.prototype.setContext = function (id) {
+    this._context = id;
+};
+
+/**
+ * @property {string[]} contexts - (Read Only)
+ */
+Object.defineProperty(SelectionUnit.prototype, 'contexts', {
+    get: function () {
+        var id = this._context;
+        if (id) {
+            var index = this.selection.indexOf(id);
+            if (index !== -1) {
+                var selection = this.selection.slice(0);
+                // make the first one as current active
+                var firstToSwap = selection[0];
+                selection[0] = id;
+                selection[index] = firstToSwap;
+                return selection;
+            }
+            else {
+                return [id];
+            }
+        }
+        else {
+            return [];
+        }
+    },
+    enumerable: true
+});
+
+SelectionUnit.prototype.clear = function () {
+    Editor.sendToAll(this.ipc_unselected, this.type, this.selection);
+    this.selection.length = 0;
+    this._activate('');
+
+    Editor.sendToAll(this.ipc_changed, this.type);
+};
+
+// ConfirmableSelectionUnit
+
+var $super = SelectionUnit;
+function ConfirmableSelectionUnit (type) {
+    SelectionUnit.call(this, type);
+
+    this.confirmed = true;
+    this._confirmedSnapShot = []; // for cancel
+}
+Editor.JS.extend(ConfirmableSelectionUnit, $super);
+
+ConfirmableSelectionUnit.prototype._activate = function (id) {
+    if ( this.confirmed ) {
+        $super.prototype._activate.call( this, id );
+    }
+};
+
+function _checkConfirm (confirm) {
+    if ( !this.confirmed &amp;&amp; confirm ) {
+        // confirm selecting
+        this.confirm();
+    }
+    else if ( this.confirmed &amp;&amp; !confirm ) {
+        // take snapshot
+        this._confirmedSnapShot = this.selection.slice();
+        this.confirmed = false;
+    }
+}
+
+ConfirmableSelectionUnit.prototype.select = function (id, unselectOthers, confirm) {
+    _checkConfirm.call(this, confirm);
+    $super.prototype.select.call(this, id, unselectOthers);
+};
+
+ConfirmableSelectionUnit.prototype.unselect = function (id, confirm) {
+    _checkConfirm.call(this, confirm);
+    $super.prototype.unselect.call(this, id);
+};
+
+ConfirmableSelectionUnit.prototype.confirm = function () {
+    if ( !this.confirmed ) {
+        this._confirmedSnapShot.length = 0;
+        this.confirmed = true;
+        this._activate(this.selection[this.selection.length - 1]);
+    }
+};
+
+ConfirmableSelectionUnit.prototype.cancel = function () {
+    if ( !this.confirmed ) {
+        $super.prototype.select.call(this, this._confirmedSnapShot, true);
+        this._confirmedSnapShot.length = 0;
+        this.confirmed = true;
+    }
+};
+
+/**
+ * Selection module
+ * @namespace Editor.Selection
+ */
+var Selection = {
+    register: function ( type ) {
+        if ( !Editor.isCoreLevel ) {
+            Editor.warn('Editor.Selection.register can only be called in core level.');
+            return;
+        }
+
+        if ( _units[type] )
+            return;
+
+        _units[type] = new ConfirmableSelectionUnit(type);
+    },
+
+    /**
+     * Confirms all current selecting objects, no matter which type they are.
+     * This operation may trigger deactivated and activated events.
+     * @memberof Editor.Selection
+     */
+    confirm: function () {
+        for ( var p in _units ) {
+            _units[p].confirm();
+        }
+    },
+
+    /**
+     * Cancels all current selecting objects, no matter which type they are.
+     * This operation may trigger selected and unselected events.
+     * @memberof Editor.Selection
+     */
+    cancel: function () {
+        for ( var p in _units ) {
+            _units[p].cancel();
+        }
+    },
+
+    /**
+     * if confirm === false, it means you are in rect selecting state, but have not confirmed yet.
+     * in this state, the `selected` messages will be broadcasted, but the `activated` messages will not.
+     * after that, if you confirm the selection, `activated` message will be sent, otherwise `unselected` message will be sent.
+     * if confirm === true, the activated will be sent in the same time.
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @param {(string|string[])} id
+     * @param {boolean} [unselectOthers=true]
+     * @param {boolean} [confirm=true]
+     */
+    select: function ( type, id, unselectOthers, confirm ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        if ( typeof id !== 'string' &amp;&amp; ! Array.isArray(id) ) {
+            Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
+            return;
+        }
+
+        unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
+        confirm = confirm !== undefined ? confirm : true;
+        selectionUnit.select(id, unselectOthers, confirm);
+
+        if ( _lastActiveUnit !== selectionUnit &amp;&amp;
+             selectionUnit.confirmed &amp;&amp;
+             selectionUnit.lastActive ) {
+            _lastActiveUnit = selectionUnit;
+
+            Editor.sendToAll('selection:activated', type, selectionUnit.lastActive);
+        }
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @param {(string|string[])} id
+     * @param {boolean} [confirm=true]
+     */
+    unselect: function (type, id, confirm) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        if ( typeof id !== 'string' &amp;&amp; ! Array.isArray(id) ) {
+            Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
+            return;
+        }
+
+        confirm = confirm !== undefined ? confirm : true;
+        selectionUnit.unselect(id, confirm);
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @param {string} id
+     */
+    hover: function ( type, id ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        selectionUnit.hover(id);
+    },
+
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @param {string} id
+     */
+    setContext: function ( type, id ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        selectionUnit.setContext(id);
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     */
+    clear: function ( type ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        selectionUnit.clear();
+        selectionUnit.confirm();
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @return {string} hovering
+     */
+    hovering: function ( type ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return null;
+        }
+
+        return selectionUnit.lastHover;
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @return {string} contexts
+     */
+    contexts: function ( type ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return null;
+        }
+
+        return selectionUnit.contexts;
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @return {string} current activated
+     */
+    curActivate: function ( type ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return null;
+        }
+
+        return selectionUnit.lastActive;
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string} type
+     * @return {string[]} selected list
+     */
+    curSelection: function ( type ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return null;
+        }
+
+        return selectionUnit.selection.slice();
+    },
+
+    /**
+     * @memberof Editor.Selection
+     * @param {string[]} items - an array of ids
+     * @param {string} mode - ['top-level', 'deep', 'name']
+     * @param {function} func
+     */
+    filter: function ( items, mode, func ) {
+        var results, item, i, j;
+
+        if ( mode === 'name' ) {
+            results = items.filter(func);
+        }
+        else {
+            results = [];
+            for ( i = 0; i &lt; items.length; ++i ) {
+                item = items[i];
+                var add = true;
+
+                for ( j = 0; j &lt; results.length; ++j ) {
+                    var addedItem = results[j];
+
+                    if ( item === addedItem ) {
+                        // existed
+                        add = false;
+                        break;
+                    }
+
+                    var cmp = func( addedItem, item );
+                    if ( cmp > 0 ) {
+                        add = false;
+                        break;
+                    }
+                    else if ( cmp &lt; 0 ) {
+                        results.splice(j, 1);
+                        --j;
+                    }
+                }
+
+                if ( add ) {
+                    results.push(item);
+                }
+            }
+        }
+
+        return results;
+    },
+
+    local: function () {
+        // TODO: return a local selection wrap Editor.Selection functions
+    }
+};
+
+module.exports = Selection;
+
+// ==========================
+// Ipc
+// ==========================
+
+// recv ipc message and update the local data
+
+Ipc.on( 'selection:selected', function ( type, ids ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    // NOTE: it is possible we recv messages from ourself
+    ids = ids.filter(function (x) {
+        return selectionUnit.selection.indexOf(x) === -1;
+    });
+
+    // NOTE: we don't consider message from multiple source, in that case
+    //       even the data was right, the messages still goes wrong.
+    if (ids.length === 1) {
+        selectionUnit.selection.push(ids[0]);
+    }
+    else if (ids.length > 1) {
+        // NOTE: push.apply has limitation in item counts
+        selectionUnit.selection = selectionUnit.selection.concat(ids);
+    }
+});
+
+Ipc.on( 'selection:unselected', function ( type, ids ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    selectionUnit.selection = selectionUnit.selection.filter( function (x) {
+        return ids.indexOf(x) === -1;
+    });
+});
+
+Ipc.on( 'selection:activated', function ( type, id ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    selectionUnit.lastActive = id;
+});
+
+Ipc.on( 'selection:hoverin', function ( type, id ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    selectionUnit.lastHover = id;
+});
+
+Ipc.on( 'selection:hoverout', function ( type, id ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    selectionUnit.lastHover = null;
+});
+
+// ==========================
+// init
+// ==========================
+
+if ( Editor.isCoreLevel ) {
+    Ipc.on( 'selection:get-registers', function ( event ) {
+        results = [];
+        for ( var key in _units ) {
+            var selectionUnit = _units[key];
+            results.push({
+                type: key,
+                selection: selectionUnit.selection,
+                lastActive: selectionUnit.lastActive,
+                lastHover: selectionUnit.lastHover,
+                context: selectionUnit._context,
+            });
+        }
+        event.returnValue = results;
+    });
+}
+
+if ( Editor.isPageLevel ) {
+    (function () {
+        var results = Editor.sendToCoreSync('selection:get-registers');
+        for ( var i = 0; i &lt; results.length; ++i ) {
+            var info = results[i];
+            if ( _units[info.type] )
+                return;
+
+            var selectionUnit = new ConfirmableSelectionUnit(info.type);
+            selectionUnit.selection = info.selection.slice();
+            selectionUnit.lastActive = info.lastActive;
+            selectionUnit.lastHover = info.lastHover;
+            selectionUnit._context = info.context;
+
+            _units[info.type] = selectionUnit;
+        }
+    })();
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0</a> on Thu Jun 18 2015 14:04:04 GMT+0800 (CST)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>
