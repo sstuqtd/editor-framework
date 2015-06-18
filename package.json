@@ -52,6 +52,10 @@
     "jshint-stylish": "2.0.0",
     "vulcanize": "1.8.1"
   },
+  "shared-packages": {
+      "benchmark",
+      "package-examples"
+  }
   "fire-shell-version": "0.24.0",
   "electron-version": "0.28.1",
   "main": "demo.js"

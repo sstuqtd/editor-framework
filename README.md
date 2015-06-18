@@ -35,6 +35,9 @@ gulp update-electron
 # Install builtin packages
 sh utils/install-builtin.sh
 
+# Install shared packages
+gulp install-shared-packages
+
 # run the demo app
 sh demo.sh
 ```
@@ -129,4 +132,3 @@ npm run api-page # for page-level docs
 ## License
 
 MIT
-
