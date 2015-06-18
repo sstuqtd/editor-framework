@@ -188,8 +188,12 @@ function Spec(runner) {
     Ipc.on('runner:suite', function ( event, suite ) { _onSuite(suite); });
     Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
     Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
-    Ipc.on('runner:pass', function ( event, test ) { _onPass(test); });
+    Ipc.on('runner:pass', function ( event, test ) {
+        stats.passes++;
+        _onPass(test);
+    });
     Ipc.on('runner:fail', function ( event, test, err ) {
+        stats.failures++;
         cursor.CR();
         var fmt = indent() +
             color('fail', '  ' + Base.symbols.err) +
