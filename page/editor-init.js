@@ -267,12 +267,16 @@ Ipc.on( 'ipc-debugger:query', function ( reply ) {
 // ==========================
 
 Editor.registerPanel = function ( panelID, obj ) {
-    if ( window[panelID] !== undefined ) {
+    if ( !window.panels ) {
+        window.panels = {};
+    }
+
+    if ( window.panels[panelID] !== undefined ) {
         Editor.error('Failed to register panel %s, panelID has been registered.', panelID);
         return;
     }
 
-    window[panelID] = Polymer(obj);
+    window.panels[panelID] = Polymer(obj);
 };
 
 Editor.registerWidget = function ( widgetName, obj ) {

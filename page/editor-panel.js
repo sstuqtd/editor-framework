@@ -130,7 +130,7 @@ Panel.load = function ( panelID, cb ) {
         var framePath = Path.join( panelInfo.path, panelInfo.frame );
 
         Panel.import(framePath, function () {
-            var frameCtor = window[panelID];
+            var frameCtor = window.panels[panelID];
             if ( !frameCtor ) {
                 Editor.error('Panel import faield. Can not find constructor %s', panelInfo.ctor );
                 cb ( new Error( 'Constructor ' + panelInfo.ctor + ' not found' ) );
