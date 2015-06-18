@@ -388,12 +388,5 @@
     //     return obj;
     // };
 
-    EditorUI.update = function ( element, name ) {
-        var prop = element[name];
-        if ( Array.isArray(prop) ) {
-            element.set( name, prop.slice(0) );
-        }
-    };
-
     return EditorUI;
 })();
