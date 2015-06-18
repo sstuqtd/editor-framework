@@ -24,6 +24,8 @@ bin/
 ext/
 builtin/
 api/
+benchmark/
+package-examples/
 
 # webstorm
 .idea

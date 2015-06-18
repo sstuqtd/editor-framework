@@ -18,7 +18,7 @@ global.__app = {
 
         // TODO: load your profile, and disable packages here
 
-        Editor.registerPackagePath( Editor.url('app://demo/') );
+        Editor.registerPackagePath( Editor.url('app://package-examples/') );
         Editor.registerPackagePath( Editor.url('app://benchmark/') );
 
         if ( cb ) cb ();
@@ -42,7 +42,7 @@ global.__app = {
         mainWin.show();
 
         // page-level test case
-        mainWin.load( 'app://demo/index.html' );
+        mainWin.load( 'app://package-examples/index.html' );
 
         // open dev tools if needed
         if ( Editor.showDevtools ) {
@@ -96,4 +96,3 @@ global.__app = {
 };
 
 require('./init');
-
