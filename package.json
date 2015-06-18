@@ -65,6 +65,6 @@
         "pixi-grid"
     ],
     "fire-shell-version": "0.24.0",
-    "electron-version": "0.28.1",
+    "electron-version": "0.28.2",
     "main": "demo.js"
 }
