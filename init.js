@@ -358,10 +358,10 @@ App.on('will-finish-launching', function() {
 
 //
 App.on('ready', function() {
-    Winston.normal( 'Initializing protocol' );
+    Winston.normal( 'Initializing Protocol' );
     require('./core/protocol-init');
 
-    Winston.normal( 'Initializing editor' );
+    Winston.normal( 'Initializing Editor' );
     require('./core/editor-init');
 
     if ( Commander.test || Commander.testFull) {
