@@ -33,7 +33,7 @@ bower install
 gulp update-electron
 
 # Install builtin packages
-sh utils/install-builtin.sh
+gulp install-builtin
 
 # Install shared packages
 gulp install-shared-packages

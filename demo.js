@@ -42,7 +42,7 @@ global.__app = {
         mainWin.show();
 
         // page-level test case
-        mainWin.load( 'app://demo/index.html' );
+        mainWin.load( 'app://package-examples/index.html' );
 
         // open dev tools if needed
         if ( Editor.showDevtools ) {
