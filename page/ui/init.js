@@ -93,6 +93,17 @@
         return 0;
     };
 
+    EditorUI.isSelfOrAncient = function ( element, ancientEL ) {
+        var parent = element;
+        while ( parent ) {
+            if ( parent === ancientEL )
+                return true;
+
+            parent = Polymer.dom(parent).parentNode;
+        }
+        return false;
+    };
+
     //
     EditorUI.getFirstFocusableChild = function ( element ) {
         if ( element.tabIndex !== null && element.tabIndex !== undefined ) {
