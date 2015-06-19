@@ -267,29 +267,29 @@ Ipc.on( 'ipc-debugger:query', function ( reply ) {
 // ==========================
 
 Editor.registerPanel = function ( panelID, obj ) {
-    if ( !window.panels ) {
-        window.panels = {};
+    if ( !Editor.panels ) {
+        Editor.panels = {};
     }
 
-    if ( window.panels[panelID] !== undefined ) {
+    if ( Editor.panels[panelID] !== undefined ) {
         Editor.error('Failed to register panel %s, panelID has been registered.', panelID);
         return;
     }
 
-    window.panels[panelID] = Polymer(obj);
+    Editor.panels[panelID] = Polymer(obj);
 };
 
 Editor.registerWidget = function ( widgetName, obj ) {
-    if ( !window.widgets ) {
-        window.widgets = {};
+    if ( !Editor.widgets ) {
+        Editor.widgets = {};
     }
 
-    if ( window.widgets[widgetName] ) {
+    if ( Editor.widgets[widgetName] ) {
         Editor.error('Failed to register widget %s, already exists.', widgetName );
         return;
     }
 
-    window.widgets[widgetName] = Polymer(obj);
+    Editor.widgets[widgetName] = Polymer(obj);
 };
 
 // ==========================
