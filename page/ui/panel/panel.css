@@ -7,8 +7,6 @@
     align-items: stretch;
     flex-direction: column;
 
-    white-space: nowrap;
-
     color: #ddd;
     cursor: default;
 }

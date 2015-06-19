@@ -324,7 +324,9 @@ Editor.watchPackages = function ( cb ) {
     var src = [];
     for ( i = 0; i < Editor._packagePathList.length; ++i ) {
         var packagePath = Editor._packagePathList[i];
-        src.push( packagePath );
+        if ( Fs.existsSync(packagePath) ) {
+            src.push( packagePath );
+        }
     }
     _packageWatcher = Chokidar.watch(src, {
         ignored: [/[\/\\]\./, /[\/\\]bin/],
