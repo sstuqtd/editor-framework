@@ -11,7 +11,7 @@
 Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and io.js.
 
 The framework is based on top of [Electron](http://github.com/atom/electron) and [Polymer](http://github.com/polymer/polymer).
-It is designed conforming to Electron's main and renderer process architecture.
+It is designed conforming to Electron's [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple window communicate easily, Editor Framework extends Electron's Ipc message API, making it easier to send and receive callback between main and renderer processes.
 
 It is designed for fully extendibility. In the core-level ( main process ), we fulfill this by introducing a package management module and several register API. User can load or unload packages on the fly without close or restart the app. In the page-level ( renderer process ), we use HTML5 Web-Component standards and include the Polymer solution by default. User can extends the
