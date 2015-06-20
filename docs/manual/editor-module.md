@@ -20,7 +20,7 @@ Due to the complicated situation of current working directory between core-level
   - `editor-framework://`: Map to the editor framework module path.
   - `app://`: Map to the root path of your app.
   - `packages://{package-name}`: Map to the `{package-name}` path.
-  - `widgets://{widget-name}`: Map to the `{widget-name}` path.
+  - `packages://{package-name}/widget`: Map to a widget path.
 
 If you know exactly how to reference a resource in your script, you can use absolute path or relative path as well.
 
