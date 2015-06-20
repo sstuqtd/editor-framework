@@ -1,4 +1,4 @@
-# Register Your Panels
+# Create Panels
 
 Panel is the dockable "mini-windows" unit in Editor Framework. Each panel contains a panel frame.
 

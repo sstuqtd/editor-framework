@@ -40,14 +40,34 @@ Editor.sendToPanel('demo-simple.panel', 'demo-simple:open');
 
 To understand panelID, read [panelID part in register panel docs](register-panels.md#panel-id).
 
-We will explain different direction of messages below:
+Let's see message sending methods:
 
 
-## Send Message From Core to Page
+## Core Level
+
+In core-level script, you can use the following method to send messages:
 
 
-## Send Message From Page to Core
+- [Editor.sendToWindows]()
+- [Editor.sendToMainWindow]()
+- [Editor.sendToAll]()
+- [Editor.sendToCore]()
+- [Editor.sendToPanel]()
+- [windowInstance.sendToPage]() you can use `Editor.Window.find` to get window instance
+- [windowInstance.sendRequestToPage]() see also windowInstance.cancelRequestToPage
 
-## Message Handler in Core
 
-## Message Handler in Page
+## Page Level
+
+In page-level script, you can use the following method to send messages:
+
+- [Editor.sendToWindows]()
+- [Editor.sendToMainWindow]()
+- [Editor.sendToCore]()
+- [Editor.sendToCoreSync]() will get return value directly
+- [Editor.sendToPanel]()
+- [Editor.sendRequestToCore]() see also `Editor.cancelRequestToCore`
+
+## Message Handlers
+
+TODO:
