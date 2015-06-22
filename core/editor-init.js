@@ -374,24 +374,16 @@ Editor.watchPackages = function ( cb ) {
                         return;
                     }
 
-                    // reload panel
-                    var panelPath = Path.join(packageInfo._path, 'panel');
-                    if ( Path.contains(panelPath, path) ) {
+                    // reload page
+                    var pageFolders = ['page', 'panel', 'widget'];
+                    if (pageFolders.some( function ( name ) {
+                        return Path.contains( Path.join(packageInfo._path, name), path );
+                    })) {
                         for ( var panelName in packageInfo.panels ) {
                             var panelID = packageInfo.name + '.' + panelName;
                             Editor.sendToWindows( 'panel:out-of-date', panelID );
                         }
 
-                        if ( testerWin ) {
-                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                        }
-                        next();
-                        return;
-                    }
-
-                    // reload widget
-                    var widgetPath = Path.join(packageInfo._path, 'widget');
-                    if ( Path.contains(widgetPath, path) ) {
                         if ( testerWin ) {
                             testerWin.sendToPage('tester:run-tests', packageInfo.name);
                         }
