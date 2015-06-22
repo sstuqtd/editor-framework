@@ -132,8 +132,8 @@ Panel.load = function ( panelID, cb ) {
         Panel.import(framePath, function () {
             var frameCtor = Editor.panels[panelID];
             if ( !frameCtor ) {
-                Editor.error('Panel import faield. Can not find constructor %s', panelInfo.ctor );
-                cb ( new Error( 'Constructor ' + panelInfo.ctor + ' not found' ) );
+                Editor.error('Panel import faield. Can not find constructor for panelID %s', panelID );
+                cb ( new Error( panelID + '\'s constructor not found' ) );
                 return;
             }
 
