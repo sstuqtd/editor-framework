@@ -8,7 +8,7 @@ var Semver = require('semver');
 
 /**
  * Package module for manipulating packages
- * @namespace Editor.Package
+ * @module Editor.Package
  */
 var Package = {};
 var _path2package = {};
@@ -39,10 +39,9 @@ function _build ( packageObj, cb ) {
 
 /**
  * Load a package at path
- * @param {string} path - An absolute path point to a package folder
- * @param {function} cb - Callback
  * @method load
- * @memberof Editor.Package
+ * @param {string} path - An absolute path point to a package folder
+ * @param {function} cb - Callback when finish loading
  */
 Package.load = function ( path, cb ) {
     if ( _path2package[path] ) {
@@ -186,10 +185,9 @@ Package.load = function ( path, cb ) {
 
 /**
  * Unload a package at path
- * @param {string} path - An absolute path point to a package folder
- * @param {function} cb - Callback
  * @method unload
- * @memberof Editor.Package
+ * @param {string} path - An absolute path point to a package folder
+ * @param {function} cb - Callback when finish unloading
  */
 Package.unload = function ( path, cb ) {
     var packageObj = _path2package[path];
@@ -254,12 +252,11 @@ Package.unload = function ( path, cb ) {
 
 /**
  * Reload a package at path
+ * @method reload
  * @param {string} path - An absolute path point to a package folder
  * @param {object} opts - Options
  * @param {boolean} opts.rebuild - If rebuild the project
- * @param {function} cb - callback
- * @method reload
- * @memberof Editor.Package
+ * @param {function} cb - Callback when finish reloading
  */
 Package.reload = function ( path, opts, cb ) {
     opts = opts || {};
@@ -297,10 +294,9 @@ Package.reload = function ( path, opts, cb ) {
 /**
  * Find and get panel info via panelID, the panel info is the json object
  * that defined in `panels.{panel-name}` in your package.json
+ * @method panelInfo
  * @param {string} panelID
  * @return {object}
- * @method panelInfo
- * @memberof Editor.Package
  */
 Package.panelInfo = function ( panelID ) {
     return _panel2info[panelID];
@@ -309,10 +305,9 @@ Package.panelInfo = function ( panelID ) {
 /**
  * Find and get panel info via widgetName, the widget info is the json object
  * that defined in `widgets.{widget-name}` in your package.json
+ * @method widgetInfo
  * @param {string} widgetName
  * @return {object}
- * @method widgetInfo
- * @memberof Editor.Package
  */
 Package.widgetInfo = function ( widgetName ) {
     return _widget2info[widgetName];
@@ -320,10 +315,9 @@ Package.widgetInfo = function ( widgetName ) {
 
 /**
  * Find and get package info via path, the package info is the json object of your package.json file
+ * @method packageInfo
  * @param {string} path - The path can be any files in this package
  * @return {object}
- * @method packageInfo
- * @memberof Editor.Package
  */
 Package.packageInfo = function ( path ) {
     for ( var p in _path2package ) {
@@ -336,10 +330,9 @@ Package.packageInfo = function ( path ) {
 
 /**
  * Return the path of the package by name
+ * @method packagePath
  * @param {string} packageName
  * @return {string}
- * @method packagePath
- * @memberof Editor.Package
  */
 Package.packagePath = function ( packageName ) {
     return _name2packagePath[packageName];
@@ -347,11 +340,10 @@ Package.packagePath = function ( packageName ) {
 
 /**
  * Build package at path
+ * @method build
  * @param {string} path
  * @param {function} callback
  * @return {string}
- * @method build
- * @memberof Editor.Package
  */
 Package.build = function ( path, cb ) {
     var BuildPackage = require('./build-package');

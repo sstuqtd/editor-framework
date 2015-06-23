@@ -246,13 +246,12 @@ var _mainMenu = new Editor.Menu( Editor._defaultMainMenu() );
 
 /**
  * The main menu module for manipulating main menu items
- * @namespace Editor.MainMenu
+ * @module Editor.MainMenu
  */
 var MainMenu = {};
 
 /**
  * Apply main menu changes
- * @memberof Editor.MainMenu
  * @method apply
  */
 MainMenu.apply = function () {
@@ -261,7 +260,6 @@ MainMenu.apply = function () {
 
 /**
  * Reset main menu to its default template
- * @memberof Editor.MainMenu
  * @method reset
  */
 MainMenu.reset = function () {
@@ -271,7 +269,6 @@ MainMenu.reset = function () {
 
 /**
  * Build a template into menu item and add it to path
- * @memberof Editor.MainMenu
  * @method add
  * @param {string} path - A menu path
  * @param {object[]|object} template
@@ -284,7 +281,6 @@ MainMenu.add = function ( path, template ) {
 
 /**
  * Remove menu item at path.
- * @memberof Editor.MainMenu
  * @method remove
  * @param {string} path - A menu path
  */
@@ -296,7 +292,6 @@ MainMenu.remove = function ( path ) {
 
 /**
  * Set menu options at path.
- * @memberof Editor.MainMenu
  * @method set
  * @param {string} path - A menu path
  * @param {object} [options]

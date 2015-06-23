@@ -3,6 +3,10 @@ var Url = require('fire-url');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
 
+/**
+ * @module Editor
+ */
+
 // native protocol register
 
 // register protocol editor-framework://
@@ -98,6 +102,7 @@ function _packages2path ( urlInfo ) {
  * Convert a url by its protocol to a filesystem path. This function is useful when you try to
  * get some internal file. You can use {@link Editor.registerProtocol} to register and map your filesystem
  * path to url. By default, Editor Framework register `editor-framework://` and `app://` protocol.
+ * @method url
  * @param {string} url
  * @example
  * // it will return "{your-app-path}/foobar/foobar.js"
@@ -122,6 +127,7 @@ Editor.url = function ( url ) {
 
 /**
  * Require module through url path
+ * @method require
  * @param {string} url
  */
 Editor.require = function ( url ) {
@@ -131,6 +137,7 @@ Editor.require = function ( url ) {
 /**
  * Register a protocol so that {@link Editor.url} can use it to convert an url to the filesystem path.
  * The `fn` accept an url Object via [url.parse](https://iojs.org/api/url.html#url_url_parse_urlstr_parsequerystring_slashesdenotehost)
+ * @method registerProtocol
  * @param {string} protocol
  * @param {function} fn
  * @example

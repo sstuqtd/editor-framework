@@ -4,17 +4,19 @@ var Screen = require('screen');
 var Url = require('fire-url');
 var Ipc = require('ipc');
 var Fs = require('fire-fs');
+/**
+ * @module Editor
+ */
 
 /**
  * Window class for operating editor window
- * @class
+ * @class Window
  * @extends EventEmitter
- * @memberof Editor
- * @alias Window
+ * @constructor
  * @param {string} name - The window name
  * @param {object} options - The options use [BrowserWindow's options](https://github.com/atom/electron/blob/master/docs/api/browser-window.md#new-browserwindowoptions)
  * with the following additional field:
- * @param {string} options.'window-type'] - Can be one of the list:
+ * @param {string} options.'window-type' - Can be one of the list:
  *  - `dockable`: Indicate the window contains a dockable panel
  *  - `float`: Indicate the window is standalone, and float on top.
  *  - `fixed-size`: Indicate the window is standalone, float on top and non-resizable.
@@ -144,8 +146,7 @@ Editor.JS.extend(EditorWindow,EventEmitter);
 
 /**
  * If this is a main window
- * @member {boolean} isMainWindow
- * @memberof Editor.Window.prototype
+ * @property {boolean} isMainWindow
  */
 Object.defineProperty(EditorWindow.prototype, 'isMainWindow', {
     get: function () {
@@ -155,8 +156,7 @@ Object.defineProperty(EditorWindow.prototype, 'isMainWindow', {
 
 /**
  * If the window is focused
- * @member {boolean} isFocused
- * @memberof Editor.Window.prototype
+ * @property {boolean} isFocused
  */
 Object.defineProperty(EditorWindow.prototype, 'isFocused', {
     get: function () {
@@ -166,8 +166,7 @@ Object.defineProperty(EditorWindow.prototype, 'isFocused', {
 
 /**
  * If the window is minimized
- * @member {boolean} isMinimized
- * @memberof Editor.Window.prototype
+ * @property {boolean} isMinimized
  */
 Object.defineProperty(EditorWindow.prototype, 'isMinimized', {
     get: function () {
@@ -177,8 +176,7 @@ Object.defineProperty(EditorWindow.prototype, 'isMinimized', {
 
 /**
  * If the window is loaded
- * @member {boolean} isLoaded
- * @memberof Editor.Window.prototype
+ * @property {boolean} isLoaded
  */
 Object.defineProperty(EditorWindow.prototype, 'isLoaded', {
     get: function () {
@@ -197,6 +195,7 @@ EditorWindow.prototype.dispose = function () {
 /**
  * load page by url, and send argv in query property of the url. The page level will parse
  * the argv when the page is ready and save it in Editor.argv in page level
+ * @method load
  * @param {string} url
  * @param {object} argv
  */
@@ -219,6 +218,7 @@ EditorWindow.prototype.load = function ( editorUrl, argv ) {
 
 /**
  * Show the window
+ * @method show
  */
 EditorWindow.prototype.show = function () {
     this.nativeWin.show();
@@ -226,6 +226,7 @@ EditorWindow.prototype.show = function () {
 
 /**
  * Close the window
+ * @method close
  */
 EditorWindow.prototype.close = function () {
     this._loaded = false;
@@ -234,6 +235,7 @@ EditorWindow.prototype.close = function () {
 
 /**
  * Focus on the window
+ * @method focus
  */
 EditorWindow.prototype.focus = function () {
     this.nativeWin.focus();
@@ -241,6 +243,7 @@ EditorWindow.prototype.focus = function () {
 
 /**
  * Minimize the window
+ * @method minimize
  */
 EditorWindow.prototype.minimize = function () {
     this.nativeWin.minimize();
@@ -248,6 +251,7 @@ EditorWindow.prototype.minimize = function () {
 
 /**
  * Restore the window
+ * @method restore
  */
 EditorWindow.prototype.restore = function () {
     this.nativeWin.restore();
@@ -255,6 +259,7 @@ EditorWindow.prototype.restore = function () {
 
 /**
  * Open the dev-tools
+ * @method openDevTools
  * @param {object} options
  * @param {boolean} options.detach - If open the dev-tools in a new window
  */
@@ -264,6 +269,7 @@ EditorWindow.prototype.openDevTools = function (options) {
 
 /**
  * Try to adjust the window to fit the position and size we give
+ * @method adjust
  * @param {number} x
  * @param {number} y
  * @param {number} w
@@ -302,6 +308,7 @@ EditorWindow.prototype.adjust = function ( x, y, w, h ) {
 
 /**
  * Commit the current window state
+ * @method commitWindowState
  * @param {object} layoutInfo
  */
 EditorWindow.prototype.commitWindowState = function ( layoutInfo ) {
@@ -328,6 +335,7 @@ EditorWindow.prototype.commitWindowState = function ( layoutInfo ) {
 
 /**
  * Restore window's position and size from the `local` profile `layout.windows.json`
+ * @method restorePositionAndSize
  */
 EditorWindow.prototype.restorePositionAndSize = function () {
     // restore window size and position
@@ -351,8 +359,7 @@ var _windowLayouts = {};
 
 /**
  * Return the window list of all opened windows
- * @member {Editor.Window[]} windows
- * @memberof Editor.Window
+ * @property {Editor.Window[]} windows
  */
 Object.defineProperty(EditorWindow, 'windows', {
     get: function () {
@@ -377,6 +384,7 @@ EditorWindow.loadLayouts = function () {
 
 /**
  * Find window by name or by BrowserWindow instance
+ * @method find
  * @static
  * @param {string|BrowserWindow} param
  * @return {Editor.Window}
@@ -407,6 +415,7 @@ EditorWindow.find = function ( param ) {
 
 /**
  * Add an editor window
+ * @method addWindow
  * @static
  * @param {Editor.Window} win
  */
@@ -416,6 +425,7 @@ EditorWindow.addWindow = function ( win ) {
 
 /**
  * Remove an editor window
+ * @method removeWindow
  * @static
  * @param {Editor.Window} win
  */
@@ -432,6 +442,7 @@ EditorWindow.removeWindow = function ( win ) {
 
 /**
  * Commit all opened window states
+ * @method commitWindowStates
  * @static
  */
 EditorWindow.commitWindowStates = function () {
@@ -443,6 +454,7 @@ EditorWindow.commitWindowStates = function () {
 
 /**
  * Save current windows' states to profile `layout.windows.json` at `local`
+ * @method saveWindowStates
  * @static
  */
 EditorWindow.saveWindowStates = function () {
@@ -465,6 +477,7 @@ EditorWindow.saveWindowStates = function () {
 
 /**
  * Send ipc messages to page
+ * @method sendToPage
  * @param {string} channel
  * @param {...*} [arg] - whatever arguments the request needs
  */
@@ -481,11 +494,12 @@ EditorWindow.prototype.sendToPage = function () {
 
 /**
  * Send request to page and wait for the reply
+ * [Editor.Window.cancelRequestToPage]
+ * @method sendRequestToPage
  * @param {string} request - the request to send
  * @param {...*} [arg] - whatever arguments the request needs
  * @param {function} reply - the callback used to handle replied arguments
  * @return {number} The session id can be used in Editor.Window.cancelRequestToCore
- * @see Editor.Window.cancelRequestToPage
  */
 EditorWindow.prototype.sendRequestToPage = function (request) {
     'use strict';
@@ -514,6 +528,7 @@ EditorWindow.prototype.sendRequestToPage = function (request) {
 
 /**
  * Cancel request via sessionId
+ * @method cancelRequestToPage
  * @param {number} sessionId
  */
 EditorWindow.prototype.cancelRequestToPage = function (sessionId) {

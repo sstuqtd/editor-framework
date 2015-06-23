@@ -2,6 +2,10 @@
 
 require('../share/ipc-init');
 
+/**
+ * @module Editor
+ */
+
 // message operation
 
 function getOptions (args) {
@@ -135,6 +139,7 @@ Ipc.on ( 'editor:sendreq2core', function (event, request, args, sessionId) {
 
 /**
  * Send `args...` to windows except the excluded
+ * @method sendToWindowsExclude
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  * @param {object} excluded - A [WebContents](https://github.com/atom/electron/blob/master/docs/api/browser-window.md#class-webcontents) object.
@@ -174,6 +179,7 @@ Editor.sendToWindowsExclude = function (args, excluded) {
  * </body>
  * </html>
  * ```
+ * @method sendToWindows
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  */
@@ -188,6 +194,7 @@ Editor.sendToWindows = function () {
 
 /**
  * Send `args...` to core itself via `channel` in asynchronous message.
+ * @method sendToCore
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  */
@@ -199,6 +206,7 @@ Editor.sendToCore = function () {
 
 /**
  * Send `args...` to all opened window and core via `channel` in asynchronous message.
+ * @method sendToAll
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  */
@@ -240,6 +248,7 @@ Editor.sendToAll = function () {
 
 /**
  * Send `args...` to specific panel via `channel` in asynchronous message.
+ * @method sendToPanel
  * @param {string} panelID
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
@@ -260,6 +269,7 @@ Editor.sendToPanel = function ( panelID, message ) {
 
 /**
  * Send `args...` to main window via `channel` in asynchronous message.
+ * @method sendToMainWindow
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  */
