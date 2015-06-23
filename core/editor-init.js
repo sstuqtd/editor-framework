@@ -307,12 +307,34 @@ Editor.quit = function () {
     }
 };
 
+Editor.loadPackagesAt = function ( path, cb ) {
+    var idx = Editor._packagePathList.indexOf(path);
+    if ( idx === -1 ) {
+        Editor.warn( 'The package path %s is not registerred', path );
+        return;
+    }
+
+    var paths = Globby.sync( path + '/*/package.json' );
+
+    Async.eachSeries( paths, function ( path, done ) {
+        var packagePath = Path.dirname(path);
+        Editor.Package.load( packagePath, function ( err ) {
+            if ( err ) {
+                Editor.failed('Failed to load package at %s', packagePath );
+            }
+            done();
+        });
+    }, function () {
+        if ( cb ) cb ();
+    });
+};
+
 /**
  * Search and load all packages from the path you registerred
  * {{#crossLink "Editor.registerPackagePath"}}{{/crossLink}}
- * @method loadPackages
+ * @method loadAllPackages
  */
-Editor.loadPackages = function ( cb ) {
+Editor.loadAllPackages = function ( cb ) {
     var i, src = [];
     for ( i = 0; i < Editor._packagePathList.length; ++i ) {
         src.push( Editor._packagePathList[i] + '/*/package.json' );

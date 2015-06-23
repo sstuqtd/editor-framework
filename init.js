@@ -394,7 +394,6 @@ App.on('ready', function() {
 
     // register package path
     Editor.registerPackagePath( Path.join( Editor.App.path, 'builtin' ) );
-    Editor.registerPackagePath( Path.join( Editor.appHome, 'packages' ) );
 
     // register default layout
     Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
@@ -419,22 +418,9 @@ App.on('ready', function() {
             }
         },
 
-        // post init
-        function ( next ) {
-            Winston.success('Initial success!');
-
-            // register user App Ipcs after App.init
-            _loadEditorApp();
-            Editor.App.reload = _reloadEditorApp;
-
-            // load windows layout after local profile registered
-            Editor.Window.loadLayouts();
-            next ();
-        },
-
         function ( next ) {
             Winston.normal('Loading packages');
-            Editor.loadPackages( next );
+            Editor.loadAllPackages( next );
         },
 
         function ( next ) {
@@ -444,6 +430,15 @@ App.on('ready', function() {
 
         function ( next ) {
             Editor.success('Watch ready');
+
+            Winston.success('Initial success!');
+
+            // register user App Ipcs after App.init
+            _loadEditorApp();
+            Editor.App.reload = _reloadEditorApp;
+
+            // load windows layout after local profile registered
+            Editor.Window.loadLayouts();
 
             // connect to console to sending ipc to it
             Editor.connectToConsole();
