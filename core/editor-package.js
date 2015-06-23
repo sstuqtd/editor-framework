@@ -4,6 +4,7 @@ var Path = require('fire-path');
 var Fs = require('fire-fs');
 var Del = require('del');
 var Async = require('async');
+var Semver = require('semver');
 
 /**
  * Package module for manipulating packages
@@ -60,6 +61,24 @@ Package.load = function ( path, cb ) {
         return;
     }
 
+    // check host, if we don't have the host, skip load it
+    for ( var host in packageObj.hosts ) {
+        var currentVer = Editor.versions[host];
+        if ( !currentVer ) {
+            Editor.failed( 'Skip loading %s, host %s not exists.', packageObj.name, host );
+            if ( cb ) cb ();
+            return;
+        }
+
+        var requireVer = packageObj.hosts[host];
+        if ( !Semver.satisfies( currentVer, requireVer ) ) {
+            Editor.failed( 'Skip loading %s, host %s require ver %s.', packageObj.name, host, requireVer );
+            if ( cb ) cb ();
+            return;
+        }
+    }
+
+    //
     packageObj._path = path;
     _build ( packageObj, function ( err, destPath ) {
         packageObj._destPath = destPath;
