@@ -1,5 +1,7 @@
 /**
- * @namespace Editor
+ * Editor is a module contains app-wide core editor functionality. You can access properties or methods of Editor module anytime, anywhere in Fireball
+ * @module Editor
+ * @main
  */
 global.Editor = {};
 
@@ -16,6 +18,7 @@ global.Editor = {};
     /**
      * The Editor.App is your app.js module. Read more details in
      * [Define your application](https://github.com/fireball-x/editor-framework/blob/master/docs/manual/define-your-app.md).
+     * @property App
      * @type object
      */
     Editor.App = __app;
@@ -27,6 +30,7 @@ global.Editor = {};
     }
     /**
      * The current app.js running directory.
+     * @property cwd
      * @type string
      */
     Editor.cwd = __app.path;
@@ -63,12 +67,14 @@ var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname
 
 /**
  * The name of your app. It is defined in the `name` field in package.json
+ * @property name
  * @type string
  */
 Editor.name = App.getName();
 
 /**
  * versions of your app and submodules
+ * @property versions
  * @type Object
  */
 Editor.versions = {
@@ -78,18 +84,21 @@ Editor.versions[Editor.name] = App.getVersion();
 
 /**
  * The absolute path of your main entry file. Usually it is `{your-app}/app.js`.
+ * @property mainEntry
  * @type string
  */
 Editor.mainEntry = Path.join( Editor.cwd, _appPackageJson.main );
 
 /**
  * The editor framework module path. Usually it is `{your-app}/editor-framework/`
+ * @property frameworkPath
  * @type string
  */
 Editor.frameworkPath = __dirname;
 
 /**
  * Your application's data path. Usually it is `~/.{your-app-name}`
+ * @property appHome
  * @type string
  */
 Editor.appHome = Path.join( App.getPath('home'), '.' + Editor.name );

@@ -15,8 +15,13 @@ var _consoleConnected = false;
 var _logs = [];
 
 /**
+ * @module Editor
+ */
+
+/**
  * Log the normal message and show on the console.
  * The method will send ipc message `console:log` to all windows.
+ * @method log
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.log = function () {
@@ -32,6 +37,7 @@ Editor.log = function () {
 /**
  * Log the success message and show on the console
  * The method will send ipc message `console:success` to all windows.
+ * @method success
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.success = function () {
@@ -47,6 +53,7 @@ Editor.success = function () {
 /**
  * Log the failed message and show on the console
  * The method will send ipc message `console:failed` to all windows.
+ * @method failed
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.failed = function () {
@@ -62,6 +69,7 @@ Editor.failed = function () {
 /**
  * Log the info message and show on the console
  * The method will send ipc message `console:info` to all windows.
+ * @method info
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.info = function () {
@@ -78,6 +86,7 @@ Editor.info = function () {
  * Log the warnning message and show on the console,
  * it also shows the call stack start from the function call it.
  * The method will send ipc message `console:warn` to all windows.
+ * @method warn
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.warn = function () {
@@ -98,6 +107,7 @@ Editor.warn = function () {
  * Log the error message and show on the console,
  * it also shows the call stack start from the function call it.
  * The method will sends ipc message `console:error` to all windows.
+ * @method error
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.error = function () {
@@ -117,6 +127,7 @@ Editor.error = function () {
 /**
  * Log the fatal message and show on the console,
  * the app will quit immediately after that.
+ * @method fatal
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.fatal = function () {
@@ -136,6 +147,7 @@ Editor.fatal = function () {
 /**
  * Connect to console panel. Once the console connected, all logs will kept in `core-level` and display
  * on the console panel in `page-level`.
+ * @method connectToConsole
  */
 Editor.connectToConsole = function () {
     _consoleConnected = true;
@@ -143,6 +155,7 @@ Editor.connectToConsole = function () {
 
 /**
  * Clear the logs
+ * @method clearLog
  */
 Editor.clearLog = function () {
     _logs = [];
@@ -185,6 +198,7 @@ function _saveProfile ( path, profile ) {
  * Load profile via `name` and `type`, if no profile found, it will use the `defaultProfile` and save it to the disk.
  * You must register your profile path with `type` via {@link Editor.registerProfilePath} before you
  * can use it. The Editor Framework will search a profile under your register path with the `name`.
+ * @method loadProfile
  * @param {string} name - The name of the profile.
  * @param {string} type - The type of the profile, make sure you register the type via {@link Editor.registerProfilePath}.
  * @param {object} defaultProfile - The default profile to use if the profile is not found.
@@ -280,6 +294,7 @@ var _packageWatcher;
 
 /**
  * Quit the App
+ * @method quit
  */
 Editor.quit = function () {
     if ( _packageWatcher ) {
@@ -294,7 +309,8 @@ Editor.quit = function () {
 
 /**
  * Search and load all packages from the path you registerred
- * @see Editor.registerPackagePath
+ * {{#crossLink "Editor.registerPackagePath"}}{{/crossLink}}
+ * @method loadPackages
  */
 Editor.loadPackages = function ( cb ) {
     var i, src = [];
@@ -319,6 +335,7 @@ Editor.loadPackages = function ( cb ) {
 
 /**
  * Watch packages
+ * @method watchPackages
  */
 Editor.watchPackages = function ( cb ) {
     //
@@ -429,9 +446,10 @@ Editor._defaultLayout = '';
 
 /**
  * Register profile type with the path you provide.
+ * {{#crossLink "Editor.loadProfile"}}{{/crossLink}}
+ * @method registerProfilePath
  * @param {string} type - The type of the profile you want to register.
  * @param {string} path - The path for the register type.
- * @see Editor.loadProfile
  */
 Editor.registerProfilePath = function ( type, path ) {
     Editor._type2profilepath[type] = path;
@@ -439,8 +457,9 @@ Editor.registerProfilePath = function ( type, path ) {
 
 /**
  * Register a path, when loading packages, it will search the path you registerred.
+ * {{#crossLink "Editor.loadPackages"}}{{/crossLink}}
+ * @method registerPackagePath
  * @param {string} path - A absolute path for searching your packages.
- * @see Editor.loadPackages
  */
 Editor.registerPackagePath = function ( path ) {
     Editor._packagePathList.push(path);
@@ -458,8 +477,9 @@ Editor.unregisterPackagePath = function ( path ) {
 
 /**
  * Register a path, when loading packages, it will search the path you registerred.
+ * {{#crossLink "Editor.loadPackages"}}{{/crossLink}}
+ * @method registerDefaultLayout
  * @param {string} path - A absolute path for searching your packages.
- * @see Editor.loadPackages
  */
 Editor.registerDefaultLayout = function ( path ) {
     Editor._defaultLayout = path;
@@ -467,6 +487,7 @@ Editor.registerDefaultLayout = function ( path ) {
 
 /**
  * register default main menu template function
+ * @method
  * @param {function} tmplFn
  */
 Editor.registerDefaultMainMenu = function ( tmplFn ) {
