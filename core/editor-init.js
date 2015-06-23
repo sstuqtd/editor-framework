@@ -321,6 +321,12 @@ Editor.loadPackages = function ( cb ) {
  * Watch packages
  */
 Editor.watchPackages = function ( cb ) {
+    //
+    if ( Editor._packagePathList.length === 0 ) {
+        if ( cb ) cb ();
+        return;
+    }
+
     var src = [];
     for ( i = 0; i < Editor._packagePathList.length; ++i ) {
         var packagePath = Editor._packagePathList[i];
@@ -438,6 +444,16 @@ Editor.registerProfilePath = function ( type, path ) {
  */
 Editor.registerPackagePath = function ( path ) {
     Editor._packagePathList.push(path);
+};
+
+/**
+ * Unregister a package path
+ */
+Editor.unregisterPackagePath = function ( path ) {
+    var idx = Editor._packagePathList.indexOf(path);
+    if ( idx !== -1 ) {
+        Editor._packagePathList.splice(idx,1);
+    }
 };
 
 /**
