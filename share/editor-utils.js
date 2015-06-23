@@ -1,10 +1,9 @@
 /**
- * @namespace Editor.Utils
+ * @module Editor.Utils
  */
 var Utils = {};
 
 /**
- * @memberof Editor.Utils
  * @method padLeft
  * @param {string} text
  * @param {number} width
@@ -21,7 +20,6 @@ Utils.padLeft = function ( text, width, ch ) {
 };
 
 /**
- * @memberof Editor.Utils
  * @method formatFrame
  * @param {number} frame
  * @param {number} frameRate
@@ -40,7 +38,6 @@ Utils.formatFrame = function ( frame, frameRate ) {
 };
 
 /**
- * @memberof Editor.Utils
  * @method smoothScale
  * @param {number} curScale
  * @param {number} delta
@@ -54,7 +51,6 @@ Utils.smoothScale = function ( curScale, delta ) {
 
 /**
  * Wrap error so that it can be sent between core and page level
- * @memberof Editor.Utils
  * @method wrapError
  */
 Utils.wrapError = function ( err ) {

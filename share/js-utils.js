@@ -11,13 +11,13 @@ function _copyprop(name, source, target) {
 }
 
 /**
- * @namespace Editor.JS
+ * Extending JavaScript to better handle property and class inheritance
+ * @module Editor.JS
  */
 module.exports = {
     /**
      * Copy property by name from source to target
      * @method copyprop
-     * @memberof Editor.JS
      * @param {string} name
      * @param {object} source
      * @param {object} target
@@ -27,7 +27,6 @@ module.exports = {
     /**
      * copy all properties not defined in obj from arguments[1...n]
      * @method addon
-     * @memberof Editor.JS
      * @param {object} obj - object to extend its properties
      * @param {...object} sourceObj - source object to copy properties from
      * @return {object} the result obj
@@ -49,7 +48,6 @@ module.exports = {
     /**
      * Extract properties by `propNames` from `obj`
      * @method extract
-     * @memberof Editor.JS
      * @param {object} obj - object to extend its properties
      * @param {string[]} propNames
      * @return {object} - the result obj
@@ -69,7 +67,6 @@ module.exports = {
     /**
      * Copy all properties from arguments[1...n] to obj
      * @method mixin
-     * @memberof Editor.JS
      * @param {object} obj
      * @param {...object} sourceObj
      * @return {object} the result obj
@@ -95,7 +92,6 @@ module.exports = {
     /**
      * Derive the class from the supplied base class.
      * @method extend
-     * @memberof Editor.JS
      * @param {function} cls
      * @param {function} base - the baseclass to inherit
      * @return {function} the result class
@@ -121,7 +117,6 @@ module.exports = {
     /**
      * Removes all enumerable properties from object
      * @method clear
-     * @memberof Editor.JS
      * @param {*} obj
      */
     clear: function (obj) {

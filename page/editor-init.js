@@ -9,11 +9,13 @@ var Async = require('async');
 
 /**
  * Page Level Editor
+ * @module Editor
  */
 window.Editor = window.Editor || {};
 
 /**
  * Require module through url path
+ * @method require
  * @param {string} url
  */
 Editor.require = function ( path ) {
@@ -77,6 +79,7 @@ Editor.url = function (url) {
 /**
  * Log the normal message and show on the console.
  * The method will send ipc message `console:log` to core.
+ * @method log
  * @param {...*} [arg] - whatever arguments the message needs
  */
 Editor.log = function ( text ) {

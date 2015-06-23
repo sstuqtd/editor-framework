@@ -49,6 +49,7 @@ Ipc.on('editor:sendreq2page', function (request, args, sessionId) {
 
 /**
  * Send message to core-level synchronized and return a result which is responded from core-level
+ * @method sendToCoreSync
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
  * @return results
@@ -66,6 +67,7 @@ Editor.sendToCoreSync = function ( message ) {
 
 /**
  * Send message to editor-core, which is so called as main app, or atom shell's browser side.
+ * @method sendToCore
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
  */
@@ -83,6 +85,7 @@ Editor.sendToCore = function ( message ) {
 /**
  * Broadcast message to all pages.
  * The page is so called as atom shell's web side. Each application window is an independent page and has its own JavaScript context.
+ * @method sendToWindows
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
  * @param {object} [options] - you can indicate the options such as Editor.selfExcluded
@@ -101,6 +104,7 @@ Editor.sendToWindows = function ( message ) {
 /**
  * Broadcast message to main page.
  * The page is so called as atom shell's web side. Each application window is an independent page and has its own JavaScript context.
+ * @method sendToMainWindow
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
  */
@@ -117,6 +121,7 @@ Editor.sendToMainWindow = function ( message ) {
 
 /**
  * Broadcast message to all pages and editor-core
+ * @method sendToAll
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
  * @param {object} [options] - you can indicate the options such as Editor.selfExcluded
@@ -134,6 +139,7 @@ Editor.sendToAll = function ( message ) {
 
 /**
  * Send message to specific panel
+ * @method sendToPanel
  * @param {string} panelID - the panel id
  * @param {string} message - the message to send
  * @param {...*} [arg] - whatever arguments the message needs
@@ -186,6 +192,10 @@ Editor.sendRequestToCore = function (request) {
     return -1;
 };
 
+/**
+ * Cancel request sent to core by sessionId
+ * @method cancelRequestToCore
+ */
 Editor.cancelRequestToCore = function (sessionId) {
     'use strict';
     var key = '' + sessionId;

@@ -1,11 +1,13 @@
 // https://github.com/timoxley/keycode/blob/master/index.js
 // Source: http://jsfiddle.net/vWx8V/
 // http://stackoverflow.com/questions/5603195/full-list-of-javascript-keycodes
+/**
+ * @module Editor
+ */
 
 /**
  * Conenience method returns corresponding value for given keyName or keyCode.
  * @method KeyCode
- * @memberof Editor
  * @param {number|string} key - Can be number(key-code) or string(key-name)
  * @return {number|string}
  */
@@ -37,11 +39,9 @@ exports = module.exports = function(searchInput) {
   return undefined;
 };
 
-/**
- * Get by name
- *
- *   exports.code['enter'] // => 13
- */
+// Get keycode by key name
+// exports.code['enter'] // => 13
+
 
 var codes = exports.code = exports.codes = {
   'backspace': 8,
@@ -113,9 +113,9 @@ var aliases = exports.aliases = {
 };
 
 
-/*!
- * Programatically add the following
- */
+
+// Programatically add the following
+
 
 // lower case chars
 for (i = 97; i < 123; i++) codes[String.fromCharCode(i)] = i - 32;
@@ -129,11 +129,9 @@ for (i = 1; i < 13; i++) codes['f'+i] = i + 111;
 // numpad keys
 for (i = 0; i < 10; i++) codes['numpad '+i] = i + 96;
 
-/**
- * Get by code
- *
- *   exports.name[13] // => 'Enter'
- */
+
+// Get by code
+// exports.name[13] // => 'Enter'
 
 var names = exports.names = exports.title = {}; // title for backward compat
 

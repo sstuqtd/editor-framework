@@ -3,6 +3,11 @@ var Ipc = require('ipc');
 var _lastActiveUnit = null;
 var _units = {};
 
+/**
+ * Selection module
+ * @module Editor.Selection
+ */
+
 // SelectionUnit
 
 function SelectionUnit(type) {
@@ -168,9 +173,6 @@ SelectionUnit.prototype.setContext = function (id) {
     this._context = id;
 };
 
-/**
- * @property {string[]} contexts - (Read Only)
- */
 Object.defineProperty(SelectionUnit.prototype, 'contexts', {
     get: function () {
         var id = this._context;
@@ -258,10 +260,6 @@ ConfirmableSelectionUnit.prototype.cancel = function () {
     }
 };
 
-/**
- * Selection module
- * @namespace Editor.Selection
- */
 var Selection = {
     register: function ( type ) {
         if ( !Editor.isCoreLevel ) {
@@ -278,7 +276,7 @@ var Selection = {
     /**
      * Confirms all current selecting objects, no matter which type they are.
      * This operation may trigger deactivated and activated events.
-     * @memberof Editor.Selection
+     * @method confirm
      */
     confirm: function () {
         for ( var p in _units ) {
@@ -289,7 +287,7 @@ var Selection = {
     /**
      * Cancels all current selecting objects, no matter which type they are.
      * This operation may trigger selected and unselected events.
-     * @memberof Editor.Selection
+     * @method cancel
      */
     cancel: function () {
         for ( var p in _units ) {
@@ -302,7 +300,7 @@ var Selection = {
      * in this state, the `selected` messages will be broadcasted, but the `activated` messages will not.
      * after that, if you confirm the selection, `activated` message will be sent, otherwise `unselected` message will be sent.
      * if confirm === true, the activated will be sent in the same time.
-     * @memberof Editor.Selection
+     * @method select
      * @param {string} type
      * @param {(string|string[])} id
      * @param {boolean} [unselectOthers=true]
@@ -334,7 +332,8 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * unselect with type and id
+     * @method unselect
      * @param {string} type
      * @param {(string|string[])} id
      * @param {boolean} [confirm=true]
@@ -356,7 +355,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method hover
      * @param {string} type
      * @param {string} id
      */
@@ -372,7 +371,7 @@ var Selection = {
 
 
     /**
-     * @memberof Editor.Selection
+     * @method setContext
      * @param {string} type
      * @param {string} id
      */
@@ -387,7 +386,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method clear
      * @param {string} type
      */
     clear: function ( type ) {
@@ -402,7 +401,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method hovering
      * @param {string} type
      * @return {string} hovering
      */
@@ -417,7 +416,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method contexts
      * @param {string} type
      * @return {string} contexts
      */
@@ -432,7 +431,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method curActivate
      * @param {string} type
      * @return {string} current activated
      */
@@ -447,7 +446,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method curSelection
      * @param {string} type
      * @return {string[]} selected list
      */
@@ -462,7 +461,7 @@ var Selection = {
     },
 
     /**
-     * @memberof Editor.Selection
+     * @method filter
      * @param {string[]} items - an array of ids
      * @param {string} mode - ['top-level', 'deep', 'name']
      * @param {function} func

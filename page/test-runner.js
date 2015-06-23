@@ -1,7 +1,6 @@
 (function () {
-    /**
-     * Module dependencies.
-     */
+
+     // Module dependencies.
 
     var Ipc = require('ipc');
     var Base = Mocha.reporters.Base;
@@ -49,12 +48,9 @@
         };
     }
 
-    /**
-     * Initialize a new `IpcReporter` matrix test reporter.
-     *
-     * @param {Runner} runner
-     * @api public
-     */
+
+     // Initialize a new `IpcReporter` matrix test reporter.
+     // @param {Runner} runner
 
     function IpcReporter(runner) {
         Base.call(this, runner);
