@@ -303,8 +303,8 @@ var Selection = {
      * @method select
      * @param {string} type
      * @param {(string|string[])} id
-     * @param {boolean} [unselectOthers=true]
-     * @param {boolean} [confirm=true]
+     * @param {Boolean} [unselectOthers=true]
+     * @param {Boolean} [confirm=true]
      */
     select: function ( type, id, unselectOthers, confirm ) {
         var selectionUnit = _units[type];
@@ -336,7 +336,7 @@ var Selection = {
      * @method unselect
      * @param {string} type
      * @param {(string|string[])} id
-     * @param {boolean} [confirm=true]
+     * @param {Boolean} [confirm=true]
      */
     unselect: function (type, id, confirm) {
         var selectionUnit = _units[type];

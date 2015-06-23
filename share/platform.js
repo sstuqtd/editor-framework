@@ -5,35 +5,35 @@
 /**
  * indicates whether executes in node.js application
  * @property isNode
- * @type {boolean}
+ * @type {Boolean}
  */
 Editor.isNode = !!(typeof process !== 'undefined' && process.versions && process.versions.node);
 
 /**
  * indicates whether executes in electron
  * @property isElectron
- * @type {boolean}
+ * @type {Boolean}
  */
 Editor.isElectron = !!(Editor.isNode && ('electron' in process.versions));
 
 /**
  * indicates whether executes in native environment (compare to web-browser)
  * @property isNative
- * @type {boolean}
+ * @type {Boolean}
  */
 Editor.isNative = Editor.isElectron;
 
 /**
  * indicates whether executes in common web browser
  * @property isPureWeb
- * @type {boolean}
+ * @type {Boolean}
  */
 Editor.isPureWeb = !Editor.isNode && !Editor.isNative; // common web browser
 
 /**
  * indicates whether executes in common web browser, or editor's window process(electron's renderer context)
  * @property isPageLevel
- * @type {boolean}
+ * @type {Boolean}
  */
 if (Editor.isElectron) {
     Editor.isPageLevel = typeof process !== 'undefined' && process.type === 'renderer';
@@ -44,7 +44,7 @@ if (Editor.isElectron) {
 /**
  * indicates whether executes in editor's core process(electron's browser context)
  * @property isCoreLevel
- * @type {boolean}
+ * @type {Boolean}
  */
 Editor.isCoreLevel = typeof process !== 'undefined' && process.type === 'browser';
 
@@ -52,14 +52,14 @@ if (Editor.isNode) {
     /**
      * indicates whether executes in OSX
      * @property isDarwin
-     * @type {boolean}
+     * @type {Boolean}
      */
     Editor.isDarwin = process.platform === 'darwin';
 
     /**
      * indicates whether executes in Windows
      * @property isWin32
-     * @type {boolean}
+     * @type {Boolean}
      */
     Editor.isWin32 = process.platform === 'win32';
 } else {

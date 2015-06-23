@@ -255,7 +255,7 @@ Package.unload = function ( path, cb ) {
  * @method reload
  * @param {string} path - An absolute path point to a package folder
  * @param {object} opts - Options
- * @param {boolean} opts.rebuild - If rebuild the project
+ * @param {Boolean} opts.rebuild - If rebuild the project
  * @param {function} cb - Callback when finish reloading
  */
 Package.reload = function ( path, opts, cb ) {

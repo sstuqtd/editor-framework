@@ -264,9 +264,9 @@ EditorMenu.prototype.remove = function ( path ) {
  * @param {string} path - A menu path
  * @param {object} [options]
  * @param {NativeImage} [options.icon] - A [NativeImage](https://github.com/atom/electron/blob/master/docs/api/native-image.md)
- * @param {boolean} [options.enabled]
- * @param {boolean} [options.visible]
- * @param {boolean} [options.checked] - NOTE: You must set your menu-item type to 'checkbox' to make it work
+ * @param {Boolean} [options.enabled]
+ * @param {Boolean} [options.visible]
+ * @param {Boolean} [options.checked] - NOTE: You must set your menu-item type to 'checkbox' to make it work
  */
 EditorMenu.prototype.set = function ( path, options ) {
     var menuItem = _getMenuItem( this.nativeMenu, path, false );

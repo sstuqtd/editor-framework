@@ -146,7 +146,7 @@ Editor.JS.extend(EditorWindow,EventEmitter);
 
 /**
  * If this is a main window
- * @property {boolean} isMainWindow
+ * @property {Boolean} isMainWindow
  */
 Object.defineProperty(EditorWindow.prototype, 'isMainWindow', {
     get: function () {
@@ -156,7 +156,7 @@ Object.defineProperty(EditorWindow.prototype, 'isMainWindow', {
 
 /**
  * If the window is focused
- * @property {boolean} isFocused
+ * @property {Boolean} isFocused
  */
 Object.defineProperty(EditorWindow.prototype, 'isFocused', {
     get: function () {
@@ -166,7 +166,7 @@ Object.defineProperty(EditorWindow.prototype, 'isFocused', {
 
 /**
  * If the window is minimized
- * @property {boolean} isMinimized
+ * @property {Boolean} isMinimized
  */
 Object.defineProperty(EditorWindow.prototype, 'isMinimized', {
     get: function () {
@@ -176,7 +176,7 @@ Object.defineProperty(EditorWindow.prototype, 'isMinimized', {
 
 /**
  * If the window is loaded
- * @property {boolean} isLoaded
+ * @property {Boolean} isLoaded
  */
 Object.defineProperty(EditorWindow.prototype, 'isLoaded', {
     get: function () {
@@ -261,7 +261,7 @@ EditorWindow.prototype.restore = function () {
  * Open the dev-tools
  * @method openDevTools
  * @param {object} options
- * @param {boolean} options.detach - If open the dev-tools in a new window
+ * @param {Boolean} options.detach - If open the dev-tools in a new window
  */
 EditorWindow.prototype.openDevTools = function (options) {
     this.nativeWin.openDevTools(options);
