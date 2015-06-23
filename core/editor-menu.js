@@ -4,6 +4,10 @@ var Menu = require('menu');
 var MenuItem = require('menu-item');
 var Path = require('fire-path');
 
+/**
+ * @module Editor
+ */
+
 function _getMenuItem ( nativeMenu, path, createIfNotExists ) {
     var nextMenu = nativeMenu;
     createIfNotExists = typeof createIfNotExists !== 'undefined' ? createIfNotExists : false;
@@ -124,9 +128,8 @@ function _cloneMenuExcept ( newMenu, nativeMenu, exceptPath, curPath ) {
 }
 
 /**
- * @class
- * @memberof Editor
- * @alias Menu
+ * @class Menu
+ * @constructor
  * @param {object[]|object} template - Menu template for initialize. The template take the options of
  * Electron's [Menu Item](https://github.com/atom/electron/blob/master/docs/api/menu-item.md)
  * plus the following properties.
@@ -147,7 +150,8 @@ function EditorMenu ( template, webContents ) {
 }
 
 /**
- * Dereference the native menu.
+ * De-reference the native menu.
+ * @method dispose
  */
 EditorMenu.prototype.dispose = function () {
     this.nativeMenu = null;
@@ -155,6 +159,7 @@ EditorMenu.prototype.dispose = function () {
 
 /**
  * Reset the menu from the template.
+ * @method reset
  * @param {object[]|object} template
  */
 EditorMenu.prototype.reset = function (template) {
@@ -164,6 +169,7 @@ EditorMenu.prototype.reset = function (template) {
 
 /**
  * Clear all menu item in it.
+ * @method clear
  */
 EditorMenu.prototype.clear = function () {
     this.nativeMenu = new Menu();
@@ -171,6 +177,7 @@ EditorMenu.prototype.clear = function () {
 
 /**
  * Build a template into menu item and add it to path
+ * @method add
  * @param {string} path - A menu path
  * @param {object[]|object} template
  * @example
@@ -233,6 +240,7 @@ EditorMenu.prototype.add = function ( path, template ) {
 
 /**
  * Remove menu item at path.
+ * @method remove
  * @param {string} path - A menu path
  */
 // base on electron#527 said, there is no simple way to remove menu item
@@ -252,9 +260,10 @@ EditorMenu.prototype.remove = function ( path ) {
 
 /**
  * Set menu options at path.
+ * @method set
  * @param {string} path - A menu path
  * @param {object} [options]
- * @param {NativeImage} [options.icon] - A [NativeImage](https://github.com/atom/electron/blob/master/docs/api/native-image.md) 
+ * @param {NativeImage} [options.icon] - A [NativeImage](https://github.com/atom/electron/blob/master/docs/api/native-image.md)
  * @param {boolean} [options.enabled]
  * @param {boolean} [options.visible]
  * @param {boolean} [options.checked] - NOTE: You must set your menu-item type to 'checkbox' to make it work
@@ -290,6 +299,7 @@ EditorMenu.prototype.set = function ( path, options ) {
 /**
  * Parse the menu template to process additional keyword we added for Electron.
  * If webContents provided, the `template.message` will send to the target webContents.
+ * @method parseTemplate
  * @param {object[]|object} template
  * @param {object} [webContents] - A [WebContents](https://github.com/atom/electron/blob/master/docs/api/browser-window.md#class-webcontents) object.
  */

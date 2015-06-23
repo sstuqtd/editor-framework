@@ -5,7 +5,7 @@ var Spawn = require('child_process').spawn;
  * The `core-level` debugger utils, when you turn on the debugger,
  * it actually run a [node-inspector](https://github.com/node-inspector/node-inspector)
  * process in the low-level, and you can use your chrome browser debug the core module.
- * @namespace Editor.Debugger
+ * @module Editor.Debugger
  */
 var Debugger = {};
 
@@ -14,7 +14,6 @@ var dbgProcess;
 /**
  * Toggle on or off the `core-level` debugger
  * @method toggle
- * @memberof Editor.Debugger
  */
 Debugger.toggle = function () {
     if ( dbgProcess ) {
@@ -28,7 +27,6 @@ Debugger.toggle = function () {
 /**
  * Turn on the `core-level` debugger
  * @method open
- * @memberof Editor.Debugger
  */
 Debugger.open = function () {
     dbgProcess = Spawn('node-inspector', ['--debug-port=3030'], {stdio: 'inherit'});
@@ -54,7 +52,6 @@ Debugger.open = function () {
 /**
  * Turn off the `core-level` debugger
  * @method close
- * @memberof Editor.Debugger
  */
 Debugger.close = function () {
     if ( dbgProcess ) {
