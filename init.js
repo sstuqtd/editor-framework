@@ -245,8 +245,8 @@ Commander
     .option('--debug <port>', 'Open in browser context debug mode', parseInt )
     .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
     .option('--test <path>', 'Run tests in path' )
-    .option('--test-core <path>', 'Run tests in path in core-level' )
-    .option('--test-full <path>', 'Run full test with all indexed test files')
+    .option('--report-failures', 'Send test failures to the main process')
+    .option('--report-details', 'Send test details to the main process' )
     ;
 
 // EXAMPLE:
@@ -373,15 +373,14 @@ App.on('ready', function() {
     Winston.normal( 'Initializing Editor' );
     require('./core/editor-init');
 
-    if ( Commander.test || Commander.testCore || Commander.testFull ) {
+    if ( Commander.test ) {
         var Test = require('./core/test-runner');
 
         if (Commander.test) {
-            Test.run(Commander.test);
-        } else if (Commander.testCore) {
-            Test.run(Commander.testCore, { coretest: true } );
-        } else if (Commander.testFull) {
-            Test.run(Commander.testFull, { fulltest: true } );
+            Test.run(Commander.test, {
+                reportFailures: Commander.reportFailures,
+                reportDetails: Commander.reportDetails,
+            });
         }
 
         return;

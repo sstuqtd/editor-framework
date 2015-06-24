@@ -61,11 +61,11 @@ Test.run = function ( path, opts ) {
 
     var reporter = DefaultReporter;
     if (opts) {
-        if ( opts.coretest ) {
-            reporter = CoreReporter;
+        if ( opts.reportDetails ) {
+            reporter = DetailsReporter;
         }
-        else if ( opts.fulltest ) {
-            reporter = FullReporter;
+        else if ( opts.reportFailures ) {
+            reporter = FailuresReporter;
         }
     }
 
@@ -88,8 +88,8 @@ Test.run = function ( path, opts ) {
     });
 };
 
-// FullReporter
-function FullReporter(runner) {
+// FailuresReporter
+function FailuresReporter(runner) {
     Base.call(this, runner);
 
     var self = this,
@@ -129,10 +129,10 @@ function FullReporter(runner) {
     Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
     Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
 }
-FullReporter.prototype = Base.prototype;
+FailuresReporter.prototype = Base.prototype;
 
-// CoreReporter
-function CoreReporter(runner) {
+// DetailsReporter
+function DetailsReporter(runner) {
     function _ipcSuite ( suite ) {
         return {
             root: suite.root,
@@ -243,7 +243,7 @@ function CoreReporter(runner) {
         });
     });
 }
-CoreReporter.prototype = Base.prototype;
+DetailsReporter.prototype = Base.prototype;
 
 // DefaultReporter
 function DefaultReporter(runner) {
