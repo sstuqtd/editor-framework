@@ -10,7 +10,7 @@ global.__app = {
 
     init: function ( options, cb ) {
         // initialize ./.settings
-        var settingsPath = Path.join(Editor.cwd, '.settings');
+        var settingsPath = Path.join(Editor.appPath, '.settings');
         if ( !Fs.existsSync(settingsPath) ) {
             Fs.makeTreeSync(settingsPath);
         }

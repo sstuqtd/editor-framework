@@ -46,7 +46,7 @@ else {
 
 // init & cache remote
 Editor.remote = Remote.getGlobal('Editor');
-Editor.cwd = Editor.remote.url('app://');
+Editor.appPath = Editor.remote.url('app://');
 Editor.frameworkPath = Editor.remote.url('editor-framework://');
 Editor.isDev = Editor.remote.isDev;
 
@@ -62,7 +62,7 @@ Editor.url = function (url) {
     // NOTE: we cache app:// and editor-framework:// protocol to get rid of ipc-sync function calls
     var urlInfo = Url.parse(url);
     if ( urlInfo.protocol === 'app:' ) {
-        return _urlToPath( Editor.cwd, urlInfo );
+        return _urlToPath( Editor.appPath, urlInfo );
     }
     else if ( urlInfo.protocol === 'editor-framework:' ) {
         return _urlToPath( Editor.frameworkPath, urlInfo );

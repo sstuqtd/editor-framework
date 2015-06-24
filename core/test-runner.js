@@ -47,7 +47,7 @@ Test.liveRun = function ( path ) {
     }
     else {
         console.log( Chalk.magenta( 'Start test (' + path + ')') );
-        SpawnSync(exePath, [Editor.App.path, '--test', path], {stdio: 'inherit'});
+        SpawnSync(exePath, [Editor.appPath, '--test', path], {stdio: 'inherit'});
     }
 };
 

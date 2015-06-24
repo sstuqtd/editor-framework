@@ -33,7 +33,7 @@ global.Editor = {};
      * @property cwd
      * @type string
      */
-    Editor.cwd = __app.path;
+    Editor.appPath = __app.path;
 })();
 
 // ---------------------------
@@ -58,7 +58,7 @@ process.on('uncaughtException', function(error) {
     Winston.uncaught( error.stack || error );
 });
 
-var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.cwd,'package.json')));
+var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
 var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
 
 // ---------------------------
@@ -87,7 +87,7 @@ Editor.versions[Editor.name] = App.getVersion();
  * @property mainEntry
  * @type string
  */
-Editor.mainEntry = Path.join( Editor.cwd, _appPackageJson.main );
+Editor.mainEntry = Path.join( Editor.appPath, _appPackageJson.main );
 
 /**
  * The editor framework module path. Usually it is `{your-app}/editor-framework/`
@@ -393,7 +393,7 @@ App.on('ready', function() {
     Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
 
     // register package path
-    Editor.registerPackagePath( Path.join( Editor.App.path, 'builtin' ) );
+    Editor.registerPackagePath( Path.join( Editor.appPath, 'builtin' ) );
 
     // register default layout
     Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );

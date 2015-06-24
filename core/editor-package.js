@@ -364,7 +364,7 @@ Package.build = function ( path, cb ) {
 // ========================================
 
 Ipc.on('package:query-infos', function ( reply ) {
-    var builtinPath = Path.join( Editor.App.path, 'builtin' );
+    var builtinPath = Path.join( Editor.appPath, 'builtin' );
     var results = [];
 
     for ( var path in _path2package ) {
@@ -382,7 +382,7 @@ Ipc.on('package:query-infos', function ( reply ) {
 Ipc.on('package:query-info', function ( reply, name ) {
     var path = _name2packagePath[name];
     var info = _path2package[path];
-    var builtinPath = Path.join( Editor.App.path, 'builtin' );
+    var builtinPath = Path.join( Editor.appPath, 'builtin' );
 
     reply({
         path: path,

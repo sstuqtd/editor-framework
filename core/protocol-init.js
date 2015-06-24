@@ -29,7 +29,7 @@ Protocol.registerProtocol('app', function(request) {
     if ( data.pathname ) {
         relativePath = Path.join( relativePath, data.pathname );
     }
-    var file = Path.join( Editor.cwd, relativePath );
+    var file = Path.join( Editor.appPath, relativePath );
     return new Protocol.RequestFileJob(file);
 });
 
@@ -59,7 +59,7 @@ Protocol.registerProtocol('packages', function(request) {
 //     if ( data.pathname ) {
 //         relativePath = Path.join( relativePath, data.pathname );
 //     }
-//     var file = Path.join( Editor.cwd, 'bower_components', relativePath );
+//     var file = Path.join( Editor.appPath, 'bower_components', relativePath );
 //     return new Protocol.RequestFileJob(file);
 // });
 
@@ -163,5 +163,5 @@ Editor.registerProtocol = function ( protocol, fn ) {
 };
 
 Editor.registerProtocol('editor-framework', _url2path(Editor.frameworkPath));
-Editor.registerProtocol('app', _url2path(Editor.cwd));
+Editor.registerProtocol('app', _url2path(Editor.appPath));
 Editor.registerProtocol('packages', _packages2path);
