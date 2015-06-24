@@ -76,23 +76,6 @@ global.__app = {
     //     } );
     //     workerWin.loadUrl(url);
     // },
-
-    'app:tester': function () {
-        var BrowserWindow = require('browser-window');
-        Editor.testerWin = new BrowserWindow({
-            show: true,
-        });
-        var Url = require('fire-url');
-        var url = Url.format( {
-            protocol: 'file',
-            pathname: Editor.url('editor-framework://static/tester.html' ),
-            slashes: true,
-            hash: encodeURIComponent(JSON.stringify({
-                url: 'packages://console/test/console.html'
-            })),
-        } );
-        Editor.testerWin.loadUrl(url);
-    },
 };
 
 require('./init');
