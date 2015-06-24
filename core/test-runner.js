@@ -59,11 +59,14 @@ Test.run = function ( path, opts ) {
         return;
     }
 
-    var reporter = null;
-    if (opts && opts.fulltest) {
-        reporter = SpecFull;
-    } else {
-        reporter = Spec;
+    var reporter = DefaultReporter;
+    if (opts) {
+        if ( opts.coretest ) {
+            reporter = CoreReporter;
+        }
+        else if ( opts.fulltest ) {
+            reporter = FullReporter;
+        }
     }
 
     var mocha = new Mocha({
@@ -74,17 +77,19 @@ Test.run = function ( path, opts ) {
     mocha.addFile(path);
 
     mocha.run(function (failures) {
-        if (opts && opts.fulltest && failures > 0) {
+        if ( process.send ) {
             process.send({
-                'channel': 'process:end',
-                'failed-path': path,
+                channel: 'process:end',
+                failures: failures,
+                path: path,
             });
         }
         process.exit(failures);
     });
 };
 
-function SpecFull(runner) {
+// FullReporter
+function FullReporter(runner) {
     Base.call(this, runner);
 
     var self = this,
@@ -112,20 +117,137 @@ function SpecFull(runner) {
         console.log(fmt, test.title);
     }
     runner.on('start', _onStart);
+    runner.on('end', self.epilogue.bind(self));
     runner.on('suite', _onSuite);
     runner.on('suite end', _onSuiteEnd);
     runner.on('pending', _onPending);
-    runner.on('end', self.epilogue.bind(self));
 
     // IPC
     Ipc.on('runner:start', _onStart);
+    Ipc.on('runner:end', function ( event ) {});
     Ipc.on('runner:suite', function ( event, suite ) { _onSuite(suite); });
     Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
     Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
-    Ipc.on('runner:end', function ( event ) {});
 }
+FullReporter.prototype = Base.prototype;
 
-function Spec(runner) {
+// CoreReporter
+function CoreReporter(runner) {
+    function _ipcSuite ( suite ) {
+        return {
+            root: suite.root,
+            title: suite.title,
+            fullTitle: suite.fullTitle(),
+        };
+    }
+
+    function _ipcErr ( err ) {
+        if ( !err )
+            return null;
+
+        return {
+            stack: err.stack || err.toString(),
+            message: err.message,
+            line: err.line,
+            sourceURL: err.sourceURL,
+        };
+    }
+
+    function _ipcTest ( test ) {
+        return {
+            type: test.type,
+            title: test.title,
+            fullTitle: test.fullTitle(),
+            state: test.state,
+            speed: test.speed,
+            duration: test.duration,
+            pending: test.pending,
+            fn: test.fn ? test.fn.toString() : '',
+            err: _ipcErr(test.err)
+        };
+    }
+
+    function _ipcStats ( runner, stats ) {
+        return {
+            passes: stats.passes,
+            failures: stats.failures,
+            duration: new Date() - stats.start,
+            progress: stats.tests / runner.total * 100 | 0,
+        };
+    }
+
+    Base.call(this, runner);
+
+    var self = this, stats = this.stats;
+
+    runner.on('start', function () {
+        process.send({
+            channel: 'runner:start',
+        });
+    });
+
+    runner.on('end', function () {
+        process.send({
+            channel: 'runner:end',
+        });
+    });
+
+    runner.on('suite', function(suite){
+        process.send({
+            channel: 'runner:suite',
+            suite: _ipcSuite(suite)
+        });
+    });
+
+    runner.on('suite end', function (suite) {
+        process.send({
+            channel: 'runner:suite-end',
+            suite: _ipcSuite(suite)
+        });
+    });
+
+    runner.on('test', function(test) {
+        process.send({
+            channel: 'runner:test',
+            test: _ipcTest(test)
+        });
+    });
+
+    runner.on('test end', function(test) {
+        process.send({
+            channel: 'runner:test-end',
+            stats: _ipcStats(runner,stats),
+            test: _ipcTest(test),
+        });
+    });
+
+    runner.on('pending', function (test) {
+        process.send({
+            channel: 'runner:pending',
+            test: _ipcTest(test),
+        });
+    });
+
+    runner.on('pass', function (test) {
+        process.send({
+            channel: 'runner:pass',
+            test: _ipcTest(test)
+        });
+    });
+
+    runner.on('fail', function (test, err) {
+        process.send({
+            channel: 'runner:failed',
+            test: _ipcTest(test),
+            err: _ipcErr(err)
+        });
+    });
+}
+CoreReporter.prototype = Base.prototype;
+
+// DefaultReporter
+function DefaultReporter(runner) {
+
     Base.call(this, runner);
 
     var self = this,
@@ -139,7 +261,8 @@ function Spec(runner) {
         return Array(indents).join('  ');
     }
 
-    function _onStart () {}
+    function _onStart () {
+    }
     function _onSuite ( suite ) {
         ++indents;
         console.log(color('suite', '%s%s'), indent(), suite.title);
@@ -177,17 +300,21 @@ function Spec(runner) {
         cursor.CR();
         console.log(fmt, test.title);
     }
+    function _onTestEnd (test) {
+    }
 
     runner.on('start', _onStart);
+    runner.on('end', self.epilogue.bind(self));
     runner.on('suite', _onSuite);
     runner.on('suite end', _onSuiteEnd);
+    runner.on('test end', _onTestEnd);
     runner.on('pending', _onPending);
     runner.on('pass', _onPass);
     runner.on('fail', _onFail);
-    runner.on('end', self.epilogue.bind(self));
 
-    // IPC
+    // IPC (from page)
     Ipc.on('runner:start', _onStart);
+    Ipc.on('runner:end', function ( event ) {});
     Ipc.on('runner:suite', function ( event, suite ) { _onSuite(suite); });
     Ipc.on('runner:suite-end', function ( event, suite ) { _onSuiteEnd(suite); });
     Ipc.on('runner:pending', function ( event, test ) { _onPending(test); });
@@ -205,13 +332,10 @@ function Spec(runner) {
         console.log(fmt, test.title);
         cursor.CR();
 
-        fmt = color('error message', ' %s')
-            ;
+        fmt = color('error message', ' %s');
         console.log(fmt, err.stack);
     });
-    Ipc.on('runner:end', function ( event ) {});
 }
-Spec.prototype = Base.prototype;
-SpecFull.prototype = Base.prototype;
+DefaultReporter.prototype = Base.prototype;
 
 module.exports = Test;
