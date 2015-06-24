@@ -7,11 +7,6 @@ var del = require('del');
 var Fs = require('fs');
 var Path = require('path');
 
-// special tasks
-var browserify = require('browserify');
-var vulcanize = require('vulcanize');
-var hydrolysis = require('hydrolysis');
-
 // ==============================
 // paths
 // ==============================
@@ -33,6 +28,9 @@ var paths = {
 
 // js
 gulp.task('js-min', function () {
+    // special tasks
+    var browserify = require('browserify');
+
     // DISABLE
     // // set up the browserify instance on a task basis
     // var b = browserify({
@@ -57,6 +55,9 @@ gulp.task('js-min', function () {
 
 // html
 gulp.task('html-min', function ( done ) {
+    var vulcanize = require('vulcanize');
+    var hydrolysis = require('hydrolysis');
+
     // DISABLE
     vulcanize.setOptions({
         abspath: Path.resolve('./bin/dev/page/ui/'),
