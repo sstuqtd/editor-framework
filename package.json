@@ -18,7 +18,7 @@
         "api-page": "jsdoc -c ./jsdoc-page.conf.json"
     },
     "dependencies": {
-        "async": "1.1.0",
+        "async": "1.2.1",
         "chai": "2.3.0",
         "chalk": "1.0.0",
         "chokidar": "1.0.2",
