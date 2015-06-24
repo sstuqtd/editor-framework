@@ -75,7 +75,10 @@ Test.run = function ( path, opts ) {
 
     mocha.run(function (failures) {
         if (opts && opts.fulltest && failures > 0) {
-            process.send(path);
+            process.send({
+                'channel': 'process:end',
+                'failed-path': path,
+            });
         }
         process.exit(failures);
     });
