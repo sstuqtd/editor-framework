@@ -181,12 +181,14 @@ EditorMenu.prototype.clear = function () {
  * @param {string} path - A menu path
  * @param {object[]|object} template
  * @example
+ * ```js
  * var editorMenu = new Editor.Menu();
  * editorMenu.add( 'foo/bar', {
  *     label: foobar,
  *     message: 'foobar:say',
  *     params: ['foobar: hello!']
  * });
+ * ```
  */
 EditorMenu.prototype.add = function ( path, template ) {
     EditorMenu.parseTemplate(template);

@@ -207,6 +207,7 @@ function _saveProfile ( path, profile ) {
  *  - clear: clear all properties in the profile.
  * @see Editor.registerProfilePath
  * @example
+ * ```js
  * // register a project profile
  * Editor.registerProfilePath( 'project', '~/foo/bar');
  *
@@ -219,6 +220,7 @@ function _saveProfile ( path, profile ) {
  * // change and save your profile
  * foobarProfile.foo = 'hello foo';
  * foobarProfile.save();
+ * ```
  */
 Editor.loadProfile = function ( name, type, defaultProfile ) {
     var path = Editor._type2profilepath[type];
