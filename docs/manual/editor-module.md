@@ -8,7 +8,7 @@ This module can be categorized into the following parts:
 
 Editor module provides following properties to give user access to common paths:
 
-  - `Editor.cwd`: The current app.js working directory path.
+  - `Editor.appPath`: The current app.js working directory path.
   - `Editor.mainEntry`: Your main entry file. Usually it is `{your-app}/app.js`.
   - `Editor.frameworkPath`: The editor framework module path. Usually it is `{your-app}/editor-framework/`
   - `Editor.appHome`: Your application's home path. Usually it is `~/.{your-app-name}`
