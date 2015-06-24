@@ -105,8 +105,10 @@ function _packages2path ( urlInfo ) {
  * @method url
  * @param {string} url
  * @example
+ * ```js
  * // it will return "{your-app-path}/foobar/foobar.js"
  * Editor.url('app://foobar/foobar.js');
+ * ```
  */
 Editor.url = function ( url ) {
     var urlInfo = Url.parse(url);
@@ -141,6 +143,7 @@ Editor.require = function ( url ) {
  * @param {string} protocol
  * @param {function} fn
  * @example
+ * ```js
  * var Path = require('path');
  *
  * var _url2path = function ( base ) {
@@ -153,6 +156,7 @@ Editor.require = function ( url ) {
  * };
  *
  * Editor.registerProtocol('editor-framework', _url2path(Editor.frameworkPath));
+ * ```
  */
 Editor.registerProtocol = function ( protocol, fn ) {
     Editor._protocol2fn[protocol+':'] = fn;

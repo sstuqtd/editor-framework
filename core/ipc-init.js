@@ -253,7 +253,9 @@ Editor.sendToAll = function () {
  * @param {string} channel
  * @param {...*} [args] - whatever arguments the message needs
  * @example
+ * ```js
  * Editor.sendToPanel( 'package.panel', 'ipc-foo-bar', 'arg1', 'arg2', ... );
+ * ```
  */
 Editor.sendToPanel = function ( panelID, message ) {
     var win = Editor.Panel.findWindow( panelID );
