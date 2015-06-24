@@ -34,7 +34,7 @@ Test.liveRun = function ( path ) {
 
             files = require(indexFile);
             files.forEach(function ( file ) {
-                Test.liveRun( file );
+                Test.liveRun( Path.join(path,file) );
             });
         }
         else {
@@ -47,7 +47,7 @@ Test.liveRun = function ( path ) {
     }
     else {
         console.log( Chalk.magenta( 'Start test (' + path + ')') );
-        SpawnSync(exePath, ['./', '--test', path], {stdio: 'inherit'});
+        SpawnSync(exePath, [Editor.App.path, '--test', path], {stdio: 'inherit'});
     }
 };
 
