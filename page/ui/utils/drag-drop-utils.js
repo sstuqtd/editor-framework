@@ -13,10 +13,14 @@ EditorUI.DragDrop = (function () {
             } );
             dataTransfer.effectAllowed = effect;
             dataTransfer.dropEffect = 'none';
+            // FIXME: https://github.com/atom/electron/issues/1276
+            dataTransfer.setData('text', 'dummy');
             dataTransfer.setData('editor/type', type);
             dataTransfer.setData('editor/items', ids.join());
             var img = this.getDragIcon(items);
             dataTransfer.setDragImage(img, -10, 10);
+
+            Editor.sendToWindows('editor:dragstart');
         },
 
         drop: function ( dataTransfer ) {
@@ -32,6 +36,7 @@ EditorUI.DragDrop = (function () {
 
         end: function () {
             _allowed = false;
+            Editor.sendToWindows('editor:dragend');
         },
 
         updateDropEffect: function ( dataTransfer, dropEffect ) {

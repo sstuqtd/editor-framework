@@ -35,7 +35,7 @@ EditorUI.droppable = (function () {
                         this.fire('drop-area-enter', {
                             dragType: dragType,
                             dragItems: dragItems,
-                            dataTransfer: event.dataTransfer
+                            dataTransfer: event.dataTransfer,
                         });
                     });
                 }
@@ -56,7 +56,7 @@ EditorUI.droppable = (function () {
                         this.fire('drop-area-leave', {
                             dragType: dragType,
                             dragItems: dragItems,
-                            dataTransfer: event.dataTransfer
+                            dataTransfer: event.dataTransfer,
                         });
                     });
                 }
@@ -78,7 +78,9 @@ EditorUI.droppable = (function () {
                     this.fire('drop-area-accept', {
                         dragType: dragType,
                         dragItems: dragItems,
-                        dataTransfer: event.dataTransfer
+                        dataTransfer: event.dataTransfer,
+                        offsetX: event.offsetX,
+                        offsetY: event.offsetY,
                     });
                 });
             }.bind(this));

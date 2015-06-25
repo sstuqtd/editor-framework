@@ -5,12 +5,15 @@ try {
     // prevent default drag
     document.addEventListener( 'dragstart', function (event) {
         event.preventDefault();
+        event.stopPropagation();
     } );
     document.addEventListener( 'drop', function (event) {
         event.preventDefault();
+        event.stopPropagation();
     } );
     document.addEventListener( 'dragover', function (event) {
         event.preventDefault();
+        event.stopPropagation();
     } );
 
     // prevent contextmenu
