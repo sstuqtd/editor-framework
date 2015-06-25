@@ -1,4 +1,5 @@
 title: Create Panels
+category: editor
 permalinks: editor/packages/create-panels
 ---
 

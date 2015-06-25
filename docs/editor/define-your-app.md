@@ -1,4 +1,5 @@
 title: Define Your App
+category: editor
 permalinks: editor/define-your-app
 ---
 

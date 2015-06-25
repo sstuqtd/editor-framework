@@ -1,4 +1,5 @@
 title: Register Shortcuts
+category: editor
 permalinks: editor/packages/register-shortcuts
 ---
 

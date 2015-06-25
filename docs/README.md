@@ -1,12 +1,13 @@
-title: Create Panels
-permalinks: editor
+title: Extending Editor
+category: editor
+permalinks: editor/index
 ---
 
 This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
 ## Editor
 
-  * [Define Your App](editor/define-your-app.md) **This is for creating app with editor-framework. You don't need to read it if you're Fireball user**
+  * [Define Your App](editor/define-your-app.md) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
   * [Editor Module](editor/editor-module.md)
   * [Ipc Channels Between Core and Page Level](editor/ipc-channel.md)
 

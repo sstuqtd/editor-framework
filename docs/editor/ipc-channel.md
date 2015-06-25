@@ -1,4 +1,5 @@
 title: Ipc Channel
+category: editor
 permalinks: editor/ipc-channel
 ---
 

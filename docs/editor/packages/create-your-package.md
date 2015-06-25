@@ -1,4 +1,5 @@
 title: Create Package
+category: editor
 permalinks: editor/packages/create-package
 ---
 

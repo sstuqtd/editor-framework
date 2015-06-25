@@ -1,4 +1,5 @@
 title: Load and Build Packages
+category: editor
 permalinks: editor/packages/load-and-build
 ---
 

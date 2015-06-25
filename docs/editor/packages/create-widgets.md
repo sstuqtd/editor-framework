@@ -1,4 +1,5 @@
 title: Create Widgets
+category: editor
 permalinks: editor/packages/create-widgets
 ---
 

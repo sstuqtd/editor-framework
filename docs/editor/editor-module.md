@@ -1,4 +1,5 @@
 title: Editor Module
+category: editor
 permalinks: editor/editor-module
 ---
 
