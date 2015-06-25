@@ -1,5 +1,5 @@
 title: Ipc Channel
-permalinks: editor/packages/ipc-channel
+permalinks: editor/ipc-channel
 ---
 
 # Ipc Channel Between Core and Page Process

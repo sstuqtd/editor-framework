@@ -1,3 +1,7 @@
+title: Create Panels
+permalinks: editor/packages/create-panels
+---
+
 # Create Panels
 
 Panel is the dockable "mini-windows" unit in Editor Framework. Each panel contains a panel frame.
