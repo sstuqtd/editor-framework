@@ -109,9 +109,12 @@ EditorUI.DragDrop = (function () {
             for ( var i = 0; i < items.length; ++i ) {
                 var item = items[i];
                 if ( i <= 4 ) {
-                    icon.src = 'uuid://' + item.id + '?thumb';
-                    imgPanel.drawImage(icon,0,top,16,16); // icon
-                    imgPanel.fillText(item.name,20,top + 15); // text
+                    // icon
+                    if ( item.icon ) {
+                        imgPanel.drawImage(item.icon,0,top,16,16);
+                    }
+                    // text
+                    imgPanel.fillText(item.name,20,top + 15);
                     top += 15;
                 }
                 else {
