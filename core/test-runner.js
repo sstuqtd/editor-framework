@@ -237,7 +237,7 @@ function DetailsReporter(runner) {
 
     runner.on('fail', function (test, err) {
         process.send({
-            channel: 'runner:failed',
+            channel: 'runner:fail',
             test: _ipcTest(test),
             err: _ipcErr(err)
         });
