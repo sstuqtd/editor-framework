@@ -1,8 +1,3 @@
-title: Extending Editor
-category: editor
-permalinks: editor/index
----
-
 This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
 ## Editor
