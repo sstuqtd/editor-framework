@@ -53,26 +53,89 @@ Let's see message sending methods:
 In core-level script, you can use the following method to send messages:
 
 
-- [Editor.sendToWindows]()
-- [Editor.sendToMainWindow]()
-- [Editor.sendToAll]()
-- [Editor.sendToCore]()
-- [Editor.sendToPanel]()
-- [windowInstance.sendToPage]() you can use `Editor.Window.find` to get window instance
-- [windowInstance.sendRequestToPage]() see also windowInstance.cancelRequestToPage
-
+- [Editor.sendToWindows](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToWindows)
+- [Editor.sendToMainWindow](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToMainWindow)
+- [Editor.sendToAll](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToAll)
+- [Editor.sendToCore](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToCore)
+- [Editor.sendToPanel](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToPanel)
+- [windowInstance.sendToPage](http://docs.fireball-x.com/api/classes/Window.html#method_sendToPage) you can use `Editor.Window.find` to get window instance
+- [windowInstance.sendRequestToPage](http://docs.fireball-x.com/api/classes/Window.html#method_sendRequestToPage) see also windowInstance.cancelRequestToPage
+- [Editor.cancelRequestToPage](http://docs.fireball-x.com/api/classes/Window.html#method_cancelRequestToPage)
 
 ## Page Level
 
 In page-level script, you can use the following method to send messages:
 
-- [Editor.sendToWindows]()
-- [Editor.sendToMainWindow]()
-- [Editor.sendToCore]()
-- [Editor.sendToCoreSync]() will get return value directly
-- [Editor.sendToPanel]()
-- [Editor.sendRequestToCore]() see also `Editor.cancelRequestToCore`
+- [Editor.sendToWindows](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToWindows)
+- [Editor.sendToMainWindow](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToMainWindow)
+- [Editor.sendToCore](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToCore)
+- [Editor.sendToCoreSync](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToCoreSync) will get return value directly
+- [Editor.sendToPanel](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToPanel)
+- [Editor.sendRequestToCore](http://docs.fireball-x.com/api/modules/Editor.html#method_sendRequestToCore)
+
+See also [Editor.cancelRequestToCore](http://docs.fireball-x.com/api/modules/Editor.html#method_cancelRequestToCore) for cancel request.
 
 ## Message Handlers
+
+### On Core Level
+
+Register a message handler in core-level script is easy, just add a property with the name of Ipc channel id to your core-level module:
+
+```js
+module.exports = {
+    // ...
+
+    'demo-simple:open': function () {
+        // do your job in core level, such as open a panel
+        Editor.Panel.open('demo-simple.panel');
+    }
+};
+```
+
+### On Page Level
+
+Register the Ipc channel id you want to listen to in `panels.panel.messages` property of `package.json`:
+```json
+"panels": {
+  "panel": {
+    "messages": [
+        "demo-simple:run"
+    ]
+  }
+}
+```
+Please notice `panel` is the name for panelID, you can register your panel with any name you like, see [Create Panels](packages/create-panels.md).
+
+Once Ipc channel id registered, you can add a property in your `Editor.registerPanel` object:
+
+```js
+Editor.registerPanel( 'demo-simple.panel', {
+    is: 'demo-simple',
+    // ...
+    // to receive IPC message on page-level, you need to register message in package.json
+    "demo-simple:run" : function () {
+        // run some tasks on page-level
+    }
+});
+```
+
+## Message With Parameter
+
+You can pass any number of parameters you like with a message:
+
+```js
+// on core-level
+Editor.sendToPanel('demo-simple.panel', 'demo-simple:log', someText);
+
+// on page-level
+Editor.registerPanel( 'demo-simple.panel', {
+    // log the text passed to editor console
+    "demo-simple:log" : function (text) {
+        Editor.log(text);
+    }
+}
+```
+
+## Broadcast Message
 
 TODO:
