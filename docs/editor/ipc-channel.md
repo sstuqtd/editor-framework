@@ -1,9 +1,8 @@
-title: Ipc Channel
+---
+title: Ipc Channel Between Core and Page Process
 category: editor
 permalinks: editor/ipc-channel
 ---
-
-# Ipc Channel Between Core and Page Process
 
 Editor framework (and Fireball) has two levels of processes:
 

@@ -1,3 +1,4 @@
+---
 title: Extending Editor
 permalinks: editor/index
 ---

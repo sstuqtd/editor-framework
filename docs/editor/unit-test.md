@@ -1,9 +1,8 @@
+---
 title: Unit Test
 category: editor
 permalinks: editor/unit-test
 ---
-
-# Unit Test
 
 In Editor Framework, we can make and run unit test easily with our Test Suite.
 

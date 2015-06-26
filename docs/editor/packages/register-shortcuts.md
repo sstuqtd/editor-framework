@@ -1,9 +1,8 @@
+---
 title: Register Shortcuts
 category: editor
 permalinks: editor/packages/register-shortcuts
 ---
-
-# Register Shortcuts for Your Panel
 
 You can define keyboard shortcuts for your panel in `package.json`. Here is a simple example:
 
