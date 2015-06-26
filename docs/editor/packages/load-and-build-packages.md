@@ -1,9 +1,8 @@
+---
 title: Load and Build Packages
 category: editor
 permalinks: editor/packages/load-and-build
 ---
-
-# Load and Build Packages
 
 Packages can be developed in any of the following file format:
 

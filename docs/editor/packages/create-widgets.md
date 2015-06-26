@@ -1,9 +1,8 @@
+---
 title: Create Widgets
 category: editor
 permalinks: editor/packages/create-widgets
 ---
-
-# Create Widgets
 
 Widgets are pluggable custom elements that can be shared by panels. Widgets must be created inside a package. A good example of a widgets library is Fireball's builtin [ui-kit](https://github.com/fireball-packages/ui-kit).
 
