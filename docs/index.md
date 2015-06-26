@@ -9,6 +9,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   * [Define Your App](/editor/define-your-app) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
   * [Editor Module](/editor/editor-module)
   * [Ipc Channels Between Core and Page Level](/editor/ipc-channel)
+  * [Unit Test](/editor/unit-test)
 
 ## Packages
 
