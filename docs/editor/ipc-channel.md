@@ -118,7 +118,7 @@ Editor.registerPanel( 'demo-simple.panel', {
 });
 ```
 
-## Message With Parameter
+## Message With Arguments
 
 You can pass any number of parameters you like with a message:
 
@@ -135,6 +135,41 @@ Editor.registerPanel( 'demo-simple.panel', {
 }
 ```
 
+### Pass Event Object As Argument
+
+When you use [Editor.sendToAll](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToAll) and [Editor.sendToCore](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToCore), you can add [Editor.requireIpcEvent](http://docs.fireball-x.com/api/modules/Editor.html#property_requireIpcEvent) as the last argument.
+
+For example:
+
+`Editor.sendToCore('foo:bar', 'say hello', Editor.requireIpcEvent )`
+
+When you respond to the message in core level, the first parameter will be event object instead of 'say hello', for more details about event object read [class:event](https://github.com/atom/electron/blob/master/docs/api/ipc-main-process.md#class-event) of Electron docs.
+
+The message handler looks like this:
+
+```js
+    'foo:bar':function ( event, text ) {
+      // the event is the ipc-event object
+      // the text is 'say hello'
+    }
+```
+
+This is very useful if you want to known who send you this Ipc message by looking at `event.sender`.
+
+For example if we want to know from which editor window the message is sent, we can do it like this:
+
+```js
+// in the message handler above:
+
+// get browserWindow (or we call nativeWin) which is part of electron
+var win = BrowserWindow.fromWebContents( event.sender );
+
+// get our Editor.Window instance
+var editorWin = Editor.Window.find(win);
+```
+
 ## Broadcast Message
 
-TODO:
+[Editor.sendToWindows](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToWindows) and [Editor.sendToAll](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToAll) can be used to broadcast message. To prevent sending message to self, you can add [Editor.selfExcluded](http://docs.fireball-x.com/api/modules/Editor.html#property_selfExcluded) as the last argument. For example:
+
+`Editor.sendToAll( 'foo:bar', Editor.selfExcluded )` will not send Ipc message to the script itself.
