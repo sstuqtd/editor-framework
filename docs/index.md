@@ -11,6 +11,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   * [Editor Module](/editor/editor-module)
   * [Ipc Channels Between Core and Page Level](/editor/ipc-channel)
   * [Unit Test](/editor/unit-test)
+  * [CSS Layout Helper](/editor/css-layout)
 
 ## Packages
 
