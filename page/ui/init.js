@@ -115,19 +115,20 @@
         }
 
         var el = null;
-        var elementDOM = Polymer.dom(element);
+        // var elementDOM = Polymer.dom(element);
+        var elementDOM = element;
         for ( var i = 0; i < elementDOM.children.length; ++i ) {
             el = EditorUI.getFirstFocusableChild(elementDOM.children[i]);
             if ( el !== null )
                 return el;
         }
 
-        var rootDOM = Polymer.dom(element.root);
-        if ( rootDOM ) {
-            el = EditorUI.getFirstFocusableChild(rootDOM);
-            if ( el !== null )
-                return el;
-        }
+        // var rootDOM = Polymer.dom(element.root);
+        // if ( rootDOM ) {
+        //     el = EditorUI.getFirstFocusableChild(rootDOM);
+        //     if ( el !== null )
+        //         return el;
+        // }
 
         return null;
     };
