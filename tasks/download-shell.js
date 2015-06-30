@@ -39,70 +39,24 @@ gulp.task('update-electron', function(cb) {
     }, cb);
 });
 
-gulp.task('update-fire-shell', function(cb) {
-    updateFireShell.downloadFireShell({
-        version: fireshellVer,
-        outputDir: 'bin/fire-shell'
-    }, cb);
-});
-
-gulp.task('update-fire-shell-china', function(cb) {
-    updateFireShell.downloadFireShell({
-        version: fireshellVer,
-        outputDir: 'bin/fire-shell',
-        chinaMirror: true
-    }, cb);
-});
-
-gulp.task('prebuild-native-module', shell.task(['node config.js true']));
-
-gulp.task('update-atom-native-module', ['prebuild-native-module'], function(cb) {
-    var setcmd = process.platform === 'win32' ? 'set' : 'export';
-    var stream = shell([
-        'apm install'
-    ], {
-        cwd: 'bin',
-        env: {
-            ATOM_NODE_VERSION: electronVer
-        }
-    });
-    stream.write(process.stdout);
-    stream.end();
-    stream.on('finish', cb);
-});
-
-gulp.task('update-fire-native-module', function(cb) {
-    var nativeModules = require('../../src/main/package.json')['native-modules'];
-    updateFireShell.downloadNativeModules({
-        version: fireshellVer,
-        outputDir: Path.join('bin','node_modules'),
-        nativeModules: nativeModules,
-        isFireShell: true
-    }, cb);
-});
-
-gulp.task('update-fire-native-module-china', function(cb) {
-    var nativeModules = require('../../src/main/package.json')['native-modules'];
-    updateFireShell.downloadNativeModules({
-        version: fireshellVer,
-        outputDir: Path.join('bin','node_modules'),
-        nativeModules: nativeModules,
-        isFireShell: true,
-        chinaMirror: true
-    }, cb);
-});
+// gulp.task('update-fire-shell', function(cb) {
+//     updateFireShell.downloadFireShell({
+//         version: fireshellVer,
+//         outputDir: 'bin/fire-shell'
+//     }, cb);
+// });
+//
+// gulp.task('update-fire-shell-china', function(cb) {
+//     updateFireShell.downloadFireShell({
+//         version: fireshellVer,
+//         outputDir: 'bin/fire-shell',
+//         chinaMirror: true
+//     }, cb);
+// });
 
 gulp.task('clear-cached-downloads', function(cb) {
     updateFireShell.clearCachedDownloads({
         versionAtom: electronVer,
         versionFire: fireshellVer
-    }, cb);
-});
-
-gulp.task('copy-fire-shell', ['del-dist'], function(cb) {
-    updateFireShell.downloadFireShell({
-        version: fireshellVer,
-        outputDir: 'dist/',
-        chinaMirror: true
     }, cb);
 });

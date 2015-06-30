@@ -5,9 +5,11 @@ var Path = require('path');
 
 // require tasks
 require('./tasks/download-shell');
-require('./tasks/build');
-require('./tasks/build-min');
-require('./tasks/build-api');
+// require('./tasks/build');
+// require('./tasks/build-min');
+// require('./tasks/build-api');
+
+gulp.task('bootstrap', gulpSequence('npm', 'bower', ['update-electron','install-builtin', 'install-shared-packages']));
 
 gulp.task('update-config', function ( done ) {
     var utils = require('./tasks/utils');
@@ -24,8 +26,8 @@ gulp.task('update-config', function ( done ) {
 });
 
 gulp.task('install-shared-packages', function(cb) {
-    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
-    var pkgs = pjson['shared-packages'];
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var pkgs = appJson['shared-packages'];
     var count = pkgs.length;
     pkgs.forEach(function(pkg) {
         if (!Fs.existsSync(Path.join(pkg, '.git'))) {
@@ -49,8 +51,8 @@ gulp.task('install-shared-packages', function(cb) {
 });
 
 gulp.task('update-shared-packages', function(cb) {
-    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
-    var pkgs = pjson['shared-packages'];
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var pkgs = appJson['shared-packages'];
     var count = pkgs.length;
     pkgs.forEach(function(pkg) {
         if (Fs.existsSync(Path.join(pkg, '.git'))) {
@@ -72,10 +74,10 @@ gulp.task('update-shared-packages', function(cb) {
 });
 
 gulp.task('install-builtin', function(cb) {
-    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
-    var count = pjson.builtins.length;
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var count = appJson.builtins.length;
     if (Fs.isDirSync('builtin')) {
-        pjson.builtins.map(function(packageName) {
+        appJson.builtins.map(function(packageName) {
             if (!Fs.existsSync(Path.join('builtin', packageName, '.git'))) {
                 git.runGitCmdInPath(['clone', 'https://github.com/fireball-packages/' + packageName], 'builtin', function() {
                     if (--count <= 0) {
@@ -93,7 +95,7 @@ gulp.task('install-builtin', function(cb) {
         });
     } else {
         Fs.mkdirSync('builtin');
-        pjson.builtins.map(function(packageName) {
+        appJson.builtins.map(function(packageName) {
             count++;
             git.runGitCmdInPath(['clone', 'https://github.com/fireball-packages/' + packageName], 'builtin', function() {
                 if (--count <= 0) {
@@ -106,10 +108,10 @@ gulp.task('install-builtin', function(cb) {
 });
 
 gulp.task('update-builtin', function(cb) {
-    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
     var count = 0;
     if (Fs.isDirSync('builtin')) {
-        pjson.builtins.map(function(packageName) {
+        appJson.builtins.map(function(packageName) {
             if (Fs.existsSync(Path.join('builtin', packageName, '.git'))) {
                 count++;
                 git.runGitCmdInPath(['pull', 'https://github.com/fireball-packages/' + packageName, 'master'], Path.join('builtin', packageName), function() {
@@ -134,3 +136,40 @@ gulp.task('update-builtin', function(cb) {
 });
 
 gulp.task('clean-all', ['clean', 'clean-min']);
+
+gulp.task('bower', shell.task(['bower install']));
+
+gulp.task('npm', function(cb) {
+    var cmdstr = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var tmpenv = process.env;
+    var homepath = process.platform === 'win32' ? Path.join(tmpenv.HOMEPATH, '.node-gyp') : Path.join(tmpenv.HOME, '.electron-gyp');
+    tmpenv.npm_config_disturl = 'https://atom.io/download/atom-shell';
+    tmpenv.npm_config_target = appJson['electron-version'];
+    tmpenv.npm_config_arch = process.platform === 'win32' ? 'ia32' : 'x64';
+    console.log(homepath);
+    tmpenv.HOME = homepath;
+    var child = spawn(cmdstr, ['install'], {
+        stdio: 'inherit',
+        env: tmpenv
+    });
+    child.on('exit', cb);
+});
+
+gulp.task('run', function(cb) {
+    var cmdStr = '';
+    var optArr = [];
+    if (process.platform === "win32") {
+        cmdStr = 'bin\\electron\\electron.exe';
+        optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
+    } else {
+        cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
+        optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
+    }
+    var child = spawn(cmdStr, optArr, {
+        stdio: 'inherit'
+    });
+    child.on('exit', function() {
+        cb();
+    });
+});
