@@ -3,6 +3,7 @@ var git = require('./utils/git.js');
 var Fs = require('fire-fs');
 var Path = require('path');
 var gulpSequence = require('gulp-sequence');
+var spawn = require('child_process').spawn;
 
 // require tasks
 require('./tasks/download-shell');
@@ -10,7 +11,7 @@ require('./tasks/download-shell');
 // require('./tasks/build-min');
 // require('./tasks/build-api');
 
-gulp.task('bootstrap', gulpSequence('npm', ['update-electron','install-builtin', 'install-shared-packages']));
+gulp.task('bootstrap', gulpSequence('npm-rebuild', ['update-electron','install-builtin', 'install-shared-packages']));
 
 gulp.task('update-config', function ( done ) {
     var utils = require('./tasks/utils');
@@ -138,35 +139,64 @@ gulp.task('update-builtin', function(cb) {
 
 gulp.task('clean-all', ['clean', 'clean-min']);
 
-gulp.task('rm-native-modules', function(cb) {
-    var del = require('del');
-    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
-    var nativeModules = pjson['native-modules'];
-    var nativePaths = nativeModules.map(function(filepath) {
-        return 'node_modules/' + filepath;
-    });
-    console.log("Deleting existing native modules to make sure rebuild triggers.");
-    del(nativePaths, function(err) {
-        if (err) throw err;
-        else cb();
-    });
-});
+// gulp.task('rm-native-modules', function(cb) {
+//     var del = require('del');
+//     var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+//     var nativeModules = appJson['native-modules'];
+//     var nativePaths = nativeModules.map(function(filepath) {
+//         return 'node_modules/' + filepath;
+//     });
+//     console.log("Deleting existing native modules to make sure rebuild triggers.");
+//     del(nativePaths, function(err) {
+//         if (err) throw err;
+//         else cb();
+//     });
+// });
 
-gulp.task('npm', ['rm-native-modules'], function(cb) {
-    var cmdstr = process.platform === 'win32' ? 'npm.cmd' : 'npm';
+function findNativeModulePathRecursive(path) {
+    var nativePaths = [];
+    if (Fs.existsSync(Path.join(path, 'binding.gyp'))) {
+        nativePaths.push(path);
+    } else {
+        if (Fs.isDirSync(Path.join(path, 'node_modules'))) {
+            var subPaths = Fs.readdirSync(Path.join(path, 'node_modules'));
+            subPaths.forEach(function(subpath) {
+                var subCollect = findNativeModulePathRecursive(Path.join(path, 'node_modules', subpath));
+                if (subCollect.length > 0) {
+                    nativePaths = nativePaths.concat(subCollect);
+                }
+            });
+        }
+    }
+    return nativePaths;
+}
+
+gulp.task('npm-rebuild', function(cb) {
+    var cmdstr = process.platform === 'win32' ? 'node-gyp.cmd' : 'node-gyp';
     var appJson = JSON.parse(Fs.readFileSync('./package.json'));
     var tmpenv = process.env;
-    var homepath = process.platform === 'win32' ? Path.join(tmpenv.HOMEPATH, '.node-gyp') : Path.join(tmpenv.HOME, '.electron-gyp');
-    tmpenv.npm_config_disturl = 'https://atom.io/download/atom-shell';
-    tmpenv.npm_config_target = appJson['electron-version'];
-    tmpenv.npm_config_arch = process.platform === 'win32' ? 'ia32' : 'x64';
-    console.log(homepath);
-    tmpenv.HOME = homepath;
-    var child = spawn(cmdstr, ['install'], {
-        stdio: 'inherit',
-        env: tmpenv
+    tmpenv.HOME = process.platform === 'win32' ? Path.join(tmpenv.HOMEPATH, '.node-gyp') : Path.join(tmpenv.HOME, '.electron-gyp');
+    var disturl = 'https://atom.io/download/atom-shell';
+    var target = appJson['electron-version'];
+    var arch = process.platform === 'win32' ? 'ia32' : 'x64';
+    var nativePaths = findNativeModulePathRecursive('.');
+    console.log('rebuilding native modules: \n' + nativePaths);
+    var count = nativePaths.length;
+    nativePaths.forEach(function(path) {
+        var child = spawn(cmdstr, [
+            'rebuild', '--target='+target,
+            '--arch='+arch, '--dist-url='+disturl
+            ], {
+            stdio: 'inherit',
+            env: tmpenv,
+            cwd: path
+        });
+        child.on('exit', function() {
+            if (--count <= 0) {
+                cb();
+            }
+        });
     });
-    child.on('exit', cb);
 });
 
 gulp.task('run', function(cb) {

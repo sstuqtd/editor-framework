@@ -13,8 +13,9 @@
         "url": "https://github.com/fireball-x/editor-framework/issues"
     },
     "scripts": {
-        "install": "node utils/init.js && gulp bootstrap && bower install",
-        "run": "gulp run",
+        "preinstall": "node utils/init.js",
+        "install": "gulp bootstrap && bower install",
+        "start": "gulp run",
         "test": "node utils/run-tests.js",
         "api-core": "jsdoc -c ./jsdoc-core.conf.json",
         "api-page": "jsdoc -c ./jsdoc-page.conf.json"
@@ -63,6 +64,9 @@
         "tester",
         "ui-kit",
         "pixi-grid"
+    ],
+    "native-modules": [
+        "chokidar"
     ],
     "fire-shell-version": "0.24.0",
     "electron-version": "0.28.3",
