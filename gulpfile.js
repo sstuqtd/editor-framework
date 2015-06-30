@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var git = require('./utils/git.js');
 var Fs = require('fire-fs');
 var Path = require('path');
+var gulpSequence = require('gulp-sequence');
 
 // require tasks
 require('./tasks/download-shell');
@@ -139,7 +140,21 @@ gulp.task('clean-all', ['clean', 'clean-min']);
 
 gulp.task('bower', shell.task(['bower install']));
 
-gulp.task('npm', function(cb) {
+gulp.task('rm-native-modules', function(cb) {
+    var del = require('del');
+    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var nativeModules = pjson['native-modules'];
+    var nativePaths = nativeModules.map(function(filepath) {
+        return 'node_modules/' + filepath;
+    });
+    console.log("Deleting existing native modules to make sure rebuild triggers.");
+    del(nativePaths, function(err) {
+        if (err) throw err;
+        else cb();
+    });
+});
+
+gulp.task('npm', ['rm-native-modules'], function(cb) {
     var cmdstr = process.platform === 'win32' ? 'npm.cmd' : 'npm';
     var appJson = JSON.parse(Fs.readFileSync('./package.json'));
     var tmpenv = process.env;
