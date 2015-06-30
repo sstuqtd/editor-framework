@@ -106,7 +106,11 @@
 
     //
     EditorUI.getFirstFocusableChild = function ( element ) {
-        if ( element.tabIndex !== null && element.tabIndex !== undefined ) {
+        if ( element.tabIndex !== null &&
+             element.tabIndex !== undefined &&
+             element.tabIndex !== -1
+           )
+        {
             return element;
         }
 
@@ -377,27 +381,27 @@
         return importList;
     };
 
-    // DELME?? Polymer 0.9 support behaviors, which do the same things
-    // EditorUI.mixin = function ( obj ) {
-    //     'use strict';
-    //     for ( var i = 1, length = arguments.length; i < length; ++i ) {
-    //         var source = arguments[i];
-    //         for ( var name in source) {
-    //             if ( name === 'properties' ||
-    //                  name === 'observers' ||
-    //                  name === 'listeners' )
-    //             {
-    //                 obj[name] = Editor.JS.addon( obj[name], source[name] );
-    //             }
-    //             else {
-    //                 if ( obj[name] === undefined ) {
-    //                     Editor.JS.copyprop( name, source, obj);
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return obj;
-    // };
+    // binding helpers
+    EditorUI.bind = function ( el1, value1, el2, value2 ) {
+        el1.addEventListener( value1+'-changed', function ( event ) {
+            el2.set( value2, event.detail.value );
+        });
+        el2.addEventListener( value2+'-changed', function ( event ) {
+            el1.set( value1, event.detail.value );
+        });
+    };
+
+    EditorUI.toHumanText = function ( text ) {
+        var result = text.replace(/([A-Z])/g, ' $1').replace(/[-_]/g, ' ');
+
+        // remove first white-space
+        if ( result.charAt(0) === ' ' ) {
+            result.slice(1);
+        }
+
+        // capitalize the first letter
+        return result.charAt(0).toUpperCase() + result.slice(1);
+    };
 
     return EditorUI;
 })();
