@@ -53,8 +53,8 @@ gulp.task('install-shared-packages', function(cb) {
 });
 
 gulp.task('update-shared-packages', function(cb) {
-    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
-    var pkgs = appJson['shared-packages'];
+    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
+    var pkgs = pjson['shared-packages'];
     var count = pkgs.length;
     pkgs.forEach(function(pkg) {
         if (Fs.existsSync(Path.join(pkg, '.git'))) {
@@ -62,15 +62,16 @@ gulp.task('update-shared-packages', function(cb) {
                 git.runGitCmdInPath(['fetch', '--all'], pkg, function() {
                     console.log('Remote head updated!');
                     if (--count <= 0) {
-                        console.log('Sahred packages update complete!');
+                        console.log('Shared packages update complete!');
                         cb();
                     }
                 });
             });
         } else {
-            console.warn('Shared package ' + pkg + ' not initialized, please run "gulp install-shared-packages" first!');
-            cb();
-            process.exit();
+            console.warn(chalk.red('Shared package ' + pkg + ' not initialized, please run "gulp install-shared-packages" first!'));
+            if (--count <= 0) {
+                cb();
+            }
         }
     });
 });
@@ -110,10 +111,10 @@ gulp.task('install-builtin', function(cb) {
 });
 
 gulp.task('update-builtin', function(cb) {
-    var appJson = JSON.parse(Fs.readFileSync('./package.json'));
+    var pjson = JSON.parse(Fs.readFileSync('./package.json'));
     var count = 0;
     if (Fs.isDirSync('builtin')) {
-        appJson.builtins.map(function(packageName) {
+        pjson.builtins.forEach(function(packageName) {
             if (Fs.existsSync(Path.join('builtin', packageName, '.git'))) {
                 count++;
                 git.runGitCmdInPath(['pull', 'https://github.com/fireball-packages/' + packageName, 'master'], Path.join('builtin', packageName), function() {
@@ -121,18 +122,17 @@ gulp.task('update-builtin', function(cb) {
                         console.log('Remote head updated!');
                         if (--count <= 0) {
                             console.log('Builtin packages update complete!');
-                            cb();
+                            return cb();
                         }
                     });
                 });
             } else {
-                console.warn('Builtin package ' + packageName + ' not initialized, please run "gulp install-builtin" first!');
-                cb();
-                process.exit();
+                console.error(chalk.red('Builtin package ' + packageName + ' not initialized, please run "gulp install-builtin" first!'));
+                process.exit(1);
             }
         });
     } else {
-        console.warn('Builtin folder not initialized, please run "gulp install-builtin" first!');
+        console.error(chalk.red('Builtin folder not initialized, please run "gulp install-builtin" first!'));
         return cb();
     }
 });

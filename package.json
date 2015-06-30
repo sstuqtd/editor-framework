@@ -16,6 +16,7 @@
         "preinstall": "node utils/init.js",
         "install": "gulp bootstrap && bower install",
         "start": "gulp run",
+        "update": "gulp update-builtin && gulp update-shared-packages",
         "test": "node utils/run-tests.js",
         "api-core": "jsdoc -c ./jsdoc-core.conf.json",
         "api-page": "jsdoc -c ./jsdoc-page.conf.json"

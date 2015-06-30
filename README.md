@@ -21,31 +21,36 @@ widgets and panels, then refresh the page to apply the changes.
 
 ## Install
 
+There are two ways to install and bootstrap Editor Framework:
+
+### Clone This Repo
+
+Enter your repo's folder, then run the following command:
+
 ```bash
-# Install npm packages
-sh utils/npm.sh install # DO NOT use npm directly
-
-# Install bower packages
-bower install
-
-# Install electron
-gulp update-electron
-
-# Install builtin packages
-gulp install-builtin
-
-# Install shared packages
-gulp install-shared-packages
-
-# run the demo app
-sh demo.sh
+# Install npm packages, the npm script will take care of other dependencies
+npm install
 ```
 
-**NOTE:** we use `npm.sh` instead of npm here, this is just a shell script follow the [electron way](https://github.com/atom/electron/blob/master/docs/tutorial/using-native-node-modules.md) for using native node modules.
+### Install With NPM
+
+You can also install Editor Framework into your app as a npm package:
+
+```bash
+# Again, npm script will take care of other dependencies
+npm install editor-framework
+```
+
+**NOTE:** after npm dependencies are installed, we will run `node-gyp rebuild` against all native modules in editor-framework path. Please make sure `node-gyp` works in your command line environment. To learn more about native module building and setting up a `node-gyp` working environment, please check out:
+
+- [node-gyp](https://github.com/TooTallNate/node-gyp)
+- [Build native module for electron](https://github.com/atom/electron/blob/master/docs/tutorial/using-native-node-modules.md)
+- [native-module for beginner](https://github.com/Elzair/native-module)
+
 
 ## Builtin Packages
 
-The `utils/install-builtin.sh` will install these builtin packages:
+The `gulp install-builtin` will install these builtin packages(this operation is covered in npm install script):
 
  - Developer Tools
    - [console](https://github.com/fireball-packages/console)
@@ -56,6 +61,12 @@ The `utils/install-builtin.sh` will install these builtin packages:
    - [ui-kit](https://github.com/fireball-packages/ui-kit)
    - [pixi-grid](https://github.com/fireball-packages/pixi-grid)
 
+## Update
+
+```bash
+# update builtin packages and shared packages
+npm run update
+```
 
 ## Develop
 
