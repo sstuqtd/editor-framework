@@ -59,7 +59,7 @@
 :host(.active) .border {
     /* border-top: 1px solid rgba(255, 255, 255, 0.2); */
     height: 21px;
-    background-color: #444;
+    background-color: #474747;
 }
 
 :host([out-of-date]) .border, :host(.active[out-of-date]) .border {
