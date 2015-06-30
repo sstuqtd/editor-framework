@@ -10,7 +10,7 @@ require('./tasks/download-shell');
 // require('./tasks/build-min');
 // require('./tasks/build-api');
 
-gulp.task('bootstrap', gulpSequence('npm', 'bower', ['update-electron','install-builtin', 'install-shared-packages']));
+gulp.task('bootstrap', gulpSequence('npm', ['update-electron','install-builtin', 'install-shared-packages']));
 
 gulp.task('update-config', function ( done ) {
     var utils = require('./tasks/utils');
@@ -137,8 +137,6 @@ gulp.task('update-builtin', function(cb) {
 });
 
 gulp.task('clean-all', ['clean', 'clean-min']);
-
-gulp.task('bower', shell.task(['bower install']));
 
 gulp.task('rm-native-modules', function(cb) {
     var del = require('del');

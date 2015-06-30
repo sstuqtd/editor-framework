@@ -13,7 +13,7 @@
         "url": "https://github.com/fireball-x/editor-framework/issues"
     },
     "scripts": {
-        "install": "node utils/init.js && gulp bootstrap",
+        "install": "node utils/init.js && gulp bootstrap && bower install",
         "run": "gulp run",
         "test": "node utils/run-tests.js",
         "api-core": "jsdoc -c ./jsdoc-core.conf.json",
