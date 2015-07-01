@@ -129,7 +129,7 @@ EditorUI.DragDrop = (function () {
                 }
                 else {
                     imgPanel.fillStyle = 'gray';
-                    imgPanel.fillText('[more.....]',20,top + 15);
+                    imgPanel.fillText('[more...]',20,top + 15);
                     break;
                 }
 
