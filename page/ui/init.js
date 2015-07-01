@@ -448,5 +448,17 @@
         return result.charAt(0).toUpperCase() + result.slice(1);
     };
 
+    EditorUI.dashToCamelCase = function(dash) {
+        return dash.replace(/-([a-z])/g, function(m) {
+            return m[1].toUpperCase();
+        });
+    };
+
+    EditorUI.camelToDashCase = function(camel) {
+        return camel.replace(/([a-z][A-Z])/g, function (g) {
+            return g[0] + '-' + g[1].toLowerCase();
+        });
+    };
+
     return EditorUI;
 })();
