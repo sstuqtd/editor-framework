@@ -115,7 +115,12 @@ EditorUI.DragDrop = (function () {
                 var item = items[i];
                 if ( i <= 4 ) {
                     // icon
-                    if ( item.icon ) {
+                    // NOTE: the icon may be broken, use naturalWidth detect this
+                    if ( item.icon &&
+                         item.icon.naturalWidth !== undefined &&
+                         item.icon.naturalWidth !== 0
+                       )
+                    {
                         imgPanel.drawImage(item.icon,0,top,16,16);
                     }
                     // text
