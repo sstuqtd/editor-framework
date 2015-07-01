@@ -182,6 +182,10 @@ gulp.task('npm-rebuild', function(cb) {
     var nativePaths = findNativeModulePathRecursive('.');
     console.log('rebuilding native modules: \n' + nativePaths);
     var count = nativePaths.length;
+    if (count === 0) {
+        console.log('no native module found!');
+        return cb();
+    }
     nativePaths.forEach(function(path) {
         var child = spawn(cmdstr, [
             'rebuild', '--target='+target,

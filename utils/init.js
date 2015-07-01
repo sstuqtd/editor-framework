@@ -9,13 +9,27 @@ var packages = [
     'del@1.2.0'
 ];
 
-var proc = exec('npm install ' + packages.join(' '));
-proc.stdout.on('data', function(data) {
-    console.log(data.toString());
+packages = packages.filter(function(pkg) {
+   var pkgName = pkg.split('@')[0];
+   if (require(pkgName)) {
+       return false;
+   } else {
+       return true;
+   }
 });
-proc.stderr.on('data', function(data) {
-    console.log(data.toString());
-});
-proc.on('exit', function() {
+
+if (packages.length > 0) {
+    var proc = exec('npm install ' + packages.join(' '));
+    proc.stdout.on('data', function(data) {
+        console.log(data.toString());
+    });
+    proc.stderr.on('data', function(data) {
+        console.log(data.toString());
+    });
+    proc.on('exit', function() {
+        console.log('Gulp task dependency installed successful! \n Please run "gulp bootstrap" to setup development environment.');
+    });
+} else {
     console.log('Gulp task dependency installed successful! \n Please run "gulp bootstrap" to setup development environment.');
-});
+}
+
