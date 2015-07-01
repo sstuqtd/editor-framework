@@ -423,10 +423,16 @@
     // binding helpers
     EditorUI.bind = function ( el1, value1, el2, value2 ) {
         el1.addEventListener( value1+'-changed', function ( event ) {
-            el2.set( value2, event.detail.value );
+            if ( event.detail.path )
+                el2.set( event.detail.path, event.detail.value );
+            else
+                el2.set( value2, event.detail.value );
         });
         el2.addEventListener( value2+'-changed', function ( event ) {
-            el1.set( value1, event.detail.value );
+            if ( event.detail.path )
+                el1.set( event.detail.path, event.detail.value );
+            else
+                el1.set( value1, event.detail.value );
         });
     };
 
