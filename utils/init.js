@@ -11,9 +11,10 @@ var packages = [
 
 packages = packages.filter(function(pkg) {
    var pkgName = pkg.split('@')[0];
-   if (require(pkgName)) {
+   try {
+       require(pkgName);
        return false;
-   } else {
+   } catch (err) {
        return true;
    }
 });
@@ -32,4 +33,3 @@ if (packages.length > 0) {
 } else {
     console.log('Gulp task dependency installed successful! \n Please run "gulp bootstrap" to setup development environment.');
 }
-
