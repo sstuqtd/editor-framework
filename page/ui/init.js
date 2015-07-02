@@ -57,7 +57,10 @@
     EditorUI.getParentTabIndex = function ( element ) {
         var parent = Polymer.dom(element).parentNode;
         while ( parent ) {
-            if ( parent.tabIndex !== null && parent.tabIndex !== undefined ) {
+            if ( parent.tabIndex !== null &&
+                 parent.tabIndex !== undefined &&
+                 parent.tabIndex !== -1 )
+            {
                 return parent.tabIndex;
             }
 
