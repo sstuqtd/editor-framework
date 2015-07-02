@@ -4,12 +4,14 @@ category: editor
 permalinks: editor/ipc-channel
 ---
 
+## Core and Page Process
+
 Editor framework (and Fireball) has two levels of processes:
 
 - Core-level process: In charge of creating window and web pages, access to file system, run any task that iojs (or nodejs) are capable of.
 - Page-level process: Render HTML web page and run client-side JavaScript. Each web page is rendered in a separated page-level process so they will not pollute each other's DOM.
 
-To better understand these two type of processes, read [Electron's introduction document](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md#introduction), core-level process is Electron's main process, page-level process is Electron's renderer process.
+To better understand these two type of processes, read [Electron's introduction document](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md#introduction), core-level process is Electron's main process, page-level process is Electron's renderer process. If you're still confused, think of core-level process as server JavaScript, and page-level process as client JavaScript, in a web development context.
 
 To allow communication between core and page processes. We enhanced [Electron's ipc API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md) (ipc stands for Inter-process communication). Fireball and Editor Framework user will have much cleaner and easier API to build ipc communication channel between core and page level processes.
 
