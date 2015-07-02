@@ -5,7 +5,7 @@ permalinks: editor/index
 
 This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
-## Editor
+## Extending Editor
 
   * [Define Your App](/editor/define-your-app) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
   * [Editor Module](/editor/editor-module)
