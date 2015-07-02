@@ -47,13 +47,13 @@
 }
 
 #icon {
-    display: inline;
+    display: inline-block;
+    margin-right: 5px;
 }
 
 #icon img {
     width: 16px;
     height: 16px;
-    margin-bottom: -4px;
 }
 
 :host(.active) .border {
