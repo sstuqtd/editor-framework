@@ -376,7 +376,7 @@ Editor.watchPackages = function ( cb ) {
         }
     }
     _packageWatcher = Chokidar.watch(src, {
-        ignored: [/[\/\\]\./, /[\/\\]bin/],
+        ignored: [/[\/\\]\./, /[\/\\]bin/, /[\/\\]test[\/\\]fixtures/],
         ignoreInitial: true,
         persistent: true,
     });
