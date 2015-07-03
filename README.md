@@ -74,6 +74,7 @@ npm run update
 
  - Mocha
  - Chai
+ - Sinon
 
 **Note:** We need to install mocha, chai in both core and page, that's why we put them in both bower and npm dependencies. The core level tests only run during develop phase, and will not go into the final product. The page level test environment has integrated with [tester](https://github.com/fireball-x/tester) package and every developer can use it to test your panels.
 
