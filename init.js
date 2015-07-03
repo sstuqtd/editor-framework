@@ -366,6 +366,15 @@ App.on('will-finish-launching', function() {
 });
 
 //
+App.on('gpu-process-crashed', function() {
+    if ( Editor && Editor.sendToWindows ) {
+        Editor.sendToWindows('console:error', 'GPU Process Crashed!');
+    }
+    Winston.uncaught('GPU Process Crashed!');
+});
+
+
+//
 App.on('ready', function() {
     Winston.normal( 'Initializing Protocol' );
     require('./core/protocol-init');
