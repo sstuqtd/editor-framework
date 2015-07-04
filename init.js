@@ -127,7 +127,7 @@ if ( process.platform === 'darwin' ) {
     _logpath = Path.join(App.getPath('home'), 'Library/Logs/' + Editor.name );
 }
 else {
-    _logpath = App.getPath('appData');
+    _logpath = Path.join(App.getPath('appData'), Editor.name);
 }
 
 if ( !Fs.existsSync(_logpath) ) {
