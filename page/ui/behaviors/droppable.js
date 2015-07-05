@@ -79,6 +79,9 @@ EditorUI.droppable = (function () {
                         dragType: dragType,
                         dragItems: dragItems,
                         dataTransfer: event.dataTransfer,
+                        dropTarget: Polymer.dom(event).localTarget,
+                        clientX: event.clientX,
+                        clientY: event.clientY,
                         offsetX: event.offsetX,
                         offsetY: event.offsetY,
                     });

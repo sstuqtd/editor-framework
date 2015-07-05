@@ -40,6 +40,12 @@ EditorUI.DragDrop = (function () {
         },
 
         updateDropEffect: function ( dataTransfer, dropEffect ) {
+            if ( ['copy', 'move', 'link', 'none'].indexOf(dropEffect) === -1 ) {
+                Editor.warn( 'dropEffect must be one of \'copy\', \'move\', \'link\' or \'none\'' );
+                dataTransfer.dropEffect = 'none';
+                return;
+            }
+
             if ( _allowed ) {
                 dataTransfer.dropEffect = dropEffect;
             }

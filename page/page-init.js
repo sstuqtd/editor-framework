@@ -14,6 +14,7 @@ try {
     document.addEventListener( 'dragover', function (event) {
         event.preventDefault();
         event.stopPropagation();
+        event.dataTransfer.dropEffect = 'none';
     } );
 
     // prevent contextmenu
