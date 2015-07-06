@@ -319,6 +319,7 @@ Editor.loadPackagesAt = function ( path, cb ) {
     var paths = Globby.sync( path + '/*/package.json' );
 
     Async.eachSeries( paths, function ( path, done ) {
+        path = Path.normalize(path);
         var packagePath = Path.dirname(path);
         Editor.Package.load( packagePath, function ( err ) {
             if ( err ) {
@@ -345,6 +346,7 @@ Editor.loadAllPackages = function ( cb ) {
     var paths = Globby.sync( src );
 
     Async.eachSeries( paths, function ( path, done ) {
+        path = Path.normalize(path);
         var packagePath = Path.dirname(path);
         Editor.Package.load( packagePath, function ( err ) {
             if ( err ) {
