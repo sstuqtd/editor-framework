@@ -425,11 +425,12 @@
 
     // binding helpers
     EditorUI.bind = function ( el1, value1, el2, value2 ) {
+        var camelValue2 = EditorUI.dashToCamelCase(value2);
         el1.addEventListener( value1+'-changed', function ( event ) {
             if ( event.detail.path )
                 el2.set( event.detail.path, event.detail.value );
             else
-                el2.set( value2, event.detail.value );
+                el2.set( camelValue2, event.detail.value );
         });
         el2.addEventListener( value2+'-changed', function ( event ) {
             if ( event.detail.path )
