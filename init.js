@@ -104,9 +104,7 @@ Editor.frameworkPath = __dirname;
 Editor.appHome = Path.join( App.getPath('home'), '.' + Editor.name );
 
 // initialize ~/.{app-name}
-if ( !Fs.existsSync(Editor.appHome) ) {
-    Fs.makeTreeSync(Editor.appHome);
-}
+Fs.ensureDirSync(Editor.appHome);
 
 // initialize ~/.{app-name}/local/
 var settingsPath = Path.join(Editor.appHome, 'local');
@@ -130,9 +128,7 @@ else {
     _logpath = Path.join(App.getPath('appData'), Editor.name);
 }
 
-if ( !Fs.existsSync(_logpath) ) {
-    Fs.makeTreeSync(_logpath);
-}
+Fs.ensureDirSync(_logpath);
 
 var _logfile = Path.join(_logpath, Editor.name + '.log');
 if ( Fs.existsSync(_logfile) ) {
