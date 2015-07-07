@@ -21,11 +21,14 @@ function _build ( packageObj, cb ) {
         // check if bin/dev exists
         var binPath = Path.join( packageObj._path, 'bin/dev' );
         if ( Fs.existsSync(binPath) ) {
-            // check if bin/dev/package.json have the same version
-            var binPackageObj = JSON.parse(Fs.readFileSync( Path.join( binPath, 'package.json')));
-            if ( packageObj.version === binPackageObj.version ) {
-                if ( cb ) cb ( null, binPath );
-                return;
+            var packageJsonPath = Path.join( binPath, 'package.json');
+            if (  Fs.existsSync(packageJsonPath)  ) {
+                // check if bin/dev/package.json have the same version
+                var binPackageObj = JSON.parse(Fs.readFileSync(packageJsonPath));
+                if ( packageObj.version === binPackageObj.version ) {
+                    if ( cb ) cb ( null, binPath );
+                    return;
+                }
             }
         }
 
