@@ -422,6 +422,28 @@
         return [width,height];
     };
 
+    var _importCount = 0;
+    EditorUI.importing = false;
+    EditorUI.import = function ( url, cb ) {
+        ++_importCount;
+        EditorUI.importing = true;
+
+        Polymer.Base.importHref( url, function ( event ) {
+            --_importCount;
+            if ( _importCount === 0 ) {
+                EditorUI.importing = false;
+            }
+
+            if ( cb ) cb ();
+        }, function ( err ) {
+            --_importCount;
+            if ( _importCount === 0 ) {
+                EditorUI.importing = false;
+            }
+
+            if ( cb ) cb ( err );
+        });
+    };
 
     // binding helpers
     EditorUI.bind = function ( el1, value1, el2, value2 ) {
