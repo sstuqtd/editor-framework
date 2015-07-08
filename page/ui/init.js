@@ -158,7 +158,8 @@
             lastx = event.clientX;
             lasty = event.clientY;
 
-            onMove( event, dx, dy, offsetx, offsety );
+            if ( onMove )
+                onMove( event, dx, dy, offsetx, offsety );
         };
 
         var mouseupHandle = function(event) {
@@ -175,7 +176,8 @@
             offsety = event.clientY - pressy;
 
             _cancelDrag = null;
-            onEnd( event, dx, dy, offsetx, offsety);
+            if ( onEnd )
+                onEnd( event, dx, dy, offsetx, offsety);
         }.bind(this);
 
         _cancelDrag = function () {
