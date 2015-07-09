@@ -46,6 +46,13 @@ npm install editor-framework
 - [Build native module for electron](https://github.com/atom/electron/blob/master/docs/tutorial/using-native-node-modules.md)
 - [native-module for beginner](https://github.com/Elzair/native-module)
 
+## Run Editor-Framework Demo
+
+```bash
+npm start
+```
+
+In the demo you will see builtin packages and other example packages from `Developer` and `Examples` menu.
 
 ## Builtin Packages
 
@@ -160,4 +167,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
