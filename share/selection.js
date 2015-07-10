@@ -329,16 +329,20 @@ var Selection = {
             return;
         }
 
+        var lastActiveBeforeSelect = selectionUnit.lastActive;
+        var lastActiveUnitBeforeSelect = _lastActiveUnit;
+
         unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
         confirm = confirm !== undefined ? confirm : true;
+
         selectionUnit.select(id, unselectOthers, confirm);
-
-        if ( _lastActiveUnit !== selectionUnit &&
-             selectionUnit.confirmed &&
-             selectionUnit.lastActive ) {
+        if ( selectionUnit.confirmed ) {
             _lastActiveUnit = selectionUnit;
-
-            _sendToAll('selection:activated', type, selectionUnit.lastActive);
+            if ( lastActiveUnitBeforeSelect !== _lastActiveUnit ||
+                lastActiveBeforeSelect !== selectionUnit.lastActive )
+            {
+                _sendToAll('selection:activated', type, selectionUnit.lastActive);
+            }
         }
     },
 
@@ -573,7 +577,21 @@ Ipc.on( '_selection:activated', function ( type, id ) {
         return;
     }
 
+    _lastActiveUnit = selectionUnit;
     selectionUnit.lastActive = id;
+});
+
+Ipc.on( '_selection:deactivated', function ( type, id ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    if ( _lastActiveUnit === selectionUnit ) {
+        _lastActiveUnit = null;
+    }
+    selectionUnit.lastActive = null;
 });
 
 Ipc.on( '_selection:hoverin', function ( type, id ) {
