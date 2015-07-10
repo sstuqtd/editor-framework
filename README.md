@@ -46,6 +46,22 @@ npm install editor-framework
 - [Build native module for electron](https://github.com/atom/electron/blob/master/docs/tutorial/using-native-node-modules.md)
 - [native-module for beginner](https://github.com/Elzair/native-module)
 
+### Choose Electron Download Mirror
+
+Download Electron can take time, especially when you're on the wrong side of wall. We use [electron-prebuilt](https://github.com/mafintosh/electron-prebuilt) for Electron binary download. You can choose if you want to use the china mirror during `gulp update-electron` task.
+
+The first time you run this task (this task is included in `npm install` process), you'll be asked if you want to use China mirror for Electron downloading. A json file `mirror-setting.json` will be created to record your choice, like this:
+
+```js
+//mirror-setting.json
+{
+    "mirror": "china" // this value can be 'china' or 'global'
+                      // depending on your answer
+}
+```
+
+You can change this file anytime to choose mirror for Electron downloading again.
+
 ## Run Editor-Framework Demo
 
 ```bash

@@ -57,7 +57,7 @@ function installElectron (isChina, cb) {
     if(isChina) {
         tmpenv.ELECTRON_MIRROR = 'http://npm.taobao.org/mirrors/electron/';
     }
-    var child = spawn(cmdstr, ['install', '-g', 'electron-prebuilt'+ '@' + electronVer], {
+    var child = spawn(cmdstr, ['install', 'electron-prebuilt'+ '@' + electronVer], {
         stdio: 'inherit',
         env: tmpenv
     });
@@ -72,35 +72,21 @@ gulp.task('install-electron', function(cb) {
     installElectron(isChina, cb);
 });
 
-function getNpmPrefix (cb) {
-    var cmdstr = process.platform === 'win32' ? 'npm.cmd' : 'npm';
-    var child = spawn('npm.cmd', ['config', 'get', 'prefix']);
-    var output = '';
-    child.stdout.on('data', function(data) {
-        output += data.toString();
-    });
-    child.stdout.on('end', function(){
-        cb(output.replace('\n', ''));
-    });
-}
-
 gulp.task('electron-to-bin', function(cb) {
     var ncp = require('ncp');
-    getNpmPrefix(function(prefix) {
-        var libMod = process.platform === 'win32' ? '' : 'lib';
-        var electronPath = Path.join(prefix, libMod, 'node_modules', 'electron-prebuilt', 'dist');
-        console.log("copying electron from: " + electronPath);
-        var mkdirp = require('mkdirp');
-        mkdirp.sync('bin/electron');
-        ncp(electronPath, 'bin/electron', {clobber: true}, function(err){
-            if (err) return console.log('ncp Error: ' + err);
-            else {
-                console.log('Electron ' + Fs.readFileSync(Path.join(electronPath, 'version')) + ' has been download to bin/electron folder');
-                cb();
-            }
-        });
+    var electronPath = Path.join('node_modules', 'electron-prebuilt', 'dist');
+    console.log("copying electron from: " + electronPath);
+    var mkdirp = require('mkdirp');
+    mkdirp.sync('bin/electron');
+    ncp(electronPath, 'bin/electron', {clobber: true}, function(err){
+        if (err) return console.log('ncp Error: ' + err);
+        else {
+            console.log('Electron ' + Fs.readFileSync(Path.join(electronPath, 'version')) + ' has been download to bin/electron folder');
+            cb();
+        }
     });
 });
+
 
 gulp.task('setup-mirror', function(cb) {
     var needBuildSetting = false;
