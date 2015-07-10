@@ -44,7 +44,6 @@
         "winston": "1.0.0"
     },
     "devDependencies": {
-        "global-prefix": "0.1.0",
         "gulp-changed": "1.2.1",
         "gulp-jshint": "1.11.0",
         "gulp-shell": "0.4.1",
