@@ -11,7 +11,7 @@ require('./tasks/download-shell');
 // require('./tasks/build-min');
 // require('./tasks/build-api');
 
-gulp.task('bootstrap', gulpSequence('npm-rebuild', ['update-electron','install-builtin', 'install-shared-packages']));
+gulp.task('bootstrap', gulpSequence('npm-rebuild', ['install-builtin', 'install-shared-packages'], 'update-electron'));
 
 gulp.task('update-config', function ( done ) {
     var utils = require('./tasks/utils');
