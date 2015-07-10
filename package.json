@@ -13,7 +13,7 @@
         "url": "https://github.com/fireball-x/editor-framework/issues"
     },
     "scripts": {
-        "install": "gulp bootstrap && bower install",
+        "install": "gulp bootstrap && bower install && gulp update-electron",
         "start": "gulp run",
         "update": "gulp update-builtin && gulp update-shared-packages",
         "test": "node utils/run-tests.js",
@@ -52,6 +52,7 @@
         "jaguarjs-jsdoc": "git+https://github.com/davidshimjs/jaguarjs-jsdoc.git",
         "jsdoc": "3.3.0",
         "jshint-stylish": "2.0.0",
+        "mkdirp": "0.5.1",
         "ncp": "2.0.0"
     },
     "shared-packages": [

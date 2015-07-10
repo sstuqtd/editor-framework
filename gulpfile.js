@@ -11,7 +11,7 @@ require('./tasks/download-shell');
 // require('./tasks/build-min');
 // require('./tasks/build-api');
 
-gulp.task('bootstrap', gulpSequence('npm-rebuild', ['install-builtin', 'install-shared-packages'], 'update-electron'));
+gulp.task('bootstrap', gulpSequence('npm-rebuild', ['install-builtin', 'install-shared-packages']));
 
 gulp.task('update-config', function ( done ) {
     var utils = require('./tasks/utils');
@@ -90,7 +90,6 @@ gulp.task('install-builtin', function(cb) {
                 });
             } else {
                 console.log(packageName + ' has already installed in builtin/' + packageName + ' folder!');
-                console.log(count);
                 if (--count <= 0) {
                     cb();
                 }

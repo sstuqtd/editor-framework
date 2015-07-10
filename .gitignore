@@ -26,6 +26,7 @@ builtin/
 api/
 benchmark/
 package-examples/
+mirror-setting.json
 
 # webstorm
 .idea
