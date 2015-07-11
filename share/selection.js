@@ -160,7 +160,7 @@ SelectionUnit.prototype.unselect = function (id) {
             this._activate(this.selection[this.selection.length - 1]);
         }
         else {
-            this._activate('');
+            this._activate(null);
         }
     }
 
@@ -211,7 +211,7 @@ Object.defineProperty(SelectionUnit.prototype, 'contexts', {
 SelectionUnit.prototype.clear = function () {
     _sendToAll(this.ipc_unselected, this.type, this.selection);
     this.selection.length = 0;
-    this._activate('');
+    this._activate(null);
 
     _sendToAll(this.ipc_changed, this.type);
 };
@@ -259,7 +259,12 @@ ConfirmableSelectionUnit.prototype.confirm = function () {
     if ( !this.confirmed ) {
         this._confirmedSnapShot.length = 0;
         this.confirmed = true;
-        this._activate(this.selection[this.selection.length - 1]);
+        if ( this.selection.length > 0 ) {
+            this._activate(this.selection[this.selection.length - 1]);
+        }
+        else {
+            this._activate(null);
+        }
     }
 };
 
