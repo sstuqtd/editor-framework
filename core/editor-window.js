@@ -66,7 +66,7 @@ function EditorWindow ( name, options ) {
     this.nativeWin.on ( 'focus', function ( event ) {
         if ( !Editor.focused ) {
             Editor.focused = true;
-            // Editor.emit('focus'); // TODO:
+            Editor.events.emit('focus');
         }
     }.bind(this) );
 
@@ -77,7 +77,7 @@ function EditorWindow ( name, options ) {
         setImmediate( function () {
             if ( !BrowserWindow.getFocusedWindow() ) {
                 Editor.focused = false;
-                // Editor.emit('blur'); // TODO:
+                Editor.events.emit('blur');
             }
         }.bind(this));
 

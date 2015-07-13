@@ -112,6 +112,9 @@ if ( !Fs.existsSync(settingsPath) ) {
     Fs.mkdirSync(settingsPath);
 }
 
+var EventEmitter = require('events');
+Editor.events = new EventEmitter();
+
 // ---------------------------
 // initialize logs/
 // ---------------------------
@@ -368,7 +371,6 @@ App.on('gpu-process-crashed', function() {
     }
     Winston.uncaught('GPU Process Crashed!');
 });
-
 
 //
 App.on('ready', function() {
