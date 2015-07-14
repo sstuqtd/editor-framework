@@ -39,4 +39,42 @@ describe('Editor.Menu', function() {
 
         done();
     });
+
 });
+
+describe('Editor.MainMenu', function() {
+
+    var MainMenu = Editor.MainMenu;
+    var addmenu;
+    before(function() {
+        addmenu = sinon.stub(Editor.Menu.prototype, 'add');
+    });
+    after(function() {
+        addmenu.restore();
+    });
+
+    describe('.add', function() {
+        it('should add path and label', function() {
+            MainMenu.add('foo/bar', {
+                'label': 'zoo',
+                'message': 'hint'
+            });
+            expect( addmenu.firstCall.args[0] ).to.equal('foo/bar');
+            expect( addmenu.firstCall.args[1] ).to.deep.equal({
+                'label': 'zoo',
+                'message': 'hint'
+            });
+        });
+        it('should add path without label', function() {
+            MainMenu.add('foo/bar/zom', {
+                'message': 'hint'
+            });
+            expect( addmenu.secondCall.args[0] ).to.equal('foo/bar');
+            expect( addmenu.secondCall.args[1] ).to.deep.equal({
+                'label': 'zom',
+                'message': 'hint'
+            });
+        });
+    });
+
+})
