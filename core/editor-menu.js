@@ -191,10 +191,22 @@ EditorMenu.prototype.clear = function () {
  * ```
  */
 EditorMenu.prototype.add = function ( path, template ) {
+    // in object mode, we should set label from path if not exists
+    if ( !Array.isArray(template) ) {
+        if ( !template.label && template.type !== 'separator' ) {
+            var start = path.lastIndexOf( '/' );
+            if ( start !== -1 ) {
+                template.label = path.slice( start + 1 );
+                path = path.slice( 0, start );
+            }
+        }
+    }
+
     EditorMenu.parseTemplate(template);
 
-    if ( !Array.isArray(template) )
+    if ( !Array.isArray(template) ) {
         template = [template];
+    }
 
     var menuItem = _getMenuItem( this.nativeMenu, path, true );
 
@@ -314,6 +326,10 @@ EditorMenu.parseTemplate = function ( template, webContents ) {
     }
 
     var args;
+
+    if ( template.label === undefined && template.type !== 'separator' ) {
+        Editor.warn('Missing label in template');
+    }
 
     if ( template.message ) {
         if ( template.click ) {
