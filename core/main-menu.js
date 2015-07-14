@@ -274,6 +274,13 @@ MainMenu.reset = function () {
  * @param {object[]|object} template
  */
 MainMenu.add = function ( path, template ) {
+    if ( !template.label ) {
+        var start = path.lastIndexOf( '/' );
+        if ( start !== -1 ) {
+            template.label = path.slice( start + 1 );
+            path = path.slice( 0, start );
+        }
+    }
     if ( _mainMenu.add( path, template ) ) {
         MainMenu.apply();
     }
