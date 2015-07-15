@@ -307,6 +307,8 @@ Editor.quit = function () {
     for ( var i = 0; i < winlist.length; ++i ) {
         winlist[i].close();
     }
+
+    require('app').quit();
 };
 
 Editor.loadPackagesAt = function ( path, cb ) {
