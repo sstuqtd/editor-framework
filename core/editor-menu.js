@@ -188,6 +188,14 @@ EditorMenu.prototype.clear = function () {
  *     message: 'foobar:say',
  *     params: ['foobar: hello!']
  * });
+ *
+ * // you can also create menu without label
+ * // it will add menu to foo/bar where bar is the menu-item
+ * var editorMenu = new Editor.Menu();
+ * editorMenu.add( 'foo/bar/foobar', {
+ *     message: 'foobar:say',
+ *     params: ['foobar: hello!']
+ * });
  * ```
  */
 EditorMenu.prototype.add = function ( path, template ) {
