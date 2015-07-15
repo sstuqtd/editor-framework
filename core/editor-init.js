@@ -6,6 +6,7 @@ var Winston = require('winston');
 var Globby = require('globby');
 var Chokidar = require('chokidar');
 var Async = require('async');
+var App = require('app');
 
 // ==========================
 // console log API
@@ -308,7 +309,7 @@ Editor.quit = function () {
         winlist[i].close();
     }
 
-    require('app').quit();
+    App.quit();
 };
 
 Editor.loadPackagesAt = function ( path, cb ) {
