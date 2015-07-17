@@ -2,8 +2,6 @@ var Fs = require('fire-fs');
 var Path = require('fire-path');
 
 global.__app = {
-    path: __dirname,
-
     initCommander: function ( commander ) {
         // TODO:
     },

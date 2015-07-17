@@ -22,25 +22,20 @@ global.Editor = {};
      * @type object
      */
     Editor.App = __app;
-
-    if ( !__app.path ) {
-        console.error( '\'__app.path\' is undefined. please set `path: __dirname` manually in your __app structure.');
-        process.exit(1);
-        return;
-    }
-    /**
-     * The current app.js running directory.
-     * @property cwd
-     * @type string
-     */
-    Editor.appPath = __app.path;
 })();
+
+var App = require('app');
+/**
+ * The current app.js running directory.
+ * @property cwd
+ * @type string
+ */
+Editor.appPath = App.getAppPath();
 
 // ---------------------------
 // load modules
 // ---------------------------
 
-var App = require('app');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
 var Url = require('fire-url');
