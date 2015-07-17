@@ -3,6 +3,15 @@ var Url = require('fire-url');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
 
+function protocolRegisterCallback ( err, scheme ) {
+    if ( err ) {
+        Editor.failed( 'Failed to register protocol %s, %s', scheme, err.message );
+        return;
+    }
+    Editor.success( 'protocol %s registerred', scheme );
+}
+Editor.protocolRegisterCallback = protocolRegisterCallback;
+
 /**
  * @module Editor
  */
@@ -19,7 +28,7 @@ Protocol.registerProtocol('editor-framework', function(request) {
     }
     var file = Path.join( Editor.frameworkPath, relativePath );
     return new Protocol.RequestFileJob(file);
-});
+}, protocolRegisterCallback );
 
 // register protocol app://
 Protocol.registerProtocol('app', function(request) {
@@ -31,7 +40,7 @@ Protocol.registerProtocol('app', function(request) {
     }
     var file = Path.join( Editor.appPath, relativePath );
     return new Protocol.RequestFileJob(file);
-});
+}, protocolRegisterCallback );
 
 // register protocol packages://
 
@@ -48,7 +57,7 @@ Protocol.registerProtocol('packages', function(request) {
         }
     }
     return new Protocol.RequestErrorJob(-6); // net::ERR_FILE_NOT_FOUND
-});
+}, protocolRegisterCallback );
 
 // DISABLE: this make protocol can not use relative path
 // // register protocol bower://
@@ -61,7 +70,7 @@ Protocol.registerProtocol('packages', function(request) {
 //     }
 //     var file = Path.join( Editor.appPath, 'bower_components', relativePath );
 //     return new Protocol.RequestFileJob(file);
-// });
+// }, protocolRegisterCallback );
 
 // DISABLE: same reason as bower
 // // register protocol widgets://
@@ -75,7 +84,7 @@ Protocol.registerProtocol('packages', function(request) {
 //         return new Protocol.RequestFileJob(file);
 //     }
 //     return new Protocol.RequestErrorJob(-6); // net::ERR_FILE_NOT_FOUND
-// });
+// }, protocolRegisterCallback );
 
 // Editor.url protocol register
 
