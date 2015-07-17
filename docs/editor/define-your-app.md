@@ -34,8 +34,6 @@ Here is an example:
 ```javascript
 // you MUST assigned to global.__app
 global.__app = {
-    path: __dirname, // must have, important
-
     initCommander: function ( commander ) {
         // optional
     },
