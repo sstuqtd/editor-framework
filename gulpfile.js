@@ -176,7 +176,7 @@ gulp.task('npm-rebuild', function(cb) {
     var tmpenv = process.env;
     tmpenv.HOME = process.platform === 'win32' ? Path.join(tmpenv.HOMEPATH, '.node-gyp') : Path.join(tmpenv.HOME, '.electron-gyp');
     var disturl = 'https://atom.io/download/atom-shell';
-    var target = appJson['electron-version'];
+    var target = appJson.electronVersion;
     var arch = process.platform === 'win32' ? 'ia32' : 'x64';
     var nativePaths = findNativeModulePathRecursive('.');
     console.log('rebuilding native modules: \n' + nativePaths);
