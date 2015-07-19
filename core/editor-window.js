@@ -499,7 +499,7 @@ EditorWindow.prototype.sendToPage = function () {
  * @param {string} request - the request to send
  * @param {...*} [arg] - whatever arguments the request needs
  * @param {function} reply - the callback used to handle replied arguments
- * @return {number} The session id can be used in Editor.Window.cancelRequestToCore
+ * @return {number} The session id can be used in Editor.Window.cancelRequestToPage
  */
 EditorWindow.prototype.sendRequestToPage = function (request) {
     'use strict';
