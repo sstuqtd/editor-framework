@@ -34,6 +34,7 @@ function SelectionUnit(type) {
     this.ipc_deactivated = 'selection:deactivated'; // argument is an id
     this.ipc_hoverin = 'selection:hoverin';         // argument is an id
     this.ipc_hoverout = 'selection:hoverout';       // argument is an id
+    this.ipc_context = 'selection:context';
     this.ipc_changed = 'selection:changed';
 }
 
@@ -182,6 +183,7 @@ SelectionUnit.prototype.hover = function (id) {
 
 SelectionUnit.prototype.setContext = function (id) {
     this._context = id;
+    _sendToAll(this.ipc_context, this.type, id);
 };
 
 Object.defineProperty(SelectionUnit.prototype, 'contexts', {
@@ -617,6 +619,16 @@ Ipc.on( '_selection:hoverout', function ( type, id ) {
     }
 
     selectionUnit.lastHover = null;
+});
+
+Ipc.on( '_selection:context', function ( type, id ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    selectionUnit._context = id;
 });
 
 // ==========================
