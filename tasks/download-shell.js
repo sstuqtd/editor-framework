@@ -11,7 +11,7 @@ var Path = require('path');
 var Fs = require('fs');
 
 var pjson = JSON.parse(Fs.readFileSync('./package.json'));
-var electronVer = pjson['electron-version'];
+var electronVer = pjson.electronVersion;
 var spawn = require('child_process').spawn;
 
 /////////////////////////////////////////////////////
