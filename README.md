@@ -28,7 +28,7 @@ Enter your repo’s folder, then run the following command:
 
 ```bash
 # Install npm packages, the npm script will take care of other dependencies
-npm install
+npm bootstrap
 ```
 
 ### Install With NPM
@@ -111,9 +111,10 @@ npm test
 To generate the document, just run:
 
 ```bash
-npm run api-core # for core-level docs
-npm run api-page # for page-level docs
+npm run api
 ```
+
+It will generate the API document in `./apidocs`, you can browse it by open `./apidocs/index.html`.
 
 ## Features
 

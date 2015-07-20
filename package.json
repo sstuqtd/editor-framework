@@ -1,6 +1,6 @@
 {
     "name": "editor-framework",
-    "version": "0.3.12",
+    "version": "0.3.13",
     "description": "A simple framework for making panel based applications.",
     "homepage": "http://fireball-x.com",
     "repository": {
@@ -13,12 +13,11 @@
         "url": "https://github.com/fireball-x/editor-framework/issues"
     },
     "scripts": {
-        "install": "gulp bootstrap && bower install && gulp update-electron",
+        "bootstrap": "gulp bootstrap && bower install && gulp update-electron",
         "start": "gulp run",
         "update": "gulp update-builtin && gulp update-shared-packages",
         "test": "node utils/run-tests.js",
-        "api-core": "jsdoc -c ./jsdoc-core.conf.json",
-        "api-page": "jsdoc -c ./jsdoc-page.conf.json"
+        "api": "firedoc build ./ --theme notab"
     },
     "dependencies": {
         "async": "1.2.1",
@@ -44,12 +43,11 @@
         "winston": "1.0.0"
     },
     "devDependencies": {
+        "firedoc": "1.9.0",
         "gulp-changed": "1.2.1",
         "gulp-jshint": "1.11.0",
         "gulp-shell": "0.4.1",
         "gulp-watch": "4.2.4",
-        "jaguarjs-jsdoc": "git+https://github.com/davidshimjs/jaguarjs-jsdoc.git",
-        "jsdoc": "3.3.0",
         "jshint-stylish": "2.0.0",
         "mkdirp": "0.5.1",
         "ncp": "2.0.0"
