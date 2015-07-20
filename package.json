@@ -54,7 +54,7 @@
         "mkdirp": "0.5.1",
         "ncp": "2.0.0"
     },
-    "shared-packages": [
+    "sharedPackages": [
         "benchmark",
         "package-examples"
     ],
@@ -66,10 +66,9 @@
         "ui-kit",
         "pixi-grid"
     ],
-    "native-modules": [
+    "nativeModules": [
         "chokidar"
     ],
-    "fire-shell-version": "0.24.0",
     "electronVersion": "0.30.0",
     "main": "demo.js"
 }

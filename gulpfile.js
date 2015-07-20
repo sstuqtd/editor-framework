@@ -29,7 +29,7 @@ gulp.task('update-config', function ( done ) {
 
 gulp.task('install-shared-packages', function(cb) {
     var appJson = JSON.parse(Fs.readFileSync('./package.json'));
-    var pkgs = appJson['shared-packages'];
+    var pkgs = appJson.sharedPackages;
     var count = pkgs.length;
     pkgs.forEach(function(pkg) {
         if (!Fs.existsSync(Path.join(pkg, '.git'))) {
@@ -54,7 +54,7 @@ gulp.task('install-shared-packages', function(cb) {
 
 gulp.task('update-shared-packages', function(cb) {
     var pjson = JSON.parse(Fs.readFileSync('./package.json'));
-    var pkgs = pjson['shared-packages'];
+    var pkgs = pjson.sharedPackages;
     var count = pkgs.length;
     pkgs.forEach(function(pkg) {
         if (Fs.existsSync(Path.join(pkg, '.git'))) {
