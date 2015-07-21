@@ -178,7 +178,12 @@ gulp.task('npm-rebuild', function(cb) {
     var disturl = 'https://atom.io/download/atom-shell';
     var target = appJson.electronVersion;
     var arch = process.platform === 'win32' ? 'ia32' : 'x64';
-    var nativePaths = findNativeModulePathRecursive('.');
+    var deps = appJson.dependencies;
+    var nativePaths = [];
+    for (var dep in deps) {
+        var depPath = Path.join('.', 'node_modules', dep);
+        nativePaths = nativePaths.concat(findNativeModulePathRecursive(depPath));
+    }
     console.log('rebuilding native modules: \n' + nativePaths);
     var count = nativePaths.length;
     if (count === 0) {
