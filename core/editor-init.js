@@ -363,6 +363,39 @@ Editor.loadAllPackages = function ( cb ) {
 };
 
 /**
+ * Require module through url path
+ * @method require
+ * @param {string} url
+ */
+Editor.require = function ( url ) {
+    return require( Editor.url(url) );
+};
+
+/**
+ * Spawn child process that start from console
+ * @method execSpawn
+ * @param {string} command
+ * @param {object} options
+ */
+Editor.execSpawn = function ( command, options ) {
+    var file, args;
+    options = options || {};
+
+    if (process.platform === 'win32') {
+        file = 'cmd.exe';
+        args = ['/s', '/c', '"' + command + '"'];
+        options.windowsVerbatimArguments = true;
+    } else {
+        file = '/bin/sh';
+        args = ['-c', command];
+        options.windowsVerbatimArguments = false;
+    }
+
+    var spawn = require('child_process').spawn;
+    return spawn(file, args, options);
+};
+
+/**
  * Watch packages
  * @method watchPackages
  */
