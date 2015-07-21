@@ -4,7 +4,6 @@
  */
 
 var gulp = require('gulp');
-var shell = require('gulp-shell');
 var gulpSequence = require('gulp-sequence');
 
 var Path = require('path');
