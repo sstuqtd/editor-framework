@@ -37,7 +37,7 @@ You can also install Editor Framework into your app as a npm package:
 
 ```bash
 # Again, npm script will take care of other dependencies
-npm install editor-framework
+npm install fireball-x/editor-framework
 ```
 
 **NOTE:** after npm dependencies are installed, we will run `node-gyp rebuild` against all native modules in editor-framework path. Please make sure `node-gyp` works in your command line environment. To learn more about native module building and setting up a `node-gyp` working environment, please check out:

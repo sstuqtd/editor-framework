@@ -6,7 +6,6 @@ var packages = [];
 for (var key in packagesObj) {
     packages.push(key+"@"+packagesObj[key]);
 }
-console.log(packages);
 
 packages = packages.filter(function(pkg) {
    var pkgName = pkg.split('@')[0];
