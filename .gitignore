@@ -24,6 +24,7 @@ bin/
 ext/
 builtin/
 apidocs/
+api/
 benchmark/
 package-examples/
 mirror-setting.json
