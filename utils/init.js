@@ -1,13 +1,12 @@
 var exec = require('child_process').exec;
-var packages = [
-    'gulp',
-    'gulp-sequence@0.3.2',
-    'gulp-shell@0.4.1',
-    'fire-fs@0.1.5',
-    //'mkdirp@0.5.1',
-    'gulp-download-fire-shell',
-    'del@1.2.0'
-];
+var fs = require('fs');
+var packagesObj = JSON.parse(fs.readFileSync('package.json', 'utf8')).devDependencies;
+var packages = [];
+
+for (var key in packagesObj) {
+    packages.push(key+"@"+packagesObj[key]);
+}
+console.log(packages);
 
 packages = packages.filter(function(pkg) {
    var pkgName = pkg.split('@')[0];
