@@ -465,7 +465,9 @@
     };
 
     EditorUI.toHumanText = function ( text ) {
-        var result = text.replace(/([A-Z])/g, ' $1').replace(/[-_]/g, ' ');
+        var result = text.replace(/[-_]([a-z])/g, function(m) {
+            return ' ' + m[1].toUpperCase();
+        });
 
         // remove first white-space
         if ( result.charAt(0) === ' ' ) {
