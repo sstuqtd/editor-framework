@@ -27,7 +27,7 @@ global.Editor = {};
 var App = require('app');
 /**
  * The current app.js running directory.
- * @property cwd
+ * @property appPath
  * @type string
  */
 Editor.appPath = App.getAppPath();
