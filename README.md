@@ -28,7 +28,7 @@ Enter your repo’s folder, then run the following command:
 
 ```bash
 # Install npm packages, the npm script will take care of other dependencies
-npm bootstrap
+npm install
 ```
 
 ### Install With NPM
