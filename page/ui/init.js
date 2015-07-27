@@ -464,6 +464,20 @@
         });
     };
 
+    EditorUI.bindUUID = function ( el1, value1, el2, value2 ) {
+        var camelValue2 = EditorUI.dashToCamelCase(value2);
+        el1.addEventListener( value1+'-changed', function ( event ) {
+            if ( event.detail.path === value1+'.uuid' ) {
+                el2.set( camelValue2, event.detail.value );
+            }
+        });
+        el2.addEventListener(value2+'-changed', function ( event ) {
+            el1.set(value1, {
+                uuid: event.detail.value
+            });
+        });
+    };
+
     EditorUI.toHumanText = function ( text ) {
         var result = text.replace(/[-_]([a-z])/g, function(m) {
             return ' ' + m[1].toUpperCase();
