@@ -213,8 +213,13 @@ gulp.task('run', function(cb) {
     if (process.platform === "win32") {
         cmdStr = 'bin\\electron\\electron.exe';
         optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
-    } else {
+    }
+    else if (process.platform === "darwin") {
         cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
+        optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
+    }
+    else {
+        cmdStr = 'bin/electron/electron';
         optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
     }
     var child = spawn(cmdStr, optArr, {
