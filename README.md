@@ -24,7 +24,18 @@ There are two ways to install and bootstrap Editor Framework:
 
 ### Clone This Repo
 
-Enter your repo’s folder, then run the following command:
+```bash
+git clone https://github.com/fireball-x/editor-framework
+cd editor-framework
+```
+
+The install script requires Bower and Gulp to be installed globally:
+
+```bash
+npm install -g bower gulp
+```
+
+Now run the following command:
 
 ```bash
 # Install npm packages, the npm script will take care of other dependencies
