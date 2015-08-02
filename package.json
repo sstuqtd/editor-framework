@@ -60,8 +60,7 @@
         "ipc-debugger",
         "package-manager",
         "tester",
-        "ui-kit",
-        "pixi-grid"
+        "ui-kit"
     ],
     "nativeModules": [
         "chokidar"
