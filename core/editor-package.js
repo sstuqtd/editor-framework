@@ -384,6 +384,8 @@ Ipc.on('package:query-infos', function ( reply ) {
 
 Ipc.on('package:query-info', function ( reply, name ) {
     var path = _name2packagePath[name];
+    path = path ? path : '';
+
     var info = _path2package[path];
     var builtinPath = Path.join( Editor.appPath, 'builtin' );
 
