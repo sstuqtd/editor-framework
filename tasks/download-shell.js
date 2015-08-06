@@ -7,7 +7,7 @@ var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence');
 
 var Path = require('path');
-var Fs = require('fs');
+var Fs = require('fire-fs');
 
 var pjson = JSON.parse(Fs.readFileSync('./package.json'));
 var electronVer = pjson.electronVersion;
@@ -75,8 +75,7 @@ gulp.task('electron-to-bin', function(cb) {
     var ncp = require('ncp');
     var electronPath = Path.join('node_modules', 'electron-prebuilt', 'dist');
     console.log("copying electron from: " + electronPath);
-    var mkdirp = require('mkdirp');
-    mkdirp.sync('bin/electron');
+    Fs.mkdirsSync('bin/electron');
     ncp(electronPath, 'bin/electron', {clobber: true}, function(err){
         if (err) return console.log('ncp Error: ' + err);
         else {

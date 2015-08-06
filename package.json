@@ -48,7 +48,6 @@
         "gulp-jshint": "1.11.0",
         "gulp-watch": "4.2.4",
         "jshint-stylish": "2.0.0",
-        "mkdirp": "0.5.1",
         "ncp": "2.0.0"
     },
     "sharedPackages": [
