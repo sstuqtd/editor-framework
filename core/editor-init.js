@@ -395,10 +395,79 @@ Editor.execSpawn = function ( command, options ) {
     return spawn(file, args, options);
 };
 
+function _updatePackages ( pathList, cb ) {
+    Async.each( pathList, function ( path, done ) {
+        var packageInfo = Editor.Package.packageInfo(path);
+        if ( !packageInfo ) {
+            done();
+            return;
+        }
+
+        Async.series([
+            function ( next ) {
+                if ( !packageInfo.build ) {
+                    next();
+                    return;
+                }
+
+                Editor.log( 'Rebuilding ' + packageInfo.name );
+                Editor.Package.build( packageInfo._path, next );
+            },
+
+            function ( next ) {
+                var testerWin = Editor.Panel.findWindow('tester.panel');
+
+                // reload test
+                var testPath = Path.join(packageInfo._path, 'test');
+                if ( Path.contains(testPath , path) ) {
+                    if ( testerWin ) {
+                        testerWin.sendToPage('tester:run-tests', packageInfo.name);
+                    }
+                    next();
+                    return;
+                }
+
+                // reload page
+                var pageFolders = ['page', 'panel', 'widget'];
+                if (pageFolders.some( function ( name ) {
+                    return Path.contains( Path.join(packageInfo._path, name), path );
+                })) {
+                    for ( var panelName in packageInfo.panels ) {
+                        var panelID = packageInfo.name + '.' + panelName;
+                        Editor.sendToWindows( 'panel:out-of-date', panelID );
+                    }
+
+                    if ( testerWin ) {
+                        testerWin.sendToPage('tester:run-tests', packageInfo.name);
+                    }
+                    next();
+                    return;
+                }
+
+                // reload core
+                Editor.Package.reload(packageInfo._path, {
+                    rebuild: false
+                });
+                next();
+            },
+        ], function ( err ) {
+            if ( err ) {
+                Editor.error( 'Failed to reload package %s: %s', packageInfo.name, err.message );
+            }
+
+            done();
+        });
+    }, function ( err ) {
+        if ( cb ) cb ();
+    });
+}
+
 /**
  * Watch packages
  * @method watchPackages
  */
+var _watchDebounceID = null;
+var _packages = [];
 Editor.watchPackages = function ( cb ) {
     //
     if ( Editor._packagePathList.length === 0 ) {
@@ -433,60 +502,28 @@ Editor.watchPackages = function ( cb ) {
         _packageWatcher.unwatch(path);
     })
     .on('change', function (path) {
+        // NOTE: this is not 100% safe, because 50ms debounce still can have multiple
+        //       same packages building together, to avoid this, try to use Async.queue
+
         var packageInfo = Editor.Package.packageInfo(path);
-        if ( packageInfo ) {
-            Async.series([
-                function ( next ) {
-                    if ( packageInfo.build ) {
-                        Editor.log( 'Rebuilding ' + packageInfo.name );
-                        Editor.Package.build( packageInfo._path, next );
-                    }
-                    else {
-                        next ();
-                    }
-                },
-
-                function ( next ) {
-                    var testerWin = Editor.Panel.findWindow('tester.panel');
-
-                    // reload test
-                    var testPath = Path.join(packageInfo._path, 'test');
-                    if ( Path.contains(testPath , path) ) {
-                        if ( testerWin ) {
-                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                        }
-                        next();
-                        return;
-                    }
-
-                    // reload page
-                    var pageFolders = ['page', 'panel', 'widget'];
-                    if (pageFolders.some( function ( name ) {
-                        return Path.contains( Path.join(packageInfo._path, name), path );
-                    })) {
-                        for ( var panelName in packageInfo.panels ) {
-                            var panelID = packageInfo.name + '.' + panelName;
-                            Editor.sendToWindows( 'panel:out-of-date', panelID );
-                        }
-
-                        if ( testerWin ) {
-                            testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                        }
-                        next();
-                        return;
-                    }
-
-                    // reload core
-                    Editor.Package.reload(packageInfo._path, {
-                        rebuild: false
-                    });
-                    next();
-                },
-            ], function ( err ) {
-                if ( err )
-                    Editor.error( 'Failed to reload package %s: %s', packageInfo.name, err.message );
-            });
+        if ( !packageInfo ) {
+            return;
         }
+
+        if ( _packages.indexOf(packageInfo._path) === -1 ) {
+            _packages.push(packageInfo._path);
+        }
+
+        // debounce write for 50ms
+        if ( _watchDebounceID ) {
+            clearTimeout(_watchDebounceID);
+            _watchDebounceID = null;
+        }
+        _watchDebounceID = setTimeout(function () {
+            _updatePackages(_packages);
+            _packages = [];
+            _watchDebounceID = null;
+        }, 50);
     })
     .on('error', function (error) {
         Editor.error('Package Watcher Error: %s', error.message);
