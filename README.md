@@ -18,27 +18,29 @@ It is designed for full extensibility. In the core level (main process), we achi
 
 ![screen shot](https://cloud.githubusercontent.com/assets/174891/8265547/dd7c8412-172f-11e5-90cc-b12a91a5c73c.png)
 
-## Install
+## Prerequisite
 
-There are two ways to install and bootstrap Editor Framework:
-
-### Clone This Repo
-
-```bash
-git clone https://github.com/fireball-x/editor-framework
-cd editor-framework
-```
-
-The install script requires Bower and Gulp to be installed globally:
+- Install [node.js v0.12+](https://nodejs.org/) or [io.js v2.0+](https://iojs.org/en/index.html)
+- Install [gulp](https://github.com/gulpjs/gulp) command line tool
+- Install [bower](http://bower.io/) command line tool
 
 ```bash
 npm install -g bower gulp
 ```
 
-Now run the following command:
+For **Windows** user, you need the following environment set up to be able to build nodejs native modules:
+
+- [node-gyp](https://github.com/TooTallNate/node-gyp)
+- [Visual Studio Community 2013](http://www.visualstudio.com/products/visual-studio-community-vs)
+- [Python 2.7](http://www.python.org/download/releases/2.7/) - make sure you can run `python --verson` in your command line tool. Read [this](https://docs.python.org/2/using/windows.html#excursus-setting-environment-variables) for setting up path correctly.
+
+## Install
+
+In cloned project folder, run the following command to setup dev environment:
 
 ```bash
-# Install npm packages, the npm script will take care of other dependencies
+# Initialize gulp task dependencies
+# npm is a builtin CLI when you install Node.js
 npm install
 ```
 
@@ -64,7 +66,7 @@ Download Electron can take time, especially when you're on the wrong side of wal
 The first time you run this task (this task is included in `npm install` process), you'll be asked if you want to use China mirror for Electron downloading. A json file `mirror-setting.json` will be created to record your choice, like this:
 
 ```js
-//mirror-setting.json
+// local-setting.json
 {
     "mirror": "china" // this value can be 'china' or 'global'
                       // depending on your answer
@@ -76,7 +78,7 @@ You can change this file anytime to choose mirror for Electron downloading again
 ## Run Editor-Framework Demo
 
 ```bash
-npm start
+gulp run
 ```
 
 In the demo you will see builtin packages and other example packages from `Developer` and `Examples` menu.
@@ -96,9 +98,25 @@ The `gulp install-builtin` will install these builtin packages (this operation i
 
 ## Update
 
+To get the latest fireball build:
+
 ```bash
-# update builtin packages and shared packages
-npm run update
+# Update editor-framework from github repo,
+# also update builtin packages and electron binary
+# this command will also check dependencies
+# and report outdated or missing dependencies
+gulp update
+
+# If you want to update all dependencies
+# this command will bootstrap and update the whole project and takes long
+npm install
+
+# or if you just want to quickly install a missing package:
+# please use the semver reported at the end of `gulp update` dependency check
+npm install some-npm-package@x.x.x
+
+# If you only want to update bower dependencies
+bower install
 ```
 
 ## Develop

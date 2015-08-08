@@ -17,8 +17,6 @@
         "postinstall": "gulp post-install-npm",
         "install": "gulp bootstrap && bower install && gulp npm-rebuild && gulp update",
         "test": "node utils/run-tests.js",
-        "start": "gulp run",
-        "update": "gulp update-builtin && gulp update-shared-packages",
         "api": "firedoc build ./ --theme notab"
     },
     "dependencies": {
