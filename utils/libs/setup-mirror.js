@@ -22,34 +22,35 @@ function setupMirror(cb) {
         hasSettingFile = false;
     }
 
-    if (hasMirrorSetting === false) {
-        var readline = require('readline');
-        var rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout
-        });
-        rl.question("Do you want to use mirror in China to download Electron and other dependencies? (y/n) : ", function(answer) {
-            var obj = {mirror: ''};
-            if ( hasSettingFile ) {
-                obj = JSON.parse(Fs.readFileSync('local-setting.json'));
-            }
-
-            obj.mirror = 'global';
-            if ( answer === 'y' ) {
-                obj.mirror = 'china';
-            }
-
-            Fs.writeFileSync('local-setting.json', JSON.stringify(obj, null, '  '));
-            rl.close();
-
-            cb();
-            return;
-        });
-
+    //
+    if ( hasMirrorSetting ) {
+        cb();
         return;
     }
 
-    cb();
+    //
+    var readline = require('readline');
+    var rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    rl.question("Do you want to use mirror in China to download Electron and other dependencies? (y/n) : ", function(answer) {
+        var obj = {mirror: ''};
+        if ( hasSettingFile ) {
+            obj = JSON.parse(Fs.readFileSync('local-setting.json'));
+        }
+
+        obj.mirror = 'global';
+        if ( answer === 'y' ) {
+            obj.mirror = 'china';
+        }
+
+        Fs.writeFileSync('local-setting.json', JSON.stringify(obj, null, '  '));
+        rl.close();
+
+        cb();
+        return;
+    });
 }
 
 module.exports = setupMirror;
