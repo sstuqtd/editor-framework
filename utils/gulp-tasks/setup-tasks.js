@@ -43,13 +43,13 @@ gulp.task('setup-branch', function(cb) {
         };
 
         (pjson.builtins || []).forEach(function(entry) {
-            obj.branch.builtins[entry] = "master";
+            obj.branch.builtins[entry] = 'master';
         });
         (pjson.sharedPackages || []).forEach(function(entry) {
-            obj.branch.sharedPackages[entry] = "master";
+            obj.branch.sharedPackages[entry] = 'master';
         });
         Fs.writeFileSync('local-setting.json', JSON.stringify(obj, null, '  '));
-        console.log("Setup submodule branch local setting. You can change 'local-setting.json' to specify your branches.");
+        console.log('Setup submodule branch local setting. You can change "local-setting.json" to specify your branches.');
         cb();
         return;
     }
