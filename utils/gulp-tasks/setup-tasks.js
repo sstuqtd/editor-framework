@@ -14,7 +14,9 @@ gulp.task('setup-branch', function(cb) {
     if ( Fs.existsSync('local-setting.json') ) {
         try {
             var jsonObj = JSON.parse(Fs.readFileSync('local-setting.json'));
-            if (jsonObj.branch) {
+            if (jsonObj.branch &&
+                jsonObj.branch.builtins &&
+                jsonObj.branch.sharedPackages) {
                 return cb();
             } else {
                 hasBranchSetting = false;
@@ -36,18 +38,18 @@ gulp.task('setup-branch', function(cb) {
             obj = JSON.parse(Fs.readFileSync('local-setting.json'));
         }
         obj.branch = {
-            sharedPackages: {},
             builtins: {},
+            sharedPackages: {},
         };
 
-        pjson.builtins.forEach(function(entry) {
-            obj.branch.builtins[entry] = "master";
+        (pjson.builtins || []).forEach(function(entry) {
+            obj.branch.builtins[entry] = 'master';
         });
-        pjson.sharedPackages.forEach(function(entry) {
-            obj.branch.sharedPackages[entry] = "master";
+        (pjson.sharedPackages || []).forEach(function(entry) {
+            obj.branch.sharedPackages[entry] = 'master';
         });
         Fs.writeFileSync('local-setting.json', JSON.stringify(obj, null, '  '));
-        console.log("Setup submodule branch local setting. You can change 'local-setting.json' to specify your branches.");
+        console.log('Setup submodule branch local setting. You can change "local-setting.json" to specify your branches.');
         cb();
         return;
     }

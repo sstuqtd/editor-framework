@@ -63,11 +63,11 @@ gulp.task('post-install-npm', function(cb) {
 gulp.task('run', function(cb) {
     var cmdStr = '';
     var optArr = [];
-    if (process.platform === "win32") {
+    if (process.platform === 'win32') {
         cmdStr = 'bin\\electron\\electron.exe';
         optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
     }
-    else if (process.platform === "darwin") {
+    else if (process.platform === 'darwin') {
         cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
         optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
     }
@@ -144,7 +144,11 @@ gulp.task('update-builtin', function(cb) {
             return;
         }
 
-        var branch = setting.branch.builtins[name] || "master";
+        var branch = 'master';
+        if ( setting.branch.builtins ) {
+            branch = setting.branch.builtins.name || 'master';
+        }
+
         git.pull(Path.join('builtin', name),
                  'https://github.com/fireball-packages/' + name,
                  branch,
@@ -227,7 +231,11 @@ gulp.task('update-shared-packages', function(cb) {
             return;
         }
 
-        var branch = setting.branch.sharedPackages[name] || "master";
+        var branch = 'master';
+        if ( setting.branch.sharedPackages ) {
+            branch = setting.branch.sharedPackages.name || 'master';
+        }
+
         git.pull(name,
                  'https://github.com/fireball-packages/' + name,
                  branch,
