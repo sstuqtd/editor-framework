@@ -45,6 +45,8 @@ function setupMirror(cb) {
             cb();
             return;
         });
+
+        return;
     }
 
     cb();
