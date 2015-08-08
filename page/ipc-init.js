@@ -155,7 +155,7 @@ Editor.sendToPanel = function ( panelID, message ) {
     }
 };
 
-var nextSessionId = 0;
+var nextSessionId = 1000;
 var replyCallbacks = {};
 
 /**
