@@ -28,6 +28,7 @@ api/
 benchmark/
 package-examples/
 mirror-setting.json
+local-setting.json
 
 # webstorm
 .idea

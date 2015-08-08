@@ -13,10 +13,12 @@
         "url": "https://github.com/fireball-x/editor-framework/issues"
     },
     "scripts": {
-        "install": "node utils/init.js && gulp bootstrap && bower install && gulp update-electron",
+        "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
+        "postinstall": "gulp post-install-npm",
+        "install": "gulp bootstrap && bower install && gulp npm-rebuild && gulp update",
+        "test": "node utils/run-tests.js",
         "start": "gulp run",
         "update": "gulp update-builtin && gulp update-shared-packages",
-        "test": "node utils/run-tests.js",
         "api": "firedoc build ./ --theme notab"
     },
     "dependencies": {
@@ -48,7 +50,7 @@
         "gulp-jshint": "1.11.0",
         "gulp-watch": "4.2.4",
         "jshint-stylish": "2.0.0",
-        "ncp": "2.0.0"
+        "npmconf": "2.1.2"
     },
     "sharedPackages": [
         "benchmark",
