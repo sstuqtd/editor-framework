@@ -189,7 +189,7 @@ Editor.sendRequestToCore = function (request) {
     else {
         Editor.error('The request must be of type string');
     }
-    return -1;
+    return null;
 };
 
 /**
@@ -203,6 +203,9 @@ Editor.cancelRequestToCore = function (sessionId) {
     if ( cb ) {
         delete replyCallbacks[key];
     }
+};
+
+Editor.waitForPanelReply = function (request) {
 };
 
 })();
