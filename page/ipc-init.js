@@ -17,15 +17,8 @@ Ipc.on('editor:sendreq2core:reply', function replyCallback (args, sessionId) {
     var cb = _replyCallbacks[key];
     if (cb) {
         cb.apply(null, args);
-
-        //if (sessionId + 1 === _nextSessionId) {
-        //    --_nextSessionId;
-        //}
         delete _replyCallbacks[key];
     }
-    // else {
-    //     Editor.error('non-exists callback of session:', sessionId);
-    // }
 });
 
 Ipc.on('editor:send2panel', function () {
@@ -61,13 +54,13 @@ Ipc.on('editor:sendreq2page', function (request, args, sessionId) {
  */
 Editor.sendToCoreSync = function ( message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        return Ipc.sendSync.apply( Ipc, [message].concat(args) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    return Ipc.sendSync.apply( Ipc, [message].concat(args) );
 };
 
 /**
@@ -78,13 +71,13 @@ Editor.sendToCoreSync = function ( message ) {
  */
 Editor.sendToCore = function ( message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        Ipc.send.apply( Ipc, ['editor:send2core'].concat( args ) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    Ipc.send.apply( Ipc, ['editor:send2core'].concat( args ) );
 };
 
 /**
@@ -97,13 +90,13 @@ Editor.sendToCore = function ( message ) {
  */
 Editor.sendToWindows = function ( message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        Ipc.send.apply( Ipc, ['editor:send2wins'].concat( args ) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    Ipc.send.apply( Ipc, ['editor:send2wins'].concat( args ) );
 };
 
 /**
@@ -115,13 +108,13 @@ Editor.sendToWindows = function ( message ) {
  */
 Editor.sendToMainWindow = function ( message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        Ipc.send.apply( Ipc, ['editor:send2mainwin'].concat( args ) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    Ipc.send.apply( Ipc, ['editor:send2mainwin'].concat( args ) );
 };
 
 /**
@@ -133,13 +126,13 @@ Editor.sendToMainWindow = function ( message ) {
  */
 Editor.sendToAll = function ( message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        Ipc.send.apply( Ipc, ['editor:send2all'].concat( args ) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    Ipc.send.apply( Ipc, ['editor:send2all'].concat( args ) );
 };
 
 /**
@@ -151,13 +144,13 @@ Editor.sendToAll = function ( message ) {
  */
 Editor.sendToPanel = function ( panelID, message ) {
     'use strict';
-    if ( typeof message === 'string' ) {
-        var args = [].slice.call( arguments );
-        Ipc.send.apply( Ipc, ['editor:send2panel'].concat( args ) );
-    }
-    else {
+    if ( typeof message !== 'string' ) {
         Editor.error('The message must be provided');
+        return;
     }
+
+    var args = [].slice.call( arguments );
+    Ipc.send.apply( Ipc, ['editor:send2panel'].concat( args ) );
 };
 
 /**
@@ -171,27 +164,31 @@ Editor.sendToPanel = function ( panelID, message ) {
  */
 Editor.sendRequestToCore = function (request) {
     'use strict';
-    if (typeof request === 'string') {
-        var args = [].slice.call(arguments, 1);
-        var reply = args[args.length - 1];
-        if (typeof reply === 'function') {
-            args.pop();
-
-            var sessionId = _nextSessionId++;
-            var key = '' + sessionId;
-            _replyCallbacks[key] = reply;
-
-            Ipc.send('editor:sendreq2core', request, args, sessionId);
-            return sessionId;
-        }
-        else {
-            Editor.error('The reply must be of type function');
-        }
-    }
-    else {
+    if (typeof request !== 'string') {
         Editor.error('The request must be of type string');
+        return null;
     }
-    return null;
+
+    var args = [].slice.call(arguments, 1);
+    if ( args.length < 1 ) {
+        Editor.error('Invalid arguments, reply function not found!');
+        return null;
+    }
+
+    var reply = args[args.length - 1];
+    if (typeof reply !== 'function') {
+        Editor.error('Invalid arguments, reply function not found!');
+        return null;
+    }
+
+    args.pop();
+
+    var sessionId = _nextSessionId++;
+    var key = '' + sessionId;
+    _replyCallbacks[key] = reply;
+
+    Ipc.send('editor:sendreq2core', request, args, sessionId);
+    return sessionId;
 };
 
 /**
@@ -208,48 +205,110 @@ Editor.cancelRequestToCore = function (sessionId) {
 };
 
 /**
- * Send `args...` to core via `channel` in asynchronous message, and waiting for the `page-level` panel
+ * Send `args...` to core via `channel` in asynchronous message, and waiting for reply
  * to reply the message through `callback`.
- * @method waitForPanelReply
+ * @method waitForReply
  * @param {string} channel - the request message channel
  * @param {...*} [arg] - whatever arguments the request needs
  * @param {function} reply - the callback used to handle replied arguments
+ * @param {number} [timeout] - timeout for the reply, if timeout = -1, it will never get expired
  * @return {number} - session id, can be used in Editor.cancelRequestToCore
  */
-Editor.waitForPanelReply = function (request) {
+Editor.waitForReply = function (request) {
     'use strict';
-    if (typeof request === 'string') {
-        var args = [].slice.call(arguments, 0);
-        var reply = args[args.length - 1];
-        if (typeof reply === 'function') {
-            args.pop();
+    if (typeof request !== 'string') {
+        Editor.error('The request must be of type string');
+        return null;
+    }
 
-            var info = _channel2replyInfo[request];
+    // arguments check
+    var args = [].slice.call(arguments, 1);
+    var reply, timeout;
 
-            if ( !info ) {
-                var requestReply = request+':reply';
-                _channel2replyInfo[request] = {
-                    nextSessionId: 1000,
-                    callbacks: {},
-                };
-            }
+    if ( args.length < 1 ) {
+        Editor.error('Invalid arguments, reply function not found!');
+        return null;
+    }
 
-            var sessionId = _nextSessionId++;
-            var key = '' + sessionId;
-            _replyCallbacks[key] = reply;
-
-            // Ipc.send('editor:sendreq2core', request, args, sessionId);
-            Editor.Panel.dispatch.apply( Editor.Panel, args, sessionId );
-            return sessionId;
+    var lastArg = args[args.length - 1];
+    if (typeof lastArg === 'number') {
+        if ( args.length < 2 ) {
+            Editor.error('Invalid arguments, reply function not found!');
+            return null;
         }
-        else {
-            Editor.error('The reply must be of type function');
+
+        timeout = lastArg;
+        args.pop();
+
+        lastArg = args[args.length - 1];
+        if (typeof lastArg !== 'function') {
+            Editor.error('Invalid arguments, reply function not found!');
+            return null;
         }
+
+        reply = lastArg;
+        args.pop();
     }
     else {
-        Editor.error('The request must be of type string');
+        if (typeof lastArg !== 'function') {
+            Editor.error('Invalid arguments, reply function not found!');
+            return null;
+        }
+
+        reply = lastArg;
+        timeout = 50;
+        args.pop();
     }
-    return null;
+
+    var info = _channel2replyInfo[request];
+    if ( !info ) {
+        info = {
+            nextSessionId: 1000,
+            callbacks: {},
+        };
+        _channel2replyInfo[request] = info;
+        Ipc.on( request+':reply', function ( sessionId ) {
+            var key = '' + sessionId;
+            var cb = info.callbacks[key];
+            if (cb) {
+                var args = [].slice.call(arguments, 1);
+                cb.apply(null, args);
+                delete info.callbacks[key];
+            }
+        });
+    }
+
+    //
+    var sessionId = info.nextSessionId++;
+    var key = '' + sessionId;
+    info.callbacks[key] = reply;
+
+    if ( timeout !== -1 ) {
+        setTimeout(function () {
+            delete info.callbacks[key];
+        },timeout);
+    }
+
+    args.unshift(sessionId);
+    args.unshift(request);
+    Ipc.send.apply( Ipc, ['editor:send2all'].concat( args ) );
+
+    return sessionId;
+};
+
+/**
+ * Cancel wait for reply by channel and sessionId
+ * @method cancelWaitForReply
+ */
+Editor.cancelWaitForReply = function (channel, sessionId) {
+    'use strict';
+    var info = _channel2replyInfo[channel];
+    if ( info ) {
+        var key = '' + sessionId;
+        if ( info.callbacks[key] ) {
+            delete info.callbacks[key];
+        }
+    }
 };
 
 })();
