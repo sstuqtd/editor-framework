@@ -512,37 +512,37 @@ Editor.watchPackages = function ( cb ) {
         }
 
         //
-        var updateInfo;
+        var reloadInfo;
         for ( var i = 0; i < _packageReloadInfo.length; ++i ) {
             if ( _packageReloadInfo[i].path === packageInfo._path ) {
-                updateInfo = _packageReloadInfo[i];
+                reloadInfo = _packageReloadInfo[i];
                 break;
             }
         }
 
-        if ( !updateInfo ) {
-            updateInfo = {
+        if ( !reloadInfo ) {
+            reloadInfo = {
                 path: packageInfo._path,
                 reloadTest: false,
                 reloadPage: false,
                 reloadCore: false,
             };
-            _packageReloadInfo.push(updateInfo);
+            _packageReloadInfo.push(reloadInfo);
         }
 
         // reload test
         if ( Path.contains(Path.join(packageInfo._path, 'test') , path) ) {
-            updateInfo.reloadTest = true;
+            reloadInfo.reloadTest = true;
         }
         // reload page
         else if ( Path.contains(Path.join(packageInfo._path, 'page') , path) ||
                   Path.contains(Path.join(packageInfo._path, 'panel') , path) ||
                   Path.contains(Path.join(packageInfo._path, 'widget') , path) ) {
-            updateInfo.reloadPage = true;
+            reloadInfo.reloadPage = true;
         }
         // reload core
         else {
-            updateInfo.reloadCore = true;
+            reloadInfo.reloadCore = true;
         }
 
         // debounce write for 50ms
