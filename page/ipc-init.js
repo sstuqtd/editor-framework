@@ -2,6 +2,11 @@
 
 var Ipc = require('ipc');
 
+var _nextSessionId = 1000;
+var _replyCallbacks = {};
+
+var _channel2replyInfo = {};
+
 require('../share/ipc-init');
 
 // Messages
@@ -9,14 +14,14 @@ require('../share/ipc-init');
 Ipc.on('editor:sendreq2core:reply', function replyCallback (args, sessionId) {
     'use strict';
     var key = '' + sessionId;
-    var cb = replyCallbacks[key];
+    var cb = _replyCallbacks[key];
     if (cb) {
         cb.apply(null, args);
 
-        //if (sessionId + 1 === nextSessionId) {
-        //    --nextSessionId;
+        //if (sessionId + 1 === _nextSessionId) {
+        //    --_nextSessionId;
         //}
-        delete replyCallbacks[key];
+        delete _replyCallbacks[key];
     }
     // else {
     //     Editor.error('non-exists callback of session:', sessionId);
@@ -155,9 +160,6 @@ Editor.sendToPanel = function ( panelID, message ) {
     }
 };
 
-var nextSessionId = 1000;
-var replyCallbacks = {};
-
 /**
  * Send `args...` to core via `channel` in asynchronous message, and waiting for the `core-level`
  * to reply the message through `callback`.
@@ -175,9 +177,9 @@ Editor.sendRequestToCore = function (request) {
         if (typeof reply === 'function') {
             args.pop();
 
-            var sessionId = nextSessionId++;
+            var sessionId = _nextSessionId++;
             var key = '' + sessionId;
-            replyCallbacks[key] = reply;
+            _replyCallbacks[key] = reply;
 
             Ipc.send('editor:sendreq2core', request, args, sessionId);
             return sessionId;
@@ -199,13 +201,55 @@ Editor.sendRequestToCore = function (request) {
 Editor.cancelRequestToCore = function (sessionId) {
     'use strict';
     var key = '' + sessionId;
-    var cb = replyCallbacks[key];
+    var cb = _replyCallbacks[key];
     if ( cb ) {
-        delete replyCallbacks[key];
+        delete _replyCallbacks[key];
     }
 };
 
+/**
+ * Send `args...` to core via `channel` in asynchronous message, and waiting for the `page-level` panel
+ * to reply the message through `callback`.
+ * @method waitForPanelReply
+ * @param {string} channel - the request message channel
+ * @param {...*} [arg] - whatever arguments the request needs
+ * @param {function} reply - the callback used to handle replied arguments
+ * @return {number} - session id, can be used in Editor.cancelRequestToCore
+ */
 Editor.waitForPanelReply = function (request) {
+    'use strict';
+    if (typeof request === 'string') {
+        var args = [].slice.call(arguments, 0);
+        var reply = args[args.length - 1];
+        if (typeof reply === 'function') {
+            args.pop();
+
+            var info = _channel2replyInfo[request];
+
+            if ( !info ) {
+                var requestReply = request+':reply';
+                _channel2replyInfo[request] = {
+                    nextSessionId: 1000,
+                    callbacks: {},
+                };
+            }
+
+            var sessionId = _nextSessionId++;
+            var key = '' + sessionId;
+            _replyCallbacks[key] = reply;
+
+            // Ipc.send('editor:sendreq2core', request, args, sessionId);
+            Editor.Panel.dispatch.apply( Editor.Panel, args, sessionId );
+            return sessionId;
+        }
+        else {
+            Editor.error('The reply must be of type function');
+        }
+    }
+    else {
+        Editor.error('The request must be of type string');
+    }
+    return null;
 };
 
 })();

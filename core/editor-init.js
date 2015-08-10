@@ -395,9 +395,9 @@ Editor.execSpawn = function ( command, options ) {
     return spawn(file, args, options);
 };
 
-function _updatePackages ( pathList, cb ) {
-    Async.each( pathList, function ( path, done ) {
-        var packageInfo = Editor.Package.packageInfo(path);
+function _reloadPackages ( reloadInfos, cb ) {
+    Async.each( reloadInfos, function ( info, done ) {
+        var packageInfo = Editor.Package.packageInfo(info.path);
         if ( !packageInfo ) {
             done();
             return;
@@ -418,8 +418,7 @@ function _updatePackages ( pathList, cb ) {
                 var testerWin = Editor.Panel.findWindow('tester.panel');
 
                 // reload test
-                var testPath = Path.join(packageInfo._path, 'test');
-                if ( Path.contains(testPath , path) ) {
+                if ( info.reloadTest ) {
                     if ( testerWin ) {
                         testerWin.sendToPage('tester:run-tests', packageInfo.name);
                     }
@@ -428,10 +427,7 @@ function _updatePackages ( pathList, cb ) {
                 }
 
                 // reload page
-                var pageFolders = ['page', 'panel', 'widget'];
-                if (pageFolders.some( function ( name ) {
-                    return Path.contains( Path.join(packageInfo._path, name), path );
-                })) {
+                if ( info.reloadPage ) {
                     for ( var panelName in packageInfo.panels ) {
                         var panelID = packageInfo.name + '.' + panelName;
                         Editor.sendToWindows( 'panel:out-of-date', panelID );
@@ -445,9 +441,14 @@ function _updatePackages ( pathList, cb ) {
                 }
 
                 // reload core
-                Editor.Package.reload(packageInfo._path, {
-                    rebuild: false
-                });
+                if ( info.reloadCore ) {
+                    Editor.Package.reload(packageInfo._path, {
+                        rebuild: false
+                    });
+                    next();
+                    return;
+                }
+
                 next();
             },
         ], function ( err ) {
@@ -467,7 +468,7 @@ function _updatePackages ( pathList, cb ) {
  * @method watchPackages
  */
 var _watchDebounceID = null;
-var _packages = [];
+var _packageReloadInfo = [];
 Editor.watchPackages = function ( cb ) {
     //
     if ( Editor._packagePathList.length === 0 ) {
@@ -510,8 +511,38 @@ Editor.watchPackages = function ( cb ) {
             return;
         }
 
-        if ( _packages.indexOf(packageInfo._path) === -1 ) {
-            _packages.push(packageInfo._path);
+        //
+        var updateInfo;
+        for ( var i = 0; i < _packageReloadInfo.length; ++i ) {
+            if ( _packageReloadInfo[i].path === packageInfo._path ) {
+                updateInfo = _packageReloadInfo[i];
+                break;
+            }
+        }
+
+        if ( !updateInfo ) {
+            updateInfo = {
+                path: packageInfo._path,
+                reloadTest: false,
+                reloadPage: false,
+                reloadCore: false,
+            };
+            _packageReloadInfo.push(updateInfo);
+        }
+
+        // reload test
+        if ( Path.contains(Path.join(packageInfo._path, 'test') , path) ) {
+            updateInfo.reloadTest = true;
+        }
+        // reload page
+        else if ( Path.contains(Path.join(packageInfo._path, 'page') , path) ||
+                  Path.contains(Path.join(packageInfo._path, 'panel') , path) ||
+                  Path.contains(Path.join(packageInfo._path, 'widget') , path) ) {
+            updateInfo.reloadPage = true;
+        }
+        // reload core
+        else {
+            updateInfo.reloadCore = true;
         }
 
         // debounce write for 50ms
@@ -520,8 +551,8 @@ Editor.watchPackages = function ( cb ) {
             _watchDebounceID = null;
         }
         _watchDebounceID = setTimeout(function () {
-            _updatePackages(_packages);
-            _packages = [];
+            _reloadPackages(_packageReloadInfo);
+            _packageReloadInfo = [];
             _watchDebounceID = null;
         }, 50);
     })
