@@ -108,11 +108,12 @@ gulp.task('rename-electron-mac', ['copy-electron-mac'], function (cb) {
         'dist/Icebolt.app/Contents/Frameworks/Icebolt Helper NP.app/Contents/MacOS/Electron Helper NP'
     ];
 
-    renameSrc.forEach(function(file) {
-        Fs.moveSync(file, file.replace(/Electron/, 'Icebolt'));
+    Async.each( renameSrc, function ( file, done ) {
+        Fs.move(file, file.replace(/Electron/, 'Icebolt'), done);
+    }, function ( err ) {
+        if ( err ) throw err;
+        cb ();
     });
-
-    cb();
 });
 
 
