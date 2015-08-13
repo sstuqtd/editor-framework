@@ -470,23 +470,14 @@
             if ( event.detail.path === value1+'.uuid' ) {
                 el2.set( camelValue2, event.detail.value );
             }
+            else {
+                el2.set( camelValue2, event.detail.value.uuid );
+            }
         });
         el2.addEventListener(value2+'-changed', function ( event ) {
             el1.set(value1, {
                 uuid: event.detail.value
             });
-        });
-    };
-
-    EditorUI.bindArrayLength = function ( el1, value1, el2, value2 ) {
-        var camelValue2 = EditorUI.dashToCamelCase(value2);
-        el1.addEventListener( value1+'-changed', function ( event ) {
-            if ( event.detail.path === value1+'.length' ) {
-                el2.set( camelValue2, event.detail.value );
-            }
-        });
-        el2.addEventListener(value2+'-changed', function ( event ) {
-            el1.set(value1+'.length', event.detail.value);
         });
     };
 
