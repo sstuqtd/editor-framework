@@ -468,6 +468,21 @@ var Selection = {
     },
 
     /**
+     * @method curGlobalActivate
+     * @return {object} - { type, id }
+     */
+    curGlobalActivate: function () {
+        if ( !_lastActiveUnit ) {
+            return null;
+        }
+
+        return {
+            type: _lastActiveUnit.type,
+            id: _lastActiveUnit.lastActive,
+        };
+    },
+
+    /**
      * @method curSelection
      * @param {string} type
      * @return {string[]} selected list
@@ -646,6 +661,7 @@ if ( Editor.isCoreLevel ) {
                 lastActive: selectionUnit.lastActive,
                 lastHover: selectionUnit.lastHover,
                 context: selectionUnit._context,
+                isLastGlobalActive: selectionUnit === _lastActiveUnit,
             });
         }
         event.returnValue = results;
@@ -667,6 +683,10 @@ if ( Editor.isPageLevel ) {
             selectionUnit._context = info.context;
 
             _units[info.type] = selectionUnit;
+
+            if ( info.isLastGlobalActive ) {
+                _lastActiveUnit = selectionUnit;
+            }
         }
     })();
 }
