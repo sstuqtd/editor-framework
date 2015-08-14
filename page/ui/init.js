@@ -483,7 +483,11 @@
 
     EditorUI.toHumanText = function ( text ) {
         var result = text.replace(/[-_]([a-z])/g, function(m) {
-            return ' ' + m[1].toUpperCase();
+            return m[1].toUpperCase();
+        });
+
+        result = result.replace(/([a-z][A-Z])/g, function (g) {
+            return g[0] + ' ' + g[1];
         });
 
         // remove first white-space
