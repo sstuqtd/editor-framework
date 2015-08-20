@@ -309,6 +309,8 @@ Editor.quit = function () {
         winlist[i].close();
     }
 
+    Editor.events.emit('quit');
+
     App.quit();
 };
 
