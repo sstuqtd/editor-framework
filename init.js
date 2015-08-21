@@ -269,6 +269,7 @@ Commander.parse(process.argv);
 Editor.isDev = Commander.dev;
 Editor.devMode = Commander.devMode;
 Editor.showDevtools = Commander.showDevtools;
+Editor.debugPort = Commander.debug;
 
 // ---------------------------
 // Define Editor.App APIs
