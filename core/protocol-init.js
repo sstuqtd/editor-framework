@@ -2,13 +2,17 @@ var Protocol = require('protocol');
 var Url = require('fire-url');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
+var Winston = require('winston');
 
 function protocolRegisterCallback ( err, scheme ) {
+    var logFailed = Editor.failed ? Editor.failed : Winston.failed;
+    var logSuccess = Editor.success ? Editor.success : Winston.success;
+
     if ( err ) {
-        Editor.failed( 'Failed to register protocol %s, %s', scheme, err.message );
+        logFailed( 'Failed to register protocol %s, %s', scheme, err.message );
         return;
     }
-    Editor.success( 'protocol %s registerred', scheme );
+    logSuccess( 'protocol %s registerred', scheme );
 }
 Editor.protocolRegisterCallback = protocolRegisterCallback;
 
@@ -19,7 +23,7 @@ Editor.protocolRegisterCallback = protocolRegisterCallback;
 // native protocol register
 
 // register protocol editor-framework://
-Protocol.registerProtocol('editor-framework', function(request) {
+Protocol.registerFileProtocol('editor-framework', function(request, callback) {
     var url = decodeURIComponent(request.url);
     var uri = Url.parse(url);
     var relativePath = uri.hostname;
@@ -27,11 +31,11 @@ Protocol.registerProtocol('editor-framework', function(request) {
         relativePath = Path.join( relativePath, uri.pathname );
     }
     var file = Path.join( Editor.frameworkPath, relativePath );
-    return new Protocol.RequestFileJob(file);
+    callback ( { path: file } );
 }, protocolRegisterCallback );
 
 // register protocol app://
-Protocol.registerProtocol('app', function(request) {
+Protocol.registerFileProtocol('app', function(request, callback) {
     var url = decodeURIComponent(request.url);
     var uri = Url.parse(url);
     var relativePath = uri.hostname;
@@ -39,12 +43,12 @@ Protocol.registerProtocol('app', function(request) {
         relativePath = Path.join( relativePath, uri.pathname );
     }
     var file = Path.join( Editor.appPath, relativePath );
-    return new Protocol.RequestFileJob(file);
+    callback ( { path: file } );
 }, protocolRegisterCallback );
 
 // register protocol packages://
 
-Protocol.registerProtocol('packages', function(request) {
+Protocol.registerFileProtocol('packages', function(request, callback) {
     var url = decodeURIComponent(request.url);
     var uri = Url.parse(url);
 
@@ -53,15 +57,18 @@ Protocol.registerProtocol('packages', function(request) {
         var packageInfo = Editor.Package.packageInfo(packagePath);
         if ( packageInfo ) {
             var file = Path.join( packageInfo._destPath, uri.pathname );
-            return new Protocol.RequestFileJob(file);
+            callback ( { path: file } );
+            return;
         }
     }
-    return new Protocol.RequestErrorJob(-6); // net::ERR_FILE_NOT_FOUND
+
+    // net::ERR_FILE_NOT_FOUND
+    callback (-6);
 }, protocolRegisterCallback );
 
 // DISABLE: this make protocol can not use relative path
 // // register protocol bower://
-// Protocol.registerProtocol('bower', function(request) {
+// Protocol.registerFileProtocol('bower', function(request, callback) {
 //     var url = decodeURIComponent(request.url);
 //     var uri = Url.parse(url);
 //     var relativePath = uri.hostname;
@@ -69,21 +76,23 @@ Protocol.registerProtocol('packages', function(request) {
 //         relativePath = Path.join( relativePath, uri.pathname );
 //     }
 //     var file = Path.join( Editor.appPath, 'bower_components', relativePath );
-//     return new Protocol.RequestFileJob(file);
+//     callback ( { path: file } );
 // }, protocolRegisterCallback );
 
 // DISABLE: same reason as bower
 // // register protocol widgets://
-// Protocol.registerProtocol('widgets', function(request) {
+// Protocol.registerFileProtocol('widgets', function(request, callback) {
 //     var url = decodeURIComponent(request.url);
 //     var uri = Url.parse(url);
 
 //     var info = Editor.Package.widgetInfo(uri.hostname);
 //     if ( info ) {
 //         var file = Path.join( info.path, uri.pathname );
-//         return new Protocol.RequestFileJob(file);
+//         callback ( { path: file } );
+//         return;
 //     }
-//     return new Protocol.RequestErrorJob(-6); // net::ERR_FILE_NOT_FOUND
+//     // net::ERR_FILE_NOT_FOUND
+//     callback (-6);
 // }, protocolRegisterCallback );
 
 // Editor.url protocol register
