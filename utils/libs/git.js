@@ -4,7 +4,7 @@ var Fs = require('fire-fs');
 var spawn = require('child_process').spawn;
 
 function exec(cmdArgs, path, cb) {
-    console.log("git " + cmdArgs.join(' ') + ' in ' + path);
+    console.log('git '  + cmdArgs.join(' ') + ' in ' + path);
     var child = spawn('git', cmdArgs, {
         cwd: path
     });
