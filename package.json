@@ -44,7 +44,7 @@
     },
     "devDependencies": {
         "check-dependencies": "0.9.5",
-        "firedoc": "1.9.2",
+        "firedoc": "1.10.0",
         "gulp-changed": "1.3.0",
         "gulp-jshint": "1.11.2",
         "gulp-watch": "4.2.4",
