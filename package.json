@@ -64,6 +64,6 @@
     "nativeModules": [
         "chokidar"
     ],
-    "electronVersion": "0.31.1",
+    "electronVersion": "0.31.2",
     "main": "demo.js"
 }
