@@ -34,13 +34,14 @@
             }
         } );
 
-        window.onload = function () {
-            // NOTE: this will prevent mac touchpad scroll the body
-            document.body.onscroll = function ( event ) {
-                document.body.scrollLeft = 0;
-                document.body.scrollTop = 0;
-            };
-        };
+        // DISABLE: looks like setting the `body: { overflow: hidden; }` will solve the problem
+        // window.onload = function () {
+        //     // NOTE: this will prevent mac touchpad scroll the body
+        //     document.body.onscroll = function ( event ) {
+        //         document.body.scrollLeft = 0;
+        //         document.body.scrollTop = 0;
+        //     };
+        // };
 
         // DISABLE: I disable this because developer may debug during initialize,
         //          and when he refresh at that time, the layout will be saved and
