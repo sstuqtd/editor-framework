@@ -55,6 +55,14 @@ function EditorWindow ( name, options ) {
         break;
     }
 
+    if ( !options.width ) {
+        options.width = 400;
+    }
+
+    if ( !options.height ) {
+        options.height = 300;
+    }
+
     this.nativeWin = new BrowserWindow(options);
 
     if ( this.hideWhenBlur ) {
