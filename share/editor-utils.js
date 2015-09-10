@@ -98,4 +98,41 @@ Utils.arrayCmpFilter = function ( items, func ) {
     return results;
 };
 
+/**
+ * @method fitSize
+ * @param {number} srcWidth
+ * @param {number} srcHeight
+ * @param {number} destWidth
+ * @param {number} destHeight
+ * @return {number[]} - [width, height]
+ */
+Utils.fitSize = function ( srcWidth, srcHeight, destWidth, destHeight ) {
+    var width, height;
+    if ( srcWidth > destWidth &&
+         srcHeight > destHeight )
+    {
+        width = destWidth;
+        height = srcHeight * destWidth/srcWidth;
+
+        if ( height > destHeight ) {
+            height = destHeight;
+            width = srcWidth * destHeight/srcHeight;
+        }
+    }
+    else if ( srcWidth > destWidth ) {
+        width = destWidth;
+        height = srcHeight * destWidth/srcWidth;
+    }
+    else if ( srcHeight > destHeight ) {
+        width = srcWidth * destHeight/srcHeight;
+        height = destHeight;
+    }
+    else {
+        width = srcWidth;
+        height = srcHeight;
+    }
+
+    return [width,height];
+};
+
 module.exports = Utils;
