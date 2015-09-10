@@ -55,6 +55,19 @@ function EditorWindow ( name, options ) {
         break;
     }
 
+    // set default value for options
+    if ( !options.width ) {
+        options.width = 400;
+    }
+
+    if ( !options.height ) {
+        options.height = 300;
+    }
+
+    if ( !options.preload ) {
+        options.preload = Editor.url('editor-framework://page/page-init.js');
+    }
+
     this.nativeWin = new BrowserWindow(options);
 
     if ( this.hideWhenBlur ) {
