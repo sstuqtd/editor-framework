@@ -4,6 +4,7 @@ var Screen = require('screen');
 var Url = require('fire-url');
 var Ipc = require('ipc');
 var Fs = require('fire-fs');
+
 /**
  * @module Editor
  */

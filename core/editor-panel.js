@@ -122,7 +122,12 @@ Panel.open = function ( panelID, argv ) {
     // BUG: https://github.com/atom/atom-shell/issues/1321
     editorWin.nativeWin.setContentSize( windowOptions.width, windowOptions.height );
     editorWin.nativeWin.setMenuBarVisibility(false);
-    editorWin.load(Panel.templateUrl, {
+
+    var url = Panel.templateUrl;
+    if ( panelInfo.type === 'simple' ) {
+        url = panelInfo.frame;
+    }
+    editorWin.load(url, {
         panelID: panelID
     });
     editorWin.focus();
