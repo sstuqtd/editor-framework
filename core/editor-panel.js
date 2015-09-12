@@ -1,5 +1,6 @@
 var Ipc = require('ipc');
 var BrowserWindow = require('browser-window');
+var Url = require('fire-url');
 
 /**
  * Panel module for operating specific panel
@@ -122,9 +123,14 @@ Panel.open = function ( panelID, argv ) {
     // BUG: https://github.com/atom/atom-shell/issues/1321
     editorWin.nativeWin.setContentSize( windowOptions.width, windowOptions.height );
     editorWin.nativeWin.setMenuBarVisibility(false);
-    editorWin.load(Panel.templateUrl, {
-        panelID: panelID
-    });
+
+    if ( panelInfo.type === 'simple' ) {
+        editorWin.load(Url.join( panelInfo.path, panelInfo.frame ), argv);
+    } else {
+        editorWin.load(Panel.templateUrl, {
+            panelID: panelID
+        });
+    }
     editorWin.focus();
 };
 

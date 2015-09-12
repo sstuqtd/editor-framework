@@ -265,7 +265,20 @@ Editor.sendToPanel = function ( panelID, message ) {
         return;
     }
 
-    var args = [].slice.call( arguments, 0 );
+    var panelInfo = Editor.Package.panelInfo(panelID);
+    if ( !panelInfo ) {
+        return;
+    }
+
+    var args;
+
+    if ( panelInfo.type === 'simple' ) {
+        args = [].slice.call( arguments, 1 );
+        win.sendToPage.apply( win, args );
+        return;
+    }
+
+    args = [].slice.call( arguments, 0 );
     args.unshift('editor:send2panel');
     win.sendToPage.apply( win, args );
 };
