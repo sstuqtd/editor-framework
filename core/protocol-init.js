@@ -123,8 +123,7 @@ Editor.url = function ( url ) {
     var urlInfo = Url.parse(url);
 
     if ( !urlInfo.protocol ) {
-        Editor.error( 'Invalid url %s.', url );
-        return null;
+        return url;
     }
 
     var fn = Editor._protocol2fn[urlInfo.protocol];

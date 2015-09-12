@@ -1,5 +1,6 @@
 var Ipc = require('ipc');
 var BrowserWindow = require('browser-window');
+var Url = require('fire-url');
 
 /**
  * Panel module for operating specific panel
@@ -123,13 +124,13 @@ Panel.open = function ( panelID, argv ) {
     editorWin.nativeWin.setContentSize( windowOptions.width, windowOptions.height );
     editorWin.nativeWin.setMenuBarVisibility(false);
 
-    var url = Panel.templateUrl;
     if ( panelInfo.type === 'simple' ) {
-        url = panelInfo.frame;
+        editorWin.load(Url.join( panelInfo.path, panelInfo.frame ), argv);
+    } else {
+        editorWin.load(Panel.templateUrl, {
+            panelID: panelID
+        });
     }
-    editorWin.load(url, {
-        panelID: panelID
-    });
     editorWin.focus();
 };
 
