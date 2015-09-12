@@ -85,7 +85,7 @@ Explanation for each key-value pair:
     - `key` *String* - Panel name, this name will be combined with package name to create an unique panelID (e.g. `PackageName.PanelName`).
     - `value` *Object* - Panel options.
       - `frame` *String* - The panel frame html file. ( It is recommended to define it as a Polymer element ).
-      - `type` *String* (Optional) - Default is `dockable`, can be `dockable`, `float`, `fixed-size`, `quick`.
+      - `type` *String* (Optional) - Default is `dockable`, can be `dockable`, `float`, `fixed-size`, `quick`, `simple`.
       - `title` *String* (Optional) - The panel title shows in the tab label, default to the panelID.
       - `popable` *Boolean* (Optional) - Default is `true`, indicate if the panel is popable.
       - `width` *Integer* (Optional) - The width of the panel frame.
