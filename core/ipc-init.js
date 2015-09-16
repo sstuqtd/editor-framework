@@ -14,7 +14,6 @@ function getOptions (args) {
 }
 
 function _sendToCore ( event, message ) {
-    // jshint validthis:true
     'use strict';
     if (arguments.length > 2) {
         var args;
@@ -45,9 +44,8 @@ function _sendToCore ( event, message ) {
 }
 
 Ipc.on ( 'editor:send2core', function ( event, message ) {
-    // jshint validthis:true
     'use strict';
-    if ( ! _sendToCore.apply ( Ipc, arguments ) ) {
+    if ( !_sendToCore.apply ( Ipc, arguments ) ) {
         Editor.failed( 'send2core "%s" failed, listener not found for "%s" in core-level', message, message );
     }
 });
@@ -229,11 +227,12 @@ Editor.sendToAll = function () {
             Ipc.emit.apply(Ipc, args); // sendToCore (dont require receiver)
         }
         Editor.sendToWindows.apply(Editor, args);
+
+        return;
     }
-    else {
-        Ipc.emit(arguments[0]); // sendToCore (dont require receiver)
-        Editor.sendToWindows(arguments[0]);
-    }
+
+    Ipc.emit(arguments[0]); // sendToCore (dont require receiver)
+    Editor.sendToWindows(arguments[0]);
 };
 
 // DISABLE: not make sense
@@ -291,11 +290,10 @@ Editor.sendToPanel = function ( panelID, message ) {
  */
 Editor.sendToMainWindow = function () {
     var mainWin = Editor.mainWindow;
-    if (mainWin) {
-        mainWin.sendToPage.apply( mainWin, arguments );
+    if ( !mainWin ) {
+        console.error('Failed to send "%s" because main page not initialized.', arguments[0]);
+        return;
     }
-    else {
-        console.error('Failed to send "%s" because main page not initialized.',
-                      arguments[0]);
-    }
+
+    mainWin.sendToPage.apply( mainWin, arguments );
 };
