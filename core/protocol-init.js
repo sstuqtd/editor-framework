@@ -4,18 +4,6 @@ var Path = require('fire-path');
 var Fs = require('fire-fs');
 var Winston = require('winston');
 
-function protocolRegisterCallback ( err, scheme ) {
-    var logFailed = Editor.failed ? Editor.failed : Winston.failed;
-    var logSuccess = Editor.success ? Editor.success : Winston.success;
-
-    if ( err ) {
-        logFailed( 'Failed to register protocol %s, %s', scheme, err.message );
-        return;
-    }
-    logSuccess( 'protocol %s registerred', scheme );
-}
-Editor.protocolRegisterCallback = protocolRegisterCallback;
-
 /**
  * @module Editor
  */
@@ -32,7 +20,13 @@ Protocol.registerFileProtocol('editor-framework', function(request, callback) {
     }
     var file = Path.join( Editor.frameworkPath, relativePath );
     callback ( { path: file } );
-}, protocolRegisterCallback );
+}, function ( err ) {
+    if ( err ) {
+        Winston.failed( 'Failed to register protocol editor-Framework, %s', err.message );
+        return;
+    }
+    Winston.success( 'protocol editor-framework registerred' );
+} );
 
 // register protocol app://
 Protocol.registerFileProtocol('app', function(request, callback) {
@@ -44,7 +38,13 @@ Protocol.registerFileProtocol('app', function(request, callback) {
     }
     var file = Path.join( Editor.appPath, relativePath );
     callback ( { path: file } );
-}, protocolRegisterCallback );
+}, function ( err ) {
+    if ( err ) {
+        Winston.failed( 'Failed to register protocol app, %s', err.message );
+        return;
+    }
+    Winston.success( 'protocol app registerred' );
+} );
 
 // register protocol packages://
 
@@ -64,7 +64,13 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 
     // net::ERR_FILE_NOT_FOUND
     callback (-6);
-}, protocolRegisterCallback );
+}, function ( err ) {
+    if ( err ) {
+        Winston.failed( 'Failed to register protocol packages, %s', err.message );
+        return;
+    }
+    Winston.success( 'protocol packages registerred' );
+} );
 
 // DISABLE: this make protocol can not use relative path
 // // register protocol bower://
@@ -77,7 +83,13 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 //     }
 //     var file = Path.join( Editor.appPath, 'bower_components', relativePath );
 //     callback ( { path: file } );
-// }, protocolRegisterCallback );
+// }, function ( err ) {
+//     if ( err ) {
+//         Winston.failed( 'Failed to register protocol bower, %s', err.message );
+//         return;
+//     }
+//     Winston.success( 'protocol bower registerred' );
+// } );
 
 // DISABLE: same reason as bower
 // // register protocol widgets://
@@ -93,7 +105,13 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 //     }
 //     // net::ERR_FILE_NOT_FOUND
 //     callback (-6);
-// }, protocolRegisterCallback );
+// }, function ( err ) {
+//     if ( err ) {
+//         Winston.failed( 'Failed to register protocol widgets, %s', err.message );
+//         return;
+//     }
+//     Winston.success( 'protocol widgets registerred' );
+// } );
 
 // Editor.url protocol register
 
