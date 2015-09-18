@@ -41,8 +41,8 @@ global.__app = {
         mainWin.load( 'app://package-examples/index.html' );
 
         // open dev tools if needed
-        // NOTE: open dev-tools before did-finish-load will make it insert an unused <style> in page-level
         if ( Editor.showDevtools ) {
+            // NOTE: open dev-tools before did-finish-load will make it insert an unused <style> in page-level
             mainWin.nativeWin.webContents.once('did-finish-load', function () {
                 mainWin.openDevTools({
                     detach: true
