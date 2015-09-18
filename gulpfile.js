@@ -146,7 +146,7 @@ gulp.task('update-builtin', function(cb) {
 
         var branch = 'master';
         if ( setting.branch.builtins ) {
-            branch = setting.branch.builtins.name || 'master';
+            branch = setting.branch.builtins[name] || 'master';
         }
 
         git.pull(Path.join('builtin', name),
@@ -233,7 +233,7 @@ gulp.task('update-shared-packages', function(cb) {
 
         var branch = 'master';
         if ( setting.branch.sharedPackages ) {
-            branch = setting.branch.sharedPackages.name || 'master';
+            branch = setting.branch.sharedPackages[name] || 'master';
         }
 
         git.pull(name,
