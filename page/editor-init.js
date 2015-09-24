@@ -270,6 +270,20 @@ Ipc.on( 'ipc-debugger:query', function ( reply ) {
 // ==========================
 
 Editor.registerPanel = function ( panelID, obj ) {
+    if ( !obj.is ) {
+        var script = document.currentScript;
+        var parent = script.parentElement;
+        if ( parent && parent.tagName === 'DOM-MODULE' ) {
+            obj.is = parent.id;
+        }
+        else {
+            var previous = script.previousElementSibling
+            if ( previous && previous.tagName === 'DOM-MODULE' ) {
+                obj.is = previous.id;
+            }
+        }
+    }
+
     if ( !Editor.panels ) {
         Editor.panels = {};
     }
