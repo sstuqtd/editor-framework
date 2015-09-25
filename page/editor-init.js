@@ -277,10 +277,8 @@ Editor.registerPanel = function ( panelID, obj ) {
             obj.is = parent.id;
         }
         else {
-            var previous = script.previousElementSibling
-            if ( previous && previous.tagName === 'DOM-MODULE' ) {
-                obj.is = previous.id;
-            }
+            Editor.error('Failed to register panel %s, the script must inside a <dom-module>.');
+            return;
         }
     }
 
