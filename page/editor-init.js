@@ -269,6 +269,22 @@ Ipc.on( 'ipc-debugger:query', function ( reply ) {
 // extends
 // ==========================
 
+Editor.registerElement = function ( obj ) {
+    if ( !obj.is ) {
+        var script = document.currentScript;
+        var parent = script.parentElement;
+        if ( parent && parent.tagName === 'DOM-MODULE' ) {
+            obj.is = parent.id;
+        }
+        else {
+            Editor.error('Failed to register element %s, the script must inside a <dom-module>.');
+            return;
+        }
+    }
+
+    Polymer(obj);
+};
+
 Editor.registerPanel = function ( panelID, obj ) {
     if ( !obj.is ) {
         var script = document.currentScript;
