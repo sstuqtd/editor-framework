@@ -295,6 +295,18 @@ Editor.registerPanel = function ( panelID, obj ) {
 };
 
 Editor.registerWidget = function ( widgetName, obj ) {
+    if ( !obj.is ) {
+        var script = document.currentScript;
+        var parent = script.parentElement;
+        if ( parent && parent.tagName === 'DOM-MODULE' ) {
+            obj.is = parent.id;
+        }
+        else {
+            Editor.error('Failed to register widget %s, the script must inside a <dom-module>.');
+            return;
+        }
+    }
+
     if ( !Editor.widgets ) {
         Editor.widgets = {};
     }
