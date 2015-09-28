@@ -23,7 +23,7 @@
         "async": "1.4.2",
         "chai": "3.2.0",
         "chalk": "1.1.1",
-        "chokidar": "1.0.5",
+        "chokidar": "1.1.0",
         "commander": "2.8.1",
         "del": "1.2.1",
         "diff": "2.1.1",
