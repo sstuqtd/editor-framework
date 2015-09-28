@@ -539,7 +539,8 @@ Editor.watchPackages = function ( cb ) {
         // reload page
         else if ( Path.contains(Path.join(packageInfo._path, 'page') , path) ||
                   Path.contains(Path.join(packageInfo._path, 'panel') , path) ||
-                  Path.contains(Path.join(packageInfo._path, 'widget') , path) ) {
+                  Path.contains(Path.join(packageInfo._path, 'widget') , path) ||
+                  Path.contains(Path.join(packageInfo._path, 'element') , path) ) {
             reloadInfo.reloadPage = true;
         }
         // reload core

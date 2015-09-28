@@ -277,12 +277,21 @@ Editor.registerElement = function ( obj ) {
             obj.is = parent.id;
         }
         else {
-            Editor.error('Failed to register element %s, the script must inside a <dom-module>.');
+            Editor.error('Failed to register widget %s, the script must inside a <dom-module>.');
             return;
         }
     }
 
-    Polymer(obj);
+    if ( !Editor.elements ) {
+        Editor.elements = {};
+    }
+
+    if ( Editor.elements[obj.is] ) {
+        Editor.error('Failed to register widget %s, already exists.', obj.is );
+        return;
+    }
+
+    Editor.elements[obj.is] = Polymer(obj);
 };
 
 Editor.registerPanel = function ( panelID, obj ) {
@@ -308,31 +317,6 @@ Editor.registerPanel = function ( panelID, obj ) {
     }
 
     Editor.panels[panelID] = Polymer(obj);
-};
-
-Editor.registerWidget = function ( widgetName, obj ) {
-    if ( !obj.is ) {
-        var script = document.currentScript;
-        var parent = script.parentElement;
-        if ( parent && parent.tagName === 'DOM-MODULE' ) {
-            obj.is = parent.id;
-        }
-        else {
-            Editor.error('Failed to register widget %s, the script must inside a <dom-module>.');
-            return;
-        }
-    }
-
-    if ( !Editor.widgets ) {
-        Editor.widgets = {};
-    }
-
-    if ( Editor.widgets[widgetName] ) {
-        Editor.error('Failed to register widget %s, already exists.', widgetName );
-        return;
-    }
-
-    Editor.widgets[widgetName] = Polymer(obj);
 };
 
 // ==========================

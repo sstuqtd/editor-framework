@@ -14,7 +14,6 @@ var Package = {};
 var _path2package = {};
 var _name2packagePath = {};
 var _panel2info = {};
-var _widget2info = {};
 
 function _build ( packageObj, cb ) {
     if ( packageObj.build ) {
@@ -162,20 +161,6 @@ Package.load = function ( path, cb ) {
             }
         }
 
-        // register widget
-        if ( packageObj.widgets && typeof packageObj.widgets === 'object' ) {
-            for ( var widgetName in packageObj.widgets ) {
-                if ( _widget2info[widgetName] ) {
-                    Editor.error( 'Failed to register widget \'%s\' from \'%s\', already exists.', widgetName, packageObj.name );
-                    continue;
-                }
-                var widgetPath = packageObj.widgets[widgetName];
-                _widget2info[widgetName] = {
-                    path: Path.join( destPath, Path.dirname(widgetPath) ),
-                };
-            }
-        }
-
         //
         _path2package[path] = packageObj;
         _name2packagePath[packageObj.name] = path;
@@ -204,13 +189,6 @@ Package.unload = function ( path, cb ) {
         for ( var panelName in packageObj.panels ) {
             var panelID = packageObj.name + '.' + panelName;
             delete _panel2info[panelID];
-        }
-    }
-
-    // unregister widget
-    if ( packageObj.widgets && typeof packageObj.widgets === 'object' ) {
-        for ( var widgetName in packageObj.widgets ) {
-            delete _widget2info[widgetName];
         }
     }
 
@@ -303,17 +281,6 @@ Package.reload = function ( path, opts, cb ) {
  */
 Package.panelInfo = function ( panelID ) {
     return _panel2info[panelID];
-};
-
-/**
- * Find and get panel info via widgetName, the widget info is the json object
- * that defined in `widgets.{widget-name}` in your package.json
- * @method widgetInfo
- * @param {string} widgetName
- * @return {object}
- */
-Package.widgetInfo = function ( widgetName ) {
-    return _widget2info[widgetName];
 };
 
 /**

@@ -65,12 +65,12 @@ describe('Editor.Package building test', function() {
                 assert( Fs.existsSync(Path.join(path,'bin/dev')) );
 
                 var packageInfo = Editor.Package.packageInfo(path);
-                var widgetInfo = Editor.Package.widgetInfo('simple-widget');
+                // var widgetInfo = Editor.Package.widgetInfo('simple-widget');
                 var panelInfo = Editor.Package.panelInfo('needs-build.panel');
 
                 expect( packageInfo._path ).to.be.equal( path );
                 expect( packageInfo._destPath ).to.be.equal( Path.join(path,'bin/dev') );
-                expect( widgetInfo.path ).to.be.equal( Path.join(path,'bin/dev/widget') );
+                // expect( widgetInfo.path ).to.be.equal( Path.join(path,'bin/dev/widget') );
                 expect( panelInfo.path ).to.be.equal( Path.join(path,'bin/dev') );
 
                 done();
