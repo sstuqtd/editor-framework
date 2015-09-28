@@ -302,7 +302,7 @@ Editor.registerPanel = function ( panelID, obj ) {
             obj.is = parent.id;
         }
         else {
-            Editor.error('Failed to register panel %s, the script must inside a <dom-module>.');
+            Editor.error('Failed to register panel %s, the script must inside a <dom-module>.', panelID);
             return;
         }
     }
