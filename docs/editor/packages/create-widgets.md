@@ -12,32 +12,22 @@ Define a widget in `page-level`, then save it as `simple-widget.html` in your pa
 
 ```html
 <dom-module id="simple-widget">
-    <style>
-        :host {
-            color: red;
-        }
-    </style>
+  <style>
+    :host {
+        color: red;
+    }
+  </style>
 
-    <template>
-        This is a simple widget
-    </template>
-</dom-module>
+  <template>
+    This is a simple widget
+  </template>
 
-<script>
-    Editor.registerWidget( 'simple-widget', {
-        is: 'simple-widget',
+  <script>
+    Editor.registerElement({
+      // ...
     });
-</script>
-```
-Register the html file in `package.json`:
-
-```json
-{
-  "name": "simple",
-  "widgets": {
-    "simple-widget": "widget/simple-widget.html"
-  }
-}
+  </script>
+</dom-module>
 ```
 
 ## Reference Widget

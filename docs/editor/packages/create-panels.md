@@ -12,25 +12,25 @@ To define a panel frame, just create a html file like this:
 
 ```html
 <dom-module id="simple-panel">
-    <style>
-        :host {
-            display: flex;
-            flex-wrap: nowrap;
-            align-items: stretch;
-            flex-direction: column;
-        }
-    </style>
+  <style>
+    :host {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      flex-direction: column;
+    }
+  </style>
 
-    <template>
-        This is a simple panel
-    </template>
-</dom-module>
+  <template>
+    This is a simple panel
+  </template>
 
-<script>
+  <script>
     Editor.registerPanel( 'simple.panel', {
-        is: 'simple-panel',
+      // ...
     });
-</script>
+  </script>
+</dom-module>
 ```
 
 Then save it to your package's `panel` folder. After that register the html file in `package.json`:
@@ -95,7 +95,7 @@ Example:
 
 ```javascript
 Editor.Panel.open( 'your.panel.id', {
-    cwd: '~/editor-framework/',
-    file: 'foo/bar/foobar.js',
+  cwd: '~/editor-framework/',
+  file: 'foo/bar/foobar.js',
 });
 ```
