@@ -18,8 +18,7 @@ body {
 
     font-size: 13px;
 
-    /* font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-    font-family: 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, Arial, sans-serif;
     overflow: hidden;
 
     color: #ddd;
