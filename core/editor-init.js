@@ -486,7 +486,12 @@ Editor.watchPackages = function ( cb ) {
         }
     }
     _packageWatcher = Chokidar.watch(src, {
-        ignored: [/[\/\\]\./, /[\/\\]bin/, /[\/\\]test[\/\\]fixtures/, /[\/\\]test[\/\\]playground/],
+        ignored: [
+            // /[\/\\]\.(?!app-name)/: ignore /.hidden-files but skip ~/.app-name
+            new RegExp('[\\/\\\\]\\.(?!' + Editor.name + ')'),
+            /[\/\\]bin/,
+            /[\/\\]test[\/\\](fixtures|playground)/,
+        ],
         ignoreInitial: true,
         persistent: true,
     });

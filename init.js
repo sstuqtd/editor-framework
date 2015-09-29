@@ -24,6 +24,7 @@ global.Editor = {};
     Editor.App = __app;
 })();
 
+
 var App = require('app');
 /**
  * The current app.js running directory.
@@ -55,6 +56,9 @@ process.on('uncaughtException', function(error) {
 
 var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
 var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
+
+// add builtin node_modules search path
+require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
 
 // ---------------------------
 // initialize minimal Editor

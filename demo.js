@@ -16,6 +16,7 @@ global.__app = {
 
         Editor.registerPackagePath( Editor.url('app://package-examples/') );
         Editor.registerPackagePath( Editor.url('app://benchmark/') );
+        Editor.registerPackagePath( Path.join(Editor.appHome, 'packages') );
 
         if ( cb ) cb ();
     },
