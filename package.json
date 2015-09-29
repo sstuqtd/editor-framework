@@ -1,70 +1,70 @@
 {
-    "name": "editor-framework",
-    "version": "0.3.16",
-    "description": "A simple framework for making panel based applications.",
-    "homepage": "http://fireball-x.com",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/fireball-x/editor-framework.git"
-    },
-    "author": "Firebox Technology",
-    "license": "MIT License",
-    "bugs": {
-        "url": "https://github.com/fireball-x/editor-framework/issues"
-    },
-    "scripts": {
-        "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
-        "postinstall": "gulp post-install-npm",
-        "install": "gulp bootstrap && bower install && gulp npm-rebuild && gulp update",
-        "test": "node utils/run-tests.js",
-        "api": "firedoc build ./ --theme notab"
-    },
-    "dependencies": {
-        "async": "1.4.2",
-        "chai": "3.2.0",
-        "chalk": "1.1.1",
-        "chokidar": "1.1.0",
-        "commander": "2.8.1",
-        "del": "1.2.1",
-        "diff": "2.1.1",
-        "fire-fs": "0.2.1",
-        "fire-path": "0.1.7",
-        "fire-url": "0.1.6",
-        "globby": "3.0.1",
-        "gulp": "3.9.0",
-        "gulp-babel": "5.2.1",
-        "gulp-less": "3.0.3",
-        "gulp-sequence": "0.4.1",
-        "gulp-stylus": "2.0.7",
-        "lodash": "3.10.1",
-        "mocha": "2.3.2",
-        "semver": "5.0.3",
-        "sinon": "1.16.1",
-        "winston": "1.0.1"
-    },
-    "devDependencies": {
-        "check-dependencies": "0.10.3",
-        "firedoc": "1.10.0",
-        "gulp-changed": "1.3.0",
-        "gulp-jshint": "1.11.2",
-        "gulp-watch": "4.3.5",
-        "jshint-stylish": "2.0.1",
-        "npmconf": "2.1.2"
-    },
-    "sharedPackages": [
-        "benchmark",
-        "package-examples"
-    ],
-    "builtins": [
-        "console",
-        "ipc-debugger",
-        "package-manager",
-        "tester",
-        "ui-kit"
-    ],
-    "nativeModules": [
-        "chokidar"
-    ],
-    "electronVersion": "0.33.3",
-    "main": "demo.js"
+  "name": "editor-framework",
+  "version": "0.3.16",
+  "description": "A simple framework for making panel based applications.",
+  "homepage": "http://fireball-x.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fireball-x/editor-framework.git"
+  },
+  "author": "Firebox Technology",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/fireball-x/editor-framework/issues"
+  },
+  "scripts": {
+    "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
+    "postinstall": "gulp post-install-npm",
+    "install": "gulp bootstrap && bower install && gulp npm-rebuild && gulp update",
+    "test": "node utils/run-tests.js",
+    "api": "firedoc build ./ --theme notab"
+  },
+  "dependencies": {
+    "async": "1.4.2",
+    "chai": "3.2.0",
+    "chalk": "1.1.1",
+    "chokidar": "1.1.0",
+    "commander": "2.8.1",
+    "del": "1.2.1",
+    "diff": "2.1.1",
+    "fire-fs": "0.2.1",
+    "fire-path": "0.1.7",
+    "fire-url": "0.1.6",
+    "globby": "3.0.1",
+    "gulp": "3.9.0",
+    "gulp-babel": "5.2.1",
+    "gulp-less": "3.0.3",
+    "gulp-sequence": "0.4.1",
+    "gulp-stylus": "2.0.7",
+    "lodash": "3.10.1",
+    "mocha": "2.3.2",
+    "semver": "5.0.3",
+    "sinon": "1.16.1",
+    "winston": "1.0.1"
+  },
+  "devDependencies": {
+    "check-dependencies": "0.10.3",
+    "firedoc": "1.10.0",
+    "gulp-changed": "1.3.0",
+    "gulp-jshint": "1.11.2",
+    "gulp-watch": "4.3.5",
+    "jshint-stylish": "2.0.1",
+    "npmconf": "2.1.2"
+  },
+  "sharedPackages": [
+    "fireball-packages/benchmark",
+    "fireball-packages/package-examples"
+  ],
+  "builtins": [
+    "fireball-packages/console",
+    "fireball-packages/ipc-debugger",
+    "fireball-packages/package-manager",
+    "fireball-packages/tester",
+    "fireball-packages/ui-kit"
+  ],
+  "nativeModules": [
+    "chokidar"
+  ],
+  "electronVersion": "0.33.3",
+  "main": "demo.js"
 }

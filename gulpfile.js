@@ -30,7 +30,7 @@ gulp.task('update',
         'setup-branch',
         'update-editor-framework',
         'update-builtin',
-        'remove-builtin-bin',
+        'clear-builtin-bin',
         'update-shared-packages',
         'update-electron',
         'check-dependencies'
@@ -118,8 +118,9 @@ gulp.task('install-builtin', function(cb) {
     Fs.ensureDirSync('builtin');
 
     var Async = require('async');
-    Async.eachLimit( pjson.builtins, 5, function ( name, done ) {
-        git.clone('https://github.com/fireball-packages/' + name,
+    Async.eachLimit( pjson.builtins, 5, function ( path, done ) {
+        var name = Path.basename(path);
+        git.clone('https://github.com/' + path,
                   Path.join('builtin', name),
                   done);
     }, function ( err ) {
@@ -137,7 +138,8 @@ gulp.task('update-builtin', function(cb) {
     }
 
     var Async = require('async');
-    Async.eachLimit( pjson.builtins, 5, function ( name, done ) {
+    Async.eachLimit( pjson.builtins, 5, function ( path, done ) {
+        var name = Path.basename(path);
         if ( !Fs.existsSync(Path.join('builtin', name, '.git')) ) {
             console.error(Chalk.red('Builtin package ' + name + ' not initialized, please run "gulp install-builtin" first!'));
             process.exit(1);
@@ -150,7 +152,7 @@ gulp.task('update-builtin', function(cb) {
         }
 
         git.pull(Path.join('builtin', name),
-                 'https://github.com/fireball-packages/' + name,
+                 'https://github.com/' + path,
                  branch,
                  done);
     }, function ( err ) {
@@ -164,11 +166,13 @@ gulp.task('update-builtin', function(cb) {
     });
 });
 
-gulp.task('remove-builtin-bin', function(cb) {
-    var bins = pjson.builtins.filter(function(name) {
+gulp.task('clear-builtin-bin', function(cb) {
+    var bins = pjson.builtins.filter(function(path) {
+        var name = Path.basename(path);
         var json = JSON.parse(Fs.readFileSync(Path.join('builtin', name, 'package.json')));
         return json.build;
-    }).map(function (name) {
+    }).map(function (path) {
+        var name = Path.basename(path);
         return Path.join('builtin', name, 'bin');
     });
 
@@ -184,11 +188,15 @@ gulp.task('remove-builtin-bin', function(cb) {
 });
 
 gulp.task('prune-builtin', function(cb) {
-    var results = Fs.readdirSync('builtin').filter(function ( name ) {
-        return pjson.builtins.indexOf(name) === -1;
+    var builtins = pjson.builtins.map( function ( path ) {
+        return Path.basename(path);
     });
 
-    results = results.map(function ( name ) {
+    var results = Fs.readdirSync('builtin').filter(function(name) {
+        return builtins.indexOf(name) === -1;
+    });
+
+    results = results.map(function( name ) {
         return Path.join( 'builtin', name );
     });
 
@@ -210,8 +218,9 @@ gulp.task('prune-builtin', function(cb) {
 
 gulp.task('install-shared-packages', function(cb) {
     var Async = require('async');
-    Async.eachLimit( pjson.sharedPackages, 5, function ( name, done ) {
-        git.clone('https://github.com/fireball-packages/' + name,
+    Async.eachLimit( pjson.sharedPackages, 5, function ( path, done ) {
+        var name = Path.basename(path);
+        git.clone('https://github.com/' + path,
                   name,
                   done);
     }, function ( err ) {
@@ -224,7 +233,8 @@ gulp.task('update-shared-packages', function(cb) {
     var setting = JSON.parse(Fs.readFileSync('local-setting.json'));
 
     var Async = require('async');
-    Async.eachLimit( pjson.sharedPackages, 5, function ( name, done ) {
+    Async.eachLimit( pjson.sharedPackages, 5, function ( path, done ) {
+        var name = Path.basename(path);
         if ( !Fs.existsSync(Path.join(name, '.git')) ) {
             console.error(Chalk.red('Shared package ' + name + ' not initialized, please run "gulp install-shared-packages" first!'));
             process.exit(1);
