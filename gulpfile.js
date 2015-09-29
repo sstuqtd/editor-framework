@@ -247,7 +247,7 @@ gulp.task('update-shared-packages', function(cb) {
         }
 
         git.pull(name,
-                 'https://github.com/fireball-packages/' + name,
+                 'https://github.com/' + path,
                  branch,
                  done);
     }, function ( err ) {
