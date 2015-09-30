@@ -346,10 +346,11 @@ function _reloadEditorApp () {
 // App.commandLine.appendSwitch('disable-http-cache');
 // App.commandLine.appendSwitch('disable-direct-write');
 
-// quit when all windows are closed.
-App.on('window-all-closed', function( event ) {
-    App.quit();
-});
+// DISABLE: we have main-window
+// // quit when all windows are closed.
+// App.on('window-all-closed', function( event ) {
+//     App.quit();
+// });
 
 //
 App.on('will-finish-launching', function() {

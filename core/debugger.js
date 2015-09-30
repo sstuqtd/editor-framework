@@ -29,12 +29,19 @@ Debugger.toggle = function () {
  * @method open
  */
 Debugger.open = function () {
-    dbgProcess = Spawn('node-inspector', ['--debug-port=' + Editor.debugPort], {stdio: 'inherit'});
+    try {
+        dbgProcess = Spawn('node-inspector', ['--debug-port=' + Editor.debugPort], {stdio: 'inherit'});
+    } catch ( err ) {
+        Editor.failed ( 'Failed to start Core Debugger: %s', err.message );
+        return;
+    }
+
     Editor.MainMenu.set( 'Developer/Debug Core', {
         checked: true
     });
     Editor.info('Visit http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=%s to start debugging', Editor.debugPort);
 
+    // DISABLE FIXME: not work in this way
     // var debuggerWin = new BrowserWindow({
     //     'web-preferences': {
     //         'experimental-features': true,
@@ -57,11 +64,12 @@ Debugger.close = function () {
     if ( dbgProcess ) {
         dbgProcess.kill();
         dbgProcess = null;
+
+        Editor.MainMenu.set( 'Developer/Debug Core', {
+            checked: false
+        });
+        Editor.info('Core Debugger closed');
     }
-    Editor.MainMenu.set( 'Developer/Debug Core', {
-        checked: false
-    });
-    Editor.info('core debugger closed');
 };
 
 module.exports = Debugger;

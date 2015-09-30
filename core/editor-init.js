@@ -309,8 +309,13 @@ Editor.quit = function () {
         winlist[i].close();
     }
 
+    // close debugger
+    Editor.Debugger.close();
+
+    // emit quit event
     Editor.events.emit('quit');
 
+    // close app after all
     App.quit();
 };
 
