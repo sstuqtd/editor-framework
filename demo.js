@@ -25,8 +25,10 @@ global.__app = {
         // create main window
         var mainWin = new Editor.Window('main', {
             'title': 'Editor Framework',
-            'min-width': 800,
-            'min-height': 600,
+            'width': 900,
+            'height': 700,
+            'min-width': 900,
+            'min-height': 700,
             'show': false,
             'resizable': true,
         });
