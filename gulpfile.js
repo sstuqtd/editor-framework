@@ -20,8 +20,8 @@ require('./utils/gulp-tasks/setup-tasks');
 
 gulp.task('bootstrap',
     gulpSequence([
+        'install-hosts',
         'install-builtin',
-        'install-shared-packages'
     ],'update-electron')
 );
 
@@ -29,9 +29,9 @@ gulp.task('update',
     gulpSequence(
         'setup-branch',
         'update-editor-framework',
+        'update-hosts',
         'update-builtin',
         'clear-builtin-bin',
-        'update-shared-packages',
         'update-electron',
         'check-dependencies'
     )
@@ -91,7 +91,7 @@ gulp.task('update-editor-framework', function(cb) {
 
     Async.series([
         function ( next ) {
-            git.exec(['pull', 'https://github.com/fireball-x/editor-framework.git', 'master'], './', next);
+            git.exec(['pull', 'https://github.com/fireball-x/editor-framework', 'master'], './', next);
         },
 
         function ( next ) {
@@ -213,27 +213,27 @@ gulp.task('prune-builtin', function(cb) {
     });
 });
 
-// shared-packages
+// hosts
 // =====================================
 
-gulp.task('install-shared-packages', function(cb) {
+gulp.task('install-hosts', function(cb) {
     var Async = require('async');
-    Async.eachLimit( pjson.sharedPackages, 5, function ( path, done ) {
+    Async.eachLimit( pjson.hosts, 5, function ( path, done ) {
         var name = Path.basename(path);
         git.clone('https://github.com/' + path,
                   name,
                   done);
     }, function ( err ) {
-        console.log('Shared packages installation complete!');
+        console.log('Hosts installation complete!');
         cb();
     });
 });
 
-gulp.task('update-shared-packages', function(cb) {
+gulp.task('update-hosts', ['setup-branch'], function(cb) {
     var setting = JSON.parse(Fs.readFileSync('local-setting.json'));
 
     var Async = require('async');
-    Async.eachLimit( pjson.sharedPackages, 5, function ( path, done ) {
+    Async.eachLimit( pjson.hosts, 5, function ( path, done ) {
         var name = Path.basename(path);
         if ( !Fs.existsSync(Path.join(name, '.git')) ) {
             console.error(Chalk.red('Shared package ' + name + ' not initialized, please run "gulp install-shared-packages" first!'));
@@ -242,8 +242,8 @@ gulp.task('update-shared-packages', function(cb) {
         }
 
         var branch = 'master';
-        if ( setting.branch.sharedPackages ) {
-            branch = setting.branch.sharedPackages[name] || 'master';
+        if ( setting.branch.hosts ) {
+            branch = setting.branch.hosts[name] || 'master';
         }
 
         git.pull(name,
@@ -256,7 +256,7 @@ gulp.task('update-shared-packages', function(cb) {
             return;
         }
 
-        console.log('Shared packages update complete!');
+        console.log('Hosts update complete!');
         return cb();
     });
 });

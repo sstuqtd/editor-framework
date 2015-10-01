@@ -15,7 +15,7 @@
   "scripts": {
     "preinstall": "npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js",
     "postinstall": "gulp post-install-npm",
-    "install": "gulp bootstrap && bower install && gulp npm-rebuild && gulp update",
+    "install": "gulp bootstrap && bower install && gulp npm-rebuild",
     "test": "node utils/run-tests.js",
     "api": "firedoc build ./ --theme notab"
   },
@@ -51,16 +51,15 @@
     "jshint-stylish": "2.0.1",
     "npmconf": "2.1.2"
   },
-  "sharedPackages": [
-    "fireball-packages/benchmark",
-    "fireball-packages/package-examples"
-  ],
   "builtins": [
     "fireball-packages/console",
     "fireball-packages/ipc-debugger",
     "fireball-packages/package-manager",
     "fireball-packages/tester",
     "fireball-packages/ui-kit"
+  ],
+  "hosts": [
+    "fireball-packages/package-examples"
   ],
   "nativeModules": [
     "chokidar"
