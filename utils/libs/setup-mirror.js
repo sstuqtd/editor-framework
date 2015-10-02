@@ -29,14 +29,13 @@ function setupMirror(cb) {
     }
 
     //
-    var obj = {mirror: ''};
+    var obj = {};
     if ( hasSettingFile ) {
         obj = JSON.parse(Fs.readFileSync('local-setting.json'));
     }
 
-    obj.mirror = 'global';
-    if ( answer === 'y' ) {
-        obj.mirror = 'china';
+    if ( !obj.mirror ) {
+        obj.mirror = 'global';
     }
 
     Fs.writeFileSync('local-setting.json', JSON.stringify(obj, null, '  '));
