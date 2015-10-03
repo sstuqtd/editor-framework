@@ -7,6 +7,7 @@ var Globby = require('globby');
 var Chokidar = require('chokidar');
 var Async = require('async');
 var App = require('app');
+var _ = require('lodash');
 
 // ==========================
 // console log API
@@ -283,7 +284,7 @@ Editor.loadProfile = function ( name, type, defaultProfile ) {
         }
     }
 
-    profile = Editor.JS.mixin( profile, profileProto );
+    profile = _.assign(profile, profileProto);
     _path2profiles[path] = profile;
 
     return profile;

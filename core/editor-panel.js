@@ -1,6 +1,7 @@
 var Ipc = require('ipc');
 var BrowserWindow = require('browser-window');
 var Url = require('fire-url');
+var _ = require('lodash');
 
 /**
  * Panel module for operating specific panel
@@ -309,7 +310,7 @@ Ipc.on('panel:save-profile', function ( panelID, type, panelProfile ) {
     var profile = Editor.loadProfile( panelID, type );
     if ( profile ) {
         profile.clear();
-        Editor.JS.mixin(profile, panelProfile);
+        _.assign(profile, panelProfile);
         profile.save();
     }
 });

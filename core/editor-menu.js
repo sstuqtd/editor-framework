@@ -3,6 +3,7 @@ var Ipc = require('ipc');
 var Menu = require('menu');
 var MenuItem = require('menu-item');
 var Path = require('fire-path');
+var _ = require('lodash');
 
 /**
  * @module Editor
@@ -69,7 +70,7 @@ function _getMenuItem ( nativeMenu, path, createIfNotExists ) {
 }
 
 function _cloneMenuItemLevel1 ( menuItem ) {
-    var options = Editor.JS.extract( menuItem, [
+    var options = _.pick(menuItem, [
         'click',
         'selector',
         'type',

@@ -5,6 +5,7 @@ var Fs = require('fire-fs');
 var Del = require('del');
 var Async = require('async');
 var Semver = require('semver');
+var _ = require('lodash');
 
 /**
  * Package module for manipulating packages
@@ -123,7 +124,7 @@ Package.load = function ( path, cb ) {
                 }
 
                 var menuOpts = packageObj.menus[menuPath];
-                var template = Editor.JS.mixin( {
+                var template = _.assign( {
                     label: Path.basename(menuPath),
                 }, menuOpts );
 
@@ -148,7 +149,7 @@ Package.load = function ( path, cb ) {
 
                 // setup default properties
                 var panelInfo = packageObj.panels[panelName];
-                Editor.JS.addon(panelInfo, {
+                _.defaults(panelInfo, {
                     type: 'dockable',
                     title: panelID,
                     popable: true,

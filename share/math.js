@@ -1,4 +1,6 @@
 (function () {
+    var _ = require('lodash');
+
     var _d2r = Math.PI / 180.0;
     var _r2d = 180.0 / Math.PI;
 
@@ -9,7 +11,7 @@
      * @module Math
      * @main
      */
-    Editor.JS.mixin ( Math, {
+    _.assign ( Math, {
 
         /**
          * @property {number} TWO_PI - Two Pi

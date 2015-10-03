@@ -1,10 +1,12 @@
 (function () {
+    var Util = require('util');
+
     var $super = Editor.IpcListener;
 
     function IpcForward () {
         $super.call(this);
     }
-    Editor.JS.extend(IpcForward,$super);
+    Util.inherits(IpcForward,$super);
 
     IpcForward.prototype.on = function (message) {
         $super.prototype.on.call( this, message, function () {

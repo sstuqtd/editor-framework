@@ -1,3 +1,4 @@
+var Util = require('util');
 var Ipc = require('ipc');
 
 var _lastActiveUnit = null;
@@ -227,7 +228,7 @@ function ConfirmableSelectionUnit (type) {
     this.confirmed = true;
     this._confirmedSnapShot = []; // for cancel
 }
-Editor.JS.extend(ConfirmableSelectionUnit, $super);
+Util.inherits(ConfirmableSelectionUnit, $super);
 
 ConfirmableSelectionUnit.prototype._activate = function (id) {
     if ( this.confirmed ) {

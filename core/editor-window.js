@@ -1,9 +1,11 @@
+var Util = require('util');
 var EventEmitter = require('events');
 var BrowserWindow = require('browser-window');
 var Screen = require('screen');
 var Url = require('fire-url');
 var Ipc = require('ipc');
 var Fs = require('fire-fs');
+var _ = require('lodash');
 
 /**
  * @module Editor
@@ -24,6 +26,18 @@ var Fs = require('fire-fs');
  *  - `quick`: Indicate the window will never destroyed, it only hides itself when it close which make it quick to show the next time.
  */
 function EditorWindow ( name, options ) {
+    options = options || {};
+
+    // set default value for options
+    _.defaultsDeep(options, {
+        'window-type': 'dockable',
+        width: 400,
+        height: 300,
+        'web-preferences': {
+            preload: Editor.url('editor-framework://page/page-init.js'),
+        },
+    });
+
     this._loaded = false;
     this._nextSessionId = 0;
     this._replyCallbacks = {};
@@ -54,23 +68,6 @@ function EditorWindow ( name, options ) {
         options['always-on-top'] = true;
         this.hideWhenBlur = true;
         break;
-    }
-
-    // set default value for options
-    if ( !options.width ) {
-        options.width = 400;
-    }
-
-    if ( !options.height ) {
-        options.height = 300;
-    }
-
-    if ( !options['web-preferences'] ) {
-        options['web-preferences'] = {};
-    }
-
-    if ( !options['web-preferences'].preload ) {
-        options['web-preferences'].preload = Editor.url('editor-framework://page/page-init.js');
     }
 
     this.nativeWin = new BrowserWindow(options);
@@ -160,7 +157,7 @@ function EditorWindow ( name, options ) {
 
     EditorWindow.addWindow(this); // NOTE: window must be add after nativeWin assigned
 }
-Editor.JS.extend(EditorWindow,EventEmitter);
+Util.inherits(EditorWindow,EventEmitter);
 
 /**
  * If this is a main window
@@ -343,7 +340,7 @@ EditorWindow.prototype.commitWindowState = function ( layoutInfo ) {
 
     // store windows layout
     var winInfo = _windowLayouts[this.name];
-    winInfo = Editor.JS.mixin( winInfo || {}, winBounds);
+    winInfo = _.assign( winInfo || {}, winBounds);
     if ( layoutInfo ) {
         winInfo.layout = layoutInfo;
     }
