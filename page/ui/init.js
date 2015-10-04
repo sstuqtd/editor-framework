@@ -1,4 +1,6 @@
 ﻿var EditorUI = (function () {
+    var _ = require('lodash');
+
     var EditorUI = {};
 
     EditorUI.index = function ( element ) {
@@ -412,7 +414,7 @@
 
     // binding helpers
     EditorUI.bind = function ( el1, value1, el2, value2 ) {
-        var camelValue2 = EditorUI.dashToCamelCase(value2);
+        var camelValue2 = EditorUI.camelCase(value2);
         el1.addEventListener( value1+'-changed', function ( event ) {
             if ( event.detail.path )
                 el2.set( event.detail.path, event.detail.value );
@@ -428,7 +430,7 @@
     };
 
     EditorUI.bindUUID = function ( el1, value1, el2, value2 ) {
-        var camelValue2 = EditorUI.dashToCamelCase(value2);
+        var camelValue2 = EditorUI.camelCase(value2);
         el1.addEventListener( value1+'-changed', function ( event ) {
             if ( event.detail.path === value1+'.uuid' ) {
                 el2.set( camelValue2, event.detail.value );
@@ -462,17 +464,27 @@
         return result.charAt(0).toUpperCase() + result.slice(1);
     };
 
-    EditorUI.dashToCamelCase = function(dash) {
-        return dash.replace(/-([a-z])/g, function(m) {
-            return m[1].toUpperCase();
-        });
+    EditorUI.camelCase = function(text) {
+        return _.camelCase(text);
     };
 
-    EditorUI.camelToDashCase = function(camel) {
-        return camel.replace(/([a-z][A-Z])/g, function (g) {
-            return g[0] + '-' + g[1].toLowerCase();
-        });
+    EditorUI.kebabCase = function(text) {
+        return _.kebabCase(text);
     };
+
+    // DISABLE
+    // EditorUI.dashToCamelCase = function(dash) {
+    //     return dash.replace(/-([a-z])/g, function(m) {
+    //         return m[1].toUpperCase();
+    //     });
+    // };
+
+    // DISABLE
+    // EditorUI.camelToDashCase = function(camel) {
+    //     return camel.replace(/([a-z][A-Z])/g, function (g) {
+    //         return g[0] + '-' + g[1].toLowerCase();
+    //     });
+    // };
 
     return EditorUI;
 })();
