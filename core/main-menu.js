@@ -198,7 +198,12 @@ function getDefaultMainMenu () {
                 {
                     label: 'Developer Tools',
                     accelerator: 'CmdOrCtrl+Alt+I',
-                    click: function() { BrowserWindow.getFocusedWindow().openDevTools(); }
+                    click: function() {
+                        var focusedWindow = BrowserWindow.getFocusedWindow();
+                        if ( focusedWindow ) {
+                            focusedWindow.openDevTools();
+                        }
+                    }
                 },
                 {
                     label: 'Debug Core',
