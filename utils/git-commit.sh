@@ -2,9 +2,9 @@
 
 export ORIGINAL_PATH=`pwd`
 
-for name in builtin/*
+for name in builtin/* *
 do
-    if [ -d "${name}" ]; then
+    if [ -d "${name}/.git" ]; then
         echo commiting ${name}
         cd ${name}
         # check if we have unstaged, uncommit changes

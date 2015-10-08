@@ -7,16 +7,6 @@ var chalkProp = Chalk.blue;
 var chalkModule = Chalk.cyan;
 var chalkVersion = Chalk.red;
 
-function checkAll(moduleList) {
-	var npmPjson = JSON.parse(Fs.readFileSync('package.json'));
-	var bowerPjson = JSON.parse(Fs.readFileSync('bower.json'));
-	moduleList.forEach(function(submodule) {
-		checkDeps(submodule, npmPjson, 'dependencies', 'package.json');
-		checkDeps(submodule, npmPjson, 'devDependencies', 'package.json');
-		checkDeps(submodule, bowerPjson, 'dependencies', 'bower.json');
-	});
-}
-
 function checkDeps(submodule, mainJson, depkey, filename) {
 	var submodulePjson;
 	var configPath = Path.join(submodule, filename);
@@ -54,6 +44,16 @@ function checkDeps(submodule, mainJson, depkey, filename) {
 			}
 		}
 	}
+}
+
+function checkAll(moduleList) {
+	var npmPjson = JSON.parse(Fs.readFileSync('package.json'));
+	var bowerPjson = JSON.parse(Fs.readFileSync('bower.json'));
+	moduleList.forEach(function(submodule) {
+		checkDeps(submodule, npmPjson, 'dependencies', 'package.json');
+		checkDeps(submodule, npmPjson, 'devDependencies', 'package.json');
+		checkDeps(submodule, bowerPjson, 'dependencies', 'bower.json');
+	});
 }
 
 module.exports = checkAll;

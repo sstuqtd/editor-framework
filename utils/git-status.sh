@@ -1,10 +1,9 @@
 #!/bin/bash
-
 export ORIGINAL_PATH=`pwd`
 
-for name in builtin/*
+for name in builtin/* *
 do
-    if [ -d "${name}" ]; then
+    if [ -d "${name}/.git" ]; then
         echo ------------------------------------------
         echo ${name}
         echo ------------------------------------------
