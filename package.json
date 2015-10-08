@@ -65,5 +65,5 @@
     "chokidar"
   ],
   "electronVersion": "0.33.6",
-  "main": "demo.js"
+  "main": "package-examples/main.js"
 }
