@@ -57,7 +57,7 @@ process.on('uncaughtException', function(error) {
 var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
 var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
 
-// add builtin node_modules search path
+// add builtin node_modules search path for core-level
 require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
 
 // ---------------------------

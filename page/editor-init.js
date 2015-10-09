@@ -50,6 +50,9 @@ Editor.appPath = Editor.remote.url('app://');
 Editor.frameworkPath = Editor.remote.url('editor-framework://');
 Editor.isDev = Editor.remote.isDev;
 
+// add builtin node_modules search path for page-level
+require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
+
 var _urlToPath = function ( base, urlInfo ) {
     if ( urlInfo.pathname ) {
         return Path.join( base, urlInfo.host, urlInfo.pathname );
