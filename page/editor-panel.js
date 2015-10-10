@@ -78,7 +78,7 @@ function _registerShortcut ( panelID, mousetrap, frameEL, shortcut, methodName )
         mousetrap.bind(shortcut, fn.bind(frameEL) );
     }
     else {
-        Editor.warn('Failed to register shortcut for method %s in panel %s, can not find it.', methodName, panelID );
+        Editor.warn('Failed to register shortcut, can not find method %s in panel %s.', methodName, panelID );
     }
 }
 
@@ -182,7 +182,7 @@ Panel.load = function ( panelID, cb ) {
                             }
                         }
                         else {
-                            Editor.warn('Failed to register shortcut for method %s for element %s, can not find it.', methodName, shortcut );
+                            Editor.warn('Failed to register shortcut for element #%s, can not find it.', elementID );
                         }
                     }
                     else {
