@@ -142,11 +142,6 @@ Editor.warn = function ( text ) {
         text = Util.format.apply(Util, arguments);
     }
     console.warn(text);
-
-    var e = new Error('dummy');
-    var lines = e.stack.split('\n');
-    text = text + '\n' + lines.splice(2).join('\n');
-
     Editor.sendToCore('console:warn', text);
 };
 

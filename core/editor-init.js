@@ -94,10 +94,6 @@ Editor.info = function () {
 Editor.warn = function () {
     var text = Util.format.apply(Util, arguments);
 
-    var e = new Error('dummy');
-    var lines = e.stack.split('\n');
-    text = text + '\n' + lines.splice(2).join('\n');
-
     if ( _consoleConnected )
         _logs.push({ type: 'warn', message: text });
 
