@@ -37,6 +37,7 @@ function SelectionUnit(type) {
     this.ipc_hoverout = 'selection:hoverout';       // argument is an id
     this.ipc_context = 'selection:context';
     this.ipc_changed = 'selection:changed';
+    this.ipc_patch = 'selection:patch';
 }
 
 SelectionUnit.prototype._activate = function (id) {
@@ -185,6 +186,23 @@ SelectionUnit.prototype.hover = function (id) {
 SelectionUnit.prototype.setContext = function (id) {
     this._context = id;
     _sendToAll(this.ipc_context, this.type, id);
+};
+
+SelectionUnit.prototype.patch = function (srcID, destID) {
+    var idx = this.selection.indexOf(srcID);
+    if ( idx !== -1 ) {
+        this.selection[idx] = destID;
+    }
+    if ( this.lastActive === srcID ) {
+        this.lastActive = destID;
+    }
+    if ( this.lastHover === srcID ) {
+        this.lastHover = destID;
+    }
+    if ( this._context === srcID ) {
+        this._context = destID;
+    }
+    _sendToAll(this.ipc_patch, this.type, srcID, destID);
 };
 
 Object.defineProperty(SelectionUnit.prototype, 'contexts', {
@@ -406,6 +424,22 @@ var Selection = {
         }
 
         selectionUnit.setContext(id);
+    },
+
+    /**
+     * @method patch
+     * @param {string} type
+     * @srcID {string}
+     * @destID {string}
+     */
+    patch: function ( type, srcID, destID ) {
+        var selectionUnit = _units[type];
+        if ( !selectionUnit ) {
+            Editor.error('Can not find the type %s for selection, please register it first', type);
+            return;
+        }
+
+        selectionUnit.patch(srcID, destID);
     },
 
     /**
@@ -645,6 +679,29 @@ Ipc.on( '_selection:context', function ( type, id ) {
     }
 
     selectionUnit._context = id;
+});
+
+Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
+    var selectionUnit = _units[type];
+    if ( !selectionUnit ) {
+        Editor.error('Can not find the type %s for selection, please register it first', type);
+        return;
+    }
+
+    //
+    var idx = selectionUnit.selection.indexOf(srcID);
+    if ( idx !== -1 ) {
+        selectionUnit.selection[idx] = destID;
+    }
+    if ( selectionUnit.lastActive === srcID ) {
+        selectionUnit.lastActive = destID;
+    }
+    if ( selectionUnit.lastHover === srcID ) {
+        selectionUnit.lastHover = destID;
+    }
+    if ( selectionUnit._context === srcID ) {
+        selectionUnit._context = destID;
+    }
 });
 
 // ==========================
