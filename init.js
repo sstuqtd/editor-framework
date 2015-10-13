@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * Editor is a module contains app-wide core editor functionality. You can access properties or methods of Editor module anytime, anywhere in Fireball
  * @module Editor
@@ -9,23 +11,21 @@ global.Editor = {};
 // precheck
 // ---------------------------
 
-(function () {
-    if ( !__app ) {
-        console.error( '\'global.__app\' is undefined.');
-        process.exit(1);
-        return;
-    }
-    /**
-     * The Editor.App is your app.js module. Read more details in
-     * [Define your application](https://github.com/fireball-x/editor-framework/blob/master/docs/manual/define-your-app.md).
-     * @property App
-     * @type object
-     */
-    Editor.App = __app;
-})();
+if ( !__app ) {
+  console.error( '\'global.__app\' is undefined.');
+  process.exit(1);
+  return;
+}
+/**
+ * The Editor.App is your app.js module. Read more details in
+ * [Define your application](https://github.com/fireball-x/editor-framework/blob/master/docs/manual/define-your-app.md).
+ * @property App
+ * @type object
+ */
+Editor.App = __app;
 
 
-var App = require('app');
+const App = require('app');
 /**
  * The current app.js running directory.
  * @property appPath
@@ -37,25 +37,24 @@ Editor.appPath = App.getAppPath();
 // load modules
 // ---------------------------
 
-var Path = require('fire-path');
-var Fs = require('fire-fs');
-var Url = require('fire-url');
-var Commander = require('commander');
-var Chalk = require('chalk');
-var Winston = require('winston');
-var Async = require('async');
+const Path = require('fire-path');
+const Fs = require('fire-fs');
+const Commander = require('commander');
+const Chalk = require('chalk');
+const Winston = require('winston');
+const Async = require('async');
 
 // this will prevent default atom-shell uncaughtException
 process.removeAllListeners('uncaughtException');
-process.on('uncaughtException', function(error) {
-    // if ( Editor && Editor.sendToWindows ) {
-    //     Editor.sendToWindows('console:error', error.stack || error);
-    // }
-    Winston.uncaught( error.stack || error );
+process.on('uncaughtException', err => {
+  // if ( Editor && Editor.sendToWindows ) {
+  //     Editor.sendToWindows('console:error', err.stack || err);
+  // }
+  Winston.uncaught( err.stack || err );
 });
 
-var _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
-var _editorFrameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
+const _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
+const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
 
 // add builtin node_modules search path for core-level
 require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
@@ -77,7 +76,7 @@ Editor.name = App.getName();
  * @type Object
  */
 Editor.versions = {
-    'editor-framework': _editorFrameworkPackageJson.version,
+  'editor-framework': _frameworkPackageJson.version,
 };
 Editor.versions[Editor.name] = App.getVersion();
 
@@ -106,12 +105,12 @@ Editor.appHome = Path.join( App.getPath('home'), '.' + Editor.name );
 Fs.ensureDirSync(Editor.appHome);
 
 // initialize ~/.{app-name}/local/
-var settingsPath = Path.join(Editor.appHome, 'local');
+const settingsPath = Path.join(Editor.appHome, 'local');
 if ( !Fs.existsSync(settingsPath) ) {
-    Fs.mkdirSync(settingsPath);
+  Fs.mkdirSync(settingsPath);
 }
 
-var EventEmitter = require('events');
+const EventEmitter = require('events');
 Editor.events = new EventEmitter();
 
 // ---------------------------
@@ -122,30 +121,29 @@ Editor.events = new EventEmitter();
 // Windows: %APPDATA%, some where like 'C:\Users\{your user name}\AppData\Local\...'
 
 // get log path
-var _logpath = '';
+let _logpath = '';
 if ( process.platform === 'darwin' ) {
-    _logpath = Path.join(App.getPath('home'), 'Library/Logs/' + Editor.name );
-}
-else {
-    _logpath = Path.join(App.getPath('appData'), Editor.name);
+  _logpath = Path.join(App.getPath('home'), 'Library/Logs/' + Editor.name );
+} else {
+  _logpath = Path.join(App.getPath('appData'), Editor.name);
 }
 
 Fs.ensureDirSync(_logpath);
 
-var _logfile = Path.join(_logpath, Editor.name + '.log');
+const _logfile = Path.join(_logpath, Editor.name + '.log');
 if ( Fs.existsSync(_logfile) ) {
-    Fs.unlinkSync(_logfile);
+  Fs.unlinkSync(_logfile);
 }
 
-var winstonLevels = {
-    normal   : 0,
-    success  : 1,
-    failed   : 2,
-    info     : 3,
-    warn     : 4,
-    error    : 5,
-    fatal    : 6,
-    uncaught : 7,
+const winstonLevels = {
+  normal   : 0,
+  success  : 1,
+  failed   : 2,
+  info     : 3,
+  warn     : 4,
+  error    : 5,
+  fatal    : 6,
+  uncaught : 7,
 };
 Winston.setLevels(winstonLevels);
 
@@ -156,186 +154,167 @@ Winston.add(Winston.transports.File, {
     json: false,
 });
 
-var chalk_id = Chalk.bgBlue;
-var chalk_success = Chalk.green;
-var chalk_warn = Chalk.yellow;
-var chalk_error = Chalk.red;
-var chalk_info = Chalk.cyan;
+const chalkPID = Chalk.bgBlue;
+const chalkSuccess = Chalk.green;
+const chalkWarn = Chalk.yellow;
+const chalkError = Chalk.red;
+const chalkInfo = Chalk.cyan;
 
-var levelToFormat = {
-    normal: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + text;
-    },
+const levelToFormat = {
+  normal ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + text;
+  },
 
-    success: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_success(text);
-    },
+  success ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkSuccess(text);
+  },
 
-    failed: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_error(text);
-    },
+  failed ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkError(text);
+  },
 
-    info: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_info(text);
-    },
+  info ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkInfo(text);
+  },
 
-    warn: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_warn.inverse.bold('Warning:') + ' ' + chalk_warn(text);
-    },
+  warn ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkWarn.inverse.bold('Warning:') + ' ' + chalkWarn(text);
+  },
 
-    error: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_error.inverse.bold('Error:') + ' ' + chalk_error(text);
-    },
+  error ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkError.inverse.bold('Error:') + ' ' + chalkError(text);
+  },
 
-    fatal: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_error.inverse.bold('Fatal Error:') + ' ' + chalk_error(text);
-    },
+  fatal ( text ) {
+    let pid = chalkPID(`[${process.pid}]`) + ' ';
+    return pid + chalkError.inverse.bold('Fatal Error:') + ' ' + chalkError(text);
+  },
 
-    uncaught: function ( text ) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        return pid + chalk_error.inverse.bold('Uncaught Exception:') + ' ' + chalk_error(text);
-    },
+  uncaught ( text ) {
+    let pid = chalkPID(`[${process.id}]`) + ' ';
+    return pid + chalkError.inverse.bold('Uncaught Exception:') + ' ' + chalkError(text);
+  },
 };
 
 Winston.add( Winston.transports.Console, {
-    level: 'normal',
-    formatter: function (options) {
-        var pid = chalk_id('[' + process.pid + ']') + ' ';
-        var text = '';
-        if ( options.message !== undefined ) {
-            text += options.message;
-        }
-        if ( options.meta && Object.keys(options.meta).length ) {
-            text += ' ' + JSON.stringify(options.meta);
-        }
-
-        // output log by different level
-        var formatter = levelToFormat[options.level];
-        if ( formatter ) {
-            return formatter(text);
-        }
-
-        return text;
+  level: 'normal',
+  formatter: function (options) {
+    let text = '';
+    if ( options.message !== undefined ) {
+      text += options.message;
     }
+    if ( options.meta && Object.keys(options.meta).length ) {
+      text += ' ' + JSON.stringify(options.meta);
+    }
+
+    // output log by different level
+    let formatter = levelToFormat[options.level];
+    if ( formatter ) {
+      return formatter(text);
+    }
+
+    return text;
+  }
 });
 
 // ---------------------------
 // initialize Commander
 // ---------------------------
 
-function _parseList(listStr) {
-    return listStr.split(',');
-}
 // NOTE: commander only get things done barely in core level,
 //       it doesn't touch the page level, so it should not put into App.on('ready')
 Commander
-    .version(App.getVersion())
-    .option('--dev', 'Run in development environment')
-    .option('--dev-mode <mode>', 'Run in specific dev-mode')
-    .option('--show-devtools', 'Open devtools automatically when main window loaded')
-    .option('--debug <port>', 'Open in browser context debug mode', parseInt )
-    .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
-    .option('--test <path>', 'Run tests in path' )
-    .option('--report-failures', 'Send test failures to the main process')
-    .option('--report-details', 'Send test details to the main process' )
-    ;
+.version(App.getVersion())
+.option('--dev', 'Run in development environment')
+.option('--dev-mode <mode>', 'Run in specific dev-mode')
+.option('--show-devtools', 'Open devtools automatically when main window loaded')
+.option('--debug <port>', 'Open in browser context debug mode', parseInt )
+.option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
+.option('--test <path>', 'Run tests in path' )
+.option('--report-failures', 'Send test failures to the main process')
+.option('--report-details', 'Send test details to the main process' )
+;
 
 // EXAMPLE:
-
 // usage
 // Commander
 //     .usage('[options] <file ...>')
 //     ;
-
 // command
 // Commander
-//     .command('foobar').action( function () {
+//     .command('foobar').action( () => {
 //         console.log('foobar!!!');
 //         process.exit(1);
 //     })
 //     ;
 
-if ( Editor.App.initCommander ) {
-    Editor.App.initCommander(Commander);
-}
-
-// finish Commander initialize
-Commander.parse(process.argv);
-
-// apply argv to Editor
-Editor.isDev = Commander.dev;
-Editor.devMode = Commander.devMode;
-Editor.showDevtools = Commander.showDevtools;
-Editor.debugPort = Commander.debug;
-
 // ---------------------------
 // Define Editor.App APIs
 // ---------------------------
 
-var _editorAppIpc;
+let _editorAppIpc;
 function _loadEditorApp () {
-    var editorApp = Editor.App;
+  let editorApp = Editor.App;
 
-    if ( editorApp.load ) {
-        try {
-            Editor.App.load();
-        }
-        catch (err) {
-            Editor.failed( 'Failed to load Editor.App, %s.', err.stack );
-            return;
-        }
+  if ( editorApp.load ) {
+    try {
+      Editor.App.load();
     }
-
-    // register ipcs
-    var ipcListener = new Editor.IpcListener();
-    for ( var prop in editorApp ) {
-        if ( prop.indexOf('app:') !== 0 )
-            continue;
-
-        if ( typeof editorApp[prop] === 'function' ) {
-            ipcListener.on( prop, editorApp[prop].bind(editorApp) );
-        }
+    catch (err) {
+      Editor.failed( 'Failed to load Editor.App, %s.', err.stack );
+      return;
     }
-    _editorAppIpc = ipcListener;
+  }
+
+  // register ipcs
+  let ipcListener = new Editor.IpcListener();
+  for ( let prop in editorApp ) {
+    if ( prop.indexOf('app:') !== 0 )
+      continue;
+
+    if ( typeof editorApp[prop] === 'function' ) {
+      ipcListener.on( prop, editorApp[prop].bind(editorApp) );
+    }
+  }
+  _editorAppIpc = ipcListener;
 }
 
 function _unloadEditorApp () {
-    var editorApp = Editor.App;
+  let editorApp = Editor.App;
 
-    // unregister main ipcs
-    _editorAppIpc.clear();
-    _editorAppIpc = null;
+  // unregister main ipcs
+  _editorAppIpc.clear();
+  _editorAppIpc = null;
 
-    // unload main
-    var cache = require.cache;
-    if ( editorApp.unload ) {
-        try {
-            editorApp.unload();
-        }
-        catch (err) {
-            Editor.failed( 'Failed to unload Editor.App, %s.', err.stack );
-        }
+  // unload main
+  let cache = require.cache;
+  if ( editorApp.unload ) {
+    try {
+      editorApp.unload();
     }
+    catch (err) {
+      Editor.failed( 'Failed to unload Editor.App, %s.', err.stack );
+    }
+  }
 
-    delete cache[Editor.mainEntry];
-    delete global.__app;
+  delete cache[Editor.mainEntry];
+  delete global.__app;
 }
 
 function _reloadEditorApp () {
-    _unloadEditorApp();
-    require(Editor.mainEntry);
-    Editor.App = __app;
-    Editor.App.reload = _reloadEditorApp;
-    _loadEditorApp();
+  _unloadEditorApp();
+  require(Editor.mainEntry);
+  Editor.App = __app;
+  Editor.App.reload = _reloadEditorApp;
+  _loadEditorApp();
 
-    Editor.success('Editor.App reloaded');
+  Editor.success('Editor.App reloaded');
 }
 
 // ---------------------------
@@ -353,124 +332,141 @@ function _reloadEditorApp () {
 // });
 
 //
-App.on('will-finish-launching', function() {
-    if ( !Editor.isDev ) {
-        var crashReporter = require('crash-reporter');
-        crashReporter.start({
-            productName: Editor.name,
-            companyName: 'Firebox Technology',
-            submitUrl: 'https://fireball-x.com/crash-report',
-            autoSubmit: false,
-        });
-    }
-});
-
-//
-App.on('gpu-process-crashed', function() {
-    if ( Editor && Editor.sendToWindows ) {
-        Editor.sendToWindows('console:error', 'GPU Process Crashed!');
-    }
-    Winston.uncaught('GPU Process Crashed!');
-});
-
-//
-App.on('ready', function() {
-    Winston.normal( 'Initializing Protocol' );
-    require('./core/protocol-init');
-
-    Winston.normal( 'Initializing Editor' );
-    require('./core/editor-init');
-
-    if ( Commander.test ) {
-        var Test = require('./core/test-runner');
-
-        if (Commander.test) {
-            Test.run(Commander.test, {
-                reportFailures: Commander.reportFailures,
-                reportDetails: Commander.reportDetails,
-            });
-        }
-
-        return;
-    }
-
-    // apply default main menu
-    Editor.MainMenu.apply();
-
-    // register profile path
-    Editor.registerProfilePath( 'app', Editor.appHome );
-    Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
-
-    // register package path
-    Editor.registerPackagePath( Path.join( Editor.appPath, 'builtin' ) );
-
-    // register default layout
-    Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
-
-    // before run the app, we start load and watch all packages
-    Async.series([
-        // init app
-        function ( next ) {
-            // init user App
-            if ( !Editor.App.init ) {
-                Winston.error('Can not find function "init" in your App');
-                App.terminate();
-                return;
-            }
-
-            try {
-                Editor.App.init(Commander, next);
-            } catch ( error ) {
-                Winston.error(error.stack || error);
-                App.terminate();
-                return;
-            }
-        },
-
-        function ( next ) {
-            Winston.normal('Loading packages');
-            Editor.loadAllPackages( next );
-        },
-
-        function ( next ) {
-            Winston.normal('Prepare for watching packages');
-            Editor.watchPackages( next );
-        },
-
-        function ( next ) {
-            Editor.success('Watch ready');
-
-            Winston.success('Initial success!');
-
-            // register user App Ipcs after App.init
-            _loadEditorApp();
-            Editor.App.reload = _reloadEditorApp;
-
-            // load windows layout after local profile registered
-            Editor.Window.loadLayouts();
-
-            // connect to console to sending ipc to it
-            Editor.connectToConsole();
-
-            // run user App
-            if ( !Editor.App.run ) {
-                Winston.error('Can not find function "run" in your App');
-                App.terminate();
-                return;
-            }
-
-            try {
-                Editor.App.run();
-            } catch ( error ) {
-                Winston.error(error.stack || error);
-                App.terminate();
-                return;
-            }
-        },
-    ], function ( error ) {
-        if ( error ) {
-            Winston.error(error.stack || error);
-            App.terminate();
-        }
+App.on('will-finish-launching', () => {
+  if ( !Editor.isDev ) {
+    let crashReporter = require('crash-reporter');
+    crashReporter.start({
+      productName: Editor.name,
+      companyName: 'Firebox Technology',
+      submitUrl: 'https://fireball-x.com/crash-report',
+      autoSubmit: false,
     });
+  }
+});
+
+//
+App.on('gpu-process-crashed', () => {
+  if ( Editor && Editor.sendToWindows ) {
+    Editor.sendToWindows('console:error', 'GPU Process Crashed!');
+  }
+  Winston.uncaught('GPU Process Crashed!');
+});
+
+//
+App.on('ready', () => {
+  // parse app's commander
+  if ( Editor.App.initCommander ) {
+    Editor.App.initCommander(Commander);
+  }
+
+  // exec commander
+  Commander.parse(process.argv);
+
+  // apply argv to Editor
+  Editor.isDev = Commander.dev;
+  Editor.devMode = Commander.devMode;
+  Editor.showDevtools = Commander.showDevtools;
+  Editor.debugPort = Commander.debug;
+
+  //
+  Winston.normal( 'Initializing Protocol' );
+  require('./core/protocol-init');
+
+  Winston.normal( 'Initializing Editor' );
+  require('./core/editor-init');
+
+  // run test
+  if ( Commander.test ) {
+    let Test = require('./core/test-runner');
+
+    if (Commander.test) {
+      Test.run(Commander.test, {
+        reportFailures: Commander.reportFailures,
+        reportDetails: Commander.reportDetails,
+      });
+    }
+
+    return;
+  }
+
+  // apply default main menu
+  Editor.MainMenu.apply();
+
+  // register profile path
+  Editor.registerProfilePath( 'app', Editor.appHome );
+  Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
+
+  // register package path
+  Editor.registerPackagePath( Path.join( Editor.appPath, 'builtin' ) );
+
+  // register default layout
+  Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
+
+  // before run the app, we start load and watch all packages
+  Async.series([
+    // init app
+    next => {
+      // init user App
+      if ( !Editor.App.init ) {
+        Winston.error('Can not find function "init" in your App');
+        App.terminate();
+        return;
+      }
+
+      try {
+        Editor.App.init(Commander, next);
+      } catch ( err ) {
+        Winston.error(err.stack || err);
+        App.terminate();
+        return;
+      }
+    },
+
+    next => {
+      Winston.normal('Loading packages');
+      Editor.loadAllPackages( next );
+    },
+
+    next => {
+      Winston.normal('Prepare for watching packages');
+      Editor.watchPackages( next );
+    },
+
+    next => {
+      Editor.success('Watch ready');
+
+      Winston.success('Initial success!');
+
+      // register user App Ipcs after App.init
+      _loadEditorApp();
+      Editor.App.reload = _reloadEditorApp;
+
+      // load windows layout after local profile registered
+      Editor.Window.loadLayouts();
+
+      // connect to console to sending ipc to it
+      Editor.connectToConsole();
+
+      // run user App
+      if ( !Editor.App.run ) {
+        Winston.error('Can not find function "run" in your App');
+        App.terminate();
+        return;
+      }
+
+      try {
+        Editor.App.run();
+        next();
+      } catch ( err ) {
+        Winston.error(err.stack || err);
+        App.terminate();
+        return;
+      }
+    },
+  ], err => {
+    if ( err ) {
+      Winston.error(err.stack || err);
+      App.terminate();
+    }
+  });
 });

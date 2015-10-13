@@ -61,78 +61,23 @@ gulp.task('post-install-npm', function(cb) {
 // =====================================
 
 gulp.task('run', function(cb) {
+  var args = process.argv.slice(3); // strip gulp run
   var cmdStr = '';
   var optArr = [];
+
   if (process.platform === 'win32') {
     cmdStr = 'bin\\electron\\electron.exe';
-    optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'];
+    optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'].concat(args);
   } else {
     cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
-    optArr = ['./', '--debug=3030', '--dev', '--show-devtools'];
+    optArr = ['./', '--debug=3030', '--dev', '--show-devtools'].concat(args);
   }
+
   var child = spawn(cmdStr, optArr, {
     stdio: 'inherit'
   });
   child.on('exit', function() {
     cb();
-  });
-});
-
-gulp.task('editor-framework', function(cb) {
-    var Commander = require('commander');
-    Commander.option('--path <path>', 'Run open editor-framework project in path')
-        .parse(process.argv);
-
-    var projectPath = Commander.path;
-    if (projectPath) {
-        console.log('Load project from %s', projectPath);
-    }
-
-    var cmdStr = '';
-    var optArr = [];
-    if (process.platform === 'win32') {
-        cmdStr = 'bin\\electron\\electron.exe';
-        optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools', projectPath];
-    } else {
-        cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
-        optArr = ['./', '--debug=3030', '--dev', '--show-devtools', projectPath];
-    }
-
-    var child = spawn(cmdStr, optArr, {
-        stdio: 'inherit'
-    });
-    child.on('exit', function() {
-        cb();
-    });
-});
-
-// self
-// =====================================
-
-gulp.task('update-editor-framework', function(cb) {
-  var Async = require('async');
-
-  Async.series([
-    function ( next ) {
-      git.exec(['pull', 'git@github.com:fireball-x/editor-framework.git', 'master'], './', next);
-    },
-
-    function ( next ) {
-      console.log('editor-framework update complete!');
-      git.exec(['fetch', '--all'], './', next);
-    },
-
-    function ( next ) {
-      // NOTE: when we update the main project, we should reload its package.json
-      pjson = JSON.parse(Fs.readFileSync('./package.json'));
-      next();
-    },
-
-  ], function ( err ) {
-    if ( err ) {
-      throw err;
-    }
-    cb ();
   });
 });
 
