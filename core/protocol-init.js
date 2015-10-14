@@ -2,7 +2,6 @@ var Protocol = require('protocol');
 var Url = require('fire-url');
 var Path = require('fire-path');
 var Fs = require('fire-fs');
-var Winston = require('winston');
 
 /**
  * @module Editor
@@ -22,10 +21,10 @@ Protocol.registerFileProtocol('editor-framework', function(request, callback) {
     callback ( { path: file } );
 }, function ( err ) {
     if ( err ) {
-        Winston.failed( 'Failed to register protocol editor-Framework, %s', err.message );
+        Editor.failed( 'Failed to register protocol editor-Framework, %s', err.message );
         return;
     }
-    Winston.success( 'protocol editor-framework registerred' );
+    Editor.success( 'protocol editor-framework registerred' );
 } );
 
 // register protocol app://
@@ -40,10 +39,10 @@ Protocol.registerFileProtocol('app', function(request, callback) {
     callback ( { path: file } );
 }, function ( err ) {
     if ( err ) {
-        Winston.failed( 'Failed to register protocol app, %s', err.message );
+        Editor.failed( 'Failed to register protocol app, %s', err.message );
         return;
     }
-    Winston.success( 'protocol app registerred' );
+    Editor.success( 'protocol app registerred' );
 } );
 
 // register protocol packages://
@@ -66,10 +65,10 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
     callback (-6);
 }, function ( err ) {
     if ( err ) {
-        Winston.failed( 'Failed to register protocol packages, %s', err.message );
+        Editor.failed( 'Failed to register protocol packages, %s', err.message );
         return;
     }
-    Winston.success( 'protocol packages registerred' );
+    Editor.success( 'protocol packages registerred' );
 } );
 
 // DISABLE: this make protocol can not use relative path
@@ -85,10 +84,10 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 //     callback ( { path: file } );
 // }, function ( err ) {
 //     if ( err ) {
-//         Winston.failed( 'Failed to register protocol bower, %s', err.message );
+//         Editor.failed( 'Failed to register protocol bower, %s', err.message );
 //         return;
 //     }
-//     Winston.success( 'protocol bower registerred' );
+//     Editor.success( 'protocol bower registerred' );
 // } );
 
 // DISABLE: same reason as bower
@@ -107,10 +106,10 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 //     callback (-6);
 // }, function ( err ) {
 //     if ( err ) {
-//         Winston.failed( 'Failed to register protocol widgets, %s', err.message );
+//         Editor.failed( 'Failed to register protocol widgets, %s', err.message );
 //         return;
 //     }
-//     Winston.success( 'protocol widgets registerred' );
+//     Editor.success( 'protocol widgets registerred' );
 // } );
 
 // Editor.url protocol register

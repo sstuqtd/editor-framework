@@ -54,7 +54,8 @@ process.on('uncaughtException', err => {
 });
 
 const _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
-const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(__dirname,'package.json')));
+const _frameworkPath = Path.dirname(__dirname);
+const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(_frameworkPath,'package.json')));
 
 // add builtin node_modules search path for core-level
 require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
@@ -92,7 +93,7 @@ Editor.mainEntry = Path.join( Editor.appPath, _appPackageJson.main );
  * @property frameworkPath
  * @type string
  */
-Editor.frameworkPath = __dirname;
+Editor.frameworkPath = _frameworkPath;
 
 /**
  * Your application's data path. Usually it is `~/.{your-app-name}`
@@ -357,25 +358,18 @@ App.on('ready', () => {
   Editor.debugPort = Commander.debug;
 
   // ---------------------------
-  // initialize protocol
-  // ---------------------------
-
-  Winston.normal( 'Initializing Protocol' );
-  require('./core/protocol-init');
-
-  // ---------------------------
   // initialize Editor
   // ---------------------------
 
-  Winston.normal( 'Initializing Editor' );
-  require('./core/editor-init');
+  console.log( Chalk.magenta('===== Initializing Editor =====') );
+  require('./editor-init');
 
   // ---------------------------
   // run test
   // ---------------------------
 
   if ( Commander.test ) {
-    let Test = require('./core/test-runner');
+    let Test = require('./test-runner');
     Test.run(Commander.test, {
       reportFailures: Commander.reportFailures,
       reportDetails: Commander.reportDetails,
@@ -403,7 +397,7 @@ App.on('ready', () => {
     next => {
       // init user App
       if ( !Editor.App.init ) {
-        Winston.error('Can not find function "init" in your App');
+        Editor.error('Can not find function "init" in your App');
         App.terminate();
         return;
       }
@@ -411,26 +405,24 @@ App.on('ready', () => {
       try {
         Editor.App.init(Commander, next);
       } catch ( err ) {
-        Winston.error(err.stack || err);
+        Editor.error(err.stack || err);
         App.terminate();
         return;
       }
     },
 
     next => {
-      Winston.normal('Loading packages');
+      Editor.log('Loading packages');
       Editor.loadAllPackages( next );
     },
 
     next => {
-      Winston.normal('Prepare for watching packages');
+      Editor.log('Prepare for watching packages');
       Editor.watchPackages( next );
     },
 
     next => {
       Editor.success('Watch ready');
-
-      Winston.success('Initial success!');
 
       // register user App Ipcs after App.init
       _loadEditorApp();
@@ -444,7 +436,7 @@ App.on('ready', () => {
 
       // run user App
       if ( !Editor.App.run ) {
-        Winston.error('Can not find function "run" in your App');
+        Editor.error('Can not find function "run" in your App');
         App.terminate();
         return;
       }
@@ -453,14 +445,14 @@ App.on('ready', () => {
         Editor.App.run();
         next();
       } catch ( err ) {
-        Winston.error(err.stack || err);
+        Editor.error(err.stack || err);
         App.terminate();
         return;
       }
     },
   ], err => {
     if ( err ) {
-      Winston.error(err.stack || err);
+      Editor.error(err.stack || err);
       App.terminate();
     }
   });

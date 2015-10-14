@@ -34,7 +34,7 @@ function EditorWindow ( name, options ) {
         width: 400,
         height: 300,
         'web-preferences': {
-            preload: Editor.url('editor-framework://page/page-init.js'),
+            preload: Editor.url('editor-framework://page/init.js'),
         },
     });
 

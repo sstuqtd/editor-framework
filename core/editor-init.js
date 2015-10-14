@@ -180,9 +180,9 @@ require('../share/platform') ;
 Editor.JS = require('../share/js-utils') ;
 Editor.Utils = require('../share/editor-utils');
 require('../share/math');
+
+require('./protocol-init');
 require('./ipc-init');
-Editor.Selection = require('../share/selection');
-Editor.KeyCode = require('../share/keycode');
 
 // ==========================
 // profiles API
@@ -644,6 +644,9 @@ Editor.registerDefaultMainMenu = function ( tmplFn ) {
 // ==========================
 // load modules
 // ==========================
+
+Editor.Selection = require('../share/selection');
+Editor.KeyCode = require('../share/keycode');
 
 Editor.Menu = require('./editor-menu');
 Editor.Window = require('./editor-window');
