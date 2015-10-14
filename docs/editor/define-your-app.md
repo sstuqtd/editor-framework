@@ -86,7 +86,7 @@ global.__app = {
 };
 
 // must have, important
-require('./editor-framework/init');
+require('./editor-framework');
 ```
 
 An example project can be checked out here: https://github.com/fireball-x/editor-framework-app
