@@ -1,20 +1,22 @@
-var Ipc = require('ipc');
-var Util = require('util');
-var Fs = require('fire-fs');
-var Path = require('fire-path');
-var Winston = require('winston');
-var Globby = require('globby');
-var Chokidar = require('chokidar');
-var Async = require('async');
-var App = require('app');
-var _ = require('lodash');
+'use strict';
+
+const Ipc = require('ipc');
+const Util = require('util');
+const Fs = require('fire-fs');
+const Path = require('fire-path');
+const Winston = require('winston');
+const Globby = require('globby');
+const Chokidar = require('chokidar');
+const Async = require('async');
+const App = require('app');
+const _ = require('lodash');
 
 // ==========================
 // console log API
 // ==========================
 
-var _consoleConnected = false;
-var _logs = [];
+let _consoleConnected = false;
+let _logs = [];
 
 /**
  * @module Editor
@@ -27,13 +29,13 @@ var _logs = [];
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.log = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'log', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'log', message: text });
 
-    Winston.normal(text);
-    Editor.sendToWindows('console:log',text);
+  Winston.normal(text);
+  Editor.sendToWindows('console:log',text);
 };
 
 /**
@@ -43,13 +45,13 @@ Editor.log = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.success = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'success', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'success', message: text });
 
-    Winston.success(text);
-    Editor.sendToWindows('console:success',text);
+  Winston.success(text);
+  Editor.sendToWindows('console:success',text);
 };
 
 /**
@@ -59,13 +61,13 @@ Editor.success = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.failed = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'failed', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'failed', message: text });
 
-    Winston.failed(text);
-    Editor.sendToWindows('console:failed',text);
+  Winston.failed(text);
+  Editor.sendToWindows('console:failed',text);
 };
 
 /**
@@ -75,13 +77,13 @@ Editor.failed = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.info = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'info', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'info', message: text });
 
-    Winston.info(text);
-    Editor.sendToWindows('console:info',text);
+  Winston.info(text);
+  Editor.sendToWindows('console:info',text);
 };
 
 /**
@@ -92,13 +94,13 @@ Editor.info = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.warn = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'warn', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'warn', message: text });
 
-    Winston.warn(text);
-    Editor.sendToWindows('console:warn',text);
+  Winston.warn(text);
+  Editor.sendToWindows('console:warn',text);
 };
 
 /**
@@ -109,17 +111,17 @@ Editor.warn = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.error = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    var e = new Error('dummy');
-    var lines = e.stack.split('\n');
-    text = text + '\n' + lines.splice(2).join('\n');
+  let err = new Error('dummy');
+  let lines = err.stack.split('\n');
+  text = text + '\n' + lines.splice(2).join('\n');
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'error', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'error', message: text });
 
-    Winston.error(text);
-    Editor.sendToWindows('console:error',text);
+  Winston.error(text);
+  Editor.sendToWindows('console:error',text);
 };
 
 /**
@@ -129,17 +131,17 @@ Editor.error = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.fatal = function () {
-    var text = Util.format.apply(Util, arguments);
+  let text = Util.format.apply(Util, arguments);
 
-    var e = new Error('dummy');
-    var lines = e.stack.split('\n');
-    text = text + '\n' + lines.splice(2).join('\n');
+  let e = new Error('dummy');
+  let lines = e.stack.split('\n');
+  text = text + '\n' + lines.splice(2).join('\n');
 
-    if ( _consoleConnected )
-        _logs.push({ type: 'fatal', message: text });
+  if ( _consoleConnected )
+    _logs.push({ type: 'fatal', message: text });
 
-    Winston.fatal(text);
-    // NOTE: fatal error will close app immediately, no need for ipc.
+  Winston.fatal(text);
+  // NOTE: fatal error will close app immediately, no need for ipc.
 };
 
 /**
@@ -148,7 +150,7 @@ Editor.fatal = function () {
  * @method connectToConsole
  */
 Editor.connectToConsole = function () {
-    _consoleConnected = true;
+  _consoleConnected = true;
 };
 
 /**
@@ -156,7 +158,7 @@ Editor.connectToConsole = function () {
  * @method clearLog
  */
 Editor.clearLog = function () {
-    _logs = [];
+  _logs = [];
 };
 
 Ipc.on ( 'console:log', function () { Editor.log.apply(Editor,arguments); } );
@@ -167,7 +169,7 @@ Ipc.on ( 'console:warn', function () { Editor.warn.apply(Editor,arguments); } );
 Ipc.on ( 'console:error', function () { Editor.error.apply(Editor,arguments); } );
 Ipc.on ( 'console:clear', function () { Editor.clearLog(); } );
 Ipc.on ( 'console:query', function ( reply ) {
-    reply(_logs);
+  reply(_logs);
 });
 
 // ==========================
@@ -186,10 +188,10 @@ Editor.KeyCode = require('../share/keycode');
 // profiles API
 // ==========================
 
-var _path2profiles = {};
+let _path2profiles = {};
 function _saveProfile ( path, profile ) {
-    var json = JSON.stringify(profile, null, 2);
-    Fs.writeFileSync(path, json, 'utf8');
+  let json = JSON.stringify(profile, null, 2);
+  Fs.writeFileSync(path, json, 'utf8');
 }
 
 /**
@@ -210,7 +212,7 @@ function _saveProfile ( path, profile ) {
  * Editor.registerProfilePath( 'project', '~/foo/bar');
  *
  * // load the profile at ~/foo/bar/foobar.json
- * var foobarProfile = Editor.loadProfile( 'foobar', 'project', {
+ * let foobarProfile = Editor.loadProfile( 'foobar', 'project', {
  *   foo: 'foo',
  *   bar: 'bar',
  * });
@@ -221,122 +223,124 @@ function _saveProfile ( path, profile ) {
  * ```
  */
 Editor.loadProfile = function ( name, type, defaultProfile ) {
-    var path = Editor._type2profilepath[type];
-    if ( !path ) {
-        Editor.error( 'Failed to load profile by type %s, please register it first.', type );
-        return null;
-    }
-    path = Path.join(path, name+'.json');
+  let path = Editor._type2profilepath[type];
+  if ( !path ) {
+    Editor.error( 'Failed to load profile by type %s, please register it first.', type );
+    return null;
+  }
+  path = Path.join(path, name+'.json');
 
-    var profile = _path2profiles[path];
-    if ( profile ) {
-        return profile;
-    }
-
-    var profileProto = {
-        save: function () {
-            _saveProfile( path, this );
-        },
-        clear: function () {
-            for ( var p in this ) {
-                if ( p !== 'save' && p !== 'clear' ) {
-                    delete this[p];
-                }
-            }
-        },
-    };
-
-    profile = defaultProfile || {};
-
-    if ( !Fs.existsSync(path) ) {
-        Fs.writeFileSync(path, JSON.stringify(profile, null, 2));
-    }
-    else {
-        try {
-            profile = JSON.parse(Fs.readFileSync(path));
-
-            var p;
-            if ( defaultProfile ) {
-                for ( p in profile ) {
-                    if ( defaultProfile[p] === undefined )
-                        delete profile[p];
-                }
-                for ( p in defaultProfile ) {
-                    if ( profile[p] === undefined ||
-                         typeof(profile[p]) !== typeof(defaultProfile[p]) )
-                    {
-                        profile[p] = defaultProfile[p];
-                    }
-                }
-                // save again
-                Fs.writeFileSync(path, JSON.stringify(profile, null, 2));
-            }
-        }
-        catch ( err ) {
-            if ( err ) {
-                Editor.warn( 'Failed to load profile %s, error message: %s', name, err.message );
-                profile = {};
-            }
-        }
-    }
-
-    profile = _.assign(profile, profileProto);
-    _path2profiles[path] = profile;
-
+  let profile = _path2profiles[path];
+  if ( profile ) {
     return profile;
+  }
+
+  let profileProto = {
+    save () {
+      _saveProfile( path, this );
+    },
+
+    clear () {
+      for ( let p in this ) {
+        if ( p !== 'save' && p !== 'clear' ) {
+          delete this[p];
+        }
+      }
+    },
+  };
+
+  profile = defaultProfile || {};
+
+  if ( !Fs.existsSync(path) ) {
+    Fs.writeFileSync(path, JSON.stringify(profile, null, 2));
+  }
+  else {
+    try {
+      profile = JSON.parse(Fs.readFileSync(path));
+
+      if ( defaultProfile ) {
+        for ( let p in profile ) {
+          if ( defaultProfile[p] === undefined ) {
+            delete profile[p];
+          }
+        }
+
+        for ( let p in defaultProfile ) {
+          if (profile[p] === undefined ||
+              typeof(profile[p]) !== typeof(defaultProfile[p]))
+            {
+              profile[p] = defaultProfile[p];
+            }
+        }
+
+        // save again
+        Fs.writeFileSync(path, JSON.stringify(profile, null, 2));
+      }
+    } catch ( err ) {
+      if ( err ) {
+        Editor.warn( 'Failed to load profile %s, error message: %s', name, err.message );
+        profile = {};
+      }
+    }
+  }
+
+  profile = _.assign(profile, profileProto);
+  _path2profiles[path] = profile;
+
+  return profile;
 };
 
 // ==========================
 // misc API
 // ==========================
 
-var _packageWatcher;
+let _packageWatcher;
 
 /**
  * Quit the App
  * @method quit
  */
 Editor.quit = function () {
-    if ( _packageWatcher ) {
-        _packageWatcher.close();
-    }
+  if ( _packageWatcher ) {
+    _packageWatcher.close();
+  }
 
-    var winlist = Editor.Window.windows;
-    for ( var i = 0; i < winlist.length; ++i ) {
-        winlist[i].close();
-    }
+  let winlist = Editor.Window.windows;
+  winlist.forEach(win => {
+    win.close();
+  });
 
-    // close debugger
-    Editor.Debugger.close();
+  // close debugger
+  Editor.Debugger.close();
 
-    // emit quit event
-    Editor.events.emit('quit');
+  // emit quit event
+  Editor.events.emit('quit');
 
-    // close app after all
-    App.quit();
+  // close app after all
+  App.quit();
 };
 
 Editor.loadPackagesAt = function ( path, cb ) {
-    var idx = Editor._packagePathList.indexOf(path);
-    if ( idx === -1 ) {
-        Editor.warn( 'The package path %s is not registerred', path );
-        return;
-    }
+  let idx = Editor._packagePathList.indexOf(path);
+  if ( idx === -1 ) {
+    Editor.warn( 'The package path %s is not registerred', path );
+    return;
+  }
 
-    var paths = Globby.sync( path + '/*/package.json' );
+  let paths = Globby.sync( path + '/*/package.json' );
 
-    Async.eachSeries( paths, function ( path, done ) {
-        path = Path.normalize(path);
-        var packagePath = Path.dirname(path);
-        Editor.Package.load( packagePath, function ( err ) {
-            if ( err ) {
-                Editor.failed('Failed to load package at %s', packagePath );
-            }
-            done();
-        });
-    }, function () {
-        if ( cb ) cb ();
+  Async.eachSeries( paths, ( path, done ) => {
+    path = Path.normalize(path);
+    let packagePath = Path.dirname(path);
+    Editor.Package.load( packagePath, err => {
+      if ( err ) {
+        Editor.failed('Failed to load package at %s', packagePath );
+      }
+      done();
     });
+  }, () => {
+    if ( cb ) cb ();
+  });
 };
 
 /**
@@ -345,25 +349,25 @@ Editor.loadPackagesAt = function ( path, cb ) {
  * @method loadAllPackages
  */
 Editor.loadAllPackages = function ( cb ) {
-    var i, src = [];
-    for ( i = 0; i < Editor._packagePathList.length; ++i ) {
-        src.push( Editor._packagePathList[i] + '/*/package.json' );
-    }
+  let i, src = [];
+  for ( i = 0; i < Editor._packagePathList.length; ++i ) {
+    src.push( Editor._packagePathList[i] + '/*/package.json' );
+  }
 
-    var paths = Globby.sync( src );
+  let paths = Globby.sync( src );
 
-    Async.eachSeries( paths, function ( path, done ) {
-        path = Path.normalize(path);
-        var packagePath = Path.dirname(path);
-        Editor.Package.load( packagePath, function ( err ) {
-            if ( err ) {
-                Editor.failed('Failed to load package at %s', packagePath );
-            }
-            done();
-        });
-    }, function () {
-        if ( cb ) cb ();
+  Async.eachSeries( paths, ( path, done ) => {
+    path = Path.normalize(path);
+    let packagePath = Path.dirname(path);
+    Editor.Package.load( packagePath, err => {
+      if ( err ) {
+        Editor.failed('Failed to load package at %s', packagePath );
+      }
+      done();
     });
+  }, () => {
+    if ( cb ) cb ();
+  });
 };
 
 /**
@@ -372,7 +376,7 @@ Editor.loadAllPackages = function ( cb ) {
  * @param {string} url
  */
 Editor.require = function ( url ) {
-    return require( Editor.url(url) );
+  return require( Editor.url(url) );
 };
 
 /**
@@ -382,195 +386,198 @@ Editor.require = function ( url ) {
  * @param {object} options
  */
 Editor.execSpawn = function ( command, options ) {
-    var file, args;
-    options = options || {};
+  let file, args;
+  options = options || {};
 
-    if (process.platform === 'win32') {
-        file = 'cmd.exe';
-        args = ['/s', '/c', '"' + command + '"'];
-        options.windowsVerbatimArguments = true;
-    } else {
-        file = '/bin/sh';
-        args = ['-c', command];
-        options.windowsVerbatimArguments = false;
-    }
+  if (process.platform === 'win32') {
+    file = 'cmd.exe';
+    args = ['/s', '/c', '"' + command + '"'];
+    options.windowsVerbatimArguments = true;
+  } else {
+    file = '/bin/sh';
+    args = ['-c', command];
+    options.windowsVerbatimArguments = false;
+  }
 
-    var spawn = require('child_process').spawn;
-    return spawn(file, args, options);
+  let spawn = require('child_process').spawn;
+  return spawn(file, args, options);
 };
 
 function _reloadPackages ( reloadInfos, cb ) {
-    Async.each( reloadInfos, function ( info, done ) {
-        var packageInfo = Editor.Package.packageInfo(info.path);
-        if ( !packageInfo ) {
-            done();
-            return;
+  Async.each( reloadInfos, ( info, done ) => {
+    let packageInfo = Editor.Package.packageInfo(info.path);
+    if ( !packageInfo ) {
+      done();
+      return;
+    }
+
+    Async.series([
+      next => {
+        if ( !packageInfo.build ) {
+          next();
+          return;
         }
 
-        Async.series([
-            function ( next ) {
-                if ( !packageInfo.build ) {
-                    next();
-                    return;
-                }
+        Editor.log( 'Rebuilding ' + packageInfo.name );
+        Editor.Package.build( packageInfo._path, next );
+      },
 
-                Editor.log( 'Rebuilding ' + packageInfo.name );
-                Editor.Package.build( packageInfo._path, next );
-            },
+      next => {
+        let testerWin = Editor.Panel.findWindow('tester.panel');
 
-            function ( next ) {
-                var testerWin = Editor.Panel.findWindow('tester.panel');
+        // reload test
+        if ( info.reloadTest ) {
+          if ( testerWin ) {
+            testerWin.sendToPage('tester:run-tests', packageInfo.name);
+          }
+          next();
+          return;
+        }
 
-                // reload test
-                if ( info.reloadTest ) {
-                    if ( testerWin ) {
-                        testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                    }
-                    next();
-                    return;
-                }
+        // reload page
+        if ( info.reloadPage ) {
+          for ( let panelName in packageInfo.panels ) {
+            let panelID = packageInfo.name + '.' + panelName;
+            Editor.sendToWindows( 'panel:out-of-date', panelID );
+          }
 
-                // reload page
-                if ( info.reloadPage ) {
-                    for ( var panelName in packageInfo.panels ) {
-                        var panelID = packageInfo.name + '.' + panelName;
-                        Editor.sendToWindows( 'panel:out-of-date', panelID );
-                    }
+          if ( testerWin ) {
+            testerWin.sendToPage('tester:run-tests', packageInfo.name);
+          }
+          next();
+          return;
+        }
 
-                    if ( testerWin ) {
-                        testerWin.sendToPage('tester:run-tests', packageInfo.name);
-                    }
-                    next();
-                    return;
-                }
+        // reload core
+        if ( info.reloadCore ) {
+          Editor.Package.reload(packageInfo._path, {
+            rebuild: false
+          });
+          next();
+          return;
+        }
 
-                // reload core
-                if ( info.reloadCore ) {
-                    Editor.Package.reload(packageInfo._path, {
-                        rebuild: false
-                    });
-                    next();
-                    return;
-                }
+        next();
+      },
+    ], err => {
+      if ( err ) {
+        Editor.error( 'Failed to reload package %s: %s', packageInfo.name, err.message );
+      }
 
-                next();
-            },
-        ], function ( err ) {
-            if ( err ) {
-                Editor.error( 'Failed to reload package %s: %s', packageInfo.name, err.message );
-            }
-
-            done();
-        });
-    }, function ( err ) {
-        if ( cb ) cb ();
+      done();
     });
+  }, err => {
+    if ( cb ) {
+      cb (err);
+    }
+  });
 }
 
 /**
  * Watch packages
  * @method watchPackages
  */
-var _watchDebounceID = null;
-var _packageReloadInfo = [];
+let _watchDebounceID = null;
+let _packageReloadInfo = [];
 Editor.watchPackages = function ( cb ) {
-    //
-    if ( Editor._packagePathList.length === 0 ) {
-        if ( cb ) cb ();
+  //
+  if ( Editor._packagePathList.length === 0 ) {
+    if ( cb ) cb ();
+    return;
+  }
+
+  let src = Editor._packagePathList.filter( path => {
+    return Fs.existsSync(path);
+  });
+
+  _packageWatcher = Chokidar.watch(src, {
+    ignored: [
+      // /[\/\\]\.(?!app-name)/: ignore /.hidden-files but skip ~/.app-name
+      new RegExp('[\\/\\\\]\\.(?!' + Editor.name + ')'),
+      /[\/\\]bin/,
+      /[\/\\]test[\/\\](fixtures|playground)/,
+    ],
+    ignoreInitial: true,
+    persistent: true,
+  });
+
+  _packageWatcher
+    .on('add', path => {
+      _packageWatcher.add(path);
+    })
+    .on('addDir', path => {
+      _packageWatcher.add(path);
+    })
+    .on('unlink', path => {
+      _packageWatcher.unwatch(path);
+    })
+    .on('unlinkDir', path => {
+      _packageWatcher.unwatch(path);
+    })
+    .on('change', path => {
+      // NOTE: this is not 100% safe, because 50ms debounce still can have multiple
+      //       same packages building together, to avoid this, try to use Async.queue
+
+      let packageInfo = Editor.Package.packageInfo(path);
+      if ( !packageInfo ) {
         return;
-    }
+      }
 
-    var src = [];
-    for ( i = 0; i < Editor._packagePathList.length; ++i ) {
-        var packagePath = Editor._packagePathList[i];
-        if ( Fs.existsSync(packagePath) ) {
-            src.push( packagePath );
+      //
+      let reloadInfo;
+      _packageReloadInfo.some(info => {
+        if ( info.path === packageInfo._path ) {
+          reloadInfo = info;
+          return true;
         }
-    }
-    _packageWatcher = Chokidar.watch(src, {
-        ignored: [
-            // /[\/\\]\.(?!app-name)/: ignore /.hidden-files but skip ~/.app-name
-            new RegExp('[\\/\\\\]\\.(?!' + Editor.name + ')'),
-            /[\/\\]bin/,
-            /[\/\\]test[\/\\](fixtures|playground)/,
-        ],
-        ignoreInitial: true,
-        persistent: true,
-    });
+        return false;
+      });
 
-    _packageWatcher
-    .on('add', function(path) {
-        _packageWatcher.add(path);
+      if ( !reloadInfo ) {
+        reloadInfo = {
+          path: packageInfo._path,
+          reloadTest: false,
+          reloadPage: false,
+          reloadCore: false,
+        };
+        _packageReloadInfo.push(reloadInfo);
+      }
+
+      // reload test
+      if ( Path.contains(Path.join(packageInfo._path, 'test') , path) ) {
+        reloadInfo.reloadTest = true;
+      }
+      // reload page
+      else if (
+        Path.contains(Path.join(packageInfo._path, 'page') , path) ||
+        Path.contains(Path.join(packageInfo._path, 'panel') , path) ||
+        Path.contains(Path.join(packageInfo._path, 'widget') , path) ||
+        Path.contains(Path.join(packageInfo._path, 'element') , path)
+      ) {
+        reloadInfo.reloadPage = true;
+      }
+      // reload core
+      else {
+        reloadInfo.reloadCore = true;
+      }
+
+      // debounce write for 50ms
+      if ( _watchDebounceID ) {
+        clearTimeout(_watchDebounceID);
+        _watchDebounceID = null;
+      }
+
+      _watchDebounceID = setTimeout(() => {
+        _reloadPackages(_packageReloadInfo);
+        _packageReloadInfo = [];
+        _watchDebounceID = null;
+      }, 50);
     })
-    .on('addDir', function(path) {
-        _packageWatcher.add(path);
+    .on('error', err => {
+      Editor.error('Package Watcher Error: %s', err.message);
     })
-    .on('unlink', function(path) {
-        _packageWatcher.unwatch(path);
-    })
-    .on('unlinkDir', function(path) {
-        _packageWatcher.unwatch(path);
-    })
-    .on('change', function (path) {
-        // NOTE: this is not 100% safe, because 50ms debounce still can have multiple
-        //       same packages building together, to avoid this, try to use Async.queue
-
-        var packageInfo = Editor.Package.packageInfo(path);
-        if ( !packageInfo ) {
-            return;
-        }
-
-        //
-        var reloadInfo;
-        for ( var i = 0; i < _packageReloadInfo.length; ++i ) {
-            if ( _packageReloadInfo[i].path === packageInfo._path ) {
-                reloadInfo = _packageReloadInfo[i];
-                break;
-            }
-        }
-
-        if ( !reloadInfo ) {
-            reloadInfo = {
-                path: packageInfo._path,
-                reloadTest: false,
-                reloadPage: false,
-                reloadCore: false,
-            };
-            _packageReloadInfo.push(reloadInfo);
-        }
-
-        // reload test
-        if ( Path.contains(Path.join(packageInfo._path, 'test') , path) ) {
-            reloadInfo.reloadTest = true;
-        }
-        // reload page
-        else if ( Path.contains(Path.join(packageInfo._path, 'page') , path) ||
-                  Path.contains(Path.join(packageInfo._path, 'panel') , path) ||
-                  Path.contains(Path.join(packageInfo._path, 'widget') , path) ||
-                  Path.contains(Path.join(packageInfo._path, 'element') , path) ) {
-            reloadInfo.reloadPage = true;
-        }
-        // reload core
-        else {
-            reloadInfo.reloadCore = true;
-        }
-
-        // debounce write for 50ms
-        if ( _watchDebounceID ) {
-            clearTimeout(_watchDebounceID);
-            _watchDebounceID = null;
-        }
-        _watchDebounceID = setTimeout(function () {
-            _reloadPackages(_packageReloadInfo);
-            _packageReloadInfo = [];
-            _watchDebounceID = null;
-        }, 50);
-    })
-    .on('error', function (error) {
-        Editor.error('Package Watcher Error: %s', error.message);
-    })
-    .on('ready', function() {
-        if ( cb ) cb ();
+    .on('ready', () => {
+      if ( cb ) cb ();
     })
     // .on('raw', function(event, path, details) { Editor.log('Raw event info:', event, path, details); })
     ;
@@ -592,7 +599,7 @@ Editor._defaultLayout = '';
  * @param {string} path - The path for the register type.
  */
 Editor.registerProfilePath = function ( type, path ) {
-    Editor._type2profilepath[type] = path;
+  Editor._type2profilepath[type] = path;
 };
 
 /**
@@ -602,17 +609,17 @@ Editor.registerProfilePath = function ( type, path ) {
  * @param {string} path - A absolute path for searching your packages.
  */
 Editor.registerPackagePath = function ( path ) {
-    Editor._packagePathList.push(path);
+  Editor._packagePathList.push(path);
 };
 
 /**
  * Unregister a package path
  */
 Editor.unregisterPackagePath = function ( path ) {
-    var idx = Editor._packagePathList.indexOf(path);
-    if ( idx !== -1 ) {
-        Editor._packagePathList.splice(idx,1);
-    }
+  let idx = Editor._packagePathList.indexOf(path);
+  if ( idx !== -1 ) {
+    Editor._packagePathList.splice(idx,1);
+  }
 };
 
 /**
@@ -622,7 +629,7 @@ Editor.unregisterPackagePath = function ( path ) {
  * @param {string} path - A absolute path for searching your packages.
  */
 Editor.registerDefaultLayout = function ( path ) {
-    Editor._defaultLayout = path;
+  Editor._defaultLayout = path;
 };
 
 /**
@@ -631,7 +638,7 @@ Editor.registerDefaultLayout = function ( path ) {
  * @param {function} tmplFn
  */
 Editor.registerDefaultMainMenu = function ( tmplFn ) {
-    Editor._defaultMainMenu = tmplFn;
+  Editor._defaultMainMenu = tmplFn;
 };
 
 // ==========================

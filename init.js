@@ -224,37 +224,6 @@ Winston.add( Winston.transports.Console, {
 });
 
 // ---------------------------
-// initialize Commander
-// ---------------------------
-
-// NOTE: commander only get things done barely in core level,
-//       it doesn't touch the page level, so it should not put into App.on('ready')
-Commander
-.version(App.getVersion())
-.option('--dev', 'Run in development environment')
-.option('--dev-mode <mode>', 'Run in specific dev-mode')
-.option('--show-devtools', 'Open devtools automatically when main window loaded')
-.option('--debug <port>', 'Open in browser context debug mode', parseInt )
-.option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
-.option('--test <path>', 'Run tests in path' )
-.option('--report-failures', 'Send test failures to the main process')
-.option('--report-details', 'Send test details to the main process' )
-;
-
-// EXAMPLE:
-// usage
-// Commander
-//     .usage('[options] <file ...>')
-//     ;
-// command
-// Commander
-//     .command('foobar').action( () => {
-//         console.log('foobar!!!');
-//         process.exit(1);
-//     })
-//     ;
-
-// ---------------------------
 // Define Editor.App APIs
 // ---------------------------
 
@@ -354,37 +323,63 @@ App.on('gpu-process-crashed', () => {
 
 //
 App.on('ready', () => {
-  // parse app's commander
+
+  // ---------------------------
+  // initialize Commander
+  // ---------------------------
+
+  // NOTE: commander only get things done barely in core level,
+  //       it doesn't touch the page level, so it should not put into App.on('ready')
+  Commander
+    .version(App.getVersion())
+    .option('--dev', 'Run in development environment')
+    .option('--dev-mode <mode>', 'Run in specific dev-mode')
+    .option('--show-devtools', 'Open devtools automatically when main window loaded')
+    .option('--debug <port>', 'Open in browser context debug mode', parseInt )
+    .option('--debug-brk <port>', 'Open in browser context debug mode, and break at first.', parseInt)
+    .option('--test <path>', 'Run tests in path' )
+    .option('--report-failures', 'Send test failures to the main process')
+    .option('--report-details', 'Send test details to the main process' )
+    ;
+
+  // init app's command
   if ( Editor.App.initCommander ) {
     Editor.App.initCommander(Commander);
   }
 
-  // exec commander
+  // run commander
   Commander.parse(process.argv);
 
-  // apply argv to Editor
+  // apply arguments to Editor
   Editor.isDev = Commander.dev;
   Editor.devMode = Commander.devMode;
   Editor.showDevtools = Commander.showDevtools;
   Editor.debugPort = Commander.debug;
 
-  //
+  // ---------------------------
+  // initialize protocol
+  // ---------------------------
+
   Winston.normal( 'Initializing Protocol' );
   require('./core/protocol-init');
+
+  // ---------------------------
+  // initialize Editor
+  // ---------------------------
 
   Winston.normal( 'Initializing Editor' );
   require('./core/editor-init');
 
+  // ---------------------------
   // run test
+  // ---------------------------
+
   if ( Commander.test ) {
     let Test = require('./core/test-runner');
-
-    if (Commander.test) {
-      Test.run(Commander.test, {
-        reportFailures: Commander.reportFailures,
-        reportDetails: Commander.reportDetails,
-      });
-    }
+    Test.run(Commander.test, {
+      reportFailures: Commander.reportFailures,
+      reportDetails: Commander.reportDetails,
+    });
 
     return;
   }
