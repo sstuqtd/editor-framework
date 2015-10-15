@@ -7,69 +7,82 @@
  */
 global.Editor = {};
 
+// require modules
+const App = require('app');
+const Chalk = require('chalk');
+const Path = require('fire-path');
+const Fs = require('fire-fs');
+const _ = require('lodash');
+
 // ---------------------------
-// precheck
+// node setup
 // ---------------------------
 
-if ( !__app ) {
-  console.error( '\'global.__app\' is undefined.');
-  process.exit(1);
-  return;
-}
+// this will prevent default atom-shell uncaughtException
+process.removeAllListeners('uncaughtException');
+process.on('uncaughtException', err => {
+  console.log( Chalk.red.inverse.bold('Uncaught Exception: ') + Chalk.red( err.stack || err ) );
+});
+
+// add builtin node_modules search path for core-level
+require('module').globalPaths.push(Path.join(App.getAppPath(),'node_modules'));
+
+// ---------------------------
+// Init Editor.App
+// ---------------------------
+
 /**
  * The Editor.App is your app.js module. Read more details in
  * [Define your application](https://github.com/fireball-x/editor-framework/blob/master/docs/manual/define-your-app.md).
  * @property App
  * @type object
  */
-Editor.App = __app;
+Editor.App = {
+  /**
+   * The name of your app. It is defined in the `name` field in package.json
+   * @property name
+   * @type string
+   */
+  name: App.getName(),
 
+  /**
+   * your app version
+   * @property version
+   * @type string
+   */
+  version: App.getVersion(),
 
-const App = require('app');
-/**
- * The current app.js running directory.
- * @property appPath
- * @type string
- */
-Editor.appPath = App.getAppPath();
+  /**
+   * The current app.js running directory.
+   * @property path
+   * @type string
+   */
+  path: App.getAppPath(),
 
-// ---------------------------
-// load modules
-// ---------------------------
+  /**
+   * Your application's data path. Usually it is `~/.{your-app-name}`
+   * @property home
+   * @type string
+   */
+  home: Path.join(App.getPath('home'), '.' + App.getName()),
 
-const Path = require('fire-path');
-const Fs = require('fire-fs');
-const Commander = require('commander');
-const Chalk = require('chalk');
-const Winston = require('winston');
-const Async = require('async');
-
-// this will prevent default atom-shell uncaughtException
-process.removeAllListeners('uncaughtException');
-process.on('uncaughtException', err => {
-  // if ( Editor && Editor.sendToWindows ) {
-  //     Editor.sendToWindows('console:error', err.stack || err);
-  // }
-  Winston.uncaught( err.stack || err );
-});
-
-const _appPackageJson = JSON.parse(Fs.readFileSync(Path.join(Editor.appPath,'package.json')));
-const _frameworkPath = Path.dirname(__dirname);
-const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(_frameworkPath,'package.json')));
-
-// add builtin node_modules search path for core-level
-require('module').globalPaths.push(Path.join(Editor.appPath,'node_modules'));
+  /**
+   * Extends Editor.App
+   * @property extend
+   * @type function
+   */
+  extend: function ( proto ) {
+    _.assign( this, proto );
+  },
+};
 
 // ---------------------------
 // initialize minimal Editor
 // ---------------------------
 
-/**
- * The name of your app. It is defined in the `name` field in package.json
- * @property name
- * @type string
- */
-Editor.name = App.getName();
+// load your-app-path/editor-framework/package.json
+const _frameworkPath = Path.dirname(__dirname);
+const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(_frameworkPath,'package.json')));
 
 /**
  * versions of your app and submodules
@@ -78,15 +91,8 @@ Editor.name = App.getName();
  */
 Editor.versions = {
   'editor-framework': _frameworkPackageJson.version,
+  [Editor.App.name]: Editor.App.version,
 };
-Editor.versions[Editor.name] = App.getVersion();
-
-/**
- * The absolute path of your main entry file. Usually it is `{your-app}/app.js`.
- * @property mainEntry
- * @type string
- */
-Editor.mainEntry = Path.join( Editor.appPath, _appPackageJson.main );
 
 /**
  * The editor framework module path. Usually it is `{your-app}/editor-framework/`
@@ -95,21 +101,11 @@ Editor.mainEntry = Path.join( Editor.appPath, _appPackageJson.main );
  */
 Editor.frameworkPath = _frameworkPath;
 
-/**
- * Your application's data path. Usually it is `~/.{your-app-name}`
- * @property appHome
- * @type string
- */
-Editor.appHome = Path.join( App.getPath('home'), '.' + Editor.name );
+// make sure ~/.{app-name} exists
+Fs.ensureDirSync(Editor.App.home);
 
-// initialize ~/.{app-name}
-Fs.ensureDirSync(Editor.appHome);
-
-// initialize ~/.{app-name}/local/
-const settingsPath = Path.join(Editor.appHome, 'local');
-if ( !Fs.existsSync(settingsPath) ) {
-  Fs.mkdirSync(settingsPath);
-}
+// make sure ~/.{app-name}/local/ exists
+Fs.ensureDirSync(Path.join(Editor.App.home, 'local'));
 
 const EventEmitter = require('events');
 Editor.events = new EventEmitter();
@@ -118,20 +114,22 @@ Editor.events = new EventEmitter();
 // initialize logs/
 // ---------------------------
 
+const Winston = require('winston');
+
 // MacOSX: ~/Library/Logs/{app-name}
 // Windows: %APPDATA%, some where like 'C:\Users\{your user name}\AppData\Local\...'
 
 // get log path
 let _logpath = '';
 if ( process.platform === 'darwin' ) {
-  _logpath = Path.join(App.getPath('home'), 'Library/Logs/' + Editor.name );
+  _logpath = Path.join(App.getPath('home'), 'Library/Logs/' + Editor.App.name );
 } else {
-  _logpath = Path.join(App.getPath('appData'), Editor.name);
+  _logpath = Path.join(App.getPath('appData'), Editor.App.name);
 }
 
 Fs.ensureDirSync(_logpath);
 
-const _logfile = Path.join(_logpath, Editor.name + '.log');
+const _logfile = Path.join(_logpath, Editor.App.name + '.log');
 if ( Fs.existsSync(_logfile) ) {
   Fs.unlinkSync(_logfile);
 }
@@ -225,69 +223,6 @@ Winston.add( Winston.transports.Console, {
 });
 
 // ---------------------------
-// Define Editor.App APIs
-// ---------------------------
-
-let _editorAppIpc;
-function _loadEditorApp () {
-  let editorApp = Editor.App;
-
-  if ( editorApp.load ) {
-    try {
-      Editor.App.load();
-    }
-    catch (err) {
-      Editor.failed( 'Failed to load Editor.App, %s.', err.stack );
-      return;
-    }
-  }
-
-  // register ipcs
-  let ipcListener = new Editor.IpcListener();
-  for ( let prop in editorApp ) {
-    if ( prop.indexOf('app:') !== 0 )
-      continue;
-
-    if ( typeof editorApp[prop] === 'function' ) {
-      ipcListener.on( prop, editorApp[prop].bind(editorApp) );
-    }
-  }
-  _editorAppIpc = ipcListener;
-}
-
-function _unloadEditorApp () {
-  let editorApp = Editor.App;
-
-  // unregister main ipcs
-  _editorAppIpc.clear();
-  _editorAppIpc = null;
-
-  // unload main
-  let cache = require.cache;
-  if ( editorApp.unload ) {
-    try {
-      editorApp.unload();
-    }
-    catch (err) {
-      Editor.failed( 'Failed to unload Editor.App, %s.', err.stack );
-    }
-  }
-
-  delete cache[Editor.mainEntry];
-  delete global.__app;
-}
-
-function _reloadEditorApp () {
-  _unloadEditorApp();
-  require(Editor.mainEntry);
-  Editor.App = __app;
-  Editor.App.reload = _reloadEditorApp;
-  _loadEditorApp();
-
-  Editor.success('Editor.App reloaded');
-}
-
-// ---------------------------
 // register App events
 // ---------------------------
 
@@ -306,7 +241,7 @@ App.on('will-finish-launching', () => {
   if ( !Editor.isDev ) {
     let crashReporter = require('crash-reporter');
     crashReporter.start({
-      productName: Editor.name,
+      productName: Editor.App.name,
       companyName: 'Firebox Technology',
       submitUrl: 'https://fireball-x.com/crash-report',
       autoSubmit: false,
@@ -324,6 +259,8 @@ App.on('gpu-process-crashed', () => {
 
 //
 App.on('ready', () => {
+  const Commander = require('commander');
+  const Async = require('async');
 
   // ---------------------------
   // initialize Commander
@@ -344,8 +281,8 @@ App.on('ready', () => {
     ;
 
   // init app's command
-  if ( Editor.App.initCommander ) {
-    Editor.App.initCommander(Commander);
+  if ( Editor.App.beforeInit ) {
+    Editor.App.beforeInit(Commander);
   }
 
   // run commander
@@ -382,11 +319,11 @@ App.on('ready', () => {
   Editor.MainMenu.apply();
 
   // register profile path
-  Editor.registerProfilePath( 'app', Editor.appHome );
-  Editor.registerProfilePath( 'local', Path.join( Editor.appHome, 'local' ) );
+  Editor.registerProfilePath( 'app', Editor.App.home );
+  Editor.registerProfilePath( 'local', Path.join( Editor.App.home, 'local' ) );
 
   // register package path
-  Editor.registerPackagePath( Path.join( Editor.appPath, 'builtin' ) );
+  Editor.registerPackagePath( Path.join( Editor.App.path, 'builtin' ) );
 
   // register default layout
   Editor.registerDefaultLayout( Editor.url('editor-framework://static/layout.json') );
@@ -423,10 +360,6 @@ App.on('ready', () => {
 
     next => {
       Editor.success('Watch ready');
-
-      // register user App Ipcs after App.init
-      _loadEditorApp();
-      Editor.App.reload = _reloadEditorApp;
 
       // load windows layout after local profile registered
       Editor.Window.loadLayouts();

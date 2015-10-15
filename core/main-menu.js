@@ -177,12 +177,6 @@ function getDefaultMainMenu () {
                         BrowserWindow.getFocusedWindow().reloadIgnoringCache();
                     }
                 },
-                {
-                    label: 'Reload Editor.App',
-                    click: function() {
-                        Editor.App.reload();
-                    }
-                },
                 { type: 'separator' },
                 {
                     label: 'Inspect Element',

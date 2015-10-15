@@ -35,7 +35,7 @@ Protocol.registerFileProtocol('app', function(request, callback) {
     if ( uri.pathname ) {
         relativePath = Path.join( relativePath, uri.pathname );
     }
-    var file = Path.join( Editor.appPath, relativePath );
+    var file = Path.join( Editor.App.path, relativePath );
     callback ( { path: file } );
 }, function ( err ) {
     if ( err ) {
@@ -80,7 +80,7 @@ Protocol.registerFileProtocol('packages', function(request, callback) {
 //     if ( uri.pathname ) {
 //         relativePath = Path.join( relativePath, uri.pathname );
 //     }
-//     var file = Path.join( Editor.appPath, 'bower_components', relativePath );
+//     var file = Path.join( Editor.App.path, 'bower_components', relativePath );
 //     callback ( { path: file } );
 // }, function ( err ) {
 //     if ( err ) {
@@ -188,5 +188,5 @@ Editor.registerProtocol = function ( protocol, fn ) {
 };
 
 Editor.registerProtocol('editor-framework', _url2path(Editor.frameworkPath));
-Editor.registerProtocol('app', _url2path(Editor.appPath));
+Editor.registerProtocol('app', _url2path(Editor.App.path));
 Editor.registerProtocol('packages', _packages2path);
