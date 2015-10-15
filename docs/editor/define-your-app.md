@@ -32,66 +32,53 @@ The `package.json` should look like this:
 Here is an example:
 
 ```javascript
-// you MUST assigned to global.__app
-global.__app = {
-    initCommander: function ( commander ) {
-        // optional
-    },
-
-    init: function ( options ) {
-        // must have, important
-    },
-
-    run: function () {
-        // must have, important
-
-        // create main window
-        var mainWin = new Editor.Window('main', {
-            'title': 'Editor Framework',
-            'min-width': 800,
-            'min-height': 600,
-            'show': false,
-            'resizable': true,
-        });
-        Editor.mainWindow = mainWin;
-
-        // restore window size and position
-        mainWin.restorePositionAndSize();
-
-        // load and show main window
-        mainWin.show();
-
-        // page-level test case
-        mainWin.load( 'app://app.html' );
-
-        // open dev tools if needed
-        if ( Editor.showDevtools ) {
-            mainWin.openDevTools();
-        }
-        mainWin.focus();
-    },
-
-    load: function () {
-        // optional
-    },
-
-    unload: function () {
-        // optional
-    },
-
-    // An ipc message start with `app:` will be automatically registerred
-    'app:foobar': function () {
-        Editor.log('foobar');
-    },
-};
-
-// must have, important
+// require editor-framework at the beginning
 require('./editor-framework');
+
+// extends the app
+Editor.App.extend({
+  // optional, init commander in this pahse
+  beforeInit: function ( commander ) {
+  },
+
+  // init your app
+  init: function ( options ) {
+  },
+
+  // run your app
+  run: function () {
+    // create main window
+    var mainWin = new Editor.Window('main', {
+      'title': 'Editor Framework',
+      'min-width': 800,
+      'min-height': 600,
+      'show': false,
+      'resizable': true,
+    });
+    Editor.mainWindow = mainWin;
+
+    // restore window size and position
+    mainWin.restorePositionAndSize();
+
+    // load and show main window
+    mainWin.show();
+
+    // load your first page
+    mainWin.load( 'app://app.html' );
+
+    // open devtools if needed
+    if ( Editor.showDevtools ) {
+        mainWin.openDevTools();
+    }
+    mainWin.focus();
+  },
+});
 ```
 
-An example project can be checked out here: https://github.com/fireball-x/editor-framework-app
+We also provide a yeoman generator [generator-editor-framework](https://github.com/fireball-x/generator-editor-framework)
+to help users create an editor-framework app.
 
-## Class Method: initCommander(commander)
+## Class Method: beforeInit(commander)
 
  - `commander` An instance of [commander.js](https://github.com/tj/commander.js)
 
@@ -112,23 +99,3 @@ Invoked after `Editor` and its sub modules initialization. It is recommended to 
 
 Invoked after finish loading all packages. Basically you should open your main window in this function.
 
-## Define ipc messages in your App
-
-You can define ipc messages in your app script. Just add a function that use `app:` as prefix, the editor-framework will detect and load it before your app run.
-
-Example:
-
-```javascript
-global.__app = {
-    // An ipc message start with `app:` will be automatically registerred
-    'app:foobar': function () {
-        Editor.log('foobar');
-    },
-};
-```
-
-## Reload your App
-
-You can reload your App by calling `Editor.App.reload()`. This is useful if you have any changes in your app code, especially when you add or remove ipc messages.
-
-The Editor Framework also add a menu item `Developer/Reload Editor.App` to help you with this task.
