@@ -17,24 +17,22 @@ profile
 *.exvim
 .exvim.*/
 
-# project files
-node_modules/
-bower_components/
-bin/
-ext/
-builtin/
-apidocs/
-api/
-benchmark/
-package-examples/
-mirror-setting.json
-local-setting.json
-
 # webstorm
 .idea
 
 # log files
 *.log
+
+# project files
+api/
+apidocs/
+bin/
+bower_components/
+builtin/
+package-examples/
+ext/
+node_modules/
+local-setting.json
 
 # test files
 demo/.settings/

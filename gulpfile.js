@@ -83,6 +83,36 @@ gulp.task('run', function(cb) {
   });
 });
 
+// self
+// =====================================
+
+gulp.task('update-editor-framework', function(cb) {
+  var Async = require('async');
+
+  Async.series([
+    function ( next ) {
+      git.exec(['pull', 'git@github.com:fireball-x/editor-framework.git', 'master'], './', next);
+    },
+
+    function ( next ) {
+      console.log('editor-framework update complete!');
+      git.exec(['fetch', '--all'], './', next);
+    },
+
+    function ( next ) {
+      // NOTE: when we update the main project, we should reload its package.json
+      pjson = JSON.parse(Fs.readFileSync('./package.json'));
+      next();
+    },
+
+  ], function ( err ) {
+    if ( err ) {
+      throw err;
+    }
+    cb ();
+  });
+});
+
 // builtin
 // =====================================
 
