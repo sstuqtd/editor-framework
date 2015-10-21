@@ -1,3 +1,5 @@
+'use strict';
+
 var Util = require('util');
 var Ipc = require('ipc');
 
@@ -710,7 +712,7 @@ Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
 
 if ( Editor.isCoreLevel ) {
     Ipc.on( 'selection:get-registers', function ( event ) {
-        results = [];
+        var results = [];
         for ( var key in _units ) {
             var selectionUnit = _units[key];
             results.push({

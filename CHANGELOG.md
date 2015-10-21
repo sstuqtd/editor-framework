@@ -10,3 +10,4 @@
  - replace `Editor.App.initCommander` with `Editor.App.beforeInit`
  - remove `Editor.App.load`, `Editor.App.unload`
  - `Editor.App` no longer accept ipc-message `app:*` register in it
+ - support minify editor-framework in final product
