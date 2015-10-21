@@ -19,6 +19,8 @@
     "EditorUI",
     "window",
     "document",
+    "Image",
+    "Mousetrap",
     "Polymer",
     "describe",
     "it",

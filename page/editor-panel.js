@@ -1,7 +1,10 @@
-var _idToPagePanelInfo = {};
-var _url2link = {};
+'use strict';
 
-_getPanels = function ( panelEL ) {
+var _idToPagePanelInfo = {};
+// var _url2link = {};
+var _outOfDatePanels = [];
+
+function _getPanels ( panelEL ) {
     var panels = [];
 
     var panelDOM = Polymer.dom(panelEL);
@@ -12,9 +15,9 @@ _getPanels = function ( panelEL ) {
     }
 
     return panels;
-};
+}
 
-_getDocks = function ( dockEL ) {
+function _getDocks ( dockEL ) {
     var docks = [];
 
     var dockDOM = Polymer.dom(dockEL);
@@ -45,7 +48,7 @@ _getDocks = function ( dockEL ) {
     }
 
     return docks;
-};
+}
 
 function _registerIpc ( panelID, frameEL, ipcListener, ipcName ) {
     var fn = frameEL[ipcName];
@@ -96,7 +99,7 @@ Panel.load = function ( panelID, cb ) {
 
         EditorUI.import( framePath, function ( err ) {
             if ( err ) {
-                Editor.error( 'Failed to import %s. message: %s', url, err.message );
+                Editor.error( 'Failed to import %s. message: %s', framePath, err.message );
                 cb ( new Error('Panel import failed.') );
                 return;
             }
@@ -418,7 +421,6 @@ Ipc.on('panel:undock', function ( panelID ) {
     });
 });
 
-var _outOfDatePanels = [];
 Ipc.on('panel:out-of-date', function ( panelID ) {
     var frameEL = Editor.Panel.find(panelID);
     if ( frameEL ) {
