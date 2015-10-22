@@ -9,29 +9,28 @@
   <body>
     <h2>Testing Utils...</h2>
     <script>
-        var ipcforward = new IpcForward();
-        var Ipc = require('ipc');
-        var Chai = require('chai');
+      // var ipcforward = new IpcForward();
+      var Ipc = require('ipc');
+      var Chai = require('chai');
 
-        Ipc.on('test:report-error', function ( err ) {
-            try {
-                var expect = Chai.expect;
-                expect( err.message ).to.equal('This is an error from core');
-                expect( err.stack ).to.be.a('String');
-            }
-            catch ( err ) {
-                Editor.sendToCore('test:report-error:failed', err.message);
-            }
+      Ipc.on('test:report-error', err => {
+        try {
+          var expect = Chai.expect;
+          expect( err.message ).to.equal('This is an error from core');
+          expect( err.stack ).to.be.a('String');
+        } catch ( err ) {
+          Editor.sendToCore('test:report-error:failed', err.message);
+        }
 
-            Editor.sendToCore('test:report-error:success');
-        });
+        Editor.sendToCore('test:report-error:success');
+      });
 
-        Ipc.on('test:ask-error', function () {
-            var err = new Error('This is an error from page');
-            Editor.sendToCore('test:report-error', Editor.Utils.wrapError(err));
-        });
+      Ipc.on('test:ask-error', () => {
+        var err = new Error('This is an error from page');
+        Editor.sendToCore('test:report-error', Editor.Utils.wrapError(err));
+      });
 
-        Editor.sendToCore('page:ready');
+      Editor.sendToCore('page:ready');
     </script>
   </body>
 </html>
