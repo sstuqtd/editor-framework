@@ -66,6 +66,7 @@ SelectionUnit.prototype._unselectOthers = function (id) {
       }
     }
     if (unselected.length > 0) {
+      unselected.reverse();
       _sendToAll(IPC_UNSELECTED, this.type, unselected);
       changed = true;
     }
@@ -85,7 +86,7 @@ SelectionUnit.prototype._unselectOthers = function (id) {
         _sendToAll(IPC_UNSELECTED, this.type, this.selection);
         changed = true;
       }
-      this.selection.length = 0;
+      this.selection = [];
     }
   }
 
@@ -279,7 +280,7 @@ ConfirmableSelectionUnit.prototype.unselect = function (id, confirm) {
 
 ConfirmableSelectionUnit.prototype.confirm = function () {
   if ( !this.confirmed ) {
-    this._confirmedSnapShot.length = 0;
+    this._confirmedSnapShot = [];
     this.confirmed = true;
     if ( this.selection.length > 0 ) {
       this._activate(this.selection[this.selection.length - 1]);
@@ -293,7 +294,7 @@ ConfirmableSelectionUnit.prototype.confirm = function () {
 ConfirmableSelectionUnit.prototype.cancel = function () {
   if ( !this.confirmed ) {
     $super.prototype.select.call(this, this._confirmedSnapShot, true);
-    this._confirmedSnapShot.length = 0;
+    this._confirmedSnapShot = [];
     this.confirmed = true;
   }
 };
