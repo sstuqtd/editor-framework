@@ -1,5 +1,7 @@
 'use strict';
 
+global.unused = () => {};
+
 /**
  * Editor is a module contains app-wide core editor functionality. You can access properties or methods of Editor module anytime, anywhere in Fireball
  * @module Editor
@@ -21,6 +23,10 @@ const _ = require('lodash');
 // this will prevent default atom-shell uncaughtException
 process.removeAllListeners('uncaughtException');
 process.on('uncaughtException', err => {
+  if ( Editor && Editor.error ) {
+    Editor.error(err.stack || err);
+    return;
+  }
   console.log( Chalk.red.inverse.bold('Uncaught Exception: ') + Chalk.red( err.stack || err ) );
 });
 

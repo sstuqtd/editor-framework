@@ -1,10 +1,11 @@
 'use strict';
 
-var Util = require('util');
-var Ipc = require('ipc');
+const Util = require('util');
+const Ipc = require('ipc');
+const _ = require('lodash');
 
-var _lastActiveUnit = null;
-var _units = {};
+let _lastActiveUnit = null;
+let _units = {};
 
 const IPC_SELECTED = 'selection:selected';       // argument is an array of ids
 const IPC_UNSELECTED = 'selection:unselected';   // argument is an array of ids
@@ -54,74 +55,47 @@ SelectionUnit.prototype._activate = function (id) {
 };
 
 SelectionUnit.prototype._unselectOthers = function (id) {
-  var changed = false;
-
-  if (Array.isArray(id)) {
-    var unselected = [];
-    for (var j = this.selection.length - 1; j >= 0; j--) {
-      var selected = this.selection[j];
-      if (id.indexOf(selected) === -1) {
-        this.selection.splice(j, 1);
-        unselected.push(selected);
-      }
-    }
-    if (unselected.length > 0) {
-      unselected.reverse();
-      _sendToAll(IPC_UNSELECTED, this.type, unselected);
-      changed = true;
-    }
-  }
-  else {
-    var index = this.selection.indexOf(id);
-    if (index !== -1) {
-      this.selection.splice(index, 1);
-      if (this.selection.length > 0) {
-        _sendToAll(IPC_UNSELECTED, this.type, this.selection);
-        changed = true;
-      }
-      this.selection = [id];
-    }
-    else {
-      if (this.selection.length > 0) {
-        _sendToAll(IPC_UNSELECTED, this.type, this.selection);
-        changed = true;
-      }
-      this.selection = [];
-    }
+  if (!Array.isArray(id)) {
+    id = [id];
   }
 
-  return changed;
+  let unselected = _.difference(this.selection, id);
+  if ( unselected.length ) {
+    _sendToAll(IPC_UNSELECTED, this.type, unselected);
+
+    this.selection = _.intersection(this.selection, id);
+
+    // DISABLE NOTE:
+    // use the order of the new select.
+    // this needs us can synchornize order of the selection in all process.
+    // this.selection = _.intersection(id, this.selection);
+
+    return true;
+  }
+
+  return false;
 };
 
 SelectionUnit.prototype.select = function (id, unselectOthers) {
-  var changed = false;
+  let changed = false;
+
+  if (!Array.isArray(id)) {
+    id = [id];
+  }
 
   if (unselectOthers) {
     changed = this._unselectOthers(id);
   }
 
-  if ( !Array.isArray(id) ) {
-    // single
-    if (this.selection.indexOf(id) === -1) {
-      this.selection.push(id);
-      _sendToAll(IPC_SELECTED, this.type, [id]);
-      changed = true;
-    }
-    this._activate(id);
-  }
-  else if (id.length > 0) {
-    // array
-    var diff = [];
-    for (var i = 0; i < id.length; i++) {
-      if (this.selection.indexOf(id[i]) === -1) {
-        this.selection.push(id[i]);
-        diff.push(id[i]);
-      }
-    }
-    if (diff.length > 0) {
+  if ( id.length ) {
+    let diff = _.difference(id, this.selection);
+
+    if ( diff.length  ) {
+      this.selection = this.selection.concat(diff);
       _sendToAll(IPC_SELECTED, this.type, diff);
       changed = true;
     }
+
     this._activate(id[id.length - 1]);
   }
 
@@ -257,24 +231,24 @@ ConfirmableSelectionUnit.prototype._activate = function (id) {
   }
 };
 
-function _checkConfirm (confirm) {
-  if ( !this.confirmed && confirm ) {
+function _checkConfirm (helper,confirm) {
+  if ( !helper.confirmed && confirm ) {
     // confirm selecting
-    this.confirm();
-  } else if ( this.confirmed && !confirm ) {
+    helper.confirm();
+  } else if ( helper.confirmed && !confirm ) {
     // take snapshot
-    this._confirmedSnapShot = this.selection.slice();
-    this.confirmed = false;
+    helper._confirmedSnapShot = helper.selection.slice();
+    helper.confirmed = false;
   }
 }
 
 ConfirmableSelectionUnit.prototype.select = function (id, unselectOthers, confirm) {
-  _checkConfirm.call(this, confirm);
+  _checkConfirm(this, confirm);
   $super.prototype.select.call(this, id, unselectOthers);
 };
 
 ConfirmableSelectionUnit.prototype.unselect = function (id, confirm) {
-  _checkConfirm.call(this, confirm);
+  _checkConfirm(this, confirm);
   $super.prototype.unselect.call(this, id);
 };
 
@@ -636,6 +610,8 @@ Ipc.on( '_selection:activated', function ( type, id ) {
 });
 
 Ipc.on( '_selection:deactivated', function ( type, id ) {
+  unused(id);
+
   var selectionUnit = _units[type];
   if ( !selectionUnit ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
@@ -659,6 +635,8 @@ Ipc.on( '_selection:hoverin', function ( type, id ) {
 });
 
 Ipc.on( '_selection:hoverout', function ( type, id ) {
+  unused(id);
+
   var selectionUnit = _units[type];
   if ( !selectionUnit ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);

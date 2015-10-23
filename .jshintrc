@@ -15,22 +15,23 @@
   "unused": true,
   "strict": true,
   "predef": [
-    "Editor",
-    "EditorUI",
     "window",
     "document",
     "Image",
+    "unused",
+    "Editor",
+    "EditorUI",
     "Mousetrap",
     "Polymer",
-    "describe",
-    "it",
-    "before",
-    "beforeEach",
-    "beforeAll",
     "after",
-    "afterEach",
     "afterAll",
+    "afterEach",
+    "assert",
+    "before",
+    "beforeAll",
+    "beforeEach",
+    "describe",
     "expect",
-    "assert"
+    "it"
   ]
 }
