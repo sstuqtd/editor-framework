@@ -51,17 +51,26 @@ SelectionUnit.prototype._activate = function (id) {
     this.lastActive = id;
     _sendToAll( IPC_ACTIVATED, this.type, id );
     _lastActiveUnit = this;
+
+    return;
+  }
+
+  // check if last-acctive-unit is the same
+  if ( _lastActiveUnit !== this ) {
+    _lastActiveUnit = this;
+    _sendToAll(IPC_ACTIVATED, this.type, this.lastActive);
   }
 };
 
 SelectionUnit.prototype._unselectOthers = function (id) {
+  id = id || [];
   if (!Array.isArray(id)) {
     id = [id];
   }
 
-  let unselected = _.difference(this.selection, id);
-  if ( unselected.length ) {
-    _sendToAll(IPC_UNSELECTED, this.type, unselected);
+  let unselects = _.difference(this.selection, id);
+  if ( unselects.length ) {
+    _sendToAll(IPC_UNSELECTED, this.type, unselects);
 
     this.selection = _.intersection(this.selection, id);
 
@@ -79,14 +88,17 @@ SelectionUnit.prototype._unselectOthers = function (id) {
 SelectionUnit.prototype.select = function (id, unselectOthers) {
   let changed = false;
 
+  id = id || [];
   if (!Array.isArray(id)) {
     id = [id];
   }
 
+  // unselect others
   if (unselectOthers) {
     changed = this._unselectOthers(id);
   }
 
+  // send selected message
   if ( id.length ) {
     let diff = _.difference(id, this.selection);
 
@@ -95,57 +107,58 @@ SelectionUnit.prototype.select = function (id, unselectOthers) {
       _sendToAll(IPC_SELECTED, this.type, diff);
       changed = true;
     }
-
-    this._activate(id[id.length - 1]);
   }
 
-  if ( changed )
+  // activate others
+  if ( id.length ) {
+    this._activate(id[id.length - 1]);
+  } else {
+    this._activate(null);
+  }
+
+  // send changed message
+  if ( changed ) {
     _sendToAll(IPC_CHANGED, this.type);
+  }
 };
 
 SelectionUnit.prototype.unselect = function (id) {
-  var changed = false;
-  var unselectActiveObj = false;
+  let changed = false;
+  let unselectActiveObj = false;
 
-  if ( !Array.isArray(id) ) {
-    // single
-    var index = this.selection.indexOf(id);
-    if (index !== -1) {
-      this.selection.splice(index, 1);
-      _sendToAll(IPC_UNSELECTED, this.type, [id]);
-      unselectActiveObj = (id === this.lastActive);
-      changed = true;
-    }
+  id = id || [];
+  if (!Array.isArray(id)) {
+    id = [id];
   }
-  else if (id.length > 0) {
-    // array
-    var diff = [];
-    for (var i = 0; i < id.length; i++) {
-      var index2 = this.selection.indexOf(id[i]);
-      if (index2 !== -1) {
-        this.selection.splice(index2, 1);
-        diff.push(id[i]);
-        unselectActiveObj = unselectActiveObj || (id[i] === this.lastActive);
+
+  // send unselected message
+  if ( id.length ) {
+    let unselects = _.intersection( this.selection, id );
+    this.selection = _.difference( this.selection, id );
+
+    if ( unselects.length ) {
+      if ( unselects.indexOf(this.lastActive) !== -1 ) {
+        unselectActiveObj = true;
       }
-    }
-    if (diff.length > 0) {
-      _sendToAll(IPC_UNSELECTED, this.type, diff);
+
+      _sendToAll(IPC_UNSELECTED, this.type, unselects);
       changed = true;
     }
   }
 
+  // activate another
   if (unselectActiveObj) {
-    // activate another
-    if (this.selection.length > 0) {
+    if ( this.selection.length ) {
       this._activate(this.selection[this.selection.length - 1]);
-    }
-    else {
+    } else {
       this._activate(null);
     }
   }
 
-  if ( changed )
+  // send changed message
+  if ( changed ) {
     _sendToAll(IPC_CHANGED, this.type);
+  }
 };
 
 SelectionUnit.prototype.hover = function (id) {
@@ -326,26 +339,15 @@ var Selection = {
       return;
     }
 
-    if ( typeof id !== 'string' && ! Array.isArray(id) ) {
+    if ( id && typeof id !== 'string' && !Array.isArray(id) ) {
       Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
       return;
     }
-
-    var lastActiveBeforeSelect = selectionUnit.lastActive;
-    var lastActiveUnitBeforeSelect = _lastActiveUnit;
 
     unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
     confirm = confirm !== undefined ? confirm : true;
 
     selectionUnit.select(id, unselectOthers, confirm);
-    if ( selectionUnit.confirmed ) {
-      _lastActiveUnit = selectionUnit;
-      if ( lastActiveUnitBeforeSelect !== _lastActiveUnit ||
-          lastActiveBeforeSelect !== selectionUnit.lastActive )
-        {
-          _sendToAll('selection:activated', type, selectionUnit.lastActive);
-        }
-    }
   },
 
   /**
@@ -362,7 +364,7 @@ var Selection = {
       return;
     }
 
-    if ( typeof id !== 'string' && ! Array.isArray(id) ) {
+    if ( id && typeof id !== 'string' && !Array.isArray(id) ) {
       Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
       return;
     }
