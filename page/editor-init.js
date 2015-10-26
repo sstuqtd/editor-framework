@@ -8,6 +8,8 @@
   const Url = require('fire-url');
   const Async = require('async');
 
+  window.unused = () => {};
+
   /**
    * Page Level Editor
    * @module Editor

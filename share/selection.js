@@ -1,10 +1,10 @@
 'use strict';
 
-var Util = require('util');
-var Ipc = require('ipc');
+const Ipc = require('ipc');
+const _ = require('lodash');
 
-var _lastActiveUnit = null;
-var _units = {};
+let _lastActiveHelper = null;
+let _helpers = {};
 
 const IPC_SELECTED = 'selection:selected';       // argument is an array of ids
 const IPC_UNSELECTED = 'selection:unselected';   // argument is an array of ids
@@ -18,7 +18,7 @@ const IPC_PATCH = 'selection:patch';
 
 function _sendToAll () {
   // send _selection:xxx for sync selection data exclude self
-  var args = [].slice.call( arguments, 1 );
+  let args = [].slice.call( arguments, 1 );
   args.push(Editor.selfExcluded);
   args.unshift('_'+arguments[0]);
   Editor.sendToAll.apply( Editor, args );
@@ -28,276 +28,295 @@ function _sendToAll () {
 }
 
 /**
- * Selection module
+ * SelectionHelper
  * @module Editor.Selection
  */
 
-// SelectionUnit
-
-function SelectionUnit(type) {
-  this.type = type;
-  this.selection = [];
-  this.lastActive = null;
-  this.lastHover = null;
-  this._context = null; // NOTE: it is better to use lastHover, but some platform have bug with lastHover
-}
-
-SelectionUnit.prototype._activate = function (id) {
-  if (this.lastActive !== id) {
-    if (this.lastActive) {
-      _sendToAll( IPC_DEACTIVATED, this.type, this.lastActive );
-    }
-    this.lastActive = id;
-    _sendToAll( IPC_ACTIVATED, this.type, id );
-    _lastActiveUnit = this;
+class SelectionHelper {
+  constructor (type) {
+    this.type = type;
+    this.selection = [];
+    this.lastActive = null;
+    this.lastHover = null;
+    this._context = null; // NOTE: it is better to use lastHover, but some platform have bug with lastHover
   }
-};
 
-SelectionUnit.prototype._unselectOthers = function (id) {
-  var changed = false;
-
-  if (Array.isArray(id)) {
-    var unselected = [];
-    for (var j = this.selection.length - 1; j >= 0; j--) {
-      var selected = this.selection[j];
-      if (id.indexOf(selected) === -1) {
-        this.selection.splice(j, 1);
-        unselected.push(selected);
+  //
+  _activate (id) {
+    if (this.lastActive !== id) {
+      if (this.lastActive) {
+        _sendToAll( IPC_DEACTIVATED, this.type, this.lastActive );
       }
+      this.lastActive = id;
+      _sendToAll( IPC_ACTIVATED, this.type, id );
+      _lastActiveHelper = this;
+
+      return;
     }
-    if (unselected.length > 0) {
-      unselected.reverse();
-      _sendToAll(IPC_UNSELECTED, this.type, unselected);
-      changed = true;
+
+    // check if last-acctive-helper is the same
+    if ( _lastActiveHelper !== this ) {
+      _lastActiveHelper = this;
+      _sendToAll(IPC_ACTIVATED, this.type, this.lastActive);
     }
   }
-  else {
-    var index = this.selection.indexOf(id);
-    if (index !== -1) {
-      this.selection.splice(index, 1);
-      if (this.selection.length > 0) {
-        _sendToAll(IPC_UNSELECTED, this.type, this.selection);
+
+  //
+  _unselectOthers (id) {
+    id = id || [];
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
+
+    let unselects = _.difference(this.selection, id);
+    if ( unselects.length ) {
+      _sendToAll(IPC_UNSELECTED, this.type, unselects);
+
+      this.selection = _.intersection(this.selection, id);
+
+      // DISABLE NOTE:
+      // use the order of the new select.
+      // this needs us can synchornize order of the selection in all process.
+      // this.selection = _.intersection(id, this.selection);
+
+      return true;
+    }
+
+    return false;
+  }
+
+  //
+  select (id, unselectOthers) {
+    let changed = false;
+    id = id || [];
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
+    unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
+
+    // unselect others
+    if (unselectOthers) {
+      changed = this._unselectOthers(id);
+    }
+
+    // send selected message
+    if ( id.length ) {
+      let diff = _.difference(id, this.selection);
+
+      if ( diff.length  ) {
+        this.selection = this.selection.concat(diff);
+        _sendToAll(IPC_SELECTED, this.type, diff);
         changed = true;
       }
-      this.selection = [id];
     }
-    else {
-      if (this.selection.length > 0) {
-        _sendToAll(IPC_UNSELECTED, this.type, this.selection);
-        changed = true;
-      }
-      this.selection = [];
-    }
-  }
 
-  return changed;
-};
-
-SelectionUnit.prototype.select = function (id, unselectOthers) {
-  var changed = false;
-
-  if (unselectOthers) {
-    changed = this._unselectOthers(id);
-  }
-
-  if ( !Array.isArray(id) ) {
-    // single
-    if (this.selection.indexOf(id) === -1) {
-      this.selection.push(id);
-      _sendToAll(IPC_SELECTED, this.type, [id]);
-      changed = true;
-    }
-    this._activate(id);
-  }
-  else if (id.length > 0) {
-    // array
-    var diff = [];
-    for (var i = 0; i < id.length; i++) {
-      if (this.selection.indexOf(id[i]) === -1) {
-        this.selection.push(id[i]);
-        diff.push(id[i]);
-      }
-    }
-    if (diff.length > 0) {
-      _sendToAll(IPC_SELECTED, this.type, diff);
-      changed = true;
-    }
-    this._activate(id[id.length - 1]);
-  }
-
-  if ( changed )
-    _sendToAll(IPC_CHANGED, this.type);
-};
-
-SelectionUnit.prototype.unselect = function (id) {
-  var changed = false;
-  var unselectActiveObj = false;
-
-  if ( !Array.isArray(id) ) {
-    // single
-    var index = this.selection.indexOf(id);
-    if (index !== -1) {
-      this.selection.splice(index, 1);
-      _sendToAll(IPC_UNSELECTED, this.type, [id]);
-      unselectActiveObj = (id === this.lastActive);
-      changed = true;
-    }
-  }
-  else if (id.length > 0) {
-    // array
-    var diff = [];
-    for (var i = 0; i < id.length; i++) {
-      var index2 = this.selection.indexOf(id[i]);
-      if (index2 !== -1) {
-        this.selection.splice(index2, 1);
-        diff.push(id[i]);
-        unselectActiveObj = unselectActiveObj || (id[i] === this.lastActive);
-      }
-    }
-    if (diff.length > 0) {
-      _sendToAll(IPC_UNSELECTED, this.type, diff);
-      changed = true;
-    }
-  }
-
-  if (unselectActiveObj) {
-    // activate another
-    if (this.selection.length > 0) {
-      this._activate(this.selection[this.selection.length - 1]);
-    }
-    else {
+    // activate others
+    if ( id.length ) {
+      this._activate(id[id.length - 1]);
+    } else {
       this._activate(null);
     }
+
+    // send changed message
+    if ( changed ) {
+      _sendToAll(IPC_CHANGED, this.type);
+    }
   }
 
-  if ( changed )
+  //
+  unselect (id) {
+    let changed = false;
+    let unselectActiveObj = false;
+
+    id = id || [];
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
+
+    // send unselected message
+    if ( id.length ) {
+      let unselects = _.intersection( this.selection, id );
+      this.selection = _.difference( this.selection, id );
+
+      if ( unselects.length ) {
+        if ( unselects.indexOf(this.lastActive) !== -1 ) {
+          unselectActiveObj = true;
+        }
+
+        _sendToAll(IPC_UNSELECTED, this.type, unselects);
+        changed = true;
+      }
+    }
+
+    // activate another
+    if (unselectActiveObj) {
+      if ( this.selection.length ) {
+        this._activate(this.selection[this.selection.length - 1]);
+      } else {
+        this._activate(null);
+      }
+    }
+
+    // send changed message
+    if ( changed ) {
+      _sendToAll(IPC_CHANGED, this.type);
+    }
+  }
+
+  //
+  hover (id) {
+    if ( this.lastHover !== id ) {
+      if ( this.lastHover ) {
+        _sendToAll(IPC_HOVEROUT, this.type, this.lastHover);
+      }
+
+      this.lastHover = id;
+
+      if ( id ) {
+        _sendToAll(IPC_HOVERIN, this.type, id);
+      }
+    }
+  }
+
+  //
+  setContext (id) {
+    this._context = id;
+    _sendToAll(IPC_CONTEXT, this.type, id);
+  }
+
+  //
+  patch (srcID, destID) {
+    let idx = this.selection.indexOf(srcID);
+    if ( idx !== -1 ) {
+      this.selection[idx] = destID;
+    }
+    if ( this.lastActive === srcID ) {
+      this.lastActive = destID;
+    }
+    if ( this.lastHover === srcID ) {
+      this.lastHover = destID;
+    }
+    if ( this._context === srcID ) {
+      this._context = destID;
+    }
+    _sendToAll(IPC_PATCH, this.type, srcID, destID);
+  }
+
+  //
+  clear () {
+    _sendToAll(IPC_UNSELECTED, this.type, this.selection);
+    this.selection = [];
+    this._activate(null);
+
     _sendToAll(IPC_CHANGED, this.type);
-};
+  }
+}
 
-SelectionUnit.prototype.hover = function (id) {
-  if ( this.lastHover !== id ) {
-    if ( this.lastHover ) {
-      _sendToAll(IPC_HOVEROUT, this.type, this.lastHover);
-    }
-    this.lastHover = id;
-    if ( id ) {
-      _sendToAll(IPC_HOVERIN, this.type, id);
-    }
-  }
-};
-
-SelectionUnit.prototype.setContext = function (id) {
-  this._context = id;
-  _sendToAll(IPC_CONTEXT, this.type, id);
-};
-
-SelectionUnit.prototype.patch = function (srcID, destID) {
-  var idx = this.selection.indexOf(srcID);
-  if ( idx !== -1 ) {
-    this.selection[idx] = destID;
-  }
-  if ( this.lastActive === srcID ) {
-    this.lastActive = destID;
-  }
-  if ( this.lastHover === srcID ) {
-    this.lastHover = destID;
-  }
-  if ( this._context === srcID ) {
-    this._context = destID;
-  }
-  _sendToAll(IPC_PATCH, this.type, srcID, destID);
-};
-
-Object.defineProperty(SelectionUnit.prototype, 'contexts', {
-  get: function () {
-    var id = this._context;
-    if (id) {
-      var index = this.selection.indexOf(id);
-      if (index !== -1) {
-        var selection = this.selection.slice(0);
-        // make the first one as current active
-        var firstToSwap = selection[0];
-        selection[0] = id;
-        selection[index] = firstToSwap;
-        return selection;
-      }
-      else {
-        return [id];
-      }
-    }
-    else {
+Object.defineProperty(SelectionHelper.prototype, 'contexts', {
+  enumerable: true,
+  get () {
+    let id = this._context;
+    if ( !id ) {
       return [];
     }
+
+    let idx = this.selection.indexOf(id);
+    if (idx === -1) {
+      return [id];
+    }
+
+    // make the first one as current active
+    let selection = this.selection.slice(0);
+    let tmp = selection[idx];
+    selection.splice(idx,1);
+    selection.unshift(tmp);
+
+    return selection;
   },
-  enumerable: true
 });
 
-SelectionUnit.prototype.clear = function () {
-  _sendToAll(IPC_UNSELECTED, this.type, this.selection);
-  this.selection = [];
-  this._activate(null);
+/**
+ * ConfirmableSelectionHelper
+ * @module Editor.Selection
+ */
 
-  _sendToAll(IPC_CHANGED, this.type);
-};
+class ConfirmableSelectionHelper extends SelectionHelper {
+  constructor (type) {
+    super(type);
 
-// ConfirmableSelectionUnit
-
-var $super = SelectionUnit;
-function ConfirmableSelectionUnit (type) {
-  SelectionUnit.call(this, type);
-
-  this.confirmed = true;
-  this._confirmedSnapShot = []; // for cancel
-}
-Util.inherits(ConfirmableSelectionUnit, $super);
-
-ConfirmableSelectionUnit.prototype._activate = function (id) {
-  if ( this.confirmed ) {
-    $super.prototype._activate.call( this, id );
+    this.confirmed = true;
+    this._confirmedSnapShot = []; // for cancel
   }
-};
 
-function _checkConfirm (confirm) {
-  if ( !this.confirmed && confirm ) {
-    // confirm selecting
+  //
+  _checkConfirm (confirm) {
+    if ( !this.confirmed && confirm ) {
+      // confirm selecting
+      this.confirm();
+    } else if ( this.confirmed && !confirm ) {
+      // take snapshot
+      this._confirmedSnapShot = this.selection.slice();
+      this.confirmed = false;
+    }
+  }
+
+  //
+  _activate (id) {
+    if ( this.confirmed ) {
+      super._activate( id );
+    }
+  }
+
+  //
+  select (id, unselectOthers, confirm) {
+    confirm = confirm !== undefined ? confirm : true;
+
+    this._checkConfirm(confirm);
+    super.select(id, unselectOthers);
+  }
+
+  //
+  unselect (id, confirm) {
+    confirm = confirm !== undefined ? confirm : true;
+
+    this._checkConfirm(confirm);
+    super.unselect(id);
+  }
+
+  //
+  confirm () {
+    if ( !this.confirmed ) {
+      this._confirmedSnapShot = [];
+      this.confirmed = true;
+
+      if ( this.selection.length > 0 ) {
+        this._activate(this.selection[this.selection.length - 1]);
+      } else {
+        this._activate(null);
+      }
+    }
+  }
+
+  //
+  cancel () {
+    if ( !this.confirmed ) {
+      super.select(this._confirmedSnapShot, true);
+      this._confirmedSnapShot = [];
+      this.confirmed = true;
+    }
+  }
+
+  //
+  clear () {
+    super.clear();
     this.confirm();
-  } else if ( this.confirmed && !confirm ) {
-    // take snapshot
-    this._confirmedSnapShot = this.selection.slice();
-    this.confirmed = false;
   }
 }
 
-ConfirmableSelectionUnit.prototype.select = function (id, unselectOthers, confirm) {
-  _checkConfirm.call(this, confirm);
-  $super.prototype.select.call(this, id, unselectOthers);
-};
-
-ConfirmableSelectionUnit.prototype.unselect = function (id, confirm) {
-  _checkConfirm.call(this, confirm);
-  $super.prototype.unselect.call(this, id);
-};
-
-ConfirmableSelectionUnit.prototype.confirm = function () {
-  if ( !this.confirmed ) {
-    this._confirmedSnapShot = [];
-    this.confirmed = true;
-    if ( this.selection.length > 0 ) {
-      this._activate(this.selection[this.selection.length - 1]);
-    }
-    else {
-      this._activate(null);
-    }
-  }
-};
-
-ConfirmableSelectionUnit.prototype.cancel = function () {
-  if ( !this.confirmed ) {
-    $super.prototype.select.call(this, this._confirmedSnapShot, true);
-    this._confirmedSnapShot = [];
-    this.confirmed = true;
-  }
-};
+/**
+ * Selection
+ * @module Editor.Selection
+ */
 
 var Selection = {
   register ( type ) {
@@ -306,10 +325,15 @@ var Selection = {
       return;
     }
 
-    if ( _units[type] )
+    if ( _helpers[type] ) {
       return;
+    }
 
-    _units[type] = new ConfirmableSelectionUnit(type);
+    _helpers[type] = new ConfirmableSelectionHelper(type);
+  },
+
+  local () {
+    return new ConfirmableSelectionHelper('local');
   },
 
   /**
@@ -318,8 +342,8 @@ var Selection = {
    * @method confirm
    */
   confirm () {
-    for ( var p in _units ) {
-      _units[p].confirm();
+    for ( let p in _helpers ) {
+      _helpers[p].confirm();
     }
   },
 
@@ -329,8 +353,8 @@ var Selection = {
    * @method cancel
    */
   cancel () {
-    for ( var p in _units ) {
-      _units[p].cancel();
+    for ( let p in _helpers ) {
+      _helpers[p].cancel();
     }
   },
 
@@ -346,32 +370,18 @@ var Selection = {
    * @param {Boolean} [confirm=true]
    */
   select ( type, id, unselectOthers, confirm ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    if ( typeof id !== 'string' && ! Array.isArray(id) ) {
+    if ( id && typeof id !== 'string' && !Array.isArray(id) ) {
       Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
       return;
     }
 
-    var lastActiveBeforeSelect = selectionUnit.lastActive;
-    var lastActiveUnitBeforeSelect = _lastActiveUnit;
-
-    unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
-    confirm = confirm !== undefined ? confirm : true;
-
-    selectionUnit.select(id, unselectOthers, confirm);
-    if ( selectionUnit.confirmed ) {
-      _lastActiveUnit = selectionUnit;
-      if ( lastActiveUnitBeforeSelect !== _lastActiveUnit ||
-          lastActiveBeforeSelect !== selectionUnit.lastActive )
-        {
-          _sendToAll('selection:activated', type, selectionUnit.lastActive);
-        }
-    }
+    helper.select(id, unselectOthers, confirm);
   },
 
   /**
@@ -382,19 +392,18 @@ var Selection = {
    * @param {Boolean} [confirm=true]
    */
   unselect (type, id, confirm) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    if ( typeof id !== 'string' && ! Array.isArray(id) ) {
+    if ( id && typeof id !== 'string' && !Array.isArray(id) ) {
       Editor.error('The 2nd argument for Editor.Selection.select must be string or array');
       return;
     }
 
-    confirm = confirm !== undefined ? confirm : true;
-    selectionUnit.unselect(id, confirm);
+    helper.unselect(id, confirm);
   },
 
   /**
@@ -403,13 +412,13 @@ var Selection = {
    * @param {string} id
    */
   hover ( type, id ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.hover(id);
+    helper.hover(id);
   },
 
   /**
@@ -418,13 +427,18 @@ var Selection = {
    * @param {string} id
    */
   setContext ( type, id ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.setContext(id);
+    if ( id && typeof id !== 'string' ) {
+      Editor.error('The 2nd argument for Editor.Selection.setContext must be string');
+      return;
+    }
+
+    helper.setContext(id);
   },
 
   /**
@@ -434,13 +448,13 @@ var Selection = {
    * @destID {string}
    */
   patch ( type, srcID, destID ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.patch(srcID, destID);
+    helper.patch(srcID, destID);
   },
 
   /**
@@ -448,14 +462,13 @@ var Selection = {
    * @param {string} type
    */
   clear ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.clear();
-    selectionUnit.confirm();
+    helper.clear();
   },
 
   /**
@@ -464,13 +477,13 @@ var Selection = {
    * @return {string} hovering
    */
   hovering ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.lastHover;
+    return helper.lastHover;
   },
 
   /**
@@ -479,13 +492,13 @@ var Selection = {
    * @return {string} contexts
    */
   contexts ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.contexts;
+    return helper.contexts;
   },
 
   /**
@@ -494,13 +507,13 @@ var Selection = {
    * @return {string} current activated
    */
   curActivate ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.lastActive;
+    return helper.lastActive;
   },
 
   /**
@@ -508,13 +521,13 @@ var Selection = {
    * @return {object} - { type, id }
    */
   curGlobalActivate () {
-    if ( !_lastActiveUnit ) {
+    if ( !_lastActiveHelper ) {
       return null;
     }
 
     return {
-      type: _lastActiveUnit.type,
-      id: _lastActiveUnit.lastActive,
+      type: _lastActiveHelper.type,
+      id: _lastActiveHelper.lastActive,
     };
   },
 
@@ -524,13 +537,13 @@ var Selection = {
    * @return {string[]} selected list
    */
   curSelection: function ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    let helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.selection.slice();
+    return helper.selection.slice();
   },
 
   /**
@@ -540,7 +553,7 @@ var Selection = {
    * @param {function} func
    */
   filter ( items, mode, func ) {
-    var results, item, i, j;
+    let results, item, i, j;
 
     if ( mode === 'name' ) {
       results = items.filter(func);
@@ -549,23 +562,22 @@ var Selection = {
       results = [];
       for ( i = 0; i < items.length; ++i ) {
         item = items[i];
-        var add = true;
+        let add = true;
 
         for ( j = 0; j < results.length; ++j ) {
-          var addedItem = results[j];
+          let addedItem = results[j];
 
+          // existed
           if ( item === addedItem ) {
-            // existed
             add = false;
             break;
           }
 
-          var cmp = func( addedItem, item );
+          let cmp = func( addedItem, item );
           if ( cmp > 0 ) {
             add = false;
             break;
-          }
-          else if ( cmp < 0 ) {
+          } else if ( cmp < 0 ) {
             results.splice(j, 1);
             --j;
           }
@@ -590,114 +602,118 @@ module.exports = Selection;
 // recv ipc message and update the local data
 
 Ipc.on( '_selection:selected', function ( type, ids ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
   // NOTE: it is possible we recv messages from ourself
   ids = ids.filter(function (x) {
-    return selectionUnit.selection.indexOf(x) === -1;
+    return helper.selection.indexOf(x) === -1;
   });
 
   // NOTE: we don't consider message from multiple source, in that case
   //       even the data was right, the messages still goes wrong.
   if (ids.length === 1) {
-    selectionUnit.selection.push(ids[0]);
+    helper.selection.push(ids[0]);
   }
   else if (ids.length > 1) {
     // NOTE: push.apply has limitation in item counts
-    selectionUnit.selection = selectionUnit.selection.concat(ids);
+    helper.selection = helper.selection.concat(ids);
   }
 });
 
 Ipc.on( '_selection:unselected', function ( type, ids ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.selection = selectionUnit.selection.filter( function (x) {
+  helper.selection = helper.selection.filter( function (x) {
     return ids.indexOf(x) === -1;
   });
 });
 
 Ipc.on( '_selection:activated', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  _lastActiveUnit = selectionUnit;
-  selectionUnit.lastActive = id;
+  _lastActiveHelper = helper;
+  helper.lastActive = id;
 });
 
 Ipc.on( '_selection:deactivated', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  unused(id);
+
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  if ( _lastActiveUnit === selectionUnit ) {
-    _lastActiveUnit = null;
+  if ( _lastActiveHelper === helper ) {
+    _lastActiveHelper = null;
   }
-  selectionUnit.lastActive = null;
+  helper.lastActive = null;
 });
 
 Ipc.on( '_selection:hoverin', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.lastHover = id;
+  helper.lastHover = id;
 });
 
 Ipc.on( '_selection:hoverout', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  unused(id);
+
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.lastHover = null;
+  helper.lastHover = null;
 });
 
 Ipc.on( '_selection:context', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit._context = id;
+  helper._context = id;
 });
 
 Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  let helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
   //
-  var idx = selectionUnit.selection.indexOf(srcID);
+  let idx = helper.selection.indexOf(srcID);
   if ( idx !== -1 ) {
-    selectionUnit.selection[idx] = destID;
+    helper.selection[idx] = destID;
   }
-  if ( selectionUnit.lastActive === srcID ) {
-    selectionUnit.lastActive = destID;
+  if ( helper.lastActive === srcID ) {
+    helper.lastActive = destID;
   }
-  if ( selectionUnit.lastHover === srcID ) {
-    selectionUnit.lastHover = destID;
+  if ( helper.lastHover === srcID ) {
+    helper.lastHover = destID;
   }
-  if ( selectionUnit._context === srcID ) {
-    selectionUnit._context = destID;
+  if ( helper._context === srcID ) {
+    helper._context = destID;
   }
 });
 
@@ -707,16 +723,16 @@ Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
 
 if ( Editor.isCoreLevel ) {
   Ipc.on( 'selection:get-registers', function ( event ) {
-    var results = [];
-    for ( var key in _units ) {
-      var selectionUnit = _units[key];
+    let results = [];
+    for ( let key in _helpers ) {
+      let helper = _helpers[key];
       results.push({
         type: key,
-        selection: selectionUnit.selection,
-        lastActive: selectionUnit.lastActive,
-        lastHover: selectionUnit.lastHover,
-        context: selectionUnit._context,
-        isLastGlobalActive: selectionUnit === _lastActiveUnit,
+        selection: helper.selection,
+        lastActive: helper.lastActive,
+        lastHover: helper.lastHover,
+        context: helper._context,
+        isLastGlobalActive: helper === _lastActiveHelper,
       });
     }
     event.returnValue = results;
@@ -724,23 +740,24 @@ if ( Editor.isCoreLevel ) {
 }
 
 if ( Editor.isPageLevel ) {
-  (function () {
-    var results = Editor.sendToCoreSync('selection:get-registers');
-    for ( var i = 0; i < results.length; ++i ) {
-      var info = results[i];
-      if ( _units[info.type] )
+  (() => {
+    let results = Editor.sendToCoreSync('selection:get-registers');
+    for ( let i = 0; i < results.length; ++i ) {
+      let info = results[i];
+      if ( _helpers[info.type] ) {
         return;
+      }
 
-      var selectionUnit = new ConfirmableSelectionUnit(info.type);
-      selectionUnit.selection = info.selection.slice();
-      selectionUnit.lastActive = info.lastActive;
-      selectionUnit.lastHover = info.lastHover;
-      selectionUnit._context = info.context;
+      let helper = new ConfirmableSelectionHelper(info.type);
+      helper.selection = info.selection.slice();
+      helper.lastActive = info.lastActive;
+      helper.lastHover = info.lastHover;
+      helper._context = info.context;
 
-      _units[info.type] = selectionUnit;
+      _helpers[info.type] = helper;
 
       if ( info.isLastGlobalActive ) {
-        _lastActiveUnit = selectionUnit;
+        _lastActiveHelper = helper;
       }
     }
   })();
