@@ -647,6 +647,7 @@ Editor.registerDefaultMainMenu = function ( tmplFn ) {
 
 Editor.Selection = require('../share/selection');
 Editor.KeyCode = require('../share/keycode');
+Editor.Dialog = require('../share/dialog');
 
 Editor.Menu = require('./editor-menu');
 Editor.Window = require('./editor-window');
