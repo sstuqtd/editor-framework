@@ -1,15 +1,15 @@
 'use strict';
 
-var Sinon = require('sinon');
+const Sinon = require('sinon');
 
 Editor.Selection.register('normal');
 Editor.Selection.register('special');
 
-var spy = Sinon.spy(Editor,'sendToAll');
-var ipcSelected = spy.withArgs('selection:selected');
-var ipcUnSelected = spy.withArgs('selection:unselected');
-var ipcActivated = spy.withArgs('selection:activated');
-var ipcDeactivated = spy.withArgs('selection:deactivated');
+const spy = Sinon.spy(Editor,'sendToAll');
+const ipcSelected = spy.withArgs('selection:selected');
+const ipcUnSelected = spy.withArgs('selection:unselected');
+const ipcActivated = spy.withArgs('selection:activated');
+const ipcDeactivated = spy.withArgs('selection:deactivated');
 
 describe('Editor.Selection.select', () => {
   beforeEach(() => {
@@ -52,6 +52,19 @@ describe('Editor.Selection.select', () => {
 
     Editor.Selection.confirm();
     expect(Editor.Selection.curActivate('normal')).to.be.eq('d');
+
+    done();
+  });
+
+  it('should work with cancel', done => {
+    Editor.Selection.select('normal', 'a' );
+    Editor.Selection.select('normal', 'b', false, false );
+    Editor.Selection.select('normal', 'c', false, false );
+    Editor.Selection.select('normal', 'd', false, false );
+
+    Editor.Selection.cancel();
+    expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a']);
+    expect(Editor.Selection.curActivate('normal')).to.be.eq('a');
 
     done();
   });
@@ -157,7 +170,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should not send ipc message in order', done => {
+  it('should send ipc message in order', done => {
     Editor.Selection.select('normal', 'a' );
     Editor.Selection.select('normal', 'b' );
 
@@ -230,6 +243,120 @@ describe('Editor.Selection.unselect', () => {
   });
 });
 
-// TODO:
+describe('Editor.Selection.hover', () => {
+  beforeEach(() => {
+    Editor.Selection.clear('normal');
+    spy.reset();
+  });
+
+  it('should store the last hover item', done => {
+
+    Editor.Selection.hover('normal','a');
+    expect(Editor.Selection.hovering('normal')).to.be.deep.eq('a');
+
+    Editor.Selection.hover('normal','b');
+    expect(Editor.Selection.hovering('normal')).to.be.deep.eq('b');
+
+    Editor.Selection.hover('normal','c');
+    expect(Editor.Selection.hovering('normal')).to.be.deep.eq('c');
+
+    Editor.Selection.hover('normal',null);
+    expect(Editor.Selection.hovering('normal')).to.be.deep.eq(null);
+
+    done();
+  });
+
+  it('should send hover and unhover ipc message in order', done => {
+
+    Editor.Selection.hover('normal','a');
+    Editor.Selection.hover('normal','b');
+    Editor.Selection.hover('normal',null);
+
+    expect(spy.args).to.be.deep.eq([
+      ['_selection:hoverin', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+      ['selection:hoverin', 'normal', 'a' ],
+
+      ['_selection:hoverout', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+      ['selection:hoverout', 'normal', 'a' ],
+
+      ['_selection:hoverin', 'normal', 'b', { '__is_ipc_option__': true, 'self-excluded': true } ],
+      ['selection:hoverin', 'normal', 'b' ],
+
+      ['_selection:hoverout', 'normal', 'b', { '__is_ipc_option__': true, 'self-excluded': true } ],
+      ['selection:hoverout', 'normal', 'b' ],
+    ]);
+
+    done();
+  });
+});
+
+describe('Editor.Selection.setContext', () => {
+  beforeEach(() => {
+    Editor.Selection.clear('normal');
+    spy.reset();
+  });
+
+  it('should store the context', done => {
+    Editor.Selection.select('normal',['a','b','c','d']);
+    Editor.Selection.setContext('normal','e');
+
+    expect(Editor.Selection.contexts('normal')).to.be.deep.eq(['e']);
+
+    Editor.Selection.setContext('normal','c');
+    expect(Editor.Selection.contexts('normal')).to.be.deep.eq(['c','a','b','d']);
+
+    done();
+  });
+});
+
 describe('Global Active', () => {
+  beforeEach(() => {
+    Editor.Selection.clear('normal');
+    Editor.Selection.clear('special');
+    spy.reset();
+  });
+
+  it('should change global active call selection confirmed in different type', done => {
+    Editor.Selection.select('normal', ['a','b','c','d']);
+    expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      type: 'normal',
+      id: 'd',
+    });
+
+    Editor.Selection.select('special', ['a1','b1','c1','d1']);
+    expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      type: 'special',
+      id: 'd1',
+    });
+
+    Editor.Selection.select('normal', ['a','b','c','d']);
+    expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      type: 'normal',
+      id: 'd',
+    });
+
+    Editor.Selection.unselect('special', 'd1');
+    expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      type: 'special',
+      id: 'c1',
+    });
+
+    done();
+  });
+
+  it('should send activated and deactivated ipc message', done => {
+    Editor.Selection.select('normal', ['a','b','c','d']);
+    assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
+
+    Editor.Selection.select('special', ['a1','b1','c1','d1']);
+    assert( !ipcDeactivated.called );
+    assert( ipcActivated.calledWith('selection:activated', 'special', 'd1') );
+
+    Editor.Selection.select('normal', ['a','b','c','d']);
+    assert( !ipcDeactivated.called );
+    assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
+
+    done();
+  });
+
 });

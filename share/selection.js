@@ -4,8 +4,8 @@ const Util = require('util');
 const Ipc = require('ipc');
 const _ = require('lodash');
 
-let _lastActiveUnit = null;
-let _units = {};
+let _lastActiveHelper = null;
+let _helpers = {};
 
 const IPC_SELECTED = 'selection:selected';       // argument is an array of ids
 const IPC_UNSELECTED = 'selection:unselected';   // argument is an array of ids
@@ -33,9 +33,9 @@ function _sendToAll () {
  * @module Editor.Selection
  */
 
-// SelectionUnit
+// SelectionHelper
 
-function SelectionUnit(type) {
+function SelectionHelper(type) {
   this.type = type;
   this.selection = [];
   this.lastActive = null;
@@ -43,26 +43,26 @@ function SelectionUnit(type) {
   this._context = null; // NOTE: it is better to use lastHover, but some platform have bug with lastHover
 }
 
-SelectionUnit.prototype._activate = function (id) {
+SelectionHelper.prototype._activate = function (id) {
   if (this.lastActive !== id) {
     if (this.lastActive) {
       _sendToAll( IPC_DEACTIVATED, this.type, this.lastActive );
     }
     this.lastActive = id;
     _sendToAll( IPC_ACTIVATED, this.type, id );
-    _lastActiveUnit = this;
+    _lastActiveHelper = this;
 
     return;
   }
 
-  // check if last-acctive-unit is the same
-  if ( _lastActiveUnit !== this ) {
-    _lastActiveUnit = this;
+  // check if last-acctive-helper is the same
+  if ( _lastActiveHelper !== this ) {
+    _lastActiveHelper = this;
     _sendToAll(IPC_ACTIVATED, this.type, this.lastActive);
   }
 };
 
-SelectionUnit.prototype._unselectOthers = function (id) {
+SelectionHelper.prototype._unselectOthers = function (id) {
   id = id || [];
   if (!Array.isArray(id)) {
     id = [id];
@@ -85,13 +85,13 @@ SelectionUnit.prototype._unselectOthers = function (id) {
   return false;
 };
 
-SelectionUnit.prototype.select = function (id, unselectOthers) {
+SelectionHelper.prototype.select = function (id, unselectOthers) {
   let changed = false;
-
   id = id || [];
   if (!Array.isArray(id)) {
     id = [id];
   }
+  unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
 
   // unselect others
   if (unselectOthers) {
@@ -122,7 +122,7 @@ SelectionUnit.prototype.select = function (id, unselectOthers) {
   }
 };
 
-SelectionUnit.prototype.unselect = function (id) {
+SelectionHelper.prototype.unselect = function (id) {
   let changed = false;
   let unselectActiveObj = false;
 
@@ -161,7 +161,7 @@ SelectionUnit.prototype.unselect = function (id) {
   }
 };
 
-SelectionUnit.prototype.hover = function (id) {
+SelectionHelper.prototype.hover = function (id) {
   if ( this.lastHover !== id ) {
     if ( this.lastHover ) {
       _sendToAll(IPC_HOVEROUT, this.type, this.lastHover);
@@ -173,12 +173,12 @@ SelectionUnit.prototype.hover = function (id) {
   }
 };
 
-SelectionUnit.prototype.setContext = function (id) {
+SelectionHelper.prototype.setContext = function (id) {
   this._context = id;
   _sendToAll(IPC_CONTEXT, this.type, id);
 };
 
-SelectionUnit.prototype.patch = function (srcID, destID) {
+SelectionHelper.prototype.patch = function (srcID, destID) {
   var idx = this.selection.indexOf(srcID);
   if ( idx !== -1 ) {
     this.selection[idx] = destID;
@@ -195,31 +195,30 @@ SelectionUnit.prototype.patch = function (srcID, destID) {
   _sendToAll(IPC_PATCH, this.type, srcID, destID);
 };
 
-Object.defineProperty(SelectionUnit.prototype, 'contexts', {
-  get: function () {
-    var id = this._context;
-    if (id) {
-      var index = this.selection.indexOf(id);
-      if (index !== -1) {
-        var selection = this.selection.slice(0);
-        // make the first one as current active
-        var firstToSwap = selection[0];
-        selection[0] = id;
-        selection[index] = firstToSwap;
-        return selection;
-      }
-      else {
-        return [id];
-      }
-    }
-    else {
+Object.defineProperty(SelectionHelper.prototype, 'contexts', {
+  enumerable: true,
+  get () {
+    let id = this._context;
+    if ( !id ) {
       return [];
     }
+
+    let idx = this.selection.indexOf(id);
+    if (idx === -1) {
+      return [id];
+    }
+
+    // make the first one as current active
+    let selection = this.selection.slice(0);
+    let tmp = selection[idx];
+    selection.splice(idx,1);
+    selection.unshift(tmp);
+
+    return selection;
   },
-  enumerable: true
 });
 
-SelectionUnit.prototype.clear = function () {
+SelectionHelper.prototype.clear = function () {
   _sendToAll(IPC_UNSELECTED, this.type, this.selection);
   this.selection = [];
   this._activate(null);
@@ -227,18 +226,18 @@ SelectionUnit.prototype.clear = function () {
   _sendToAll(IPC_CHANGED, this.type);
 };
 
-// ConfirmableSelectionUnit
+// ConfirmableSelectionHelper
 
-var $super = SelectionUnit;
-function ConfirmableSelectionUnit (type) {
-  SelectionUnit.call(this, type);
+var $super = SelectionHelper;
+function ConfirmableSelectionHelper (type) {
+  SelectionHelper.call(this, type);
 
   this.confirmed = true;
   this._confirmedSnapShot = []; // for cancel
 }
-Util.inherits(ConfirmableSelectionUnit, $super);
+Util.inherits(ConfirmableSelectionHelper, $super);
 
-ConfirmableSelectionUnit.prototype._activate = function (id) {
+ConfirmableSelectionHelper.prototype._activate = function (id) {
   if ( this.confirmed ) {
     $super.prototype._activate.call( this, id );
   }
@@ -255,17 +254,21 @@ function _checkConfirm (helper,confirm) {
   }
 }
 
-ConfirmableSelectionUnit.prototype.select = function (id, unselectOthers, confirm) {
+ConfirmableSelectionHelper.prototype.select = function (id, unselectOthers, confirm) {
+  confirm = confirm !== undefined ? confirm : true;
+
   _checkConfirm(this, confirm);
   $super.prototype.select.call(this, id, unselectOthers);
 };
 
-ConfirmableSelectionUnit.prototype.unselect = function (id, confirm) {
+ConfirmableSelectionHelper.prototype.unselect = function (id, confirm) {
+  confirm = confirm !== undefined ? confirm : true;
+
   _checkConfirm(this, confirm);
   $super.prototype.unselect.call(this, id);
 };
 
-ConfirmableSelectionUnit.prototype.confirm = function () {
+ConfirmableSelectionHelper.prototype.confirm = function () {
   if ( !this.confirmed ) {
     this._confirmedSnapShot = [];
     this.confirmed = true;
@@ -278,12 +281,17 @@ ConfirmableSelectionUnit.prototype.confirm = function () {
   }
 };
 
-ConfirmableSelectionUnit.prototype.cancel = function () {
+ConfirmableSelectionHelper.prototype.cancel = function () {
   if ( !this.confirmed ) {
     $super.prototype.select.call(this, this._confirmedSnapShot, true);
     this._confirmedSnapShot = [];
     this.confirmed = true;
   }
+};
+
+ConfirmableSelectionHelper.prototype.clear = function () {
+  $super.prototype.clear.call(this);
+  this.confirm();
 };
 
 var Selection = {
@@ -293,10 +301,14 @@ var Selection = {
       return;
     }
 
-    if ( _units[type] )
+    if ( _helpers[type] )
       return;
 
-    _units[type] = new ConfirmableSelectionUnit(type);
+    _helpers[type] = new ConfirmableSelectionHelper(type);
+  },
+
+  local () {
+    return new ConfirmableSelectionHelper('local');
   },
 
   /**
@@ -305,8 +317,8 @@ var Selection = {
    * @method confirm
    */
   confirm () {
-    for ( var p in _units ) {
-      _units[p].confirm();
+    for ( var p in _helpers ) {
+      _helpers[p].confirm();
     }
   },
 
@@ -316,8 +328,8 @@ var Selection = {
    * @method cancel
    */
   cancel () {
-    for ( var p in _units ) {
-      _units[p].cancel();
+    for ( var p in _helpers ) {
+      _helpers[p].cancel();
     }
   },
 
@@ -333,8 +345,8 @@ var Selection = {
    * @param {Boolean} [confirm=true]
    */
   select ( type, id, unselectOthers, confirm ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
@@ -344,10 +356,7 @@ var Selection = {
       return;
     }
 
-    unselectOthers = unselectOthers !== undefined ? unselectOthers : true;
-    confirm = confirm !== undefined ? confirm : true;
-
-    selectionUnit.select(id, unselectOthers, confirm);
+    helper.select(id, unselectOthers, confirm);
   },
 
   /**
@@ -358,8 +367,8 @@ var Selection = {
    * @param {Boolean} [confirm=true]
    */
   unselect (type, id, confirm) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
@@ -369,8 +378,7 @@ var Selection = {
       return;
     }
 
-    confirm = confirm !== undefined ? confirm : true;
-    selectionUnit.unselect(id, confirm);
+    helper.unselect(id, confirm);
   },
 
   /**
@@ -379,13 +387,13 @@ var Selection = {
    * @param {string} id
    */
   hover ( type, id ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.hover(id);
+    helper.hover(id);
   },
 
   /**
@@ -394,13 +402,18 @@ var Selection = {
    * @param {string} id
    */
   setContext ( type, id ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.setContext(id);
+    if ( id && typeof id !== 'string' ) {
+      Editor.error('The 2nd argument for Editor.Selection.setContext must be string');
+      return;
+    }
+
+    helper.setContext(id);
   },
 
   /**
@@ -410,13 +423,13 @@ var Selection = {
    * @destID {string}
    */
   patch ( type, srcID, destID ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.patch(srcID, destID);
+    helper.patch(srcID, destID);
   },
 
   /**
@@ -424,14 +437,13 @@ var Selection = {
    * @param {string} type
    */
   clear ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return;
     }
 
-    selectionUnit.clear();
-    selectionUnit.confirm();
+    helper.clear();
   },
 
   /**
@@ -440,13 +452,13 @@ var Selection = {
    * @return {string} hovering
    */
   hovering ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.lastHover;
+    return helper.lastHover;
   },
 
   /**
@@ -455,13 +467,13 @@ var Selection = {
    * @return {string} contexts
    */
   contexts ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.contexts;
+    return helper.contexts;
   },
 
   /**
@@ -470,13 +482,13 @@ var Selection = {
    * @return {string} current activated
    */
   curActivate ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.lastActive;
+    return helper.lastActive;
   },
 
   /**
@@ -484,13 +496,13 @@ var Selection = {
    * @return {object} - { type, id }
    */
   curGlobalActivate () {
-    if ( !_lastActiveUnit ) {
+    if ( !_lastActiveHelper ) {
       return null;
     }
 
     return {
-      type: _lastActiveUnit.type,
-      id: _lastActiveUnit.lastActive,
+      type: _lastActiveHelper.type,
+      id: _lastActiveHelper.lastActive,
     };
   },
 
@@ -500,13 +512,13 @@ var Selection = {
    * @return {string[]} selected list
    */
   curSelection: function ( type ) {
-    var selectionUnit = _units[type];
-    if ( !selectionUnit ) {
+    var helper = _helpers[type];
+    if ( !helper ) {
       Editor.error('Can not find the type %s for selection, please register it first', type);
       return null;
     }
 
-    return selectionUnit.selection.slice();
+    return helper.selection.slice();
   },
 
   /**
@@ -566,118 +578,118 @@ module.exports = Selection;
 // recv ipc message and update the local data
 
 Ipc.on( '_selection:selected', function ( type, ids ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
   // NOTE: it is possible we recv messages from ourself
   ids = ids.filter(function (x) {
-    return selectionUnit.selection.indexOf(x) === -1;
+    return helper.selection.indexOf(x) === -1;
   });
 
   // NOTE: we don't consider message from multiple source, in that case
   //       even the data was right, the messages still goes wrong.
   if (ids.length === 1) {
-    selectionUnit.selection.push(ids[0]);
+    helper.selection.push(ids[0]);
   }
   else if (ids.length > 1) {
     // NOTE: push.apply has limitation in item counts
-    selectionUnit.selection = selectionUnit.selection.concat(ids);
+    helper.selection = helper.selection.concat(ids);
   }
 });
 
 Ipc.on( '_selection:unselected', function ( type, ids ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.selection = selectionUnit.selection.filter( function (x) {
+  helper.selection = helper.selection.filter( function (x) {
     return ids.indexOf(x) === -1;
   });
 });
 
 Ipc.on( '_selection:activated', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  _lastActiveUnit = selectionUnit;
-  selectionUnit.lastActive = id;
+  _lastActiveHelper = helper;
+  helper.lastActive = id;
 });
 
 Ipc.on( '_selection:deactivated', function ( type, id ) {
   unused(id);
 
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  if ( _lastActiveUnit === selectionUnit ) {
-    _lastActiveUnit = null;
+  if ( _lastActiveHelper === helper ) {
+    _lastActiveHelper = null;
   }
-  selectionUnit.lastActive = null;
+  helper.lastActive = null;
 });
 
 Ipc.on( '_selection:hoverin', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.lastHover = id;
+  helper.lastHover = id;
 });
 
 Ipc.on( '_selection:hoverout', function ( type, id ) {
   unused(id);
 
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit.lastHover = null;
+  helper.lastHover = null;
 });
 
 Ipc.on( '_selection:context', function ( type, id ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
-  selectionUnit._context = id;
+  helper._context = id;
 });
 
 Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
-  var selectionUnit = _units[type];
-  if ( !selectionUnit ) {
+  var helper = _helpers[type];
+  if ( !helper ) {
     Editor.error('Can not find the type %s for selection, please register it first', type);
     return;
   }
 
   //
-  var idx = selectionUnit.selection.indexOf(srcID);
+  var idx = helper.selection.indexOf(srcID);
   if ( idx !== -1 ) {
-    selectionUnit.selection[idx] = destID;
+    helper.selection[idx] = destID;
   }
-  if ( selectionUnit.lastActive === srcID ) {
-    selectionUnit.lastActive = destID;
+  if ( helper.lastActive === srcID ) {
+    helper.lastActive = destID;
   }
-  if ( selectionUnit.lastHover === srcID ) {
-    selectionUnit.lastHover = destID;
+  if ( helper.lastHover === srcID ) {
+    helper.lastHover = destID;
   }
-  if ( selectionUnit._context === srcID ) {
-    selectionUnit._context = destID;
+  if ( helper._context === srcID ) {
+    helper._context = destID;
   }
 });
 
@@ -688,15 +700,15 @@ Ipc.on( '_selection:patch', function ( type, srcID, destID ) {
 if ( Editor.isCoreLevel ) {
   Ipc.on( 'selection:get-registers', function ( event ) {
     var results = [];
-    for ( var key in _units ) {
-      var selectionUnit = _units[key];
+    for ( var key in _helpers ) {
+      var helper = _helpers[key];
       results.push({
         type: key,
-        selection: selectionUnit.selection,
-        lastActive: selectionUnit.lastActive,
-        lastHover: selectionUnit.lastHover,
-        context: selectionUnit._context,
-        isLastGlobalActive: selectionUnit === _lastActiveUnit,
+        selection: helper.selection,
+        lastActive: helper.lastActive,
+        lastHover: helper.lastHover,
+        context: helper._context,
+        isLastGlobalActive: helper === _lastActiveHelper,
       });
     }
     event.returnValue = results;
@@ -708,19 +720,19 @@ if ( Editor.isPageLevel ) {
     var results = Editor.sendToCoreSync('selection:get-registers');
     for ( var i = 0; i < results.length; ++i ) {
       var info = results[i];
-      if ( _units[info.type] )
+      if ( _helpers[info.type] )
         return;
 
-      var selectionUnit = new ConfirmableSelectionUnit(info.type);
-      selectionUnit.selection = info.selection.slice();
-      selectionUnit.lastActive = info.lastActive;
-      selectionUnit.lastHover = info.lastHover;
-      selectionUnit._context = info.context;
+      var helper = new ConfirmableSelectionHelper(info.type);
+      helper.selection = info.selection.slice();
+      helper.lastActive = info.lastActive;
+      helper.lastHover = info.lastHover;
+      helper._context = info.context;
 
-      _units[info.type] = selectionUnit;
+      _helpers[info.type] = helper;
 
       if ( info.isLastGlobalActive ) {
-        _lastActiveUnit = selectionUnit;
+        _lastActiveHelper = helper;
       }
     }
   })();
