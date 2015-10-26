@@ -1,4 +1,6 @@
-﻿var Ipc = require('ipc');
+﻿'use strict';
+
+const Ipc = require('ipc');
 
 require('../share/ipc-init');
 
@@ -8,129 +10,123 @@ require('../share/ipc-init');
 
 // message operation
 
-function getOptions (args) {
-    var options = args[args.length - 1];
-    return (options && typeof options === 'object' && options.__is_ipc_option__) && options;
+function _getOptions (args) {
+  let options = args[args.length - 1];
+  return (options && typeof options === 'object' && options.__is_ipc_option__) && options;
 }
 
 function _sendToCore ( event, message ) {
-    'use strict';
-    if (arguments.length > 2) {
-        var args;
-        // check options
-        var options = getOptions(arguments);
-        if (options) {
-            if (!options['require-ipc-event']) {
-                // discard event and options arg
-                args = [].slice.call( arguments, 1, -1 );
-            }
-            else {
-                // discard options arg
-                args = [].slice.call( arguments, 0, -1 );
-                // make message to become first argument
-                args[0] = message;
-                args[1] = event;
-            }
-        }
-        else {
-            // discard event arg
-            args = [].slice.call( arguments, 1 );
-        }
-        return Ipc.emit.apply ( Ipc, args );
+  if ( arguments.length <= 2 ) {
+    return Ipc.emit( message );
+  }
+
+  let args;
+  let options = _getOptions(arguments);
+
+  // check options
+  if (options) {
+    if (!options['require-ipc-event']) {
+      // discard event and options arg
+      args = [].slice.call( arguments, 1, -1 );
+    } else {
+      // discard options arg
+      args = [].slice.call( arguments, 0, -1 );
+      // make message to become first argument
+      args[0] = message;
+      args[1] = event;
     }
-    else {
-        return Ipc.emit( message );
-    }
+  } else {
+    // discard event arg
+    args = [].slice.call( arguments, 1 );
+  }
+
+  return Ipc.emit.apply ( Ipc, args );
 }
 
 Ipc.on ( 'editor:send2core', function ( event, message ) {
-    'use strict';
-    if ( !_sendToCore.apply ( Ipc, arguments ) ) {
-        Editor.failed( 'send2core "%s" failed, listener not found for "%s" in core-level', message, message );
-    }
+  if ( !_sendToCore.apply ( Ipc, arguments ) ) {
+    Editor.failed( `send2core "${message}" failed, listener not found for "${message}" in core-level` );
+  }
 });
 
 function _sendToWindows ( event, message ) {
-    // jshint validthis:true
-    'use strict';
-    if (arguments.length > 2) {
-        var args;
-        // check options
-        var options = getOptions(arguments);
-        if (options) {
-            // discard event and options arg
-            args = [].slice.call( arguments, 1, -1 );
-            if (options['self-excluded']) {
-                // dont send to sender
-                Editor.sendToWindowsExclude( args, event.sender );
-                return;
-            }
-        }
-        else {
-            // discard event arg
-            args = [].slice.call( arguments, 1 );
-        }
-        // send
-        Editor.sendToWindows.apply( Editor, args );
+  // jshint validthis:true
+  if (arguments.length <= 2) {
+    Editor.sendToWindows( message );
+    return;
+  }
+
+  // check options
+  let args;
+  let options = _getOptions(arguments);
+
+  if (options) {
+    // discard event and options arg
+    args = [].slice.call( arguments, 1, -1 );
+    if (options['self-excluded']) {
+      // dont send to sender
+      Editor.sendToWindowsExclude( args, event.sender );
+      return;
     }
-    else {
-        Editor.sendToWindows( message );
-    }
+  } else {
+    // discard event arg
+    args = [].slice.call( arguments, 1 );
+  }
+
+  // send
+  Editor.sendToWindows.apply( Editor, args );
 }
 
 Ipc.on ( 'editor:send2wins', _sendToWindows );
 
 Ipc.on ( 'editor:send2mainwin', function (event, message) {
-    'use strict';
-    var mainWin = Editor.mainWindow;
-    if (mainWin) {
-        if (arguments.length > 2) {
-            // discard event arg
-            var args = [].slice.call( arguments, 1 );
-            mainWin.sendToPage.apply( mainWin, args );
-        }
-        else {
-            mainWin.sendToPage( message );
-        }
-    }
-    else {
-        console.error('Failed to send "%s" because main page not initialized.',
-            message);
-    }
+  let mainWin = Editor.mainWindow;
+  if (!mainWin) {
+    console.error(`Failed to send "${message}" because main page not initialized.`);
+    return;
+  }
+
+  if (arguments.length > 2) {
+    // discard event arg
+    let args = [].slice.call( arguments, 1 );
+    mainWin.sendToPage.apply( mainWin, args );
+  } else {
+    mainWin.sendToPage( message );
+  }
 });
 
 Ipc.on ( 'editor:send2all', function () {
-    _sendToCore.apply(Ipc, arguments);
-    _sendToWindows.apply(Ipc, arguments);
+  _sendToCore.apply(Ipc, arguments);
+  _sendToWindows.apply(Ipc, arguments);
 });
 
-Ipc.on ( 'editor:send2panel', function ( event ) {
-    var args = [].slice.call( arguments, 1 );
-    Editor.sendToPanel.apply( Editor, args );
+Ipc.on ( 'editor:send2panel', function () {
+  let args = [].slice.call( arguments, 1 );
+  Editor.sendToPanel.apply( Editor, args );
 });
 
 Ipc.on ( 'editor:sendreq2core', function (event, request, args, sessionId) {
-    var called = false;
-    function replyCallback () {
-        if ( !called ) {
-            called = true;
-            event.sender.send('editor:sendreq2core:reply', [].slice.call(arguments), sessionId);
-        }
-        else {
-            Editor.error('The callback which reply to "%s" can only be called once!', request);
-        }
+  let called = false;
+  function replyCallback () {
+    if ( called ) {
+      Editor.error(`The callback which reply to "${request}" can only be called once!`);
+      return;
     }
 
-    var options = getOptions(args);
-    if (options && options['require-ipc-event']) {
-        args.unshift(request, event, replyCallback);
-    }
-    else {
-        args.unshift(request, replyCallback);
-    }
-    if ( !Ipc.emit.apply(Ipc, args) ) {
-        Editor.error('The listener of request "%s" is not yet registered!', request);
-    }
+    called = true;
+    event.sender.send('editor:sendreq2core:reply', [].slice.call(arguments), sessionId);
+  }
+
+  let options = _getOptions(args);
+  if (options && options['require-ipc-event']) {
+    args.unshift(request, event, replyCallback);
+  } else {
+    args.unshift(request, replyCallback);
+  }
+
+  if ( !Ipc.emit.apply(Ipc, args) ) {
+    Editor.error(`The listener of request "${request}" is not yet registered!`);
+  }
 });
 
 // initialize messages APIs
@@ -143,14 +139,14 @@ Ipc.on ( 'editor:sendreq2core', function (event, request, args, sessionId) {
  * @param {object} excluded - A [WebContents](https://github.com/atom/electron/blob/master/docs/api/browser-window.md#class-webcontents) object.
  */
 Editor.sendToWindowsExclude = function (args, excluded) {
-    // NOTE: duplicate windows list since window may close during events
-    var winlist = Editor.Window.windows.slice();
-    for ( var i = 0; i < winlist.length; ++i ) {
-        var win = winlist[i];
-        if (win.nativeWin.webContents !== excluded) {
-            win.sendToPage.apply( win, args );
-        }
+  // NOTE: duplicate windows list since window may close during events
+  let winlist = Editor.Window.windows.slice();
+  for ( let i = 0; i < winlist.length; ++i ) {
+    let win = winlist[i];
+    if (win.nativeWin.webContents !== excluded) {
+      win.sendToPage.apply( win, args );
     }
+  }
 };
 
 /**
@@ -183,12 +179,12 @@ Editor.sendToWindowsExclude = function (args, excluded) {
  * ```
  */
 Editor.sendToWindows = function () {
-    // NOTE: duplicate windows list since window may close during events
-    var winlist = Editor.Window.windows.slice();
-    for ( var i = 0; i < winlist.length; ++i ) {
-        var win = winlist[i];
-        win.sendToPage.apply( win, arguments );
-    }
+  // NOTE: duplicate windows list since window may close during events
+  let winlist = Editor.Window.windows.slice();
+  for ( let i = 0; i < winlist.length; ++i ) {
+    let win = winlist[i];
+    win.sendToPage.apply( win, arguments );
+  }
 };
 
 /**
@@ -198,9 +194,9 @@ Editor.sendToWindows = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.sendToCore = function () {
-    if ( Ipc.emit.apply ( Ipc, arguments ) === false ) {
-        Editor.failed( 'sendToCore ' + arguments[0] + ' failed, not responded.' );
-    }
+  if ( Ipc.emit.apply ( Ipc, arguments ) === false ) {
+    Editor.failed( 'sendToCore ' + arguments[0] + ' failed, not responded.' );
+  }
 };
 
 /**
@@ -210,29 +206,31 @@ Editor.sendToCore = function () {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.sendToAll = function () {
-    if (arguments.length > 1) {
-        var toSelf = true;
-        var args = arguments;
-        // check options
-        var options = getOptions(arguments);
-        if (options) {
-            // discard options arg
-            args = [].slice.call( arguments, 0, -1 );
-            if (options['self-excluded']) {
-                toSelf = false;
-            }
-        }
-        // send
-        if (toSelf) {
-            Ipc.emit.apply(Ipc, args); // sendToCore (dont require receiver)
-        }
-        Editor.sendToWindows.apply(Editor, args);
+  if (arguments.length > 1) {
+    let toSelf = true;
+    let args = arguments;
+    let options = _getOptions(arguments);
 
-        return;
+    // check options
+    if (options) {
+      // discard options arg
+      args = [].slice.call( arguments, 0, -1 );
+      if (options['self-excluded']) {
+        toSelf = false;
+      }
     }
 
-    Ipc.emit(arguments[0]); // sendToCore (dont require receiver)
-    Editor.sendToWindows(arguments[0]);
+    // send
+    if (toSelf) {
+      Ipc.emit.apply(Ipc, args); // sendToCore (dont require receiver)
+    }
+    Editor.sendToWindows.apply(Editor, args);
+
+    return;
+  }
+
+  Ipc.emit(arguments[0]); // sendToCore (dont require receiver)
+  Editor.sendToWindows(arguments[0]);
 };
 
 // DISABLE: not make sense
@@ -257,29 +255,27 @@ Editor.sendToAll = function () {
  * Editor.sendToPanel( 'package.panel', 'ipc-foo-bar', 'arg1', 'arg2', ... );
  * ```
  */
-Editor.sendToPanel = function ( panelID, message ) {
-    var win = Editor.Panel.findWindow( panelID );
-    if ( !win ) {
-        // Editor.warn( "Failed to send %s, can not find panel %s.", message, panelID );
-        return;
-    }
+Editor.sendToPanel = function ( panelID ) {
+  let win = Editor.Panel.findWindow( panelID );
+  if ( !win ) {
+    // Editor.warn( "Failed to send %s, can not find panel %s.", message, panelID );
+    return;
+  }
 
-    var panelInfo = Editor.Package.panelInfo(panelID);
-    if ( !panelInfo ) {
-        return;
-    }
+  let panelInfo = Editor.Package.panelInfo(panelID);
+  if ( !panelInfo ) {
+    return;
+  }
 
-    var args;
-
-    if ( panelInfo.type === 'simple' ) {
-        args = [].slice.call( arguments, 1 );
-        win.sendToPage.apply( win, args );
-        return;
-    }
-
-    args = [].slice.call( arguments, 0 );
-    args.unshift('editor:send2panel');
+  if ( panelInfo.type === 'simple' ) {
+    let args = [].slice.call( arguments, 1 );
     win.sendToPage.apply( win, args );
+    return;
+  }
+
+  let args = [].slice.call( arguments, 0 );
+  args.unshift('editor:send2panel');
+  win.sendToPage.apply( win, args );
 };
 
 /**
@@ -289,11 +285,11 @@ Editor.sendToPanel = function ( panelID, message ) {
  * @param {...*} [args] - whatever arguments the message needs
  */
 Editor.sendToMainWindow = function () {
-    var mainWin = Editor.mainWindow;
-    if ( !mainWin ) {
-        console.error('Failed to send "%s" because main page not initialized.', arguments[0]);
-        return;
-    }
+  let mainWin = Editor.mainWindow;
+  if ( !mainWin ) {
+    console.error('Failed to send "%s" because main page not initialized.', arguments[0]);
+    return;
+  }
 
-    mainWin.sendToPage.apply( mainWin, arguments );
+  mainWin.sendToPage.apply( mainWin, arguments );
 };
