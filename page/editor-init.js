@@ -163,8 +163,6 @@
   require('../share/math');
   Editor.Easing = require('../share/easing');
   require('./ipc-init');
-  Editor.Selection = require('../share/selection');
-  Editor.KeyCode = require('../share/keycode');
 
   // ==========================
   // Layout API
@@ -313,6 +311,10 @@
   // ==========================
   // load modules
   // ==========================
+
+  Editor.Selection = require('../share/selection');
+  Editor.KeyCode = require('../share/keycode');
+  Editor.Dialog = require('../share/dialog');
 
   Editor.Window = require('./editor-window' );
   Editor.Menu = require('./editor-menu');
