@@ -40,6 +40,23 @@ function _build ( packageObj, cb ) {
     if ( cb ) cb ( null, packageObj._path );
 }
 
+function _clearDependence(path, deps) {
+    if ( !path ) return;
+    var array = [];
+    deps.forEach( function ( dep ) {
+        var file = dep.filename;
+        dep.children.forEach( function ( item ) {
+            array.push(item);
+        });
+        if ( file.indexOf(path) === 0 ) {
+            delete require.cache[file];
+        }
+    });
+    if ( array.length > 0 ) {
+        _clearDependence( path, array );
+    }
+}
+
 /**
  * Load a package at path
  * @method load
@@ -220,6 +237,7 @@ Package.unload = function ( path, cb ) {
         catch (err) {
             Editor.failed( 'Failed to unload %s from %s. %s.', packageObj.main, packageObj.name, err.stack );
         }
+        _clearDependence( packageObj._destPath, module.children );
         delete cache[mainPath];
     }
 
