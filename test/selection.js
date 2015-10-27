@@ -1,11 +1,9 @@
 'use strict';
 
-const Sinon = require('sinon');
-
 Editor.Selection.register('normal');
 Editor.Selection.register('special');
 
-const spy = Sinon.spy(Editor,'sendToAll');
+const spy = sinon.spy(Editor,'sendToAll');
 const ipcSelected = spy.withArgs('selection:selected');
 const ipcUnSelected = spy.withArgs('selection:unselected');
 const ipcActivated = spy.withArgs('selection:activated');

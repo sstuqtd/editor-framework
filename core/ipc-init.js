@@ -105,23 +105,23 @@ Ipc.on ( 'editor:send2panel', function () {
   Editor.sendToPanel.apply( Editor, args );
 });
 
-Ipc.on ( 'editor:sendreq2core', function (event, request, args, sessionId) {
+Ipc.on ( 'editor:sendreq2core', function (event, request, sessionId, args) {
   let called = false;
-  function replyCallback () {
+  function _replyCallback () {
     if ( called ) {
       Editor.error(`The callback which reply to "${request}" can only be called once!`);
       return;
     }
 
     called = true;
-    event.sender.send('editor:sendreq2core:reply', [].slice.call(arguments), sessionId);
+    event.sender.send('editor:sendreq2core:reply', sessionId, [].slice.call(arguments));
   }
 
   let options = _getOptions(args);
   if (options && options['require-ipc-event']) {
-    args.unshift(request, event, replyCallback);
+    args.unshift(request, event, _replyCallback);
   } else {
-    args.unshift(request, replyCallback);
+    args.unshift(request, _replyCallback);
   }
 
   if ( !Ipc.emit.apply(Ipc, args) ) {
