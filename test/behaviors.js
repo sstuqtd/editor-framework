@@ -2,7 +2,7 @@
 
 const Ipc = require('ipc');
 
-describe('behaviors', () => {
+describe('behaviors', function () {
   let win;
 
   // close window afterward

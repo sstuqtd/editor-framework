@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Editor.Menu', () => {
+describe('Editor.Menu', function () {
   function getTemplate () {
     return [
       {
@@ -23,7 +23,7 @@ describe('Editor.Menu', () => {
     ];
   }
 
-  it('should be built from template', done => {
+  it('should be built from template', function (done) {
     var testMenu = new Editor.Menu(getTemplate());
 
     expect( testMenu.nativeMenu.items.length ).to.equal(2);
@@ -32,7 +32,7 @@ describe('Editor.Menu', () => {
     done();
   });
 
-  it('should add menu item through template', done => {
+  it('should add menu item through template', function (done) {
     var testMenu = new Editor.Menu();
     testMenu.add('foo/bar', getTemplate());
 
@@ -41,7 +41,7 @@ describe('Editor.Menu', () => {
     done();
   });
 
-  it('should add menu item through template without label', done => {
+  it('should add menu item through template without label', function (done) {
     var testMenu = new Editor.Menu();
     testMenu.add('tar/zom', {'message': 'hint'});
 

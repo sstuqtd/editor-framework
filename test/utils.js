@@ -6,7 +6,7 @@ const App = require('app');
 // NOTE: we must remove listeners for this to make sure tests can continue
 App.removeAllListeners('window-all-closed');
 
-describe('Editor.Utils.wrapError', () => {
+describe('Editor.Utils.wrapError', function () {
   const pageUrl = 'editor-framework://test/fixtures/utils/page.html';
 
   assert.isTrue( Fs.existsSync(Editor.url(pageUrl)) );
@@ -14,7 +14,7 @@ describe('Editor.Utils.wrapError', () => {
   let win;
   let ipcListener = new Editor.IpcListener();
 
-  beforeEach(done => {
+  beforeEach(function (done) {
     ipcListener.on('page:ready', done);
 
     // create main window
@@ -30,7 +30,7 @@ describe('Editor.Utils.wrapError', () => {
     win.load(pageUrl);
   });
 
-  afterEach(done => {
+  afterEach(function (done) {
     win.close();
     win.nativeWin.on('closed', () => {
       ipcListener.clear();
@@ -38,7 +38,7 @@ describe('Editor.Utils.wrapError', () => {
     });
   });
 
-  it('should send error from core to page', done => {
+  it('should send error from core to page', function (done) {
     ipcListener.on('test:report-error:success', done);
     ipcListener.on('test:report-error:failed', message => {
       throw new Error(message);
@@ -48,7 +48,7 @@ describe('Editor.Utils.wrapError', () => {
     win.sendToPage( 'test:report-error', Editor.Utils.wrapError(err) );
   });
 
-  it('should send error from page to core', done => {
+  it('should send error from page to core', function (done) {
     ipcListener.on('test:report-error', err => {
       expect( err.message ).to.equal('This is an error from page');
       expect( err.stack ).to.be.a('String');

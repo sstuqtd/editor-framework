@@ -9,13 +9,13 @@ const ipcUnSelected = spy.withArgs('selection:unselected');
 const ipcActivated = spy.withArgs('selection:activated');
 const ipcDeactivated = spy.withArgs('selection:deactivated');
 
-describe('Editor.Selection.select', () => {
-  beforeEach(() => {
+describe('Editor.Selection.select', function () {
+  beforeEach(function () {
     Editor.Selection.clear('normal');
     spy.reset();
   });
 
-  it('should work for simple case', done => {
+  it('should work for simple case', function (done) {
     Editor.Selection.select('normal', 'a' );
     expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a']);
     expect(Editor.Selection.curActivate('normal')).to.be.eq('a');
@@ -27,7 +27,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should work with array', done => {
+  it('should work with array', function (done) {
     Editor.Selection.select('normal', ['a','b'] );
     expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b']);
     expect(Editor.Selection.curActivate('normal')).to.be.eq('b');
@@ -39,7 +39,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should work with confirm', done => {
+  it('should work with confirm', function (done) {
     Editor.Selection.select('normal', 'a', false, false );
     Editor.Selection.select('normal', 'b', false, false );
     Editor.Selection.select('normal', 'c', false, false );
@@ -54,7 +54,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should work with cancel', done => {
+  it('should work with cancel', function (done) {
     Editor.Selection.select('normal', 'a' );
     Editor.Selection.select('normal', 'b', false, false );
     Editor.Selection.select('normal', 'c', false, false );
@@ -67,7 +67,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should active none when nothing select', done => {
+  it('should active none when nothing select', function (done) {
     Editor.Selection.select('normal', ['a','b','c','d'] );
     Editor.Selection.select('normal', [] );
 
@@ -90,7 +90,7 @@ describe('Editor.Selection.select', () => {
   });
 
   // NOTE: I am argue about this
-  it('should not break the order of the selection when item already selected', done => {
+  it('should not break the order of the selection when item already selected', function (done) {
     Editor.Selection.select('normal', ['a','b','c','d'] );
     expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','c','d']);
     expect(Editor.Selection.curActivate('normal')).to.be.eq('d');
@@ -102,7 +102,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should not break the order of the selection when selection not confirmed', done => {
+  it('should not break the order of the selection when selection not confirmed', function (done) {
     Editor.Selection.select('normal', ['a','b','c','d'], false );
     expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','c','d']);
 
@@ -115,7 +115,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should send ipc selection:selected when select item', done => {
+  it('should send ipc selection:selected when select item', function (done) {
     //
     Editor.Selection.select('normal', 'a' );
 
@@ -153,7 +153,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should not send ipc selection:selected when the item already selected', done => {
+  it('should not send ipc selection:selected when the item already selected', function (done) {
     Editor.Selection.select('normal', 'a', false );
     Editor.Selection.select('normal', 'a', false );
     Editor.Selection.select('normal', 'b', false );
@@ -168,7 +168,7 @@ describe('Editor.Selection.select', () => {
     done();
   });
 
-  it('should send ipc message in order', done => {
+  it('should send ipc message in order', function (done) {
     Editor.Selection.select('normal', 'a' );
     Editor.Selection.select('normal', 'b' );
 
@@ -202,13 +202,13 @@ describe('Editor.Selection.select', () => {
   });
 });
 
-describe('Editor.Selection.unselect', () => {
-  beforeEach(() => {
+describe('Editor.Selection.unselect', function () {
+  beforeEach(function () {
     Editor.Selection.clear('normal');
     spy.reset();
   });
 
-  it('should work for simple case', done => {
+  it('should work for simple case', function (done) {
     Editor.Selection.select('normal',['a','b','c','d']);
     Editor.Selection.unselect('normal','c');
 
@@ -226,7 +226,7 @@ describe('Editor.Selection.unselect', () => {
     done();
   });
 
-  it('should not sending non-selected items in the ipc message when unselect', done => {
+  it('should not sending non-selected items in the ipc message when unselect', function (done) {
     Editor.Selection.select('normal',['a','b','c','d']);
     Editor.Selection.unselect('normal',['d','e']);
 
@@ -241,13 +241,13 @@ describe('Editor.Selection.unselect', () => {
   });
 });
 
-describe('Editor.Selection.hover', () => {
-  beforeEach(() => {
+describe('Editor.Selection.hover', function () {
+  beforeEach(function () {
     Editor.Selection.clear('normal');
     spy.reset();
   });
 
-  it('should store the last hover item', done => {
+  it('should store the last hover item', function (done) {
 
     Editor.Selection.hover('normal','a');
     expect(Editor.Selection.hovering('normal')).to.be.deep.eq('a');
@@ -264,7 +264,7 @@ describe('Editor.Selection.hover', () => {
     done();
   });
 
-  it('should send hover and unhover ipc message in order', done => {
+  it('should send hover and unhover ipc message in order', function (done) {
 
     Editor.Selection.hover('normal','a');
     Editor.Selection.hover('normal','b');
@@ -288,13 +288,13 @@ describe('Editor.Selection.hover', () => {
   });
 });
 
-describe('Editor.Selection.setContext', () => {
-  beforeEach(() => {
+describe('Editor.Selection.setContext', function () {
+  beforeEach(function () {
     Editor.Selection.clear('normal');
     spy.reset();
   });
 
-  it('should store the context', done => {
+  it('should store the context', function (done) {
     Editor.Selection.select('normal',['a','b','c','d']);
     Editor.Selection.setContext('normal','e');
 
@@ -307,14 +307,14 @@ describe('Editor.Selection.setContext', () => {
   });
 });
 
-describe('Global Active', () => {
-  beforeEach(() => {
+describe('Global Active', function () {
+  beforeEach(function () {
     Editor.Selection.clear('normal');
     Editor.Selection.clear('special');
     spy.reset();
   });
 
-  it('should change global active call selection confirmed in different type', done => {
+  it('should change global active call selection confirmed in different type', function (done) {
     Editor.Selection.select('normal', ['a','b','c','d']);
     expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
       type: 'normal',
@@ -342,7 +342,7 @@ describe('Global Active', () => {
     done();
   });
 
-  it('should send activated and deactivated ipc message', done => {
+  it('should send activated and deactivated ipc message', function (done) {
     Editor.Selection.select('normal', ['a','b','c','d']);
     assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
 

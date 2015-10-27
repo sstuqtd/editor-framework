@@ -6,20 +6,20 @@ const Path = require('path');
 const Diff = require('diff');
 
 //
-describe('Editor.Package building test', () => {
-  describe('test fixtures/packages/needs-build (core-level)', () => {
+describe('Editor.Package building test', function () {
+  describe('test fixtures/packages/needs-build (core-level)', function () {
     const path = Editor.url('editor-framework://test/fixtures/packages/needs-build');
 
-    after(done => {
+    after(function (done) {
       Del( Path.join(path,'bin'), done );
     });
 
-    beforeEach(done => {
+    beforeEach(function (done) {
       sinon.spy( Editor.Package, 'build' );
       done();
     });
 
-    afterEach(done => {
+    afterEach(function (done) {
       Editor.Package.unload(path, () => {
         let pkgJsonPath = Path.join( path, 'package.json');
         let pkgJson = JSON.parse(Fs.readFileSync(pkgJsonPath));
@@ -31,7 +31,7 @@ describe('Editor.Package building test', () => {
       });
     });
 
-    it('should build package before loading it', done => {
+    it('should build package before loading it', function (done) {
       Editor.Package.load(path, () => {
         expect( Editor.Package.build.calledOnce ).to.be.equal(true);
         expect( Fs.existsSync(Path.join(path,'bin/dev')) ).to.be.equal(true);
@@ -54,7 +54,7 @@ describe('Editor.Package building test', () => {
       });
     });
 
-    it('should not build package if it is exists', done => {
+    it('should not build package if it is exists', function (done) {
       Editor.Package.load(path, () => {
         assert( Fs.existsSync(Path.join(path,'bin/dev')) );
         expect( Editor.Package.build.callCount ).to.be.equal(0);
@@ -63,7 +63,7 @@ describe('Editor.Package building test', () => {
       });
     });
 
-    it('should use the built path for resources loading', done => {
+    it('should use the built path for resources loading', function (done) {
       Editor.Package.load(path, () => {
         assert( Fs.existsSync(Path.join(path,'bin/dev')) );
 
@@ -80,7 +80,7 @@ describe('Editor.Package building test', () => {
       });
     });
 
-    it('should re-build package if src package.json has a different version', done => {
+    it('should re-build package if src package.json has a different version', function (done) {
       let pkgJsonPath = Path.join( path, 'package.json');
       let pkgJson = JSON.parse(Fs.readFileSync(pkgJsonPath));
       pkgJson.version = '0.0.2';

@@ -8,19 +8,19 @@ const App = require('app');
 App.removeAllListeners('window-all-closed');
 
 //
-describe('Editor.Package', () => {
-  describe('fixtures/packages/simple (core-level)', () => {
+describe('Editor.Package', function () {
+  describe('fixtures/packages/simple (core-level)', function () {
     const path = Editor.url('editor-framework://test/fixtures/packages/simple');
 
-    afterEach(done => {
+    afterEach(function (done) {
       Editor.Package.unload(path, done);
     });
 
-    it('should load simple package', done => {
+    it('should load simple package', function (done) {
       Editor.Package.load(path, done);
     });
 
-    it('should unload simple package', done => {
+    it('should unload simple package', function (done) {
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
@@ -28,7 +28,7 @@ describe('Editor.Package', () => {
     });
   });
 
-  describe('fixtures/packages/simple (page-level)', () => {
+  describe('fixtures/packages/simple (page-level)', function () {
     const pageUrl = 'editor-framework://test/fixtures/packages/page.html';
     const path = Editor.url('editor-framework://test/fixtures/packages/simple');
 
@@ -38,7 +38,7 @@ describe('Editor.Package', () => {
     let win;
     let ipcListener = new Editor.IpcListener();
 
-    beforeEach(done => {
+    beforeEach(function (done) {
       ipcListener.on('page:ready', done);
 
       // create main window
@@ -54,7 +54,7 @@ describe('Editor.Package', () => {
       win.load(pageUrl);
     });
 
-    afterEach(done => {
+    afterEach(function (done) {
       win.close();
       win.nativeWin.on('closed', () => {
         ipcListener.clear();
@@ -62,7 +62,7 @@ describe('Editor.Package', () => {
       });
     });
 
-    it('should send loaded ipc message', done => {
+    it('should send loaded ipc message', function (done) {
       ipcListener.on('package:loaded:forward', name => {
         expect(name).to.equal('test-simple');
         done();
@@ -70,7 +70,7 @@ describe('Editor.Package', () => {
       Editor.Package.load(path);
     });
 
-    it('should send unload message', done => {
+    it('should send unload message', function (done) {
       ipcListener.on('package:unloaded:forward', name => {
         expect(name).to.equal('test-simple');
         done();
