@@ -1,0 +1,23 @@
+{
+  "name": "test-load-deps",
+  "version": "0.0.1",
+  "description": "A Simple Package Test Fixture",
+  "author": "Firebox Technology",
+  "main": "main.js",
+  "menus": {
+    "Test Case/Simple": {
+      "message": "demo-simple:open"
+    }
+  },
+  "panels": {
+    "panel": {
+      "frame": "panel/panel.html",
+      "type": "dockable",
+      "title": "Simple",
+      "width": 800,
+      "height": 600,
+      "messages": [
+      ]
+    }
+  }
+}

@@ -42,18 +42,21 @@ function _build ( packageObj, cb ) {
 
 function _clearDependence(path, deps) {
     if ( !path ) return;
-    var array = [];
+    var childDeps = [];
     deps.forEach( function ( dep ) {
         var file = dep.filename;
-        dep.children.forEach( function ( item ) {
-            array.push(item);
-        });
+        // file: ./builtin/a/core/menu.js
+        // path: ./builtin/a
         if ( file.indexOf(path) === 0 ) {
+            // Internal file
+            dep.children.forEach( function ( item ) {
+                childDeps.push(item);
+            });
             delete require.cache[file];
         }
     });
-    if ( array.length > 0 ) {
-        _clearDependence( path, array );
+    if ( childDeps.length > 0 ) {
+        _clearDependence( path, childDeps );
     }
 }
 

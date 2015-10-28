@@ -1,6 +1,7 @@
 'use strict';
 
 const Fs = require('fire-fs');
+const Path = require('fire-path');
 const Async = require('async');
 const App = require('app');
 
@@ -80,6 +81,46 @@ describe('Editor.Package', function () {
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ]);
+    });
+  });
+
+  describe('fixtures/packages/load-deps', function () {
+    const path = Editor.url('editor-framework://test/fixtures/packages/load-deps');
+
+    afterEach(function (done) {
+      Editor.Package.unload(path, done);
+    });
+
+    it('should unload load-deps package', function (done) {
+      let cache = require.cache;
+      let loadCacheList = [];
+      Async.series([
+        next => { Editor.Package.load(path, next); },
+        next => {
+          for ( var name in cache ) {
+            loadCacheList.push(cache[name].filename);
+          }
+          next();
+        },
+        next => { Editor.Package.unload(path, next); },
+        next => {
+          var index;
+          for (var name in cache) {
+            index = loadCacheList.indexOf(cache[name].filename);
+            loadCacheList.splice(index, 1);
+          }
+
+          // main.js | core/test.js
+          expect(loadCacheList).to.eql([
+            Path.join(path, 'main.js'),
+            Path.join(path, 'core/test.js'),
+            Path.join(path, 'core/foo/bar.js'),
+            Path.join(path, 'test.js'),
+          ]);
+
+          next();
+        },
+      ], done);
     });
   });
 
