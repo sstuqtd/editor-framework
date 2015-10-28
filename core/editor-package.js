@@ -40,6 +40,26 @@ function _build ( packageObj, cb ) {
     if ( cb ) cb ( null, packageObj._path );
 }
 
+function _clearDependence(path, deps) {
+    if ( !path ) return;
+    var childDeps = [];
+    deps.forEach( function ( dep ) {
+        var file = dep.filename;
+        // file: ./builtin/a/core/menu.js
+        // path: ./builtin/a
+        if ( file.indexOf(path) === 0 ) {
+            // Internal file
+            dep.children.forEach( function ( item ) {
+                childDeps.push(item);
+            });
+            delete require.cache[file];
+        }
+    });
+    if ( childDeps.length > 0 ) {
+        _clearDependence( path, childDeps );
+    }
+}
+
 /**
  * Load a package at path
  * @method load
@@ -220,6 +240,7 @@ Package.unload = function ( path, cb ) {
         catch (err) {
             Editor.failed( 'Failed to unload %s from %s. %s.', packageObj.main, packageObj.name, err.stack );
         }
+        _clearDependence( packageObj._destPath, module.children );
         delete cache[mainPath];
     }
 
