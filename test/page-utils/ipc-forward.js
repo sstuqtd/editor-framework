@@ -1,28 +1,27 @@
-(function () {
-    var Util = require('util');
+(() => {
+  'use strict';
 
-    var $super = Editor.IpcListener;
-
-    function IpcForward () {
-        $super.call(this);
+  class IpcForward extends Editor.IpcListener {
+    constructor () {
+      super();
     }
-    Util.inherits(IpcForward,$super);
 
-    IpcForward.prototype.on = function (message) {
-        $super.prototype.on.call( this, message, function () {
-            var args = [].slice.call( arguments, 0 );
-            args.unshift( message + ':forward' );
-            Editor.sendToCore.apply(Editor, args);
-        });
-    };
+    on (message) {
+      super.on( message, function () {
+        var args = [].slice.call( arguments, 0 );
+        args.unshift( message + ':forward' );
+        Editor.sendToCore.apply(Editor, args);
+      });
+    }
 
-    IpcForward.prototype.once = function (message) {
-        $super.prototype.once.call( this, message, function () {
-            var args = [].slice.call( arguments, 0 );
-            args.unshift( message + ':forward' );
-            Editor.sendToCore.apply(Editor, args);
-        });
-    };
+    once (message) {
+      super.once( message, function () {
+        var args = [].slice.call( arguments, 0 );
+        args.unshift( message + ':forward' );
+        Editor.sendToCore.apply(Editor, args);
+      });
+    }
+  }
 
-    window.IpcForward = IpcForward;
+  window.IpcForward = IpcForward;
 })();

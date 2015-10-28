@@ -1,4 +1,6 @@
-﻿var Ipc = require('ipc');
+﻿'use strict';
+
+const Ipc = require('ipc');
 
 /**
  * @module Editor
@@ -11,8 +13,8 @@
  * @type {Object}
  */
 Editor.selfExcluded = {
-    '__is_ipc_option__': true,
-    'self-excluded': true,
+  '__is_ipc_option__': true,
+  'self-excluded': true,
 };
 
 /**
@@ -22,51 +24,53 @@ Editor.selfExcluded = {
  * @type {Object}
  */
 Editor.requireIpcEvent = {
-    '__is_ipc_option__': true,
-    'require-ipc-event': true,
+  '__is_ipc_option__': true,
+  'require-ipc-event': true,
 };
 
-/**
- * IpcListener for easily manage ipc events
- * @class IpcListener
- * @constructor
- */
-function IpcListener () {
+class IpcListener {
+  /**
+   * IpcListener for easily manage ipc events
+   * @class IpcListener
+   * @constructor
+   */
+  constructor () {
     this.listeningIpcs = [];
-}
+  }
 
-/**
- * Register ipc message and respond it with the callback function
- * @method on
- * @param {string} ipc message name
- * @param {function} callback
- */
-IpcListener.prototype.on = function (message, callback) {
+  /**
+   * Register ipc message and respond it with the callback function
+   * @method on
+   * @param {string} ipc message name
+   * @param {function} callback
+   */
+  on (message, callback) {
     Ipc.on( message, callback );
     this.listeningIpcs.push( [message, callback] );
-};
+  }
 
-/**
- * Register ipc message and respond it once with the callback function
- * @method once
- * @param {string} ipc message name
- * @param {function} callback
- */
-IpcListener.prototype.once = function (message, callback) {
+  /**
+   * Register ipc message and respond it once with the callback function
+   * @method once
+   * @param {string} ipc message name
+   * @param {function} callback
+   */
+  once (message, callback) {
     Ipc.once( message, callback );
     this.listeningIpcs.push( [message, callback] );
-};
+  }
 
-/**
- * Clear all registered ipc messages in this ipc listener
- * @method clear
- */
-IpcListener.prototype.clear = function () {
+  /**
+   * Clear all registered ipc messages in this ipc listener
+   * @method clear
+   */
+  clear () {
     for (var i = 0; i < this.listeningIpcs.length; i++) {
-        var pair = this.listeningIpcs[i];
-        Ipc.removeListener( pair[0], pair[1] );
+      var pair = this.listeningIpcs[i];
+      Ipc.removeListener( pair[0], pair[1] );
     }
     this.listeningIpcs.length = 0;
-};
+  }
+}
 
 Editor.IpcListener = IpcListener;

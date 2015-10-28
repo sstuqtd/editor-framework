@@ -9,11 +9,11 @@
   <body>
     <h2>Testing Packages...</h2>
     <script>
-        var ipcforward = new IpcForward();
-        ipcforward.on('package:loaded');
-        ipcforward.on('package:unloaded');
+      var ipcForward = new IpcForward();
+      ipcForward.on('package:loaded');
+      ipcForward.on('package:unloaded');
 
-        Editor.sendToCore('page:ready');
+      Editor.sendToCore('page:ready');
     </script>
   </body>
 </html>
