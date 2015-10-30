@@ -11,4 +11,6 @@
  - remove `Editor.App.load`, `Editor.App.unload`
  - `Editor.App` no longer accept ipc-message `app:*` register in it
  - support minify editor-framework in final product
- - move `core/`, `page/` and `share/` folders to `lib/`
+ - move `core/` to `lib/main/`
+ - move `page/` to `lib/renderer/`
+ - move `share/` to `lib/share/`
