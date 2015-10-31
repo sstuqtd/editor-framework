@@ -1,3 +1,5 @@
+'use strict';
+
 var Path = require('path');
 var Fs = require('fire-fs');
 var Chalk = require('chalk');
@@ -106,14 +108,14 @@ if (singleTestFile) {
     } else {
       if (failedTest.length > 0) {
         console.log(Chalk.red('================================='));
-        console.log(Chalk.red( 'Listing all failed tests: '));
+        console.log(Chalk.red('Listing all failed tests: '));
         console.log(Chalk.red('================================='));
         failedTest.forEach(function(file) {
           SpawnSync(exePath, [cwd, '--test', file], {stdio: 'inherit'});
         });
       } else {
         console.log(Chalk.green('================================='));
-        console.log(Chalk.green( 'All tests passed, Congratulations! '));
+        console.log(Chalk.green('All tests passed, Congratulations! '));
         console.log(Chalk.green('================================='));
       }
     }
