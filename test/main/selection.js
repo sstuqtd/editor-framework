@@ -356,5 +356,4 @@ describe('Global Active', function () {
 
     done();
   });
-
 });

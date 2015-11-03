@@ -40,7 +40,7 @@ Async.eachSeries([
 
     var cp = Spawn(
       exePath,
-      [cwd, '--test', file, info.renderer ? '--test-renderer' : ''],
+      [cwd, '--test', file, info.renderer ? '--renderer' : ''],
       { stdio: [ 0, 1, 2, 'ipc' ] }
     );
 
