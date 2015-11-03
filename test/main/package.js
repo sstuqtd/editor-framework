@@ -10,7 +10,7 @@ App.removeAllListeners('window-all-closed');
 
 //
 describe('Editor.Package', function () {
-  describe('fixtures/packages/simple (core-level)', function () {
+  describe('fixtures/packages/simple', function () {
     const path = Editor.url('editor-framework://test/fixtures/packages/simple');
 
     afterEach(function (done) {
@@ -29,58 +29,34 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/simple (page-level)', function () {
-    const pageUrl = 'editor-framework://test/fixtures/packages/page.html';
+  describe('fixtures/packages/simple ipc-message', function () {
     const path = Editor.url('editor-framework://test/fixtures/packages/simple');
 
-    assert.isTrue( Fs.existsSync(Editor.url(pageUrl)) );
     assert.isTrue( Fs.existsSync(path) );
 
-    let win;
-    let ipcListener = new Editor.IpcListener();
+    const spy = sinon.spy(Editor,'sendToWindows');
+    const packageLoaded = spy.withArgs('package:loaded');
+    const packageUnloaded = spy.withArgs('package:unloaded');
 
-    beforeEach(function (done) {
-      ipcListener.on('page:ready', done);
-
-      // create main window
-      win = new Editor.Window('main', {
-        'title': 'Package Listener',
-        'width': 400,
-        'height': 400,
-        'min-width': 400,
-        'min-height': 400,
-        'show': true,
-        'resizable': false,
-      });
-      win.load(pageUrl);
-    });
-
-    afterEach(function (done) {
-      win.close();
-      win.nativeWin.on('closed', () => {
-        ipcListener.clear();
-        Editor.Package.unload(path, done);
-      });
+    beforeEach(function () {
+      spy.reset();
     });
 
     it('should send loaded ipc message', function (done) {
-      ipcListener.on('package:loaded:forward', name => {
-        expect(name).to.equal('test-simple');
+      Editor.Package.load(path, function () {
+        assert( packageLoaded.calledWith('package:loaded', 'test-simple') );
         done();
       });
-      Editor.Package.load(path);
     });
 
     it('should send unload message', function (done) {
-      ipcListener.on('package:unloaded:forward', name => {
-        expect(name).to.equal('test-simple');
-        done();
-      });
-
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
-      ]);
+      ], function () {
+        assert( packageUnloaded.calledWith('package:unloaded', 'test-simple') );
+        done();
+      });
     });
   });
 
