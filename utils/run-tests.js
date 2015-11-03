@@ -38,9 +38,16 @@ Async.eachSeries([
   Async.eachSeries(info.files, function(file, done) {
     console.log( Chalk.magenta( 'Start test: ') + Chalk.cyan( Path.relative(cwd, file) ) );
 
+    let args = [];
+    if ( info.renderer ) {
+      args = [cwd, '--test', '--reporter', 'spec', '--renderer', file];
+    } else {
+      args = [cwd, '--test', '--reporter', 'spec', file];
+    }
+
     var cp = Spawn(
       exePath,
-      [cwd, '--test', file, info.renderer ? '--renderer' : ''],
+      args,
       { stdio: [ 0, 1, 2, 'ipc' ] }
     );
 
@@ -74,6 +81,10 @@ Async.eachSeries([
   console.log(Chalk.red('================================='));
 
   failedTests.forEach(function(file) {
-    SpawnSync(exePath, [cwd, '--test', file], {stdio: 'inherit'});
+    SpawnSync(
+      exePath,
+      [cwd, '--test', file, '--reporter', 'spec'],
+      {stdio: 'inherit'}
+    );
   });
 });
