@@ -9,16 +9,12 @@ describe('Test ghost-tester', function () {
     testEL.classList.add('fit');
 
     document.body.appendChild(testEL);
-    window.requestAnimationFrame (() => {
-      done();
-    });
+    done();
   });
 
   afterEach(function (done) {
     testEL.remove();
-    window.requestAnimationFrame (() => {
-      done();
-    });
+    done();
   });
 
   this.timeout(50);
