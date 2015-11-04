@@ -135,6 +135,18 @@ To test the editor-framework itself, just run:
 npm test
 ```
 
+You can also run a single test or a bunch of tests in one directory by:
+
+```bash
+gulp run --test ${your/test/path}
+```
+
+To debug a test, use the command:
+
+```bash
+gulp run --debug-test ${your/test/path}
+```
+
 ### Generate Documentation
 
 To generate the document, just run:

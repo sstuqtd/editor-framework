@@ -40,7 +40,7 @@ Async.eachSeries([
 
     let args = [];
     if ( info.renderer ) {
-      args = [cwd, '--test', '--reporter', 'spec', '--renderer', file];
+      args = [cwd, '--test-renderer', '--reporter', 'spec', file];
     } else {
       args = [cwd, '--test', '--reporter', 'spec', file];
     }
