@@ -5,7 +5,6 @@ var Chalk = require('chalk');
 var Async = require('async');
 var Globby = require('globby');
 var Spawn = require('child_process').spawn;
-var SpawnSync = require('child_process').spawnSync;
 
 // get extPath
 var exePath = '';
@@ -40,9 +39,9 @@ Async.eachSeries([
 
     let args = [];
     if ( info.renderer ) {
-      args = [cwd, '--test-renderer', '--reporter', 'spec', file];
+      args = [cwd, 'test', '--renderer', '--reporter', 'spec', file];
     } else {
-      args = [cwd, '--test', '--reporter', 'spec', file];
+      args = [cwd, 'test', '--reporter', 'spec', file];
     }
 
     var cp = Spawn(
