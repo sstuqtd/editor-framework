@@ -59,7 +59,7 @@ Async.eachSeries([
       }
     });
 
-    cp.on('exit', function(){
+    cp.on('exit', function () {
       done();
     });
 
@@ -77,14 +77,15 @@ Async.eachSeries([
   }
 
   console.log(Chalk.red('================================='));
-  console.log(Chalk.red('Listing all failed tests: '));
+  console.log(Chalk.red(`${failedTests.length} failes: `));
   console.log(Chalk.red('================================='));
 
   failedTests.forEach(function(file) {
-    SpawnSync(
-      exePath,
-      [cwd, '--test', file, '--reporter', 'spec'],
-      {stdio: 'inherit'}
-    );
+    // SpawnSync(
+    //   exePath,
+    //   [cwd, '--test', file, '--reporter', 'spec'],
+    //   {stdio: 'inherit'}
+    // );
+    console.log(Chalk.red(` - ${file}`));
   });
 });
