@@ -14,3 +14,4 @@
  - move `core/` to `lib/main/`
  - move `page/` to `lib/renderer/`
  - move `share/` to `lib/share/`
+ - change the unit test working pipeline

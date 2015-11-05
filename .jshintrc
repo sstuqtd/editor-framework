@@ -21,6 +21,7 @@
     "unused",
     "Editor",
     "EditorUI",
+    "Helper",
     "Mousetrap",
     "Polymer",
     "sinon",
