@@ -78,7 +78,7 @@ You can change this file anytime to choose mirror for Electron downloading again
 ## Run Editor-Framework Demo
 
 ```bash
-gulp run
+npm start
 ```
 
 In the demo you will see builtin packages and other example packages from `Developer` and `Examples` menu.
@@ -133,6 +133,30 @@ To test the editor-framework itself, just run:
 
 ```bash
 npm test
+```
+
+You can also run a single test or a bunch of tests in one directory by:
+
+```bash
+npm start -- test ${your/test/path}
+```
+
+You can also force to run tests in renderer by `--renderer` option:
+
+```bash
+npm start -- test --renderer ${your/test/path}
+```
+
+You can load specific package and run its tests by `--package` option:
+
+```bash
+npm start -- test --package ${your/test/path}
+```
+
+To debug a test, use the `--detail` option:
+
+```bash
+npm start -- test --detail ${your/test/path}
 ```
 
 ### Generate Documentation

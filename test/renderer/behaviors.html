@@ -1,0 +1,18 @@
+<dom-module id="test-focusable">
+  <template>
+    <div id="focus"
+      on-focus="_onFocus"
+      on-blur="_onBlur"
+      >Test Focusable</div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'test-focusable',
+      behaviors: [EditorUI.focusable],
+      ready: function () {
+        this._initFocusable(this.$.focus);
+      },
+    });
+  </script>
+</dom-module>
