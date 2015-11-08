@@ -1,0 +1,10 @@
+{
+  "name": "package-deps",
+  "version": "0.0.1",
+  "description": "A Simple Package Test Fixture",
+  "author": "Firebox Technology",
+  "main": "main.js",
+  "dependencies": {
+    "dep-01": "0.0.1"
+  }
+}
