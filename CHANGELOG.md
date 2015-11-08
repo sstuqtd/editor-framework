@@ -15,3 +15,6 @@
  - move `page/` to `lib/renderer/`
  - move `share/` to `lib/share/`
  - change the unit test working pipeline
+ - replace `Editor.registerPackagePath` with `Editor.Package.addPath`
+ - replace `Editor.unregisterPackagePath` with `Editor.Package.removePath`
+ - replace `Editor._packagePathList` with `Editor.Package.paths`
