@@ -1,5 +1,5 @@
 {
-  "name": "test-load-deps",
+  "name": "package-json-broken",
   "version": "0.0.1",
   "description": "A Simple Package Test Fixture",
   "author": "Firebox Technology",
@@ -19,5 +19,6 @@
       "messages": [
       ]
     }
-  }
+  },
+  I am broken
 }

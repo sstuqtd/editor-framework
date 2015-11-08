@@ -18,3 +18,4 @@
  - replace `Editor.registerPackagePath` with `Editor.Package.addPath`
  - replace `Editor.unregisterPackagePath` with `Editor.Package.removePath`
  - replace `Editor._packagePathList` with `Editor.Package.paths`
+ - support load dependent packages through `pkgDependencies` in `package.json`
