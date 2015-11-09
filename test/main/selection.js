@@ -1,27 +1,27 @@
 'use strict';
 
 describe('Editor.Selection', function () {
+  Helper.run({
+    selection: ['normal', 'special'],
+  });
+
+  // TODO: I should move all this to Helper.run
+  let ipcSelected;
+  let ipcUnSelected;
+  let ipcActivated;
+  let ipcDeactivated;
+
   before(function () {
-    Editor.init({
-      selection: ['normal', 'special'],
-    });
+    ipcSelected = Helper.sendToAll.withArgs('selection:selected');
+    ipcUnSelected = Helper.sendToAll.withArgs('selection:unselected');
+    ipcActivated = Helper.sendToAll.withArgs('selection:activated');
+    ipcDeactivated = Helper.sendToAll.withArgs('selection:deactivated');
   });
-
-  after(function () {
-    Editor.reset();
-  });
-
-  // TODO: should move these to Helper.init
-  const spy = sinon.spy(Editor,'sendToAll');
-  const ipcSelected = spy.withArgs('selection:selected');
-  const ipcUnSelected = spy.withArgs('selection:unselected');
-  const ipcActivated = spy.withArgs('selection:activated');
-  const ipcDeactivated = spy.withArgs('selection:deactivated');
 
   describe('Editor.Selection.select', function () {
     beforeEach(function () {
       Editor.Selection.clear('normal');
-      spy.reset();
+      Helper.reset();
     });
 
     it('should work for simple case', function (done) {
@@ -181,7 +181,7 @@ describe('Editor.Selection', function () {
       Editor.Selection.select('normal', 'a' );
       Editor.Selection.select('normal', 'b' );
 
-      expect( spy.args ).to.be.deep.eq([
+      expect( Helper.sendToAll.args ).to.be.deep.eq([
         ['_selection:selected', 'normal', ['a'], { '__is_ipc_option__': true, 'self-excluded': true } ],
         ['selection:selected', 'normal', ['a'] ],
 
@@ -214,7 +214,7 @@ describe('Editor.Selection', function () {
   describe('Editor.Selection.unselect', function () {
     beforeEach(function () {
       Editor.Selection.clear('normal');
-      spy.reset();
+      Helper.reset();
     });
 
     it('should work for simple case', function (done) {
@@ -253,7 +253,7 @@ describe('Editor.Selection', function () {
   describe('Editor.Selection.hover', function () {
     beforeEach(function () {
       Editor.Selection.clear('normal');
-      spy.reset();
+      Helper.reset();
     });
 
     it('should store the last hover item', function (done) {
@@ -279,7 +279,7 @@ describe('Editor.Selection', function () {
       Editor.Selection.hover('normal','b');
       Editor.Selection.hover('normal',null);
 
-      expect(spy.args).to.be.deep.eq([
+      expect(Helper.sendToAll.args).to.be.deep.eq([
         ['_selection:hoverin', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
         ['selection:hoverin', 'normal', 'a' ],
 
@@ -300,7 +300,7 @@ describe('Editor.Selection', function () {
   describe('Editor.Selection.setContext', function () {
     beforeEach(function () {
       Editor.Selection.clear('normal');
-      spy.reset();
+      Helper.reset();
     });
 
     it('should store the context', function (done) {
@@ -320,7 +320,7 @@ describe('Editor.Selection', function () {
     beforeEach(function () {
       Editor.Selection.clear('normal');
       Editor.Selection.clear('special');
-      spy.reset();
+      Helper.reset();
     });
 
     it('should change global active call selection confirmed in different type', function (done) {
