@@ -3,15 +3,23 @@
 const Fs = require('fire-fs');
 const Path = require('fire-path');
 const Async = require('async');
-const App = require('app');
-
-// NOTE: we must remove listeners for this to make sure tests can continue
-App.removeAllListeners('window-all-closed');
 
 //
 describe('Editor.Package', function () {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
   const spy = sinon.spy(Editor,'sendToWindows');
+
+  before(function () {
+    Editor.init({
+      'package-search-path': [
+        Editor.url('editor-framework://test/fixtures/packages/')
+      ],
+    });
+  });
+
+  after(function () {
+    Editor.reset();
+  });
 
   describe('fixtures/packages/simple', function () {
     const path = Path.join(testPackages,'simple');
@@ -155,7 +163,6 @@ describe('Editor.Package', function () {
     const packageLoaded = spy.withArgs('package:loaded');
 
     beforeEach(function (done) {
-      Editor.Package.addPath(Editor.url('editor-framework://test/fixtures/packages/'));
       spy.reset();
       done();
     });
