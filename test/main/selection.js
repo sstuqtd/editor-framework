@@ -2,20 +2,7 @@
 
 describe('Editor.Selection', function () {
   Helper.run({
-    selection: ['normal', 'special'],
-  });
-
-  // TODO: I should move all this to Helper.run
-  let ipcSelected;
-  let ipcUnSelected;
-  let ipcActivated;
-  let ipcDeactivated;
-
-  before(function () {
-    ipcSelected = Helper.sendToAll.withArgs('selection:selected');
-    ipcUnSelected = Helper.sendToAll.withArgs('selection:unselected');
-    ipcActivated = Helper.sendToAll.withArgs('selection:activated');
-    ipcDeactivated = Helper.sendToAll.withArgs('selection:deactivated');
+    'selection': ['normal', 'special'],
   });
 
   describe('Editor.Selection.select', function () {
@@ -125,44 +112,54 @@ describe('Editor.Selection', function () {
     });
 
     it('should send ipc selection:selected when select item', function (done) {
+      Helper.spyChannels( 'sendToAll', [
+        'selection:selected',
+        'selection:unselected',
+      ]);
+
       //
       Editor.Selection.select('normal', 'a' );
 
-      assert( ipcSelected.calledWith('selection:selected', 'normal', ['a']) );
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'a') );
+      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['a']) );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'a') );
 
       //
       Editor.Selection.select('normal', 'b' );
 
-      assert( ipcUnSelected.calledWith('selection:unselected', 'normal', ['a']) );
-      assert( ipcSelected.calledWith('selection:selected', 'normal', ['b']) );
-      assert( ipcDeactivated.calledWith('selection:deactivated', 'normal', 'a') );
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'b') );
+      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['a']) );
+      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['b']) );
+      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'a') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
 
       //
       Editor.Selection.select('normal', ['c','d'] );
 
-      assert( ipcUnSelected.calledWith('selection:unselected', 'normal', ['b']) );
-      assert( ipcSelected.calledWith('selection:selected', 'normal', ['c','d']) );
-      assert( ipcDeactivated.calledWith('selection:deactivated', 'normal', 'b') );
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
+      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['b']) );
+      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['c','d']) );
+      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'b') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
       //
       Editor.Selection.select('normal', ['a','b'] );
 
-      assert( ipcUnSelected.calledWith('selection:unselected', 'normal', ['c','d']) );
-      assert( ipcSelected.calledWith('selection:selected', 'normal', ['a','b']) );
-      assert( ipcDeactivated.calledWith('selection:deactivated', 'normal', 'd') );
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'b') );
+      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['c','d']) );
+      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['a','b']) );
+      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
 
       //
-      expect( ipcSelected.callCount ).to.be.equal(4);
-      expect( ipcUnSelected.callCount ).to.be.equal(3);
+      expect( Helper.channel('sendToAll','selection:selected').callCount ).to.be.equal(4);
+      expect( Helper.channel('sendToAll','selection:unselected').callCount ).to.be.equal(3);
 
       done();
     });
 
     it('should not send ipc selection:selected when the item already selected', function (done) {
+      Helper.spyChannels( 'sendToAll', [
+        'selection:selected',
+      ]);
+      let ipcSelected = Helper.channel('sendToAll','selection:selected');
+
       Editor.Selection.select('normal', 'a', false );
       Editor.Selection.select('normal', 'a', false );
       Editor.Selection.select('normal', 'b', false );
@@ -239,12 +236,12 @@ describe('Editor.Selection', function () {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.unselect('normal',['d','e']);
 
-      assert( ipcUnSelected.calledWith('selection:unselected', 'normal', ['d']) );
-      assert( ipcDeactivated.calledWith('selection:deactivated', 'normal', 'd') );
+      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['d']) );
+      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
 
       Editor.Selection.unselect('normal',['b','c']);
-      assert( ipcUnSelected.calledWith('selection:unselected', 'normal', ['b','c']) );
-      assert( ipcDeactivated.calledWith('selection:deactivated', 'normal', 'c') );
+      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['b','c']) );
+      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'c') );
 
       done();
     });
@@ -352,16 +349,19 @@ describe('Editor.Selection', function () {
     });
 
     it('should send activated and deactivated ipc message', function (done) {
+      Helper.spyChannels('sendToAll', ['selection:deactivated']);
+      let ipcDeactivated = Helper.channel('sendToAll', 'selection:deactivated');
+
       Editor.Selection.select('normal', ['a','b','c','d']);
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
       Editor.Selection.select('special', ['a1','b1','c1','d1']);
       assert( !ipcDeactivated.called );
-      assert( ipcActivated.calledWith('selection:activated', 'special', 'd1') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'special', 'd1') );
 
       Editor.Selection.select('normal', ['a','b','c','d']);
       assert( !ipcDeactivated.called );
-      assert( ipcActivated.calledWith('selection:activated', 'normal', 'd') );
+      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
       done();
     });
