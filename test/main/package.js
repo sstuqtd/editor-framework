@@ -7,18 +7,11 @@ const Async = require('async');
 //
 describe('Editor.Package', function () {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
-  const spy = sinon.spy(Editor,'sendToWindows');
 
-  before(function () {
-    Editor.init({
-      'package-search-path': [
-        Editor.url('editor-framework://test/fixtures/packages/')
-      ],
-    });
-  });
-
-  after(function () {
-    Editor.reset();
+  Helper.run({
+    'package-search-path': [
+      Editor.url('editor-framework://test/fixtures/packages/')
+    ],
   });
 
   describe('fixtures/packages/simple', function () {
@@ -45,16 +38,13 @@ describe('Editor.Package', function () {
 
     assert.isTrue( Fs.existsSync(path) );
 
-    const packageLoaded = spy.withArgs('package:loaded');
-    const packageUnloaded = spy.withArgs('package:unloaded');
-
     beforeEach(function () {
-      spy.reset();
+      Helper.reset();
     });
 
     it('should send loaded ipc message', function (done) {
       Editor.Package.load(path, function () {
-        assert( packageLoaded.calledWith('package:loaded', 'simple') );
+        assert( Helper.sendToWindows.calledWith('package:loaded', 'simple') );
         done();
       });
     });
@@ -64,7 +54,7 @@ describe('Editor.Package', function () {
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ], function () {
-        assert( packageUnloaded.calledWith('package:unloaded', 'simple') );
+        assert( Helper.sendToWindows.calledWith('package:unloaded', 'simple') );
         done();
       });
     });
@@ -160,10 +150,8 @@ describe('Editor.Package', function () {
     const path2 = Path.join(testPackages,'dep-01');
     const path3 = Path.join(testPackages,'dep-02');
 
-    const packageLoaded = spy.withArgs('package:loaded');
-
     beforeEach(function (done) {
-      spy.reset();
+      Helper.reset();
       done();
     });
 
@@ -186,6 +174,11 @@ describe('Editor.Package', function () {
     });
 
     it('should load dependencies first', function (done) {
+      Helper.spyChannels( 'sendToWindows', [
+        'package:loaded',
+      ]);
+      let packageLoaded = Helper.channel('sendToWindows','package:loaded');
+
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);
         assert( packageLoaded.getCall(0).calledWith('package:loaded', 'dep-02') );
