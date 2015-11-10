@@ -31,7 +31,7 @@
     "fire-fs": "0.2.1",
     "fire-path": "0.1.7",
     "fire-url": "0.1.6",
-    "globby": "3.0.1",
+    "globby": "2.1.0",
     "gulp": "3.9.0",
     "gulp-babel": "5.2.1",
     "gulp-less": "3.0.3",
