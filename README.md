@@ -8,7 +8,7 @@
 [![Dependency Status](https://david-dm.org/fireball-x/editor-framework.svg)](https://david-dm.org/fireball-x/editor-framework)
 [![devDependency Status](https://david-dm.org/fireball-x/editor-framework/dev-status.svg)](https://david-dm.org/fireball-x/editor-framework#info=devDependencies)
 
-Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and io.js.
+Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
 The framework is based on top of [Electron](http://github.com/atom/electron) and [Polymer](http://github.com/polymer/polymer).
 It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
@@ -20,7 +20,7 @@ It is designed for full extensibility. In the core level (main process), we achi
 
 ## Prerequisite
 
-- Install [node.js v0.12+](https://nodejs.org/) or [io.js v2.0+](https://iojs.org/en/index.html)
+- Install [node.js v0.12+](https://nodejs.org/) or [node.js v4.0+](https://nodejs.org)
 - Install [gulp](https://github.com/gulpjs/gulp) command line tool
 - Install [bower](http://bower.io/) command line tool
 
