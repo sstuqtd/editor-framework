@@ -37,7 +37,7 @@ Async.eachSeries([
   Async.eachSeries(info.files, function(file, done) {
     console.log( Chalk.magenta( 'Start test: ') + Chalk.cyan( Path.relative(cwd, file) ) );
 
-    let args = [];
+    var args = [];
     if ( info.renderer ) {
       args = [cwd, 'test', '--renderer', '--reporter', 'spec', file];
     } else {
