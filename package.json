@@ -40,8 +40,12 @@
     "highlight.js": "8.7.0",
     "lodash": "3.10.1",
     "mocha": "2.3.2",
+    "mousetrap": "1.5.3",
+    "numeral": "1.5.3",
+    "pixi.js": "3.0.8",
     "semver": "5.0.3",
     "sinon": "1.16.1",
+    "svg.js": "2.2.0",
     "winston": "1.0.1"
   },
   "devDependencies": {
