@@ -22,7 +22,6 @@
     "Editor",
     "EditorUI",
     "Helper",
-    "Mousetrap",
     "Polymer",
     "sinon",
     "after",
