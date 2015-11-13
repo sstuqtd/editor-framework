@@ -4,7 +4,7 @@ describe('focusable', function () {
   var targetEL = null;
 
   beforeEach(function ( done ) {
-    Polymer.Base.importHref('editor-framework://test/renderer/behaviors.html', function () {
+    Polymer.Base.importHref('editor-framework://test/fixtures/behaviors.html', function () {
       targetEL = document.createElement('test-focusable');
       document.body.appendChild(targetEL);
       done();
