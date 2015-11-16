@@ -16,7 +16,8 @@ To make multiple windows communicate easily, Editor Framework extends [Electronâ
 
 It is designed for full extensibility. In the core level (main process), we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the page level (renderer process), we use HTML5 Web Component standards and include the Polymer solution by default. The user can extend the widgets and panels, then refresh the page to apply the changes.
 
-![screen shot](https://cloud.githubusercontent.com/assets/174891/8265547/dd7c8412-172f-11e5-90cc-b12a91a5c73c.png)
+![screen shot](https://cloud.githubusercontent.com/assets/174891/11186940/24a90d74-8cbf-11e5-9ea5-fc2610ebbd79.png)
+
 
 ## Prerequisite
 
