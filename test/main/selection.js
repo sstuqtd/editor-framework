@@ -367,4 +367,34 @@ describe('Editor.Selection', function () {
     });
   });
 
+  describe('Local Selection', function () {
+    let local = Editor.Selection.local();
+
+    beforeEach(function () {
+      local.clear();
+      Helper.reset();
+    });
+
+    it('should not send ipc message', function (done) {
+      Helper.spyChannels( 'sendToAll', [
+        'selection:selected',
+        'selection:unselected',
+      ]);
+
+      //
+      local.select('a');
+      expect(local.selection).to.be.deep.eq(['a']);
+      expect(local.lastActive).to.be.eq('a');
+
+      local.select('b');
+      expect(local.selection).to.be.deep.eq(['b']);
+      expect(local.lastActive).to.be.eq('b');
+
+      assert( Helper.sendToAll.neverCalledWith('selection:selected') );
+      assert( Helper.sendToAll.neverCalledWith('selection:unselected') );
+
+      done();
+    });
+  });
+
 });
