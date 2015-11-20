@@ -5,11 +5,13 @@ describe('Editor.Selection', function () {
     'selection': ['normal', 'special'],
   });
 
+  beforeEach(function () {
+    Editor.Selection.clear('normal');
+    Editor.Selection.clear('special');
+    Helper.reset();
+  });
+
   describe('Editor.Selection.select', function () {
-    beforeEach(function () {
-      Editor.Selection.clear('normal');
-      Helper.reset();
-    });
 
     it('should work for simple case', function (done) {
       Editor.Selection.select('normal', 'a' );
@@ -209,11 +211,6 @@ describe('Editor.Selection', function () {
   });
 
   describe('Editor.Selection.unselect', function () {
-    beforeEach(function () {
-      Editor.Selection.clear('normal');
-      Helper.reset();
-    });
-
     it('should work for simple case', function (done) {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.unselect('normal','c');
@@ -248,11 +245,6 @@ describe('Editor.Selection', function () {
   });
 
   describe('Editor.Selection.hover', function () {
-    beforeEach(function () {
-      Editor.Selection.clear('normal');
-      Helper.reset();
-    });
-
     it('should store the last hover item', function (done) {
 
       Editor.Selection.hover('normal','a');
@@ -295,11 +287,6 @@ describe('Editor.Selection', function () {
   });
 
   describe('Editor.Selection.setContext', function () {
-    beforeEach(function () {
-      Editor.Selection.clear('normal');
-      Helper.reset();
-    });
-
     it('should store the context', function (done) {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.setContext('normal','e');
@@ -313,13 +300,30 @@ describe('Editor.Selection', function () {
     });
   });
 
-  describe('Global Active', function () {
-    beforeEach(function () {
-      Editor.Selection.clear('normal');
-      Editor.Selection.clear('special');
-      Helper.reset();
-    });
+  describe('Editor.Selection.clear', function () {
+    it('should not send changed ipc message when clear multiple times', function (done) {
+      let ipcChanged = Helper.sendToAll.withArgs('selection:changed');
 
+      Editor.Selection.clear('normal');
+      Editor.Selection.clear('normal');
+      Editor.Selection.clear('normal');
+      Editor.Selection.clear('normal');
+      expect( ipcChanged.callCount ).to.eql(0);
+
+      Editor.Selection.select('normal',['a','b','c','d']);
+      expect( ipcChanged.callCount ).to.eql(1);
+
+      Editor.Selection.clear('normal');
+      expect( ipcChanged.callCount ).to.eql(2);
+
+      Editor.Selection.clear('normal');
+      expect( ipcChanged.callCount ).to.eql(2);
+
+      done();
+    });
+  });
+
+  describe('Global Active', function () {
     it('should change global active call selection confirmed in different type', function (done) {
       Editor.Selection.select('normal', ['a','b','c','d']);
       expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
@@ -372,7 +376,6 @@ describe('Editor.Selection', function () {
 
     beforeEach(function () {
       local.clear();
-      Helper.reset();
     });
 
     it('should not send ipc message', function (done) {
