@@ -22,3 +22,4 @@
  - Add `Editor.init` and `Editor.reset` which can help register environment quickly
  - replace `panel:open` ipc to `panel:run` in renderer process
  - add `panel-ready` function in panel element, it will invoked when panel been totally setup
+ - add `Editor.Undo` module

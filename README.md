@@ -202,7 +202,7 @@ It will generate the API document in `./apidocs`, you can browse it by open `./a
    - Selection cached and synced among windows
    - User can register his own selection type
    - Automatically filtering selections
- - Global Undo and Redo (under development)
+ - Global Undo and Redo
  - Enhance the native Dialog (under development)
    - Remember dialog last edit position
  - Enhance IPC Programming Experience
