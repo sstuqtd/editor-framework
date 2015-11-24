@@ -69,8 +69,8 @@ The first time you run this task (this task is included in `npm install` process
 ```js
 // local-setting.json
 {
-    "mirror": "china" // this value can be 'china' or 'global'
-                      // depending on your answer
+  "mirror": "china" // this value can be 'china' or 'global'
+                    // depending on your answer
 }
 ```
 
