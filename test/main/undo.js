@@ -416,4 +416,40 @@ describe('Editor.Undo', function () {
     done();
   });
 
+  it('should work with collapse', function (done) {
+    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.commit();
+
+    _foo.a = 'a';
+
+    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.commit();
+
+    _foo.b = 'b';
+
+    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.commit();
+
+    _foo.c = 'c';
+
+    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.commit();
+
+    //
+    Editor.Undo.collapseTo(1);
+    expect(Editor.Undo._global._groups.length).to.be.eql(2);
+    expect(Editor.Undo.dirty()).to.be.eql(true);
+
+    Editor.Undo.undo();
+    expect(_foo).to.be.deep.eql({});
+    Editor.Undo.redo();
+    expect(_foo).to.be.deep.eql({
+      a: 'a',
+      b: 'b',
+      c: 'c',
+    });
+
+    done();
+  });
+
 });
