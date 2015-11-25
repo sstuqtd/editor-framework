@@ -23,3 +23,4 @@
  - replace `panel:open` ipc to `panel:run` in renderer process
  - add `panel-ready` function in panel element, it will invoked when panel been totally setup
  - add `Editor.Undo` module
+ - support `path` when define a menu template
