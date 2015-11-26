@@ -3,20 +3,20 @@
 let _foo = {};
 class FooCmd extends Editor.Undo.Command {
   undo () {
-    _foo = JSON.parse(this.info.json);
+    _foo = JSON.parse(this.info.before);
   }
   redo () {
-    _foo = JSON.parse(this.info.json);
+    _foo = JSON.parse(this.info.after);
   }
 }
 
 let _bar = {};
 class BarCmd extends Editor.Undo.Command {
   undo () {
-    _bar = JSON.parse(this.info.json);
+    _bar = JSON.parse(this.info.before);
   }
   redo () {
-    _bar = JSON.parse(this.info.json);
+    _bar = JSON.parse(this.info.after);
   }
 }
 
@@ -44,51 +44,45 @@ describe('Editor.Undo', function () {
   });
 
   it('should add the foo commands', function (done) {
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    let before = JSON.stringify(_foo);
     _foo.a = 'a';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.c = 'c';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
     // ----------
 
-    expect( Editor.Undo._global._groups.length ).to.be.eql(4);
-    expect( Editor.Undo._global._groups[2]._commands[0].info.json ).to.be.eql(JSON.stringify({
-      a: 'a', b: 'b'
+    expect( Editor.Undo._global._groups.length ).to.be.eql(3);
+    expect( Editor.Undo._global._groups[2]._commands[0].info.after ).to.be.eql(JSON.stringify({
+      a: 'a', b: 'b', c: 'c'
     }));
 
     done();
   });
 
   it('should undo the foo object correctly', function (done) {
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    let before = JSON.stringify(_foo);
     _foo.a = 'a';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.c = 'c';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
     // ----------
@@ -118,22 +112,19 @@ describe('Editor.Undo', function () {
 
 
   it('should redo the foo object correctly', function (done) {
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    let before = JSON.stringify(_foo);
     _foo.a = 'a';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.c = 'c';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
     // ----------
@@ -183,40 +174,33 @@ describe('Editor.Undo', function () {
   });
 
   it('should undo or redo different command in order', function (done) {
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    let before = JSON.stringify(_foo);
     _foo.a = 'a';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
     Editor.Undo.commit();
 
-    _foo.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
     // undo 4
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
+    before = JSON.stringify(_foo);
+    _foo.b = 'b';
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
     Editor.Undo.commit();
-
-    _bar.a = 'a';
 
     // undo 3
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
-    Editor.Undo.commit();
-    // undo 2
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    before = JSON.stringify(_bar);
+    _bar.a = 'a';
+    Editor.Undo.add('bar', { before: before, after: JSON.stringify(_bar) } );
     Editor.Undo.commit();
 
+    // undo 2
+    before = JSON.stringify(_foo);
     _foo.c = 'c';
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
+    Editor.Undo.commit();
 
     // undo 1
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    before = JSON.stringify(_foo);
     _foo.d = 'd';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
     Editor.Undo.commit();
 
     // ----------
@@ -260,11 +244,18 @@ describe('Editor.Undo', function () {
       b: 'b',
     });
     expect(_bar).to.be.deep.eql({
-      a: 'a',
     });
 
     // undo 4
     Editor.Undo.undo();
+    expect(_foo).to.be.deep.eql({
+      a: 'a',
+    });
+    expect(_bar).to.be.deep.eql({
+    });
+
+    // redo 1
+    Editor.Undo.redo();
     expect(_foo).to.be.deep.eql({
       a: 'a',
       b: 'b',
@@ -272,7 +263,7 @@ describe('Editor.Undo', function () {
     expect(_bar).to.be.deep.eql({
     });
 
-    // redo 1
+    // redo 2
     Editor.Undo.redo();
     expect(_foo).to.be.deep.eql({
       a: 'a',
@@ -287,30 +278,29 @@ describe('Editor.Undo', function () {
 
   it('should undo or redo batched command in correctly', function (done) {
     // undo 3
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
-    Editor.Undo.commit();
-
+    let beforeF = JSON.stringify(_foo);
+    let beforeB = JSON.stringify(_bar);
     _foo.a = 'a';
+    Editor.Undo.add('foo', { before: beforeF, after: JSON.stringify(_foo) } );
+    Editor.Undo.add('bar', { before: beforeB, after: JSON.stringify(_bar) } );
+    Editor.Undo.commit();
 
     // undo 2
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
-    Editor.Undo.commit();
-
+    beforeF = JSON.stringify(_foo);
+    beforeB = JSON.stringify(_bar);
     _foo.b = 'b';
     _bar.a = 'a';
-
-    // undo 1
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
+    Editor.Undo.add('foo', { before: beforeF, after: JSON.stringify(_foo) } );
+    Editor.Undo.add('bar', { before: beforeB, after: JSON.stringify(_bar) } );
     Editor.Undo.commit();
 
+    // undo 1
+    beforeF = JSON.stringify(_foo);
+    beforeB = JSON.stringify(_bar);
     _foo.c = 'c';
     _bar.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.add('bar', { json: JSON.stringify(_bar) } );
+    Editor.Undo.add('foo', { before: beforeF, after: JSON.stringify(_foo) } );
+    Editor.Undo.add('bar', { before: beforeB, after: JSON.stringify(_bar) } );
     Editor.Undo.commit();
 
     // ----------
@@ -385,19 +375,19 @@ describe('Editor.Undo', function () {
     expect(Editor.Undo.dirty()).to.be.deep.eql(false);
 
     // 1
-    Editor.Undo.add('dummy' );
+    Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
     expect(Editor.Undo.dirty()).to.be.deep.eql(false);
 
     // 2
-    Editor.Undo.add('dummy' );
+    Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
     expect(Editor.Undo.dirty()).to.be.deep.eql(false);
 
     // 3
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: {}, after: {} } );
     Editor.Undo.commit();
 
     expect(Editor.Undo.dirty()).to.be.deep.eql(true);
@@ -407,8 +397,8 @@ describe('Editor.Undo', function () {
     expect(Editor.Undo.dirty()).to.be.deep.eql(false);
 
     // 5
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.add('dummy' );
+    Editor.Undo.add('foo', { before: {}, after: {} } );
+    Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
     expect(Editor.Undo.dirty()).to.be.deep.eql(true);
@@ -417,27 +407,24 @@ describe('Editor.Undo', function () {
   });
 
   it('should work with collapse', function (done) {
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
-    Editor.Undo.commit();
-
+    let before = JSON.stringify(_foo);
     _foo.a = 'a';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.b = 'b';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
+    before = JSON.stringify(_foo);
     _foo.c = 'c';
-
-    Editor.Undo.add('foo', { json: JSON.stringify(_foo) } );
+    Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
     Editor.Undo.commit();
 
     //
-    Editor.Undo.collapseTo(1);
-    expect(Editor.Undo._global._groups.length).to.be.eql(2);
+    Editor.Undo.collapseTo(0);
+    expect(Editor.Undo._global._groups.length).to.be.eql(1);
     expect(Editor.Undo.dirty()).to.be.eql(true);
 
     Editor.Undo.undo();
