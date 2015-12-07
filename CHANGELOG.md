@@ -24,3 +24,6 @@
  - add `panel-ready` function in panel element, it will invoked when panel been totally setup
  - add `Editor.Undo` module
  - support `path` when define a menu template
+ - add `Editor.Menu.update` which can update a submenu without change its position
+ - add `Editor.Menu.walk` which can walking the menu template tree
+ - add `Editor.Menu.register` and add `Editor.Menu.getMenu`, useful when caching a menu template
