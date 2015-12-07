@@ -101,6 +101,111 @@ describe('Editor.Menu', function () {
     done();
   });
 
+  it('should be able to update exists sub-menu at root', function (done) {
+    let tmpl = [
+      {
+        label: 'foo',
+        submenu: [
+          {
+            label: 'foo.01',
+          },
+          {
+            label: 'foo.02',
+          },
+        ],
+      },
+
+      {
+        label: 'bar',
+        submenu: [
+          {
+            label: 'bar.01',
+          },
+          {
+            label: 'bar.02',
+          },
+        ],
+      },
+    ];
+
+    let testMenu = new Editor.Menu(tmpl);
+    testMenu.update( 'foo', [
+      {
+        label: 'foo.01.new',
+      },
+      {
+        label: 'foo.02.new',
+      },
+      {
+        label: 'foo.03.new',
+      },
+    ]);
+
+    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('foo.01.new');
+    expect( testMenu.nativeMenu.items[0].submenu.items[1].label ).to.equal('foo.02.new');
+    expect( testMenu.nativeMenu.items[0].submenu.items[2].label ).to.equal('foo.03.new');
+    expect( testMenu.nativeMenu.items[1].label ).to.equal('bar');
+
+    done();
+  });
+
+  it('should be able to update exists sub-menu at path', function (done) {
+    let tmpl = [
+      {
+        label: 'foo',
+        submenu: [
+          {
+            label: 'foo.01',
+            submenu: [
+              {
+                label: 'foo.01.a',
+              },
+              {
+                label: 'foo.01.b',
+              },
+            ]
+          },
+          {
+            label: 'foo.02',
+          },
+        ],
+      },
+
+      {
+        label: 'bar',
+        submenu: [
+          {
+            label: 'bar.01',
+          },
+          {
+            label: 'bar.02',
+          },
+        ],
+      },
+    ];
+
+    let testMenu = new Editor.Menu(tmpl);
+    testMenu.update( 'foo/foo.01', [
+      {
+        label: 'foo.01.a.new',
+      },
+      {
+        label: 'foo.01.b.new',
+      },
+      {
+        label: 'foo.01.c.new',
+      },
+    ]);
+
+    let fooFoo01 = testMenu.nativeMenu.items[0].submenu.items[0];
+    expect( fooFoo01.submenu.items[0].label ).to.equal('foo.01.a.new');
+    expect( fooFoo01.submenu.items[1].label ).to.equal('foo.01.b.new');
+    expect( fooFoo01.submenu.items[2].label ).to.equal('foo.01.c.new');
+    expect( testMenu.nativeMenu.items[0].submenu.items[1].label ).to.equal('foo.02');
+
+    done();
+  });
+
   it('should be able to parse template with path', function (done) {
     let tmpl = [
       { label: 'foo', type: 'submenu', submenu: [] },
