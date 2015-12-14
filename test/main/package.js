@@ -115,6 +115,33 @@ describe('Editor.Package', function () {
     });
   });
 
+  describe('fixtures/packages/localize', function () {
+    const path = Path.join(testPackages,'localize');
+
+    it('should load and unload en i18n file', function (done) {
+      Editor.lang = 'en';
+      Editor.Package.load(path, () => {
+        expect(Editor.T('localize.search')).to.equal('Search');
+        expect(Editor.T('localize.edit')).to.equal('Edit');
+
+        Editor.Package.unload(path, () => {
+          expect(Editor.i18n._phrases().localize).to.eql(undefined);
+          done();
+        });
+      });
+    });
+
+    it('should load zh i18n file', function (done) {
+      Editor.lang = 'zh';
+      Editor.Package.load(path, () => {
+        expect(Editor.T('localize.search')).to.equal('搜索');
+        expect(Editor.T('localize.edit')).to.equal('编辑');
+
+        Editor.Package.unload(path, done);
+      });
+    });
+  });
+
   describe('fixtures/packages/host-not-exists', function () {
     const path = Path.join(testPackages,'host-not-exists');
 

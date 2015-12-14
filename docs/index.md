@@ -21,3 +21,4 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   * [Register Shortcuts](/editor/packages/register-shortcuts)
   * [Create Widgets](/editor/packages/create-widgets)
   * [Load and Build Packages](/editor/packages/load-and-build)
+  * [i18n](/editor/packages/i18n)
