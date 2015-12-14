@@ -27,3 +27,4 @@
  - add `Editor.Menu.update` which can update a submenu without change its position
  - add `Editor.Menu.walk` which can walking the menu template tree
  - add `Editor.Menu.register` and add `Editor.Menu.getMenu`, useful when caching a menu template
+ - add i18n solution
