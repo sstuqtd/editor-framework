@@ -43,6 +43,7 @@
     "mousetrap": "1.5.3",
     "node-polyglot": "1.0.0",
     "numeral": "1.5.3",
+    "os-locale": "1.4.0",
     "pixi.js": "3.0.8",
     "semver": "5.0.3",
     "sinon": "1.16.1",
