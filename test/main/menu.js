@@ -206,6 +206,41 @@ describe('Editor.Menu', function () {
     done();
   });
 
+  it('should not add dev template in release mode', function (done) {
+    let oldDev = Editor.isDev;
+    Editor.isDev = false;
+
+    let tmpl = [
+      {
+        label: 'foo',
+        submenu: [
+        ],
+        dev: true,
+      },
+
+      {
+        label: 'bar',
+        submenu: [
+          {
+            label: 'bar.01',
+            dev: true,
+          },
+          {
+            label: 'bar.02',
+          },
+        ],
+      },
+    ];
+
+    let testMenu = new Editor.Menu(tmpl);
+
+    expect( testMenu.nativeMenu.items.length ).to.equal(1);
+    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('bar.02');
+
+    Editor.isDev = oldDev;
+    done();
+  });
+
   it('should be able to parse template with path', function (done) {
     let tmpl = [
       { label: 'foo', type: 'submenu', submenu: [] },
