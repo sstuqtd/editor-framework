@@ -3,6 +3,8 @@
 const Electron = require('electron');
 const BrowserWindow = Electron.BrowserWindow;
 
+const Async = require('async');
+
 //
 describe('Editor.Ipc', function () {
   Helper.run({
@@ -10,27 +12,47 @@ describe('Editor.Ipc', function () {
   });
 
   let ipc = new Editor.Ipc();
-  let win = new Editor.Window();
 
   afterEach(function () {
     ipc.clear();
   });
 
   describe('Editor.sendToCore', function () {
-    it('should work for simple case', function (done) {
-      win.load('editor-framework://test/fixtures/ipc-main/send2core-simple.html');
+    it('should work in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
+      this.timeout(0);
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
+        win.close();
         done();
       });
     });
 
+    it('should work in main process', function (done) {
+      ipc.on('foobar:say-hello-no-param', (event) => {
+        expect(event.sender).to.eql('main');
+      });
+
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
+        expect(event.sender).to.eql('main');
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        done();
+      });
+
+      Editor.sendToCore('foobar:say-hello-no-param', 'foo', 'bar');
+      Editor.sendToCore('foobar:say-hello', 'foo', 'bar');
+    });
+
     it('should send ipc in order', function (done) {
-      win.load('editor-framework://test/fixtures/ipc-main/send2core-in-order.html');
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2core-in-order.html');
 
       let idx = 0;
 
@@ -60,20 +82,66 @@ describe('Editor.Ipc', function () {
         expect(idx).to.eql(4);
         idx += 1;
 
+        win.close();
         done();
       });
 
     });
+  });
 
-    it('should work in main process', function (done) {
-      ipc.on('foobar:say-hello', (event) => {
-        console.log(event);
+  describe('Editor.sendToWindows', function () {
+    it('should send message to all windows in main process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
 
-        done();
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+
+      Async.each([win, win2], (w, next) => {
+        w.nativeWin.webContents.on('dom-ready', () => {
+          next();
+        });
+      }, () => {
+        Editor.sendToWindows('foobar:say-hello', 'foo', 'bar');
       });
 
-      Editor.sendToCore('foobar:say-hello');
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        cnt += 1;
+        if ( cnt === 2 ) {
+          win.close();
+          win2.close();
+
+          done();
+        }
+      });
     });
+
+    it('should send message to all windows in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2wins-simple.html');
+
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        cnt += 1;
+        if ( cnt === 2 ) {
+          win.close();
+          win2.close();
+
+          done();
+        }
+      });
+    });
+
   });
 
 });
