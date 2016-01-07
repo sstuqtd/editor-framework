@@ -142,6 +142,158 @@ describe('Editor.Ipc', function () {
       });
     });
 
+    it('should send message to window exclude self', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2wins-self-excluded.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win2.nativeWin);
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        win.close();
+        win2.close();
+
+        done();
+      });
+    });
+
+  });
+
+  describe('Editor.sendToAll', function () {
+    it('should send message to all process in main process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+        Editor.sendToCore('foobar:reply', foo, bar);
+      });
+
+      Async.each([win, win2], (w, next) => {
+        w.nativeWin.webContents.on('dom-ready', () => {
+          next();
+        });
+      }, () => {
+        Editor.sendToAll('foobar:say-hello', 'foo', 'bar');
+      });
+
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        cnt += 1;
+        if ( cnt === 3 ) {
+          win.close();
+          win2.close();
+
+          done();
+        }
+      });
+    });
+
+    it('should send message to all process in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
+
+      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+        Editor.sendToCore('foobar:reply', foo, bar);
+      });
+
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        cnt += 1;
+        if ( cnt === 3 ) {
+          win.close();
+          win2.close();
+
+          done();
+        }
+      });
+    });
+
+    it('should send message to all process exclude self in main process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+        assert(false, 'Main process should not recieve ipc event');
+        Editor.sendToCore('foobar:reply', foo, bar);
+      });
+
+      Async.each([win, win2], (w, next) => {
+        w.nativeWin.webContents.on('dom-ready', () => {
+          next();
+        });
+      }, () => {
+        Editor.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.selfExcluded);
+      });
+
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        cnt += 1;
+        if ( cnt === 2 ) {
+          win.close();
+          win2.close();
+
+          setTimeout(() => {
+            done();
+          }, 500);
+        }
+      });
+    });
+
+    it('should send message to all process exclude self in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2all-self-excluded.html');
+
+      let win2 = new Editor.Window();
+      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+
+      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+        Editor.sendToCore('foobar:reply', foo, bar);
+      });
+
+      let cnt = 0;
+      ipc.on('foobar:reply', (event, foo, bar) => {
+        if ( event.sender === 'main' ) {
+          cnt += 1;
+          return;
+        }
+
+        cnt += 1;
+
+        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win2.nativeWin);
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        win.close();
+        win2.close();
+
+        if ( cnt === 2 ) {
+          done();
+        }
+      });
+    });
+
   });
 
 });
