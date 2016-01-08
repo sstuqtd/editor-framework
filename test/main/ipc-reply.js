@@ -8,7 +8,7 @@ const BrowserWindow = Electron.BrowserWindow;
 //
 describe('Editor.Ipc Reply', function () {
   Helper.run({
-    'enable-ipc': true,
+    enableIpc: true,
   });
 
   let ipc = new Editor.Ipc();

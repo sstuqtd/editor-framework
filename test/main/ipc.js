@@ -8,7 +8,7 @@ const Async = require('async');
 //
 describe('Editor.Ipc', function () {
   Helper.run({
-    'enable-ipc': true,
+    enableIpc: true,
   });
 
   let ipc = new Editor.Ipc();
