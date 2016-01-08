@@ -35,11 +35,11 @@ describe('Editor.Ipc', function () {
 
     it('should work in main process', function (done) {
       ipc.on('foobar:say-hello-no-param', (event) => {
-        expect(event.sender).to.eql('main');
+        expect(event.senderType).to.eql('main');
       });
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
-        expect(event.sender).to.eql('main');
+        expect(event.senderType).to.eql('main');
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
@@ -274,7 +274,7 @@ describe('Editor.Ipc', function () {
 
       let cnt = 0;
       ipc.on('foobar:reply', (event, foo, bar) => {
-        if ( event.sender === 'main' ) {
+        if ( event.senderType === 'main' ) {
           cnt += 1;
           return;
         }
