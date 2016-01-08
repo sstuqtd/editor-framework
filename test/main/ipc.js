@@ -293,7 +293,6 @@ describe('Editor.Ipc', function () {
         }
       });
     });
-
   });
 
 });
