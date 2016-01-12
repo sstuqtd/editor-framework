@@ -1,13 +1,39 @@
 <script type="text/javascript" src="resizer.js"></script>
 
 <dom-module name="editor-dock">
-    <link rel="import" type="css" href="dock.css">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        box-sizing: border-box;
 
-    <template>
-        <div id="content" class="content fit">
-            <content/>
-        </div>
-    </template>
+        overflow: hidden;
 
-    <script type="text/javascript" src="dock.js"></script>
+        font-size: 14px;
+
+        color: #ddd;
+      }
+
+      .content {
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .content:focus {
+        outline: none;
+      }
+
+      :host([row]) > .content {
+        flex-direction: row;
+      }
+    </style>
+
+    <div id="content" class="content fit">
+      <content><content/>
+    </div>
+  </template>
+
+  <script type="text/javascript" src="dock.js"></script>
 </dom-module>
