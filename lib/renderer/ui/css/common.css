@@ -50,10 +50,3 @@ body {
 ::-webkit-scrollbar-button {
   display: none;
 }
-
-/*TODO: use css variable once chrome support it*/
-editor-tab.active + editor-tab::shadow > span.left-tab-border {
-  display: inline-block;
-  border-left: 1px solid #212121;
-  height: 20px;
-}

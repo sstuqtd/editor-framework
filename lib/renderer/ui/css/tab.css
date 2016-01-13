@@ -9,14 +9,9 @@
 
   border-top: 1px solid #212121;
   height: 20px;
+  margin-left: -1px;
 
   color: #aaa;
-  color: var(--hello-world);
-}
-
-:host(.active) {
-  border-top: 1px solid #212121;
-  height: 22px;
 }
 
 .border {
@@ -38,6 +33,18 @@
 /* the tab 'bar' will keep css:hover state after.                  */
 .border:hover {
   background-color: #555;
+}
+
+span.left-tab-border {
+  display: inline-block;
+  border-left: 1px solid #212121;
+  height: 20px;
+}
+
+span.right-tab-border {
+  display: inline-block;
+  border-left: 1px solid #212121;
+  height: 20px;
 }
 
 .title {
@@ -62,41 +69,29 @@
   height: 16px;
 }
 
+:host(:first-child) {
+  margin-left: 0px;
+}
+
+:host(.active) {
+  border-top: 1px solid #212121;
+  height: 22px;
+}
+
 :host(.active) .border {
   /* border-top: 1px solid rgba(255, 255, 255, 0.2); */
   height: 21px;
   background-color: #474747;
 }
 
+:host(.active[focused]) .border {
+  border-top: 1px solid #09f;
+  border-left: 1px solid #09f;
+  border-right: 1px solid #09f;
+
+  background-color: #058;
+}
+
 :host([out-of-date]) .border, :host(.active[out-of-date]) .border {
   background-color: #700;
-}
-
-span.left-tab-border {
-  /* display: inline-block;          */
-  /* border-left: 1px solid #212121; */
-  /* height: 20px;                   */
-  display: none;
-}
-
-:host(:first-child) span.left-tab-border {
-  display: inline-block;
-  border-left: 1px solid #212121;
-  height: 22px;
-}
-
-span.right-tab-border {
-  display: inline-block;
-  border-left: 1px solid #212121;
-  height: 20px;
-}
-
-:host(.active) span.right-tab-border {
-  display: none;
-}
-
-:host(:last-child) span.right-tab-border {
-  display: inline-block;
-  border-left: 1px solid #212121;
-  height: 20px;
 }
