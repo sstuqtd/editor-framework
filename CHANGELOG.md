@@ -1,9 +1,10 @@
 ## CHANGELOG
 
-### v0.5.0 (developing)
+### v0.4.1 (developing)
 
  - remove polymer
  - use shadow dom for panel content
+ - disableAutoHideCursor by default for Editor.Window
 
 ### v0.4.0
 
