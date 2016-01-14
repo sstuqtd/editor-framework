@@ -1,8 +1,13 @@
 ## CHANGELOG
 
+### v0.5.0 (developing)
+
+ - remove polymer
+ - use shadow dom for panel content
+
 ### v0.4.0
 
- - upgrade to Electron v0.36.2
+ - upgrade to Electron v0.36.3
  - writing the code in es6 (working in progress)
  - define the entry app through `Editor.App.extend` instead of `global.__app`
  - replace `Editor.name` with `Editor.App.name`
