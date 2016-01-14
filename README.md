@@ -1,12 +1,12 @@
 # Editor Framework
 
-[Documentation](https://github.com/fireball-x/editor-framework/tree/master/docs) |
-[Downloads](http://github.com/fireball-x/editor-framework/releases/) |
-[Install](https://github.com/fireball-x/editor-framework#install) |
-[Features](https://github.com/fireball-x/editor-framework#features)
+[Documentation](https://github.com/cocos-creator/editor-framework/tree/master/docs) |
+[Downloads](http://github.com/cocos-creator/editor-framework/releases/) |
+[Install](https://github.com/cocos-creator/editor-framework#install) |
+[Features](https://github.com/cocos-creator/editor-framework#features)
 
-[![Dependency Status](https://david-dm.org/fireball-x/editor-framework.svg)](https://david-dm.org/fireball-x/editor-framework)
-[![devDependency Status](https://david-dm.org/fireball-x/editor-framework/dev-status.svg)](https://david-dm.org/fireball-x/editor-framework#info=devDependencies)
+[![Dependency Status](https://david-dm.org/cocos-creator/editor-framework.svg)](https://david-dm.org/cocos-creator/editor-framework)
+[![devDependency Status](https://david-dm.org/cocos-creator/editor-framework/dev-status.svg)](https://david-dm.org/cocos-creator/editor-framework#info=devDependencies)
 
 Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
@@ -51,7 +51,7 @@ You can also install Editor Framework into your app as a npm package:
 
 ```bash
 # Again, npm script will take care of other dependencies
-npm install fireball-x/editor-framework
+npm install cocos-creator/editor-framework
 ```
 
 **NOTE:** after npm dependencies are installed, we will run `node-gyp rebuild` against all native modules in editor-framework path. Please make sure `node-gyp` works in your command line environment. To learn more about native module building and setting up a `node-gyp` working environment, please check out:
@@ -128,7 +128,7 @@ bower install
  - Chai
  - Sinon
 
-**Note:** We need to install Mocha, Chai in both core and page; that’s why we put them in both Bower and npm dependencies. The core-level tests only run during the development phase, and will not go into the final product. The page-level test environment has integrated with the [tester](https://github.com/fireball-x/tester) package and every developer can use it to test your panels.
+**Note:** We need to install Mocha, Chai in both core and page; that’s why we put them in both Bower and npm dependencies. The core-level tests only run during the development phase, and will not go into the final product. The page-level test environment has integrated with the [tester](https://github.com/fireball-packages/tester) package and every developer can use it to test your panels.
 
 To test the editor-framework itself, just run:
 
@@ -219,7 +219,7 @@ It will generate the API document in `./apidocs`, you can browse it by open `./a
 
 ## License (MIT)
 
-Copyright (c) 2015 Fireball Game Engine
+Copyright (c) 2015 Cocos Creator
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
