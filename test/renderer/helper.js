@@ -100,6 +100,19 @@ describe('Test ghost-tester', function () {
   it('should respond mousemove step', function ( done ) {
     this.timeout(0);
 
+    Helper.mousemove(
+      testEL,
+      'left',
+      { x: 0, y: 0 },
+      { x: 100, y: 100 },
+      1000,
+      done
+    );
+  });
+
+  it('should respond mousemove step', function ( done ) {
+    this.timeout(0);
+
     let results = [
       { x: 0, y: 0 },
       { x: 20, y: 20 },

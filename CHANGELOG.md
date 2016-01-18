@@ -5,6 +5,7 @@
  - remove polymer
  - use shadow dom for panel content
  - disableAutoHideCursor by default for Editor.Window
+ - add `Editor.DevTools` in main process
 
 ### v0.4.0
 
@@ -26,7 +27,7 @@
  - replace `Editor.unregisterPackagePath` with `Editor.Package.removePath`
  - replace `Editor._packagePathList` with `Editor.Package.paths`
  - support load dependent packages through `pkgDependencies` in `package.json`
- - Add `Editor.init` and `Editor.reset` which can help register environment quickly
+ - add `Editor.init` and `Editor.reset` which can help register environment quickly
  - replace `panel:open` ipc to `panel:run` in renderer process
  - add `panel-ready` function in panel element, it will invoked when panel been totally setup
  - add `Editor.Undo` module
