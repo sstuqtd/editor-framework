@@ -1,0 +1,46 @@
+:host {
+  position: relative;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  flex-direction: column;
+
+  color: #ddd;
+  cursor: default;
+}
+
+.border {
+  position: relative;
+  flex: 1;
+  border: 1px solid #212121;
+}
+
+.frame-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+
+  background-color: #474747;
+}
+
+.frame-wrapper:focus {
+  outline: none;
+}
+
+/* :host([focused]) .content {                                      */
+/*     border: 1px solid #f90;                                      */
+/* }                                                                */
+/* :host([focused])::shadow editor-tabs editor-tab.active .border { */
+/*     border-left: 1px solid #f90;                                 */
+/*     border-right: 1px solid #f90;                                */
+/*     border-top: 1px solid #f90;                                  */
+/* }                                                                */

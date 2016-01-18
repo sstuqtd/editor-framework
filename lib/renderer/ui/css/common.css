@@ -50,9 +50,3 @@ body {
 ::-webkit-scrollbar-button {
   display: none;
 }
-
-editor-tab.active + editor-tab span.left-tab-border {
-  display: inline-block;
-  border-left: 1px solid #212121;
-  height: 20px;
-}

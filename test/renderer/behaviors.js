@@ -1,7 +1,7 @@
 'use strict';
 
 describe('focusable', function () {
-  var targetEL = null;
+  let targetEL = null;
 
   beforeEach(function ( done ) {
     Polymer.Base.importHref('editor-framework://test/fixtures/behaviors.html', function () {

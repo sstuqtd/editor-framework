@@ -65,7 +65,7 @@ describe('Test ghost-tester', function () {
       done();
     });
 
-    Helper.mousedown( testEL, null, null, 'right' );
+    Helper.mousedown( testEL, 'right' );
   });
 
   it('should respond mouseup on left button', function ( done ) {
@@ -75,7 +75,7 @@ describe('Test ghost-tester', function () {
       done();
     });
 
-    Helper.mouseup( testEL, null, null, 'left' );
+    Helper.mouseup( testEL, 'left' );
   });
 
   it('should respond dblclick on left button', function ( done ) {
@@ -85,7 +85,7 @@ describe('Test ghost-tester', function () {
       done();
     });
 
-    Helper.dblclick( testEL, null, null, 'left' );
+    Helper.dblclick( testEL, 'left' );
   });
 
   it('should respond mousewheel', function ( done ) {
@@ -94,10 +94,12 @@ describe('Test ghost-tester', function () {
       done();
     });
 
-    Helper.mousewheel( testEL, null, null, 10 );
+    Helper.mousewheel( testEL, null, 10 );
   });
 
-  it('should respond mousemove', function ( done ) {
+  it('should respond mousemove step', function ( done ) {
+    this.timeout(0);
+
     let results = [
       { x: 0, y: 0 },
       { x: 20, y: 20 },
@@ -118,6 +120,6 @@ describe('Test ghost-tester', function () {
       }
     });
 
-    Helper.mousemove( testEL, { x: 0, y: 0 }, { x: 100, y: 100 }, 5, 'left' );
+    Helper.mousemoveStep( testEL, 'left', { x: 0, y: 0 }, { x: 100, y: 100 }, 5 );
   });
 });

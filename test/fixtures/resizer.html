@@ -1,0 +1,29 @@
+<template id="simple">
+  <style>
+    .fit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .hbox {
+      display: flex;
+      flex-direction: row;
+
+      margin: 10px;
+      border: 1px solid #800;
+    }
+
+    .box {
+      border: 1px solid #888;
+    }
+  </style>
+
+  <editor-dock id="container" class="hbox fit" row>
+    <editor-dock class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock class="box" width="300" min-width="200"></editor-dock>
+  </editor-dock>
+</template>
