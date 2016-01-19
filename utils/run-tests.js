@@ -88,4 +88,6 @@ Async.eachSeries([
     // );
     console.log(Chalk.red(` - ${file}`));
   });
+
+  throw new Error(`${failedTests.length} test(s) faield.`);
 });
