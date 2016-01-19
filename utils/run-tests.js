@@ -73,7 +73,7 @@ Async.eachSeries([
     console.log(Chalk.green('================================='));
     console.log(Chalk.green('All tests passed, Congratulations! '));
     console.log(Chalk.green('================================='));
-    return;
+    return 0;
   }
 
   console.log(Chalk.red('================================='));
@@ -88,4 +88,5 @@ Async.eachSeries([
     // );
     console.log(Chalk.red(` - ${file}`));
   });
+  return failedTests.length;
 });
