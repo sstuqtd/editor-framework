@@ -1,10 +1,10 @@
 'use strict';
 
+var Npm = require('npm');
 var Fs = require('fire-fs');
 var Path = require('path');
 var Del = require('del');
 var Chalk = require('chalk');
-var Npmconf = require('npmconf');
 
 var gulp = require('gulp');
 var gulpSequence = require('gulp-sequence');
@@ -12,6 +12,8 @@ var gulpSequence = require('gulp-sequence');
 var git = require('./utils/libs/git.js');
 var pjson = require('./package.json');
 var spawn = require('child_process').spawn;
+
+var _defaultRegistry = 'https://registry.npmjs.org/';
 
 // require tasks
 require('./utils/gulp-tasks/electron-tasks');
@@ -43,21 +45,21 @@ gulp.task('update',
 
 gulp.task('pre-install-npm', ['setup-mirror'], function(cb) {
   var mirror = JSON.parse(Fs.readFileSync('local-setting.json')).mirror;
-  Npmconf.load(function(_, conf) {
-    var registry = Npmconf.defaults.registry;
+  Npm.load({}, function () {
+    var registry = _defaultRegistry;
     if (mirror === 'china') {
       registry = 'http://registry.npm.taobao.org/';
     }
-    conf.set('registry', registry, 'user');
-    conf.save('user', cb);
+    Npm.config.set('registry', registry, 'user');
+    Npm.config.save('user', cb);
   });
 });
 
 gulp.task('post-install-npm', function(cb) {
   // resume the default config when being installed
-  Npmconf.load(function(_, conf) {
-    conf.set('registry', Npmconf.defaults.registry, 'user');
-    conf.save('user', cb);
+  Npm.load({}, function () {
+    Npm.config.set('registry', _defaultRegistry, 'user');
+    Npm.config.save('user', cb);
   });
 });
 
