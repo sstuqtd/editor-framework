@@ -6,8 +6,8 @@ notifications:
 
 language: node_js
 
-node_js:
-  - "5.1.1"
+env:
+  - NODE_VERSION="5.1"
 
 os:
   - linux
