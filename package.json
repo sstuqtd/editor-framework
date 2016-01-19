@@ -58,6 +58,7 @@
     "gulp-jshint": "1.11.2",
     "gulp-watch": "4.3.5",
     "jshint-stylish": "2.0.1",
+    "node-gyp": "3.2.1",
     "npmconf": "2.1.2"
   },
   "builtins": [
