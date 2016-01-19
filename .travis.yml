@@ -22,5 +22,11 @@ branches:
   only:
     - master
 
+script:
+  - npm install --ignore-scripts
+  - gulp update-electron
+  - bower install
+  - gulp npm-rebuild
+
 before_script:
   - npm install -g bower gulp node-gyp
