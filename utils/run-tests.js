@@ -87,6 +87,7 @@ Async.eachSeries([
     //   {stdio: 'inherit'}
     // );
     console.log(Chalk.red(` - ${file}`));
-    throw new Error( `${file} failed` );
   });
+
+  throw new Error(`${failedTests.length} test(s) faield.`);
 });
