@@ -7,7 +7,7 @@ notifications:
 language: node_js
 
 node_js:
-  - "5.4.1"
+  - "5.1.1"
 
 os:
   - linux
@@ -28,7 +28,7 @@ before_install:
 install:
   - npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js
   - npm install --ignore-scripts
-  - git clone https://github.com/fireball-packages/package-examples
+  - git clone https://github.com/fireball-packages/package-examples ./package-examples
   - gulp update-electron
   - bower install
   - gulp npm-rebuild
