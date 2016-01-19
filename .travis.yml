@@ -33,3 +33,4 @@ install:
   - bower install
   - gulp npm-rebuild
   - gulp post-install-npm
+  - ls
