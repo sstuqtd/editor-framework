@@ -5,7 +5,7 @@ describe('Editor.Window', function () {
     let editorWin = new Editor.Window();
     editorWin.load('editor-framework://test/fixtures/simple.html');
     editorWin.nativeWin.webContents.on('dom-ready', () => {
-      // done();
+      done();
     });
   });
 

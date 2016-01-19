@@ -29,7 +29,7 @@ class DummyCmd extends Editor.Undo.Command {
 describe('Editor.Undo', function () {
   Helper.run({
     'undo': {
-      // 'foo': FooCmd,
+      'foo': FooCmd,
       'bar': BarCmd,
       'dummy': DummyCmd,
     }
