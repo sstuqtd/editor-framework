@@ -24,7 +24,7 @@ describe('<editor-dock-resizer>', function () {
       'left',
       { x: rect.left, y: rect.top + 50 },
       { x: rect.left + 400, y: rect.top + 50 },
-      500,
+      5000,
       function () {
       }
     );
