@@ -11,9 +11,10 @@ var exePath = '';
 var cwd = process.cwd();
 if ( process.platform === 'darwin' ) {
   exePath = Path.join(cwd, 'bin/electron/Electron.app/Contents/MacOS/Electron');
-}
-else {
-  exePath = Path.join(cwd, 'bin/electron/Electron.exe');
+} else if ( process.platform === 'win32' ) {
+  exePath = Path.join(cwd, 'bin/electron/electron.exe');
+} else {
+  exePath = Path.join(cwd, 'bin/electron/electron');
 }
 
 // get main files

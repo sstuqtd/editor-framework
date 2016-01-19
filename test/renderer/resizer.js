@@ -26,6 +26,7 @@ describe('<editor-dock-resizer>', function () {
       { x: rect.left + 400, y: rect.top + 50 },
       1000,
       function () {
+        done();
       }
     );
   });
