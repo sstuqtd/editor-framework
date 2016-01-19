@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   'MAIN_MENU': {
     'about': 'About %{product}',

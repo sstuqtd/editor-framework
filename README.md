@@ -12,7 +12,7 @@
 
 Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
-The framework is based on top of [Electron](http://github.com/atom/electron) and [Polymer](http://github.com/polymer/polymer).
+The framework is based on top of [Electron](http://github.com/atom/electron) ~~and [Polymer](http://github.com/polymer/polymer)~~(Polymer will be removed soon, and editor-framework will be unlimited for any gui framework).
 It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
 
