@@ -6,12 +6,11 @@ notifications:
 
 language: node_js
 
-env:
-  - NODE_VERSION="5.1"
+node_js:
+  - "5.1.1"
 
 os:
   - linux
-  - osx
 
 env:
   - TARGET_ARCH=x64
