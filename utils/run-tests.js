@@ -73,7 +73,7 @@ Async.eachSeries([
     console.log(Chalk.green('================================='));
     console.log(Chalk.green('All tests passed, Congratulations! '));
     console.log(Chalk.green('================================='));
-    return 0;
+    return;
   }
 
   console.log(Chalk.red('================================='));
@@ -87,6 +87,6 @@ Async.eachSeries([
     //   {stdio: 'inherit'}
     // );
     console.log(Chalk.red(` - ${file}`));
+    throw new Error( `${file} failed` );
   });
-  return failedTests.length;
 });
