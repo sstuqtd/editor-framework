@@ -47,8 +47,8 @@
     "os-locale": "1.4.0",
     "pixi.js": "3.0.9",
     "semver": "5.1.0",
-    "sinon": "1.16.1",
-    "svg.js": "2.2.0",
+    "sinon": "1.17.2",
+    "svg.js": "2.2.5",
     "winston": "2.1.1"
   },
   "devDependencies": {
