@@ -6,6 +6,7 @@
  - use shadow dom for panel content
  - disableAutoHideCursor by default for Editor.Window
  - add `Editor.DevTools` in main process
+ - add mouse hint for tests
 
 ### v0.4.0
 
