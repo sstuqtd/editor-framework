@@ -28,6 +28,7 @@ before_install:
 install:
   - npm install npmconf@2.1.2 && node ./utils/pre-install-npm.js
   - npm install --ignore-scripts
+  - git clone https://github.com/fireball-packages/package-examples
   - gulp update-electron
   - bower install
   - gulp npm-rebuild
