@@ -23,13 +23,11 @@ install:
   - node --version
   - npm --version
   - npm install -g bower gulp node-gyp
-  - node ./utils/pre-install-npm.js
   - npm install --ignore-scripts
   - git clone https://github.com/fireball-packages/package-examples ./package-examples
   - gulp update-electron
   - bower install
   - gulp npm-rebuild
-  - gulp post-install-npm
 
 test_script:
   # Output useful info for debugging.
