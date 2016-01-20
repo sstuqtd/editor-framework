@@ -1,7 +1,9 @@
 # appveyor file
 # http://www.appveyor.com/docs/appveyor-yml
 environment:
-  nodejs_version: "5.1.1"
+  matrix:
+    # node.js
+    - nodejs_version: "5"
 
 platform:
   - x86
