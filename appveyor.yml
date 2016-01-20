@@ -1,0 +1,23 @@
+# appveyor file
+# http://www.appveyor.com/docs/appveyor-yml
+environment:
+  nodejs_version: "5.1.1"
+
+platform:
+  - x86
+  - x64
+
+install:
+  - npm install -g bower gulp node-gyp
+  - npm install
+
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - npm test
+
+branches:
+  only:
+    - master

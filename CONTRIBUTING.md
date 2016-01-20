@@ -42,19 +42,18 @@ The following is a set of guidelines for contributing to editor-framework and it
 * Document new code with comments in source code based on the [Firedoc User Guide](https://github.com/fireball-x/firedoc/blob/master/GUIDE.md)
 * End files with a newline.
 * Place requires in the following order:
-    * Built in Node Modules (such as `path`)
-    * Built in editor-framework and Electron Modules (such as `fire-fs`, `shell`)
-    * Local Modules (using relative paths)
+  * Built in Node Modules (such as `path`)
+  * Built in editor-framework and Electron Modules (such as `fire-fs`, `shell`)
+  * Local Modules (using relative paths)
 * Place class properties in the following order:
-    * Class methods and properties (methods starting with a `@`)
-    * Instance methods and properties
+  * Class methods and properties (methods starting with a `@`)
+  * Instance methods and properties
 * Avoid platform-dependent code:
-    * Use `require('atom').fs.getHomeDirectory()` to get the home directory.
-    * Use `path.join()` to concatenate filenames.
-    * Use `os.tmpdir()` rather than `/tmp` when you need to reference the
-      temporary directory.
+  * Use `require('atom').fs.getHomeDirectory()` to get the home directory.
+  * Use `path.join()` to concatenate filenames.
+  * Use `os.tmpdir()` rather than `/tmp` when you need to reference the temporary directory.
 * Using a plain `return` when returning explicitly at the end of a function.
-    * Not `return null`, `return undefined`, `null`, or `undefined`
+  * Not `return null`, `return undefined`, `null`, or `undefined`
 
 ## Git Commit Messages
 
@@ -63,21 +62,21 @@ The following is a set of guidelines for contributing to editor-framework and it
 * Limit the first line to 72 characters or less
 * Reference issues and pull requests liberally
 * Consider starting the commit message with an applicable emoji:
-    * :art: `:art:` when improving the format/structure of the code
-    * :racehorse: `:racehorse:` when improving performance
-    * :non-potable_water: `:non-potable_water:` when plugging memory leaks
-    * :memo: `:memo:` when writing docs
-    * :penguin: `:penguin:` when fixing something on Linux
-    * :apple: `:apple:` when fixing something on Mac OS
-    * :checkered_flag: `:checkered_flag:` when fixing something on Windows
-    * :bug: `:bug:` when fixing a bug
-    * :fire: `:fire:` when removing code or files
-    * :green_heart: `:green_heart:` when fixing the CI build
-    * :white_check_mark: `:white_check_mark:` when adding tests
-    * :lock: `:lock:` when dealing with security
-    * :arrow_up: `:arrow_up:` when upgrading dependencies
-    * :arrow_down: `:arrow_down:` when downgrading dependencies
-    * :shirt: `:shirt:` when removing linter warnings
+  * :art: `:art:` when improving the format/structure of the code
+  * :racehorse: `:racehorse:` when improving performance
+  * :non-potable_water: `:non-potable_water:` when plugging memory leaks
+  * :memo: `:memo:` when writing docs
+  * :penguin: `:penguin:` when fixing something on Linux
+  * :apple: `:apple:` when fixing something on Mac OS
+  * :checkered_flag: `:checkered_flag:` when fixing something on Windows
+  * :bug: `:bug:` when fixing a bug
+  * :fire: `:fire:` when removing code or files
+  * :green_heart: `:green_heart:` when fixing the CI build
+  * :white_check_mark: `:white_check_mark:` when adding tests
+  * :lock: `:lock:` when dealing with security
+  * :arrow_up: `:arrow_up:` when upgrading dependencies
+  * :arrow_down: `:arrow_down:` when downgrading dependencies
+  * :shirt: `:shirt:` when removing linter warnings
 
 
 ## Documentation Styleguide
