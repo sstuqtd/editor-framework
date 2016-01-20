@@ -8,6 +8,8 @@ platform:
   - x64
 
 install:
+  - node --version
+  - npm --version
   - npm install -g bower gulp node-gyp
   - npm install
 
