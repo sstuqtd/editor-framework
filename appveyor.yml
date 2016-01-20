@@ -10,6 +10,7 @@ platform:
   - x64
 
 install:
+  - Install-Product node "5.1.1"
   - node --version
   - npm --version
   - npm install -g bower gulp node-gyp
