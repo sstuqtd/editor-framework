@@ -5,6 +5,7 @@ var Path = require('fire-path');
 var gulp = require('gulp');
 
 var pjson = require('../../package.json');
+var setupMirror = require('../libs/setup-mirror');
 
 function _setupBranchAt ( localJson, group ) {
   if ( !localJson.branch[group] ) {
@@ -38,6 +39,10 @@ function _setupBranchAt ( localJson, group ) {
     }
   }
 }
+
+gulp.task('setup-mirror', function(cb) {
+  setupMirror(cb);
+});
 
 gulp.task('setup-branch', function(cb) {
   var localJson = {};
