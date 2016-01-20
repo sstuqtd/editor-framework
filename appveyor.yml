@@ -1,5 +1,13 @@
 # appveyor file
 # http://www.appveyor.com/docs/appveyor-yml
+
+# Build version format
+version: "{build}"
+
+# Fix line endings on Windows
+init:
+  - git config --global core.autocrlf true
+
 environment:
   matrix:
     # node.js
@@ -10,7 +18,7 @@ platform:
   - x64
 
 install:
-  - Install-Product node "5.1.1"
+  - ps: Install-Product node $env:nodejs_version
   - node --version
   - npm --version
   - npm install -g bower gulp node-gyp
@@ -18,10 +26,9 @@ install:
 
 test_script:
   # Output useful info for debugging.
-  - node --version
-  - npm --version
+  - node --version && npm --version
   # run tests
-  - npm test
+  - cmd: npm test
 
 branches:
   only:
