@@ -18,6 +18,7 @@ platform:
   - x64
 
 install:
+  # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   - node --version
   - npm --version
