@@ -29,6 +29,8 @@ install:
   - bower install
   - gulp npm-rebuild
 
+build: off
+
 test_script:
   # Output useful info for debugging.
   - node --version
