@@ -1,0 +1,44 @@
+# appveyor file
+# http://www.appveyor.com/docs/appveyor-yml
+
+# Build version format
+version: "{build}"
+
+# Fix line endings on Windows
+init:
+  - git config --global core.autocrlf true
+
+environment:
+  matrix:
+    # node.js
+    - nodejs_version: "5"
+
+platform:
+  - x86
+  - x64
+
+install:
+  # Get the latest stable version of Node.js or io.js
+  - ps: Install-Product node $env:nodejs_version
+  - node --version
+  - npm --version
+  - npm install -g bower gulp node-gyp
+  - npm install --ignore-scripts
+  - git clone https://github.com/fireball-packages/package-examples ./package-examples
+  - gulp update-electron
+  - bower install
+  - gulp npm-rebuild
+
+build: off
+test: off
+
+# test_script:
+#   # Output useful info for debugging.
+#   - node --version
+#   - npm --version
+#   # run tests
+#   - npm test
+
+branches:
+  only:
+    - master

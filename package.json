@@ -13,8 +13,6 @@
     "url": "https://github.com/fireball-x/editor-framework/issues"
   },
   "scripts": {
-    "preinstall": "node ./utils/pre-install-npm.js",
-    "postinstall": "gulp post-install-npm",
     "install": "gulp bootstrap && bower install && gulp npm-rebuild",
     "test": "node ./utils/run-tests.js",
     "start": "node ./utils/run.js",
