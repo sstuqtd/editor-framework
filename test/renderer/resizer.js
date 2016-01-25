@@ -1,11 +1,12 @@
 'use strict';
 
 describe('<editor-dock-resizer>', function () {
+  this.timeout(0);
+
   Editor.Window.resizeSync( 800, 400 );
   Editor.Window.center();
 
   Helper.runElement('editor-framework://test/fixtures/resizer.html', 'simple', '#container');
-  this.timeout(0);
 
   beforeEach(function ( done ) {
     Helper.targetEL._finalizeSizeRecursively(true);
