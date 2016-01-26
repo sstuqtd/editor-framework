@@ -5,12 +5,12 @@
   "homepage": "http://fireball-x.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fireball-x/editor-framework.git"
+    "url": "https://github.com/cocos-creator/editor-framework.git"
   },
   "author": "Firebox Technology",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/fireball-x/editor-framework/issues"
+    "url": "https://github.com/cocos-creator/editor-framework/issues"
   },
   "scripts": {
     "install": "gulp bootstrap && bower install && gulp npm-rebuild",
