@@ -85,7 +85,7 @@ function _drawBezier ( ctx, c1, c2, c3, c4 ) {
   //   ctx.stroke();
   // }
 
-  for ( let x = c1.x; x <= c4.x; x += 1 ) {
+  for ( let x = c1.x; x <= c4.x; x += 100 ) {
     let y = bezierY( c1, c2, c3, c4, x );
 
     ctx.beginPath();
@@ -119,6 +119,13 @@ describe('curve', function () {
     let c3 = { x: 0, y: 300 };
     let c4 = { x: 500, y: 300 };
     _drawBezier( ctx, c1, c2, c3, c4 );
+
+    // for ( let x = c1.x; x <= c4.x; x += 1 ) {
+    //   let y1 = bezierY( c1, c2, c3, c4, x );
+    //   let t = Editor.Math.solveCubicBezier( c1.x, c2.x, c3.x, c4.x, x );
+    //   let y2 = Editor.Math.bezier( c1.y, c2.y, c3.y, c4.y, t );
+    //   Editor.log( `y1 = ${y1}, y2 = ${y2}` );
+    // }
 
     // animate
 
