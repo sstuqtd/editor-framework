@@ -1,7 +1,7 @@
 # Editor Framework
 
-[Documentation](/tree/master/docs) |
-[Downloads](/releases/) |
+[Documentation](tree/master/docs) |
+[Downloads](releases/) |
 [Install](#install) |
 [Features](#features)
 
