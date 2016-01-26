@@ -1,9 +1,9 @@
 # Editor Framework
 
-[Documentation](https://github.com/cocos-creator/editor-framework/tree/master/docs) |
-[Downloads](http://github.com/cocos-creator/editor-framework/releases/) |
-[Install](https://github.com/cocos-creator/editor-framework#install) |
-[Features](https://github.com/cocos-creator/editor-framework#features)
+[Documentation](/tree/master/docs) |
+[Downloads](/releases/) |
+[Install](#install) |
+[Features](#features)
 
 [![Circle CI](https://circleci.com/gh/cocos-creator/editor-framework.svg?style=svg)](https://circleci.com/gh/cocos-creator/editor-framework)
 [![Build status](https://ci.appveyor.com/api/projects/status/ugkft1nmcy2wklrl?svg=true)](https://ci.appveyor.com/project/jwu/editor-framework)
