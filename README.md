@@ -1,7 +1,7 @@
 # Editor Framework
 
-[Documentation](tree/master/docs) |
-[Downloads](releases/) |
+[Documentation](https://github.com/cocos-creator/editor-framework/tree/master/docs) |
+[Downloads](https://github.com/cocos-creator/editor-framework/releases/) |
 [Install](#install) |
 [Features](#features)
 
