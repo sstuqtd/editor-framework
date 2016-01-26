@@ -1,9 +1,9 @@
 # Editor Framework
 
 [Documentation](https://github.com/cocos-creator/editor-framework/tree/master/docs) |
-[Downloads](http://github.com/cocos-creator/editor-framework/releases/) |
-[Install](https://github.com/cocos-creator/editor-framework#install) |
-[Features](https://github.com/cocos-creator/editor-framework#features)
+[Downloads](https://github.com/cocos-creator/editor-framework/releases/) |
+[Install](#install) |
+[Features](#features)
 
 [![Circle CI](https://circleci.com/gh/cocos-creator/editor-framework.svg?style=svg)](https://circleci.com/gh/cocos-creator/editor-framework)
 [![Build status](https://ci.appveyor.com/api/projects/status/ugkft1nmcy2wklrl?svg=true)](https://ci.appveyor.com/project/jwu/editor-framework)
@@ -24,7 +24,7 @@ It is designed for full extensibility. In the core level (main process), we achi
 
 ## Prerequisite
 
-- Install [node.js v0.12+](https://nodejs.org/) or [node.js v4.0+](https://nodejs.org)
+- Install [node.js v4.0+](https://nodejs.org)
 - Install [gulp](https://github.com/gulpjs/gulp) command line tool
 - Install [bower](http://bower.io/) command line tool
 

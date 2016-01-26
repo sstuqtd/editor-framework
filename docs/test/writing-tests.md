@@ -1,7 +1,7 @@
 ---
 title: Define Your App
-category: editor
-permalinks: editor/writing-tests
+category: test
+permalinks: test/writing-tests
 ---
 
 ## Writing Tests for App

@@ -1,7 +1,7 @@
 ---
 title: Load and Build Packages
-category: editor
-permalinks: editor/packages/load-and-build
+category: packages
+permalinks: packages/load-and-build
 ---
 
 Packages can be developed in any of the following file format:

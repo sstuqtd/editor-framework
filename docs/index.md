@@ -5,20 +5,34 @@ permalinks: editor/index
 
 This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
-## Extending Editor
+**NOTE: The document is a little bit out of date, but still can help you getting start with editor-framework. I will update it as soon as possible.**
 
-  * [Define Your App](/editor/define-your-app) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
-  * [Editor Module](/editor/editor-module)
-  * [Ipc Channels Between Core and Page Level](/editor/ipc-channel)
-  * [Unit Test](/editor/unit-test)
-  * [CSS Layout Helper](/editor/css-layout)
-  * [Event Binding](/editor/event-binding)
+## Getting Start
 
-## Packages
+  - [Define Your App](/getting-start/define-your-app) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
+  - [Ipc](/getting-start/ipc-channel)
 
-  * [Create Your Package](/editor/packages/create-package)
-  * [Create Panels](/editor/packages/create-panels)
-  * [Register Shortcuts](/editor/packages/register-shortcuts)
-  * [Create Widgets](/editor/packages/create-widgets)
-  * [Load and Build Packages](/editor/packages/load-and-build)
-  * [i18n](/editor/packages/i18n)
+## Writing A Package
+
+  - [Create Your Package](/packages/create-package)
+  - [Create Panels](/packages/create-panels)
+  - [Register Shortcuts](/packages/register-shortcuts)
+  - [Create Widgets](/packages/create-widgets)
+  - [Load and Build Packages](/packages/load-and-build)
+  - [i18n](/packages/i18n)
+
+## UI Programming
+
+  - [Polymer Primer](/ui/polymer-primer)
+  - [CSS Layout Helper](/ui/css-layout)
+  - [Event Binding](/ui/event-binding)
+
+## Usage of Editor Module
+
+  - [Editor Module](/editor/editor-module)
+  - [Online/Offline Event Detection](/editor/online-offline-events)
+
+## Test
+
+  - [Unit Test](/test/unit-test)
+  - [Writing Tests](/test/writing-tests)

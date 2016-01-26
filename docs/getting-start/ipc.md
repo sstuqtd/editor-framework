@@ -1,7 +1,7 @@
 ---
 title: Ipc Channel Between Core and Page Process
-category: editor
-permalinks: editor/ipc-channel
+category: getting-start
+permalinks: getting-start/ipc-channel
 ---
 
 ## Core and Page Process
@@ -49,9 +49,9 @@ To understand panelID, read [panelID part in register panel docs](register-panel
 Let's see message sending methods:
 
 
-## Core Level
+## Main Process
 
-In core-level script, you can use the following method to send messages:
+In main-process script, you can use the following method to send messages:
 
 
 - [Editor.sendToWindows](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToWindows)
@@ -63,9 +63,9 @@ In core-level script, you can use the following method to send messages:
 - [windowInstance.sendRequestToPage](http://docs.fireball-x.com/api/classes/Window.html#method_sendRequestToPage) see also windowInstance.cancelRequestToPage
 - [Editor.cancelRequestToPage](http://docs.fireball-x.com/api/classes/Window.html#method_cancelRequestToPage)
 
-## Page Level
+## Renderer Process
 
-In page-level script, you can use the following method to send messages:
+In renderer-process script, you can use the following method to send messages:
 
 - [Editor.sendToWindows](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToWindows)
 - [Editor.sendToMainWindow](http://docs.fireball-x.com/api/modules/Editor.html#method_sendToMainWindow)
@@ -78,29 +78,27 @@ See also [Editor.cancelRequestToCore](http://docs.fireball-x.com/api/modules/Edi
 
 ## Message Handlers
 
-### On Core Level
+### Main Process
 
 Register a message handler in core-level script is easy, just add a property with the name of Ipc channel id to your core-level module:
 
 ```js
 module.exports = {
-    // ...
-
-    'demo-simple:open': function () {
-        // do your job in core level, such as open a panel
-        Editor.Panel.open('demo-simple.panel');
-    }
+  'demo-simple:open': function () {
+    // do your job in core level, such as open a panel
+    Editor.Panel.open('demo-simple.panel');
+  }
 };
 ```
 
-### On Page Level
+### Renderer Process
 
 Register the Ipc channel id you want to listen to in `panels.panel.messages` property of `package.json`:
 ```json
 "panels": {
   "panel": {
     "messages": [
-        "demo-simple:run"
+      "demo-simple:run"
     ]
   }
 }
@@ -111,12 +109,12 @@ Once Ipc channel id registered, you can add a property in your `Editor.registerP
 
 ```js
 Editor.registerPanel( 'demo-simple.panel', {
-    is: 'demo-simple',
-    // ...
-    // to receive IPC message on page-level, you need to register message in package.json
-    "demo-simple:run" : function () {
-        // run some tasks on page-level
-    }
+  is: 'demo-simple',
+
+  // to receive IPC message on page-level, you need to register message in package.json
+  'demo-simple:run' : function () {
+    // run some tasks on page-level
+  }
 });
 ```
 
@@ -130,10 +128,10 @@ Editor.sendToPanel('demo-simple.panel', 'demo-simple:log', someText);
 
 // on page-level
 Editor.registerPanel( 'demo-simple.panel', {
-    // log the text passed to editor console
-    "demo-simple:log" : function (text) {
-        Editor.log(text);
-    }
+  // log the text passed to editor console
+  'demo-simple:log' : function (text) {
+      Editor.log(text);
+  }
 }
 ```
 
@@ -150,10 +148,10 @@ When you respond to the message in core level, the first parameter will be event
 The message handler looks like this:
 
 ```js
-    'foo:bar':function ( event, text ) {
-      // the event is the ipc-event object
-      // the text is 'say hello'
-    }
+'foo:bar':function ( event, text ) {
+  // the event is the ipc-event object
+  // the text is 'say hello'
+}
 ```
 
 This is very useful if you want to known who send you this Ipc message by looking at `event.sender`.

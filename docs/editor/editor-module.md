@@ -45,3 +45,6 @@ var myFilePath = Editor.url('app://myfolder/myfile.js');
 ## Editor.App
 
 The Editor.App is your app.js module. Read more in [Define your application](../../manual/define-your-app.md).
+
+
+## TODO: introduce the submodules in both main and renderer process
