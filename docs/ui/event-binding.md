@@ -1,7 +1,7 @@
 ---
 title: Event Binding
-category: editor
-permalinks: editor/event-binding
+category: ui
+permalinks: ui/event-binding
 ---
 
 ## Register Listener

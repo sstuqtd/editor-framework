@@ -1,7 +1,7 @@
 ---
 title: CSS Layout Helper
-category: editor
-permalinks: editor/css-layout
+category: ui
+permalinks: ui/css-layout
 ---
 
 When creating new editor window or package panel, we recommend using flexbox to layout your web page.
