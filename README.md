@@ -6,6 +6,7 @@
 [Features](#features)
 
 [![Circle CI](https://circleci.com/gh/cocos-creator/editor-framework.svg?style=svg)](https://circleci.com/gh/cocos-creator/editor-framework)
+[![Build Status](https://travis-ci.org/cocos-creator/editor-framework.svg?branch=master)](https://travis-ci.org/cocos-creator/editor-framework)
 [![Build status](https://ci.appveyor.com/api/projects/status/ugkft1nmcy2wklrl?svg=true)](https://ci.appveyor.com/project/jwu/editor-framework)
 [![bitHound Overall Score](https://www.bithound.io/github/cocos-creator/editor-framework/badges/score.svg)](https://www.bithound.io/github/cocos-creator/editor-framework)
 [![Dependency Status](https://david-dm.org/cocos-creator/editor-framework.svg)](https://david-dm.org/cocos-creator/editor-framework)
