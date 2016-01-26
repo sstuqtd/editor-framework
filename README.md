@@ -24,7 +24,7 @@ It is designed for full extensibility. In the core level (main process), we achi
 
 ## Prerequisite
 
-- Install [node.js v0.12+](https://nodejs.org/) or [node.js v4.0+](https://nodejs.org)
+- Install [node.js v4.0+](https://nodejs.org)
 - Install [gulp](https://github.com/gulpjs/gulp) command line tool
 - Install [bower](http://bower.io/) command line tool
 
