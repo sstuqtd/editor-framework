@@ -72,7 +72,7 @@ gulp.task('update-editor-framework', function(cb) {
 
   Async.series([
     function ( next ) {
-      git.exec(['pull', 'git@github.com:fireball-x/editor-framework.git', 'master'], './', next);
+      git.exec(['pull', 'https://github.com/cocos-creator/editor-framework.git', 'master'], './', next);
     },
 
     function ( next ) {
@@ -106,7 +106,7 @@ gulp.task('update-hosts', ['setup-branch'], function(cb) {
 
     // if not exists, git clone it
     if (!Fs.existsSync(name)) {
-      git.clone('git@github.com:' + path + '.git',
+      git.clone('https://github.com/' + path + '.git',
                 name,
                 done);
       return;
@@ -119,7 +119,7 @@ gulp.task('update-hosts', ['setup-branch'], function(cb) {
     }
 
     git.pull(name,
-             'git@github.com:' + path + '.git',
+             'https://github.com/' + path + '.git',
              branch,
              done);
   }, function ( err ) {
@@ -145,7 +145,7 @@ gulp.task('update-builtin', ['setup-branch'], function(cb) {
 
     // if not exists, git clone it
     if (!Fs.existsSync(Path.join('builtin', name))) {
-      git.clone('git@github.com:' + path + '.git',
+      git.clone('https://github.com/' + path + '.git',
                 Path.join('builtin', name),
                 done);
       return;
@@ -158,7 +158,7 @@ gulp.task('update-builtin', ['setup-branch'], function(cb) {
     }
 
     git.pull(Path.join('builtin', name),
-             'git@github.com:' + path + '.git',
+             'https://github.com/' + path + '.git',
              branch,
              done);
   }, function ( err ) {
