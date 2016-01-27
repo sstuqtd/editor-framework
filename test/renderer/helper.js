@@ -103,9 +103,8 @@ describe('Test ghost-tester', function () {
     Helper.mousemove(
       testEL,
       'left',
-      { x: 0, y: 0 },
-      { x: 100, y: 100 },
       1000,
+      `M0,0, L100,100, C100,0, 200,0, 200,100`,
       done
     );
   });
@@ -133,6 +132,6 @@ describe('Test ghost-tester', function () {
       }
     });
 
-    Helper.mousemoveStep( testEL, 'left', { x: 0, y: 0 }, { x: 100, y: 100 }, 5 );
+    Helper.mousemoveStep( testEL, 'left', 5, `M0,0, L100,100` );
   });
 });

@@ -20,12 +20,11 @@ describe('<editor-dock-resizer>', function () {
     let resizer = Helper.targetEL.querySelector('editor-dock-resizer');
     let rect = resizer.getBoundingClientRect();
 
-    Helper.mousetrack(
-      resizer,
-      'left',
-      { x: rect.left, y: rect.top + 50 },
-      { x: rect.left + 400, y: rect.top + 50 },
-      1000,
+    Helper.mousetrack(resizer, 'left', 1000,
+      `M${rect.left},${rect.top+50},
+       L${rect.left+400},${rect.top+50}
+       L${rect.left},${rect.top+50}
+       `,
       function () {
         done();
       }
