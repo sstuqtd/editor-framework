@@ -53,9 +53,7 @@
     "check-dependencies": "0.11.0",
     "firedoc": "1.13.7",
     "gulp-changed": "1.3.0",
-    "gulp-jshint": "2.0.0",
-    "gulp-watch": "4.3.5",
-    "jshint-stylish": "2.1.0"
+    "gulp-watch": "4.3.5"
   },
   "builtins": [
     "fireball-packages/console",
