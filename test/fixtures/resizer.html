@@ -1,4 +1,4 @@
-<template id="simple">
+<template id="horizontal">
   <style>
     .fit {
       position: absolute;
@@ -13,7 +13,6 @@
       flex-direction: row;
 
       margin: 10px;
-      border: 1px solid #800;
     }
 
     .box {
@@ -22,8 +21,8 @@
   </style>
 
   <editor-dock id="container" class="hbox fit" row>
-    <editor-dock class="box" width="300" min-width="200"></editor-dock>
-    <editor-dock class="box" width="300" min-width="200"></editor-dock>
-    <editor-dock class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock id="box1" class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock id="box2" class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock id="box3" class="box" width="300" min-width="200"></editor-dock>
   </editor-dock>
 </template>
