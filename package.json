@@ -38,7 +38,6 @@
     "gulp-stylus": "2.2.0",
     "highlight.js": "9.1.0",
     "lodash": "4.0.0",
-    "mo-js": "0.147.4",
     "mocha": "2.3.4",
     "mousetrap": "1.5.3",
     "node-polyglot": "1.0.0",
