@@ -21,8 +21,37 @@
   </style>
 
   <editor-dock id="container" class="hbox fit" row>
-    <editor-dock id="box1" class="box" width="300" min-width="200"></editor-dock>
-    <editor-dock id="box2" class="box" width="300" min-width="200"></editor-dock>
-    <editor-dock id="box3" class="box" width="300" min-width="200"></editor-dock>
+    <editor-dock id="box1" class="box" width="200" min-width="100"></editor-dock>
+    <editor-dock id="box2" class="box" width="200" min-width="100"></editor-dock>
+    <editor-dock id="box3" class="box" width="200" min-width="100"></editor-dock>
+  </editor-dock>
+</template>
+
+<template id="vertical">
+  <style>
+    .fit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .vbox {
+      display: flex;
+      flex-direction: column;
+
+      margin: 10px;
+    }
+
+    .box {
+      border: 1px solid #888;
+    }
+  </style>
+
+  <editor-dock id="container" class="vbox fit">
+    <editor-dock id="box1" class="box" height="200" min-height="100"></editor-dock>
+    <editor-dock id="box2" class="box" height="200" min-height="100"></editor-dock>
+    <editor-dock id="box3" class="box" height="200" min-height="100"></editor-dock>
   </editor-dock>
 </template>

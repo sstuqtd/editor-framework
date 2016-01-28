@@ -97,7 +97,7 @@ describe('Test ghost-tester', function () {
     Helper.mousewheel( testEL, null, 10 );
   });
 
-  it('should respond mousemove step', function ( done ) {
+  it('should respond mousemove', function ( done ) {
     this.timeout(0);
 
     Helper.mousemove(
