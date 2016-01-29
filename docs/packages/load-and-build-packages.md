@@ -1,9 +1,3 @@
----
-title: Load and Build Packages
-category: packages
-permalinks: packages/load-and-build
----
-
 Packages can be developed in any of the following file format:
 
 - HTML
@@ -22,7 +16,7 @@ To load packages into your Editor-Framework app, you need to either:
 
 - Specify a path to load your packages from by running the method `Editor.registerPackagePath` in your `App.init` function. Then put all your packages into that path folder.
 - By default, Editor-Framework load all packages in [/demo](/demo) folder. You can also created your packages here to quickly see it in Package Manager list.
-- You can also put your packages into `~/.{app-name}/packages` folder, read [create packages](/docs/manual/create-your-package.md#create-your-package) doc for details.
+- You can also put your packages into `~/.{app-name}/packages` folder, read [create packages](create-your-package.md#create-your-package) doc for details.
 
 To load packages for [Fireball](https://github.com/fireball-x/fireball), you can open Package-studio with the following parameter:
 

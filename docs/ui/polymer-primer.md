@@ -1,9 +1,3 @@
----
-title: Polymer Primer
-category: ui
-permalinks: ui/polymer-primer
----
-
 Fireball and Editor Framework use [Polymer](polymer-project.org) to build the whole editor front end. This doc is for crediting Polymer as the perfect UI system solution for building a complex game editor toolset. Also we'd like to point to some core polymer documentation that will help you get start with developing app with Editor Framework.
 
 ## Why Polymer

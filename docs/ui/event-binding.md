@@ -1,9 +1,3 @@
----
-title: Event Binding
-category: ui
-permalinks: ui/event-binding
----
-
 ## Register Listener
 
 One way for event binding is to register event listener in Polymer constructor:
