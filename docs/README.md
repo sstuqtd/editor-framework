@@ -4,30 +4,30 @@ This section shows you how to extend Fireball Editor by creating and modifying p
 
 ## Getting Start
 
-  - [Define Your App](getting-start/define-your-app) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
-  - [Ipc](getting-start/ipc-channel)
+  - [Define Your App](getting-start/define-your-app.md) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
+  - [Ipc](getting-start/ipc-channel.md)
 
 ## Writing A Package
 
-  - [Create Your Package](packages/create-package)
-  - [Create Panels](packages/create-panels)
-  - [Register Shortcuts](packages/register-shortcuts)
-  - [Create Widgets](packages/create-widgets)
-  - [Load and Build Packages](packages/load-and-build)
-  - [i18n](packages/i18n)
+  - [Create Your Package](packages/create-package.md)
+  - [Create Panels](packages/create-panels.md)
+  - [Register Shortcuts](packages/register-shortcuts.md)
+  - [Create Widgets](packages/create-widgets.md)
+  - [Load and Build Packages](packages/load-and-build.md)
+  - [i18n](packages/i18n.md)
 
 ## UI Programming
 
-  - [Polymer Primer](ui/polymer-primer)
-  - [CSS Layout Helper](ui/css-layout)
-  - [Event Binding](ui/event-binding)
+  - [Polymer Primer](ui/polymer-primer.md)
+  - [CSS Layout Helper](ui/css-layout.md)
+  - [Event Binding](ui/event-binding.md)
 
 ## Usage of Editor Module
 
-  - [Editor Module](editor/editor-module)
-  - [Online/Offline Event Detection](editor/online-offline-events)
+  - [Editor Module](editor/editor-module.md)
+  - [Online/Offline Event Detection](editor/online-offline-events.md)
 
 ## Test
 
-  - [Unit Test](test/unit-test)
-  - [Writing Tests](test/writing-tests)
+  - [Unit Test](test/unit-test.md)
+  - [Writing Tests](test/writing-tests.md)
