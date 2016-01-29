@@ -1,9 +1,3 @@
----
-title: CSS Layout Helper
-category: ui
-permalinks: ui/css-layout
----
-
 When creating new editor window or package panel, we recommend using flexbox to layout your web page.
 
 Editor Framework already has polymer's [iron-flex-layout](https://github.com/PolymerElements/iron-flex-layout) installed, with the CSS classes and properties it provides, we can easily create any layouts you want that conform to CSS3 standard.

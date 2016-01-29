@@ -1,9 +1,3 @@
----
-title: Create Panels
-category: packages
-permalinks: packages/create-panels
----
-
 Panel is the dockable "mini-windows" unit in Editor Framework. Each panel contains a panel frame.
 
 You can define a polymer element as your panel frame, and register it in `package.json`. The Editor Framework will dynamically load your polymer element when the panel is opened.

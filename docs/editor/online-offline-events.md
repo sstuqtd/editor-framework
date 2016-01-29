@@ -1,9 +1,3 @@
----
-title: Online Offline Events
-category: editor
-permalinks: editor/online-offline-events
----
-
 Electron alread provide a way to detect online and offline for editor ---
 [Online/Offline Event Detection](https://github.com/atom/electron/blob/master/docs/tutorial/online-offline-events.md)
 

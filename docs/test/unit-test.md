@@ -1,9 +1,3 @@
----
-title: Unit Test
-category: test
-permalinks: test/unit-test
----
-
 In Editor Framework, we can make and run unit test easily with our Test Suite.
 
 ## Package Test

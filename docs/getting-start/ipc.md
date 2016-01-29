@@ -1,9 +1,3 @@
----
-title: Ipc Channel Between Core and Page Process
-category: getting-start
-permalinks: getting-start/ipc-channel
----
-
 ## Core and Page Process
 
 Editor framework (and Fireball) has two levels of processes:
@@ -44,7 +38,7 @@ Editor framework use this channel to send message for reseting editor layout. `e
 Editor.sendToPanel('demo-simple.panel', 'demo-simple:open');
 ```
 
-To understand panelID, read [panelID part in register panel docs](register-panels.md#panel-id).
+To understand panelID, read [panelID part in register panel docs](../create-panels.md#panel-id).
 
 Let's see message sending methods:
 
