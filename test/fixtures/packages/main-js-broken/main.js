@@ -1,8 +1,10 @@
-module.exports = {
-    load: function () {
-      i_am_error();
-    },
+'use strict';
 
-    unload: function () {
-    },
+module.exports = {
+  load () {
+    i_am_error();
+  },
+
+  unload () {
+  },
 };

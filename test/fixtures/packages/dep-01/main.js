@@ -1,7 +1,9 @@
-module.exports = {
-    load: function () {
-    },
+'use strict';
 
-    unload: function () {
-    },
+module.exports = {
+  load () {
+  },
+
+  unload () {
+  },
 };

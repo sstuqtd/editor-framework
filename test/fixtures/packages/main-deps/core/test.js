@@ -1,3 +1,5 @@
+'use strict';
+
 // External module
-var main = require('../../needs-build');
-var bar = require('./foo/bar');
+const main = require('../../needs-build');
+const bar = require('./foo/bar');
