@@ -60,6 +60,40 @@ describe('Editor.Package', function () {
     });
   });
 
+  describe('fixtures/packages/main-ipc', function () {
+    const path = Path.join(testPackages,'main-ipc');
+
+    assert.isTrue( Fs.existsSync(path) );
+
+    it('should reply ipc messages', function (done) {
+      Editor.Package.load(path, function () {
+        Async.series([
+          next => {
+            Editor.sendRequestToCore('main-ipc:say-hello', function ( msg ) {
+              expect(msg).to.equal('hello');
+              next();
+            });
+          },
+          next => {
+            Editor.sendRequestToCore('main-ipc:say-hello-02', function ( msg ) {
+              expect(msg).to.equal('hello-02');
+              next();
+            });
+          },
+          next => {
+            Editor.sendRequestToCore('another:say-hello-03', function ( msg ) {
+              expect(msg).to.equal('hello-03');
+              next();
+            });
+          },
+        ], function () {
+          done();
+        });
+
+      });
+    });
+  });
+
   describe('fixtures/packages/main-deps', function () {
     const path = Path.join(testPackages,'main-deps');
 

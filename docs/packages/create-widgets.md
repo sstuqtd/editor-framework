@@ -8,7 +8,7 @@ Define a widget in `page-level`, then save it as `simple-widget.html` in your pa
 <dom-module id="simple-widget">
   <style>
     :host {
-        color: red;
+      color: red;
     }
   </style>
 

@@ -105,19 +105,23 @@ Explanation for each key-value pair:
 The `main.js` file (or any file you register as main entry in `package.json`) serves as main entry of the package program. Main entry usually looks like this:
 
 ```js
+'use strict';
+
 module.exports = {
-    load: function () {
-        // callback when package has been loaded
-    },
+  load () {
+    // callback when package has been loaded
+  },
 
-    unload: function () {
-        // callback when package has been unloaded
-    },
+  unload () {
+    // callback when package has been unloaded
+  },
 
-    // a IPC message receiver
-    'demo-simple:open': function () {
-        Editor.Panel.open('demo-simple.panel');
+  // an IPC message receiver
+  messages: {
+    open () {
+      Editor.Panel.open('demo-simple.panel');
     },
+  }
 };
 ```
 
@@ -125,19 +129,19 @@ module.exports = {
 
 Fireball run each package's main entry as a module with `require`, so you must expose properties and method in your main entry with `module.exports`. See [iojs module API docs](https://iojs.org/api/modules.html#modules_module_exports) for details.
 
-### IPC Message Receiver
+### IPC Message
 
-In the above example, main entry listen to an IPC message `demo-simple:open` and call `Editor.Panel.open` to open a package panel. This is the most common way to open a package panel. To learn more about IPC messages and how package communicate between core and page level, read [IPC Channel docs](ipc-channel.md).
+In the above example, main entry listen to an IPC message `open` (it is short name for `demo-simple:open`) and call `Editor.Panel.open` to open a package panel. This is the most common way to open a package panel. To learn more about IPC messages and how package communicate between core and page level, read [IPC Channel docs](ipc-channel.md).
 
 The initial `demo-simple:open` message is registered in `menus['Examples/Simple'].message` property of `package.json`. See the above `package.json` example.
 
-### Core-Level Process
+### Main Process
 
-Main entry runs in core-level process, you can do following things in core-level scripts:
+Main entry runs in main-process, you can do following things in main-process:
 
-- Use full [iojs API](https://iojs.org/api/)
+- Use full [Node.js API](https://nodejs.org/api/)
 - Use [Electron's API](https://github.com/atom/electron/tree/master/docs#api-references) that listed under 'modules for the main process' or 'modules for both processes'
-- Require any core, local or npm module. For npm modules, you can install those modules in Fireball's root folder. And require them anywhere in your core-level scripts.
+- Require any main, local or npm module. For npm modules.
 
 ## Menu Path
 
@@ -145,12 +149,12 @@ Menu paths are defined in `menus` property of `pacakge.json`. Menu paths definit
 
 ```json
 "menus": {
-    "Examples/Simple": {
-        "message": "demo-simple:open"
-    },
-    "Examples/Advanced": {
-        "message": "demo-simple:advance"
-    }
+  "Examples/Simple": {
+    "message": "demo-simple:open"
+  },
+  "Examples/Advanced": {
+    "message": "demo-simple:advance"
+  }
 }
 ```
 

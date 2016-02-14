@@ -295,4 +295,23 @@ describe('Editor.Ipc', function () {
     });
   });
 
+  describe('Editor.sendRequestToCore', function () {
+    it('should send message to main process in main process', function (done) {
+      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
+        expect(event.senderType).to.eql('main');
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        reply( foo, bar );
+      });
+
+      Editor.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        done();
+      });
+    });
+  });
+
 });
