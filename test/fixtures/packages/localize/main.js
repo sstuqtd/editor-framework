@@ -7,7 +7,9 @@ module.exports = {
   unload () {
   },
 
-  'localize:open' () {
-    Editor.Panel.open('localize.panel');
-  },
+  messages: {
+    open () {
+      Editor.Panel.open('localize.panel');
+    },
+  }
 };

@@ -1,14 +1,18 @@
-var CoreTest = require('./core/test');
-var Test = require('./test');
+'use strict';
+
+const CoreTest = require('./core/test');
+const Test = require('./test');
 
 module.exports = {
-    load: function () {
-    },
+  load () {
+  },
 
-    unload: function () {
-    },
+  unload () {
+  },
 
-    'demo-simple:open': function () {
-        Editor.Panel.open('demo-simple.panel');
+  messages: {
+    open () {
+      Editor.Panel.open('demo-simple.panel');
     },
+  }
 };
