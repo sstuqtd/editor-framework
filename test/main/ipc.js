@@ -46,7 +46,7 @@ describe('Editor.Ipc', function () {
         done();
       });
 
-      Editor.sendToCore('foobar:say-hello-no-param', 'foo', 'bar');
+      Editor.sendToCore('foobar:say-hello-no-param');
       Editor.sendToCore('foobar:say-hello', 'foo', 'bar');
     });
 
@@ -295,17 +295,13 @@ describe('Editor.Ipc', function () {
     });
   });
 
-  describe('Editor.sendRequestToCore', function () {
-    it('should send message to main process in main process', function (done) {
-      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
-        expect(event.senderType).to.eql('main');
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+  describe('Editor.sendToPackage', function () {
+    it('should send message to package\'s main process in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2pkg-simple.html');
 
-        reply( foo, bar );
-      });
-
-      Editor.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
