@@ -1,12 +1,14 @@
 ## CHANGELOG
 
-### v0.4.1 (developing)
+### v0.5.0 (developing)
 
+ - upgrade to Electron v0.36.7
  - remove polymer
  - use shadow dom for panel content
  - disableAutoHideCursor by default for Editor.Window
  - add `Editor.DevTools` in main process
  - add mouse hint for tests
+ - change the way of register ipc messages in package's entry point
 
 ### v0.4.0
 
