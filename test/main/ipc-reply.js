@@ -40,8 +40,21 @@ describe('Editor.Ipc Reply', function () {
       });
     });
 
-    it.skip('should send message to main process and recieve a reply when starting a request in main process', function (done) {
-      done();
+    it('should send message to main process and recieve a reply when starting a request in main process', function (done) {
+      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
+        expect(event.senderType).to.eql('main');
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        reply( foo, bar );
+      });
+
+      Editor.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
+
+        done();
+      });
     });
 
     it('should work for nested case', function (done) {
