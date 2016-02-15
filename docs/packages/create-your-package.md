@@ -133,7 +133,7 @@ Fireball run each package's main entry as a module with `require`, so you must e
 
 In the above example, main entry listen to an IPC message `open` (it is short name for `demo-simple:open`) and call `Editor.Panel.open` to open a package panel. This is the most common way to open a package panel. To learn more about IPC messages and how package communicate between core and page level, read [IPC Channel docs](ipc-channel.md).
 
-The initial `demo-simple:open` message is registered in `menus['Examples/Simple'].message` property of `package.json`. See the above `package.json` example.
+The initial `demo-simple:open` message is registered in `main-menu['Examples/Simple'].message` property of `package.json`. See the above `package.json` example.
 
 ### Main Process
 
@@ -145,10 +145,10 @@ Main entry runs in main-process, you can do following things in main-process:
 
 ## Menu Path
 
-Menu paths are defined in `menus` property of `pacakge.json`. Menu paths definition should looks like this:
+Menu paths are defined in `main-menu` property of `pacakge.json`. Menu paths definition should looks like this:
 
 ```json
-"menus": {
+"main-menu": {
   "Examples/Simple": {
     "message": "demo-simple:open"
   },

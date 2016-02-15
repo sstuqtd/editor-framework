@@ -7,7 +7,7 @@
   "hosts": {
     "unknown": "0.0.1"
   },
-  "menus": {
+  "main-menu": {
     "Test Case/Simple": {
       "message": "demo-simple:open"
     }
