@@ -9,6 +9,7 @@
  - add `Editor.DevTools` in main process
  - add mouse hint for tests
  - change the way of register ipc messages in package's entry point
+ - change the field to register main menu item in `package.json` from `menus` to `main-menu`
 
 ### v0.4.0
 

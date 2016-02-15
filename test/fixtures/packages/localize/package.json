@@ -4,7 +4,7 @@
   "description": "Test i18n",
   "author": "Firebox Technology",
   "main": "main.js",
-  "menus": {
+  "main-menu": {
     "TODO/TODO": {
       "message": "localize:open"
     }

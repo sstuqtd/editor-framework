@@ -4,7 +4,7 @@
   "description": "A Simple Package Test Fixture",
   "author": "Firebox Technology",
   "main": "main.js",
-  "menus": {
+  "main-menu": {
     "Test Case/Simple": {
       "message": "demo-simple:open"
     }
