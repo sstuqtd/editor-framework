@@ -235,10 +235,10 @@ describe('Editor.Package', function () {
     });
 
     it('should load dependencies first', function (done) {
-      Helper.spyChannels( 'sendToWindows', [
+      Helper.spyMessages( 'sendToWindows', [
         'package:loaded',
       ]);
-      let packageLoaded = Helper.channel('sendToWindows','package:loaded');
+      let packageLoaded = Helper.message('sendToWindows','package:loaded');
 
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);

@@ -114,7 +114,7 @@ describe('Editor.Selection', function () {
     });
 
     it('should send ipc selection:selected when select item', function (done) {
-      Helper.spyChannels( 'sendToAll', [
+      Helper.spyMessages( 'sendToAll', [
         'selection:selected',
         'selection:unselected',
       ]);
@@ -150,17 +150,17 @@ describe('Editor.Selection', function () {
       assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
 
       //
-      expect( Helper.channel('sendToAll','selection:selected').callCount ).to.be.equal(4);
-      expect( Helper.channel('sendToAll','selection:unselected').callCount ).to.be.equal(3);
+      expect( Helper.message('sendToAll','selection:selected').callCount ).to.be.equal(4);
+      expect( Helper.message('sendToAll','selection:unselected').callCount ).to.be.equal(3);
 
       done();
     });
 
     it('should not send ipc selection:selected when the item already selected', function (done) {
-      Helper.spyChannels( 'sendToAll', [
+      Helper.spyMessages( 'sendToAll', [
         'selection:selected',
       ]);
-      let ipcSelected = Helper.channel('sendToAll','selection:selected');
+      let ipcSelected = Helper.message('sendToAll','selection:selected');
 
       Editor.Selection.select('normal', 'a', false );
       Editor.Selection.select('normal', 'a', false );
@@ -353,8 +353,8 @@ describe('Editor.Selection', function () {
     });
 
     it('should send activated and deactivated ipc message', function (done) {
-      Helper.spyChannels('sendToAll', ['selection:deactivated']);
-      let ipcDeactivated = Helper.channel('sendToAll', 'selection:deactivated');
+      Helper.spyMessages('sendToAll', ['selection:deactivated']);
+      let ipcDeactivated = Helper.message('sendToAll', 'selection:deactivated');
 
       Editor.Selection.select('normal', ['a','b','c','d']);
       assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
@@ -379,7 +379,7 @@ describe('Editor.Selection', function () {
     });
 
     it('should not send ipc message', function (done) {
-      Helper.spyChannels( 'sendToAll', [
+      Helper.spyMessages( 'sendToAll', [
         'selection:selected',
         'selection:unselected',
       ]);
