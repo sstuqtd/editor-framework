@@ -104,8 +104,11 @@ describe('Editor.Ipc Reply', function () {
           expect(foo).to.eql('foo');
           expect(bar).to.eql('bar');
 
-          win.close();
-          done();
+          // HACK: without this, it will crash in Electron 0.36.8
+          setTimeout ( function () {
+            win.close();
+            done();
+          }, 1 );
         });
       });
     });
@@ -120,8 +123,11 @@ describe('Editor.Ipc Reply', function () {
             expect(foo).to.eql('foo');
             expect(bar).to.eql('bar');
 
-            win.close();
-            done();
+            // HACK: without this, it will crash in Electron 0.36.8
+            setTimeout ( function () {
+              win.close();
+              done();
+            }, 1 );
           });
         });
       });

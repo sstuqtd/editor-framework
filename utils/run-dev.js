@@ -8,13 +8,13 @@ var optArr = [];
 
 if ( process.platform === 'darwin' ) {
   cmdStr = 'bin/electron/Electron.app/Contents/MacOS/Electron';
-  optArr = ['./'].concat(args);
+  optArr = ['./', '--debug=3030', '--dev', '--show-devtools'].concat(args);
 } else if (process.platform === 'win32') {
   cmdStr = 'bin\\electron\\electron.exe';
-  optArr = ['.\\'].concat(args);
+  optArr = ['.\\', '--debug=3030', '--dev', '--show-devtools'].concat(args);
 } else {
   cmdStr = 'bin/electron/electron';
-  optArr = ['./'].concat(args);
+  optArr = ['./', '--debug=3030', '--dev', '--show-devtools'].concat(args);
 }
 
 spawn(cmdStr, optArr, {
