@@ -15,8 +15,9 @@
   "scripts": {
     "install": "gulp bootstrap && bower install && gulp npm-rebuild",
     "test": "node ./utils/run-tests.js",
-    "start": "node ./utils/run.js",
-    "api": "firedoc build ./ --theme notab"
+    "start": "node ./utils/run-dev.js",
+    "api": "firedoc build ./ --theme notab",
+    "no-dev": "node ./utils/run.js"
   },
   "dependencies": {
     "async": "1.5.2",
@@ -68,6 +69,6 @@
   "nativeModules": [
     "chokidar"
   ],
-  "electronVersion": "0.36.7",
+  "electronVersion": "0.36.8",
   "main": "package-examples/main.js"
 }

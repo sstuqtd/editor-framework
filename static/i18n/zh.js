@@ -39,7 +39,7 @@ module.exports = {
       'reload_no_cache': '重新加载并清除缓存',
       'inspect': '检视页面元素',
       'devtools': '开发者工具',
-      'debug_core': '调试主进程',
+      'debug_main_process': '调试主进程',
       'ui_preview': 'UI 控件预览'
     },
     'help': {
