@@ -4,12 +4,13 @@ This section shows you how to extend Fireball Editor by creating and modifying p
 
 ## Getting Start
 
-  - [Define Your App](getting-start/define-your-app.md) This is for creating app with editor-framework. You don't need to read it if you're using Fireball.
-  - [Ipc](getting-start/ipc-channel.md)
+  - [Define Your App](getting-start/define-your-app.md)
+  - [App lifecycle and events](getting-start/app-lifecycle-and-events.md)
+  - [Introduction to IPC](getting-start/introduction-to-ipc.md)
 
 ## Writing A Package
 
-  - [Create Your Package](packages/create-package.md)
+  - [Create Your Package](packages/create-your-package.md)
   - [Create Panels](packages/create-panels.md)
   - [Register Shortcuts](packages/register-shortcuts.md)
   - [Create Widgets](packages/create-widgets.md)
