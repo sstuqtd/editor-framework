@@ -1,15 +1,15 @@
-To run your app with editor-framework, you should download and put `editor-framework` into your app folder. You also need to create a `package.json` file in your app's root folder, and set its main to your app.js.
+To run your app with editor-framework, you should download and put `editor-framework` into your app folder. You also need to create a `package.json` file in your app's root folder, and set its `main` field to your main entry script.
 
-Your project structure should look like this:
+Generally, an editor-framework app is structured like this
 
 ```
 your-app-path/
 ├── editor-framework/
 ├── package.json
-└── app.js
+└── main.js
 ```
 
-The `package.json` should look like this:
+The format of `package.json` is exactly the same as that of Node's modules, and the script specified by the main field is the startup script of your app, which will run the main process. An example of your package.json might look like this:
 
 ```json
 {
@@ -17,79 +17,58 @@ The `package.json` should look like this:
   "version": "0.0.1",
   "description": "A simple app based on editor-framework.",
   "dependencies": {},
-  "main": "app.js" //<== Important!!! Must have.
+  "main": "main.js" //<== Important!!! Must have.
 }
 ```
 
-## app.js
+## Main Entry Script
 
+The main entry script should call `Editor.App.extend` and give it a definition.
 Here is an example:
 
 ```javascript
+'use strict';
+
 // require editor-framework at the beginning
 require('./editor-framework');
 
 // extends the app
 Editor.App.extend({
-  // optional, init commander in this pahse
-  beforeInit: function ( commander ) {
+  // optional, init commander before app inited
+  beforeInit ( commander ) {
   },
 
   // init your app
-  init: function ( options ) {
+  init ( opts, cb ) {
+    if ( cb ) {
+      cb ();
+    }
   },
 
   // run your app
-  run: function () {
+  run () {
     // create main window
-    var mainWin = new Editor.Window('main', {
-      'title': 'Editor Framework',
-      'min-width': 800,
-      'min-height': 600,
-      'show': false,
-      'resizable': true,
+    let mainWin = new Editor.Window('main', {
+      title: 'My App',
+      minWidth: 800,
+      minHeight: 600,
+      show: false,
+      resizable: true,
     });
     Editor.mainWindow = mainWin;
 
-    // restore window size and position
-    mainWin.restorePositionAndSize();
+    // load your app page
+    mainWin.load( 'app://index.html' );
 
-    // load and show main window
+    // show and focus the main window
     mainWin.show();
-
-    // load your first page
-    mainWin.load( 'app://app.html' );
-
-    // open devtools if needed
-    if ( Editor.showDevtools ) {
-        mainWin.openDevTools();
-    }
     mainWin.focus();
   },
 });
 ```
 
-We also provide a yeoman generator [generator-editor-framework](https://github.com/fireball-x/generator-editor-framework)
-to help users create an editor-framework app.
+Read more details about App definition in [App lifecycle and events](./app-lifecycle-and-events.md).
 
-## Class Method: beforeInit(commander)
+## Yeoman Generator
 
- - `commander` An instance of [commander.js](https://github.com/tj/commander.js)
-
-Invoked at the very beginning of the app, before Editor module initialization. No method in `Editor` module can be used in this function.
-
-## Class Method: init(options)
-
- - `options` The options parsed from `process.argv`
-
-Invoked after `Editor` and its sub modules initialization. It is recommended to put following register work in this function:
-
- - register your protocol
- - register your profile path
- - register your package path
- - define your main menu
-
-## Class Method: run()
-
-Invoked after finish loading all packages. Basically you should open your main window in this function.
-
+To make things simple, we also provide a yeoman generator to create an editor-framework app --- [generator-editor-framework](https://github.com/fireball-x/generator-editor-framework).

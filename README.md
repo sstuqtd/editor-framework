@@ -18,7 +18,7 @@ The framework is based on top of [Electron](http://github.com/atom/electron) ~~a
 It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
 
-It is designed for full extensibility. In the core level (main process), we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the page level (renderer process), we use HTML5 Web Component standards and include the Polymer solution by default. The user can extend the widgets and panels, then refresh the page to apply the changes.
+It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards. The user can extend the widgets and panels, then refresh the page to apply the changes.
 
 ![screen shot](https://cloud.githubusercontent.com/assets/174891/11186940/24a90d74-8cbf-11e5-9ea5-fc2610ebbd79.png)
 
