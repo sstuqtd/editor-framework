@@ -67,5 +67,11 @@ module.exports = {
     'delete': 'Delete',
     'apply': 'Apply',
     'revert': 'Revert',
-  }
+  },
+  'PANEL_MENU': {
+    'maximize': 'Maximize',
+    'pop_out': 'Pop Out',
+    'close': 'Close',
+    'add_tab': 'Add Tab',
+  },
 };
