@@ -68,5 +68,11 @@ module.exports = {
     'revert': '撤销',
     'save': '保存',
     'warning': '警告',
-  }
+  },
+  'PANEL_MENU': {
+    'maximize': '最大化',
+    'pop_out': '弹出',
+    'close': '关闭',
+    'add_tab': '添加标签页',
+  },
 };
