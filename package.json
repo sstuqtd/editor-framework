@@ -13,11 +13,11 @@
     "url": "https://github.com/cocos-creator/editor-framework/issues"
   },
   "scripts": {
-    "install": "gulp bootstrap && bower install && gulp npm-rebuild",
-    "test": "node ./utils/run-tests.js",
-    "start": "node ./utils/run-dev.js",
     "api": "firedoc build ./ --theme notab",
-    "no-dev": "node ./utils/run.js"
+    "start": "node ./tasks/run-dev.js",
+    "start:no-dev": "node ./tasks/run.js",
+    "test": "node ./tasks/run-tests.js",
+    "clear": "sh ./tasks/remove-settings.sh"
   },
   "dependencies": {
     "async": "1.5.2",
@@ -31,6 +31,7 @@
     "fire-fs": "0.2.3",
     "fire-path": "0.1.8",
     "fire-url": "0.1.7",
+    "fs-jetpack": "0.7.x",
     "globby": "2.1.0",
     "gulp": "3.9.0",
     "gulp-babel": "6.1.1",
@@ -51,24 +52,16 @@
     "winston": "2.1.1"
   },
   "devDependencies": {
+    "babel-plugin-unassert": "2.x",
+    "babel-preset-es2015-rollup": "1.x",
     "check-dependencies": "0.11.0",
+    "electron-prebuilt": "0.37.2",
     "firedoc": "1.13.7",
-    "gulp-changed": "1.3.0",
-    "gulp-watch": "4.3.5"
+    "rollup": "0.x",
+    "rollup-plugin-babel": "2.x",
+    "rollup-plugin-replace": "1.x"
   },
-  "builtins": [
-    "fireball-packages/console",
-    "fireball-packages/ipc-debugger",
-    "fireball-packages/package-manager",
-    "fireball-packages/tester",
-    "fireball-packages/ui-kit"
-  ],
-  "hosts": [
-    "fireball-packages/package-examples"
-  ],
   "nativeModules": [
     "chokidar"
-  ],
-  "electronVersion": "0.37.2",
-  "main": "package-examples/main.js"
+  ]
 }
