@@ -5,21 +5,21 @@ const chalk = require('chalk');
 const async = require('async');
 
 const electron = require('electron-prebuilt');
-const jetpack = require('fs-jetpack');
+const globby = require('globby');
 const spawn = require('child_process').spawn;
 
 // get cwd
 let cwd = process.cwd();
 
 // get main files
-let mainTests = jetpack.find('test', {
-  matching: ['main/**/*.js', 'share/**/*.js', '!**/*.skip.js']
-});
+let mainTests = globby.sync([
+  'main/**/*.js', 'share/**/*.js', '!**/*.skip.js'
+], { cwd: './test', realpath: true });
 
 // get renderer files
-let rendererTests = jetpack.find('test', {
-  matching: ['renderer/**/*.js', 'share/**/*.js', '!**/*.skip.js']
-});
+let rendererTests = globby.sync([
+  'renderer/**/*.js', 'share/**/*.js', '!**/*.skip.js'
+], { cwd: './test', realpath: true });
 
 // process tests
 let failedTests = [];

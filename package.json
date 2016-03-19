@@ -25,14 +25,13 @@
     "chalk": "1.1.1",
     "chokidar": "1.4.2",
     "commander": "2.9.0",
-    "del": "1.2.1",
+    "del": "2.x",
     "diff": "2.2.1",
     "find-up": "1.1.0",
     "fire-fs": "0.2.3",
     "fire-path": "0.1.8",
     "fire-url": "0.1.7",
-    "fs-jetpack": "0.7.x",
-    "globby": "2.1.0",
+    "globby": "4.x",
     "gulp": "3.9.0",
     "gulp-babel": "6.1.1",
     "gulp-less": "3.0.5",
@@ -52,14 +51,8 @@
     "winston": "2.1.1"
   },
   "devDependencies": {
-    "babel-plugin-unassert": "2.x",
-    "babel-preset-es2015-rollup": "1.x",
-    "check-dependencies": "0.11.0",
     "electron-prebuilt": "0.37.2",
-    "firedoc": "1.13.7",
-    "rollup": "0.x",
-    "rollup-plugin-babel": "2.x",
-    "rollup-plugin-replace": "1.x"
+    "firedoc": "1.13.7"
   },
   "nativeModules": [
     "chokidar"
