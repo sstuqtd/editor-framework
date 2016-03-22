@@ -1,5 +1,7 @@
 'use strict';
 
+const Editor = require('./lib/main/');
+
 const Electron = require('electron');
 const Chalk = require('chalk');
 const Path = require('fire-path');
@@ -7,13 +9,7 @@ const Fs = require('fire-fs');
 const Winston = require('winston');
 const Async = require('async');
 
-const Editor = require('./lib/main/');
 const app = Electron.app;
-
-module.exports = Editor;
-
-// NOTE: this is only for remote.getGlobal('_Editor');
-global._Editor = Editor;
 
 // ---------------------------
 // node setup
@@ -22,10 +18,10 @@ global._Editor = Editor;
 // this will prevent default atom-shell uncaughtException
 process.removeAllListeners('uncaughtException');
 process.on('uncaughtException', err => {
-  if ( Editor && Editor.error ) {
-    Editor.error(err.stack || err);
-    return;
-  }
+  // if ( Editor && Editor.error ) {
+  //   Editor.error(err.stack || err);
+  //   return;
+  // }
   console.log( Chalk.red.inverse.bold('Uncaught Exception: ') + Chalk.red( err.stack || err ) );
 });
 
@@ -408,3 +404,6 @@ Editor.versions = {
  */
 Editor.frameworkPath = _frameworkPath;
 Editor.logfile = _logfile;
+
+//
+module.exports = Editor;

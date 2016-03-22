@@ -4,6 +4,7 @@
   //
   try {
     const Electron = require('electron');
+    const Path = require('fire-path');
 
     // init Editor
     window.onerror = function ( message, filename, lineno, colno, err ) {
@@ -146,9 +147,16 @@
     // limit zooming
     Electron.webFrame.setZoomLevelLimits(1,1);
 
+    // init & cache remote
+    let _remoteEditor = Electron.remote.getGlobal('_Editor');
+    let _appPath = _remoteEditor.url('app://');
+    let _frameworkPath = _remoteEditor.url('editor-framework://');
+
+    // add builtin node_modules search path for page-level
+    require('module').globalPaths.push(Path.join(_appPath,'node_modules'));
+
     // load editor-init.js
-    let frameworkPath = Electron.remote.getGlobal('_Editor').url('editor-framework://');
-    const Editor = require(`${frameworkPath}/lib/renderer`);
+    const Editor = require(`${_frameworkPath}/lib/renderer`);
 
     // DISABLE: use hash instead
     // // init argument list sending from core by url?queries
@@ -171,7 +179,13 @@
       Editor.argv = {};
     }
 
-    window.Editor = Editor;
+    Editor.dev = Editor.remote.dev;
+    Editor.lang = Editor.remote.lang;
+    Editor.appPath = _appPath;
+    Editor.frameworkPath = _frameworkPath;
+
+    // register protocol
+    Editor.Protocol.init(Editor);
   } catch ( err ) {
     window.onload = function () {
       const Electron = require('electron');
