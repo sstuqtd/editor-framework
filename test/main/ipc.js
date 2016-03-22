@@ -6,12 +6,12 @@ const BrowserWindow = Electron.BrowserWindow;
 const Async = require('async');
 
 //
-describe('Editor.Ipc', function () {
+describe('Editor.IpcListener', function () {
   Helper.run({
     enableIpc: true,
   });
 
-  let ipc = new Editor.Ipc();
+  let ipc = new Editor.IpcListener();
 
   afterEach(function () {
     ipc.clear();

@@ -3,7 +3,7 @@
 describe('ipc', function () {
   this.timeout(0);
 
-  let ipc = new Editor.Ipc();
+  let ipc = new Editor.IpcListener();
 
   afterEach(function () {
     ipc.clear();

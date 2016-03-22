@@ -12,6 +12,9 @@ const app = Electron.app;
 
 module.exports = Editor;
 
+// NOTE: this is only for remote.getGlobal('_Editor');
+global._Editor = Editor;
+
 // ---------------------------
 // node setup
 // ---------------------------
@@ -55,13 +58,13 @@ Yargs.strict()
   },
   'debug': {
     type: 'number',
-    default: 8080,
+    default: 3030,
     global: true,
     desc: 'Open in browser context debug mode.'
   },
   'debug-brk': {
     type: 'number',
-    default: 8080,
+    default: 3030,
     global: true,
     desc: 'Open in browser context debug mode, and break at first.'
   },
@@ -254,7 +257,7 @@ app.on('ready', () => {
   }
 
   if ( yargv._command !== 'test' || yargv.detail ) {
-    Winston.add( Winston.transports.Console, {
+    Winston.add(Winston.transports.Console, {
       level: 'uncaught',
       formatter (options) {
         let text = '';
@@ -278,13 +281,17 @@ app.on('ready', () => {
 
   // apply arguments to Editor
   Editor.argv = yargv;
-  Editor.isDev = yargv.dev;
-  Editor.showDevtools = yargv.showDevtools;
-  Editor.debugPort = yargv.debug;
+  Editor.dev = yargv.dev;
   Editor.lang = yargv.lang;
 
-  //
-  require('./lib/main/editor-init');
+  // register protocol
+  Editor.Protocol.init(Editor);
+
+  // reset submodules
+  Editor.Package.lang = yargv.lang;
+  Editor.Package.versions = Editor.versions;
+  Editor.Menu.showDev = yargv.dev;
+  Editor.Debugger.debugPort = yargv.debug;
 
   // ---------------------------
   // run editor
@@ -337,7 +344,7 @@ app.on('ready', () => {
 
     // watch packages
     next => {
-      if ( Editor.isDev ) {
+      if ( yargv.dev ) {
         Editor.log('Watching packages');
         Editor.watchPackages(next);
         return;

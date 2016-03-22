@@ -20,7 +20,6 @@
   ],
   "globals": {
     "unused": false,
-    "Editor": false,
     "EditorUI": false,
     "Helper": false,
     "Polymer": false,
