@@ -1,6 +1,6 @@
 'use strict';
 
-const Editor = require('./lib/main/');
+const EditorM = require('./lib/main/');
 
 const Electron = require('electron');
 const Chalk = require('chalk');
@@ -18,8 +18,8 @@ const app = Electron.app;
 // this will prevent default atom-shell uncaughtException
 process.removeAllListeners('uncaughtException');
 process.on('uncaughtException', err => {
-  // if ( Editor && Editor.error ) {
-  //   Editor.error(err.stack || err);
+  // if ( EditorM && EditorM.error ) {
+  //   EditorM.error(err.stack || err);
   //   return;
   // }
   console.log( Chalk.red.inverse.bold('Uncaught Exception: ') + Chalk.red( err.stack || err ) );
@@ -112,17 +112,17 @@ const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(_frameworkPat
 // get log path
 let _logpath = '';
 if ( process.platform === 'darwin' ) {
-  _logpath = Path.join(app.getPath('home'), `Library/Logs/${Editor.App.name}`);
+  _logpath = Path.join(app.getPath('home'), `Library/Logs/${EditorM.App.name}`);
 } else {
-  _logpath = Path.join(app.getPath('appData'), Editor.App.name);
+  _logpath = Path.join(app.getPath('appData'), EditorM.App.name);
 }
-const _logfile = Path.join(_logpath, `${Editor.App.name}.log`);
+const _logfile = Path.join(_logpath, `${EditorM.App.name}.log`);
 
 // make sure ~/.{app-name} exists
-Fs.ensureDirSync(Editor.App.home);
+Fs.ensureDirSync(EditorM.App.home);
 
 // make sure ~/.{app-name}/local/ exists
-Fs.ensureDirSync(Path.join(Editor.App.home, 'local'));
+Fs.ensureDirSync(Path.join(EditorM.App.home, 'local'));
 
 // make sure log path exists
 Fs.ensureDirSync(_logpath);
@@ -217,15 +217,15 @@ app.on('gpu-process-crashed', () => {
 
 app.on('ready', () => {
   // init app's command
-  if ( Editor.App.beforeInit ) {
-    Editor.App.beforeInit(Yargs);
+  if ( EditorM.App.beforeInit ) {
+    EditorM.App.beforeInit(Yargs);
   }
 
   // get options from yargs
   let yargv = Yargs.argv;
 
   // ---------------------------
-  // initialize Editor
+  // initialize EditorM
   // ---------------------------
 
   Winston.remove(Winston.transports.Console);
@@ -245,7 +245,7 @@ app.on('ready', () => {
       json: false,
     });
 
-    console.log( Chalk.magenta('===== Initializing Editor =====') );
+    console.log( Chalk.magenta('===== Initializing EditorM =====') );
 
     let args = process.argv.slice(2);
     args = args.map(a => { return `  ${a}`; });
@@ -275,41 +275,41 @@ app.on('ready', () => {
     });
   }
 
-  // apply arguments to Editor
-  Editor.argv = yargv;
-  Editor.dev = yargv.dev;
-  Editor.lang = yargv.lang;
+  // apply arguments to EditorM
+  EditorM.argv = yargv;
+  EditorM.dev = yargv.dev;
+  EditorM.lang = yargv.lang;
 
   // register protocol
-  Editor.Protocol.init(Editor);
+  EditorM.Protocol.init(EditorM);
 
   // reset submodules
-  Editor.Package.lang = yargv.lang;
-  Editor.Package.versions = Editor.versions;
-  Editor.Menu.showDev = yargv.dev;
-  Editor.Debugger.debugPort = yargv.debug;
+  EditorM.Package.lang = yargv.lang;
+  EditorM.Package.versions = EditorM.versions;
+  EditorM.Menu.showDev = yargv.dev;
+  EditorM.Debugger.debugPort = yargv.debug;
 
   // ---------------------------
   // run editor
   // ---------------------------
 
-  Editor.reset();
+  EditorM.reset();
 
   // before run the app, we start load and watch all packages
   Async.series([
     // init app
     next => {
       // init user App
-      if ( !Editor.App.init ) {
-        Editor.error('Can not find function "init" in your app');
+      if ( !EditorM.App.init ) {
+        EditorM.error('Can not find function "init" in your app');
         app.terminate();
         return;
       }
 
       try {
-        Editor.App.init(yargv, next);
+        EditorM.App.init(yargv, next);
       } catch ( err ) {
-        Editor.error(err.stack || err);
+        EditorM.error(err.stack || err);
         app.terminate();
         return;
       }
@@ -334,15 +334,15 @@ app.on('ready', () => {
 
     // load packages
     next => {
-      Editor.log('Loading packages');
-      Editor.loadAllPackages( next );
+      EditorM.log('Loading packages');
+      EditorM.loadAllPackages( next );
     },
 
     // watch packages
     next => {
       if ( yargv.dev ) {
-        Editor.log('Watching packages');
-        Editor.watchPackages(next);
+        EditorM.log('Watching packages');
+        EditorM.watchPackages(next);
         return;
       }
 
@@ -351,40 +351,40 @@ app.on('ready', () => {
 
     // run app
     next => {
-      Editor.log('Run Application');
+      EditorM.log('Run Application');
 
       // load windows layout after local profile registered
-      Editor.Window.loadLayouts();
+      EditorM.Window.loadLayouts();
 
       // connect to console to sending ipc to it
-      Editor.connectToConsole();
+      EditorM.connectToConsole();
 
       // run user App
-      if ( !Editor.App.run ) {
-        Editor.error('Can not find function "run" in your app');
+      if ( !EditorM.App.run ) {
+        EditorM.error('Can not find function "run" in your app');
         app.terminate();
         return;
       }
 
       try {
-        Editor.App.run();
+        EditorM.App.run();
         next();
       } catch ( err ) {
-        Editor.error(err.stack || err);
+        EditorM.error(err.stack || err);
         app.terminate();
         return;
       }
     },
   ], err => {
     if ( err ) {
-      Editor.error(err.stack || err);
+      EditorM.error(err.stack || err);
       app.terminate();
     }
   });
 });
 
 // ---------------------------
-// extends Editor module
+// extends EditorM module
 // ---------------------------
 
 /**
@@ -392,7 +392,7 @@ app.on('ready', () => {
  * @property versions
  * @type Object
  */
-Editor.versions = {
+EditorM.versions = {
   [app.getName()]: app.getVersion(),
   'editor-framework': _frameworkPackageJson.version,
 };
@@ -402,8 +402,8 @@ Editor.versions = {
  * @property frameworkPath
  * @type string
  */
-Editor.frameworkPath = _frameworkPath;
-Editor.logfile = _logfile;
+EditorM.frameworkPath = _frameworkPath;
+EditorM.logfile = _logfile;
 
 //
-module.exports = Editor;
+module.exports = EditorM;

@@ -6,10 +6,10 @@
     const Electron = require('electron');
     const Path = require('fire-path');
 
-    // init Editor
+    // init EditorR
     window.onerror = function ( message, filename, lineno, colno, err ) {
-      if ( Editor && Editor.sendToWindows ) {
-        Editor.sendToWindows('console:error', err.stack || err);
+      if ( EditorR && EditorR.sendToWindows ) {
+        EditorR.sendToWindows('console:error', err.stack || err);
       } else {
         console.error(err.stack || err);
       }
@@ -59,12 +59,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = Editor.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.Panel.getFocusedPanel();
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorUI.fire(focusedPanel, 'panel-copy', {
+        EditorR.UI.fire(focusedPanel, 'panel-copy', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -80,12 +80,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = Editor.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.Panel.getFocusedPanel();
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorUI.fire(focusedPanel, 'panel-cut', {
+        EditorR.UI.fire(focusedPanel, 'panel-cut', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -101,12 +101,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = Editor.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.Panel.getFocusedPanel();
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorUI.fire(focusedPanel, 'panel-paste', {
+        EditorR.UI.fire(focusedPanel, 'panel-paste', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -128,16 +128,16 @@
     //          and when he refresh at that time, the layout will be saved and
     //          reloaded layout will not be the expected one
     // window.onunload = function () {
-    //     if ( Editor && Editor.Panel ) {
-    //         // NOTE: do not use Editor.saveLayout() which will be invoked in requestAnimationFrame.
+    //     if ( EditorR && EditorR.Panel ) {
+    //         // NOTE: do not use EditorR.saveLayout() which will be invoked in requestAnimationFrame.
     //         // It will not be called in window.onunload
-    //         Editor.sendToCore(
+    //         EditorR.sendToCore(
     //           'window:save-layout',
-    //           Editor.Panel.dumpLayout()
+    //           EditorR.Panel.dumpLayout()
     //         );
     //     }
     //     else {
-    //         Editor.sendToCore(
+    //         EditorR.sendToCore(
     //           'window:save-layout',
     //           null
     //         );
@@ -148,7 +148,7 @@
     Electron.webFrame.setZoomLevelLimits(1,1);
 
     // init & cache remote
-    let _remoteEditor = Electron.remote.getGlobal('_Editor');
+    let _remoteEditor = Electron.remote.getGlobal('Editor');
     let _appPath = _remoteEditor.url('app://');
     let _frameworkPath = _remoteEditor.url('editor-framework://');
 
@@ -156,7 +156,7 @@
     require('module').globalPaths.push(Path.join(_appPath,'node_modules'));
 
     // load editor-init.js
-    const Editor = require(`${_frameworkPath}/lib/renderer`);
+    const EditorR = require(`${_frameworkPath}/lib/renderer`);
 
     // DISABLE: use hash instead
     // // init argument list sending from core by url?queries
@@ -174,18 +174,18 @@
     // NOTE: hash is better than query from semantic, it means this is client data.
     if ( window.location.hash ) {
       let hash = window.location.hash.slice(1);
-      Editor.argv = Object.freeze(JSON.parse(decodeURIComponent(hash)));
+      EditorR.argv = Object.freeze(JSON.parse(decodeURIComponent(hash)));
     } else {
-      Editor.argv = {};
+      EditorR.argv = {};
     }
 
-    Editor.dev = Editor.remote.dev;
-    Editor.lang = Editor.remote.lang;
-    Editor.appPath = _appPath;
-    Editor.frameworkPath = _frameworkPath;
+    EditorR.dev = EditorR.remote.dev;
+    EditorR.lang = EditorR.remote.lang;
+    EditorR.appPath = _appPath;
+    EditorR.frameworkPath = _frameworkPath;
 
     // register protocol
-    Editor.Protocol.init(Editor);
+    EditorR.Protocol.init(EditorR);
   } catch ( err ) {
     window.onload = function () {
       const Electron = require('electron');
