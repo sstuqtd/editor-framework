@@ -129,7 +129,7 @@
     //          reloaded layout will not be the expected one
     // window.onunload = function () {
     //     if ( EditorR && EditorR.Panel ) {
-    //         // NOTE: do not use EditorR.saveLayout() which will be invoked in requestAnimationFrame.
+    //         // NOTE: do not use DockUtils.saveLayout() which will be invoked in requestAnimationFrame.
     //         // It will not be called in window.onunload
     //         EditorR.sendToCore(
     //           'window:save-layout',
@@ -157,6 +157,7 @@
 
     // load editor-init.js
     const EditorR = require(`${_frameworkPath}/lib/renderer`);
+    EditorR.remote = _remoteEditor;
 
     // DISABLE: use hash instead
     // // init argument list sending from core by url?queries
@@ -179,8 +180,8 @@
       EditorR.argv = {};
     }
 
-    EditorR.dev = EditorR.remote.dev;
-    EditorR.lang = EditorR.remote.lang;
+    EditorR.dev = _remoteEditor.dev;
+    EditorR.lang = _remoteEditor.lang;
     EditorR.appPath = _appPath;
     EditorR.frameworkPath = _frameworkPath;
 
