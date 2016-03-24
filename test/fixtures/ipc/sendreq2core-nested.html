@@ -13,7 +13,7 @@
 
         Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
           Editor.Ipc.sendRequestToCore('foobar:say-hello-nested', foo, bar, (foo, bar) => {
-            Editor.Ipc.sendToCore('foobar:reply', foo, bar);
+            Editor.Ipc.sendToMain('foobar:reply', foo, bar);
           });
         });
       })();

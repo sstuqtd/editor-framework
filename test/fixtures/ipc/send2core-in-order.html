@@ -14,13 +14,13 @@
         const Electron = require('electron');
 
         Electron.ipcRenderer.on('foobar:reply-from-core', () => {
-          Editor.Ipc.sendToCore( 'foobar:say-hello-04' );
-          Editor.Ipc.sendToCore( 'foobar:say-hello-05' );
+          Editor.Ipc.sendToMain( 'foobar:say-hello-04' );
+          Editor.Ipc.sendToMain( 'foobar:say-hello-05' );
         });
 
-        Editor.Ipc.sendToCore( 'foobar:say-hello-01' );
-        Editor.Ipc.sendToCore( 'foobar:say-hello-02' );
-        Editor.Ipc.sendToCore( 'foobar:say-hello-03' );
+        Editor.Ipc.sendToMain( 'foobar:say-hello-01' );
+        Editor.Ipc.sendToMain( 'foobar:say-hello-02' );
+        Editor.Ipc.sendToMain( 'foobar:say-hello-03' );
       })();
     </script>
   </body>

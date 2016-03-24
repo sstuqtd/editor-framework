@@ -17,7 +17,7 @@ describe('Editor.IpcListener', function () {
     ipc.clear();
   });
 
-  describe('Editor.Ipc.sendToCore', function () {
+  describe('Editor.Ipc.sendToMain', function () {
     it('should work in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
@@ -46,8 +46,8 @@ describe('Editor.IpcListener', function () {
         done();
       });
 
-      Editor.Ipc.sendToCore('foobar:say-hello-no-param');
-      Editor.Ipc.sendToCore('foobar:say-hello', 'foo', 'bar');
+      Editor.Ipc.sendToMain('foobar:say-hello-no-param');
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar');
     });
 
     it('should send ipc in order', function (done) {
@@ -172,7 +172,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -206,7 +206,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       let cnt = 0;
@@ -233,7 +233,7 @@ describe('Editor.IpcListener', function () {
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
         assert(false, 'Main process should not recieve ipc event');
-        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -269,7 +269,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       let cnt = 0;

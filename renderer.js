@@ -131,13 +131,13 @@
     //     if ( EditorR && EditorR.Panel ) {
     //         // NOTE: do not use DockUtils.saveLayout() which will be invoked in requestAnimationFrame.
     //         // It will not be called in window.onunload
-    //         EditorR.sendToCore(
+    //         EditorR.Ipc.sendToMain(
     //           'window:save-layout',
     //           EditorR.Panel.dumpLayout()
     //         );
     //     }
     //     else {
-    //         EditorR.sendToCore(
+    //         EditorR.Ipc.sendToMain(
     //           'window:save-layout',
     //           null
     //         );
