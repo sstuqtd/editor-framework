@@ -4,7 +4,7 @@ describe('<editor-dock-resizer>', function () {
   this.timeout(0);
 
   describe('<editor-dock-resizer> horizontal', function () {
-    let totalSize = 480 - EditorUI.DockUtils.resizerSpace * 2;
+    let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'horizontal', '#container');
 
@@ -71,7 +71,7 @@ describe('<editor-dock-resizer>', function () {
   });
 
   describe('<editor-dock-resizer> vertical', function () {
-    let totalSize = 480 - EditorUI.DockUtils.resizerSpace * 2;
+    let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'vertical', '#container');
 
