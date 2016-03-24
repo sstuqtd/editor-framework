@@ -3,7 +3,8 @@
   "rules": {
     "comma-dangle": 0,
     "no-console": 0,
-    "no-constant-condition": 0
+    "no-constant-condition": 0,
+    "semi": 1
   },
   "parserOptions": {
     "ecmaVersion": 6,
