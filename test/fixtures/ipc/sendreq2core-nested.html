@@ -11,9 +11,9 @@
       (() => {
         'use strict';
 
-        Editor.sendRequestToCore('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
-          Editor.sendRequestToCore('foobar:say-hello-nested', foo, bar, (foo, bar) => {
-            Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
+          Editor.Ipc.sendRequestToCore('foobar:say-hello-nested', foo, bar, (foo, bar) => {
+            Editor.Ipc.sendToCore('foobar:reply', foo, bar);
           });
         });
       })();

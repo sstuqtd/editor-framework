@@ -17,7 +17,7 @@ describe('Editor.IpcListener Reply', function () {
     ipc.clear();
   });
 
-  describe('Editor.sendRequestToCore', function () {
+  describe('Editor.Ipc.sendRequestToCore', function () {
     it('should send message to main process and recieve a reply when starting a request in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2core-simple.html');
@@ -49,7 +49,7 @@ describe('Editor.IpcListener Reply', function () {
         reply( foo, bar );
       });
 
-      Editor.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+      Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 

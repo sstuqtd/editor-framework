@@ -17,7 +17,7 @@ describe('Editor.IpcListener', function () {
     ipc.clear();
   });
 
-  describe('Editor.sendToCore', function () {
+  describe('Editor.Ipc.sendToCore', function () {
     it('should work in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
@@ -46,8 +46,8 @@ describe('Editor.IpcListener', function () {
         done();
       });
 
-      Editor.sendToCore('foobar:say-hello-no-param');
-      Editor.sendToCore('foobar:say-hello', 'foo', 'bar');
+      Editor.Ipc.sendToCore('foobar:say-hello-no-param');
+      Editor.Ipc.sendToCore('foobar:say-hello', 'foo', 'bar');
     });
 
     it('should send ipc in order', function (done) {
@@ -89,7 +89,7 @@ describe('Editor.IpcListener', function () {
     });
   });
 
-  describe('Editor.sendToWindows', function () {
+  describe('Editor.Ipc.sendToWindows', function () {
     it('should send message to all windows in main process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -102,7 +102,7 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.sendToWindows('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToWindows('foobar:say-hello', 'foo', 'bar');
       });
 
       let cnt = 0;
@@ -163,7 +163,7 @@ describe('Editor.IpcListener', function () {
 
   });
 
-  describe('Editor.sendToAll', function () {
+  describe('Editor.Ipc.sendToAll', function () {
     it('should send message to all process in main process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
@@ -172,7 +172,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -180,7 +180,7 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.sendToAll('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar');
       });
 
       let cnt = 0;
@@ -206,7 +206,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
       });
 
       let cnt = 0;
@@ -233,7 +233,7 @@ describe('Editor.IpcListener', function () {
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
         assert(false, 'Main process should not recieve ipc event');
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -241,7 +241,7 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.selfExcluded);
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.selfExcluded);
       });
 
       let cnt = 0;
@@ -269,7 +269,7 @@ describe('Editor.IpcListener', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToCore('foobar:reply', foo, bar);
       });
 
       let cnt = 0;
@@ -295,7 +295,7 @@ describe('Editor.IpcListener', function () {
     });
   });
 
-  describe('Editor.sendToPackage', function () {
+  describe('Editor.Ipc.sendToPackage', function () {
     it('should send message to package\'s main process in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2pkg-simple.html');

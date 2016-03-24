@@ -16,7 +16,7 @@
           event.sender.send('foobar:reply', foo, bar);
         });
 
-        Editor.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.selfExcluded);
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.selfExcluded);
       })();
     </script>
   </body>

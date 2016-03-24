@@ -69,19 +69,19 @@ describe('Editor.Package', function () {
       Editor.Package.load(path, function () {
         Async.series([
           next => {
-            Editor.sendRequestToCore('main-ipc:say-hello', function ( msg ) {
+            Editor.Ipc.sendRequestToCore('main-ipc:say-hello', function ( msg ) {
               expect(msg).to.equal('hello');
               next();
             });
           },
           next => {
-            Editor.sendRequestToCore('main-ipc:say-hello-02', function ( msg ) {
+            Editor.Ipc.sendRequestToCore('main-ipc:say-hello-02', function ( msg ) {
               expect(msg).to.equal('hello-02');
               next();
             });
           },
           next => {
-            Editor.sendRequestToCore('another:say-hello-03', function ( msg ) {
+            Editor.Ipc.sendRequestToCore('another:say-hello-03', function ( msg ) {
               expect(msg).to.equal('hello-03');
               next();
             });
@@ -153,7 +153,7 @@ describe('Editor.Package', function () {
     const path = Path.join(testPackages,'localize');
 
     it('should load and unload en i18n file', function (done) {
-      Editor.lang = 'en';
+      Editor.Package.lang = 'en';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('Search');
         expect(Editor.T('localize.edit')).to.equal('Edit');
@@ -166,7 +166,7 @@ describe('Editor.Package', function () {
     });
 
     it('should load zh i18n file', function (done) {
-      Editor.lang = 'zh';
+      Editor.Package.lang = 'zh';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('搜索');
         expect(Editor.T('localize.edit')).to.equal('编辑');
