@@ -144,7 +144,7 @@ describe('Editor.IpcListener', function () {
 
     it('should send message to window exclude self', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2wins-self-excluded.html');
+      win.load('editor-framework://test/fixtures/ipc/send2wins-exclude-self.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -241,7 +241,7 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.selfExcluded);
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.excludeSelf);
       });
 
       let cnt = 0;
@@ -263,7 +263,7 @@ describe('Editor.IpcListener', function () {
 
     it('should send message to all process exclude self in renderer process', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-self-excluded.html');
+      win.load('editor-framework://test/fixtures/ipc/send2all-exclude-self.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');

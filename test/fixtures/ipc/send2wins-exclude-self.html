@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>send2all-self-execluded</title>
+    <title>send2wins-exclude-self</title>
     <meta charset="utf-8">
   </head>
 
@@ -16,7 +16,7 @@
           event.sender.send('foobar:reply', foo, bar);
         });
 
-        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.selfExcluded);
+        Editor.Ipc.sendToWindows('foobar:say-hello', 'foo', 'bar', Editor.Ipc.excludeSelf);
       })();
     </script>
   </body>
