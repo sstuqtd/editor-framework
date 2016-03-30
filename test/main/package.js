@@ -44,7 +44,7 @@ describe('Editor.Package', function () {
 
     it('should send loaded ipc message', function (done) {
       Editor.Package.load(path, function () {
-        assert( Helper.sendToWindows.calledWith('package:loaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('package:loaded', 'simple') );
         done();
       });
     });
@@ -54,7 +54,7 @@ describe('Editor.Package', function () {
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ], function () {
-        assert( Helper.sendToWindows.calledWith('package:unloaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('package:unloaded', 'simple') );
         done();
       });
     });
@@ -235,10 +235,10 @@ describe('Editor.Package', function () {
     });
 
     it('should load dependencies first', function (done) {
-      Helper.spyMessages( 'sendToWindows', [
+      Helper.spyMessages( 'sendToWins', [
         'package:loaded',
       ]);
-      let packageLoaded = Helper.message('sendToWindows','package:loaded');
+      let packageLoaded = Helper.message('sendToWins','package:loaded');
 
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);

@@ -89,7 +89,7 @@ describe('Editor.IpcListener', function () {
     });
   });
 
-  describe('Editor.Ipc.sendToWindows', function () {
+  describe('Editor.Ipc.sendToWins', function () {
     it('should send message to all windows in main process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -102,7 +102,7 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.Ipc.sendToWindows('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToWins('foobar:say-hello', 'foo', 'bar');
       });
 
       let cnt = 0;

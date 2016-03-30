@@ -8,8 +8,8 @@
 
     // init EditorR
     window.onerror = function ( message, filename, lineno, colno, err ) {
-      if ( EditorR && EditorR.sendToWindows ) {
-        EditorR.sendToWindows('console:error', err.stack || err);
+      if ( EditorR && EditorR.Ipc.sendToWins ) {
+        EditorR.Ipc.sendToWins('console:error', err.stack || err);
       } else {
         console.error(err.stack || err);
       }
