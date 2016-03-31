@@ -241,7 +241,9 @@ describe('Editor.IpcListener', function () {
           next();
         });
       }, () => {
-        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.excludeSelf);
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.option({
+          excludeSelf: true
+        }));
       });
 
       let cnt = 0;
