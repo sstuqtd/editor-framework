@@ -17,17 +17,17 @@ describe('Editor.IpcListener Reply', function () {
     ipc.clear();
   });
 
-  describe('Editor.Ipc.sendRequestToCore', function () {
+  describe('Editor.Ipc.sendToMain', function () {
     it('should send message to main process and recieve a reply when starting a request in renderer process', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/sendreq2core-simple.html');
+      win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
 
-      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        reply(foo,bar);
+        event.reply(foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
@@ -41,15 +41,16 @@ describe('Editor.IpcListener Reply', function () {
     });
 
     it('should send message to main process and recieve a reply when starting a request in main process', function (done) {
-      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(event.senderType).to.eql('main');
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
+        expect(event.reply).is.a('function');
 
-        reply( foo, bar );
+        event.reply( foo, bar );
       });
 
-      Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
@@ -59,22 +60,22 @@ describe('Editor.IpcListener Reply', function () {
 
     it('should work for nested case', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/sendreq2core-nested.html');
+      win.load('editor-framework://test/fixtures/ipc/send2main-reply-nested.html');
 
-      ipc.on('foobar:say-hello', (event, reply, foo, bar) => {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        reply(foo,bar);
+        event.reply(foo,bar);
       });
 
-      ipc.on('foobar:say-hello-nested', (event, reply, foo, bar) => {
+      ipc.on('foobar:say-hello-nested', (event, foo, bar) => {
         expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        reply(foo,bar);
+        event.reply(foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
@@ -92,7 +93,7 @@ describe('Editor.IpcListener Reply', function () {
     });
   });
 
-  describe('Editor.Window.sendRequestToPage', function () {
+  describe('Editor.Window.send', function () {
     this.timeout(0);
 
     it('should send message to renderer process and recieve a reply when starting a request in main process', function (done) {
@@ -100,7 +101,7 @@ describe('Editor.IpcListener Reply', function () {
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
-        win.sendRequestToPage('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
+        win.send('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
           expect(foo).to.eql('foo');
           expect(bar).to.eql('bar');
 
@@ -115,8 +116,8 @@ describe('Editor.IpcListener Reply', function () {
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-nested.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
-        win.sendRequestToPage('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
-          win.sendRequestToPage('foobar:say-hello-nested', foo, bar, (foo,bar) => {
+        win.send('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
+          win.send('foobar:say-hello-nested', foo, bar, (foo,bar) => {
             expect(foo).to.eql('foo');
             expect(bar).to.eql('bar');
 

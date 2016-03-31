@@ -12,12 +12,12 @@
         'use strict';
         const Electron = require('electron');
 
-        Electron.ipcRenderer.on('foobar:say-hello', (event, reply, foo, bar) => {
-          reply(foo,bar);
+        Electron.ipcRenderer.on('foobar:say-hello', (event, foo, bar) => {
+          event.reply(foo,bar);
         });
 
-        Electron.ipcRenderer.on('foobar:say-hello-nested', (event, reply, foo, bar) => {
-          reply(foo,bar);
+        Electron.ipcRenderer.on('foobar:say-hello-nested', (event, foo, bar) => {
+          event.reply(foo,bar);
         });
       })();
     </script>

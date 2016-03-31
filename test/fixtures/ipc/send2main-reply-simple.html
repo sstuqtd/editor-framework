@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>sendreq2core-simple</title>
+    <title>send2main-reply-simple</title>
     <meta charset="utf-8">
   </head>
 
@@ -11,7 +11,7 @@
       (() => {
         'use strict';
 
-        Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
+        Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
           Editor.Ipc.sendToMain('foobar:reply', foo, bar);
         });
       })();

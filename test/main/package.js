@@ -69,19 +69,19 @@ describe('Editor.Package', function () {
       Editor.Package.load(path, function () {
         Async.series([
           next => {
-            Editor.Ipc.sendRequestToCore('main-ipc:say-hello', function ( msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello', function ( msg ) {
               expect(msg).to.equal('hello');
               next();
             });
           },
           next => {
-            Editor.Ipc.sendRequestToCore('main-ipc:say-hello-02', function ( msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello-02', function ( msg ) {
               expect(msg).to.equal('hello-02');
               next();
             });
           },
           next => {
-            Editor.Ipc.sendRequestToCore('another:say-hello-03', function ( msg ) {
+            Editor.Ipc.sendToMain('another:say-hello-03', function ( msg ) {
               expect(msg).to.equal('hello-03');
               next();
             });

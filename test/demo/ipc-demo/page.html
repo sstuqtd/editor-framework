@@ -12,15 +12,15 @@
         'use strict';
         let id = 0;
 
-        Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
+        Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
           Editor.log('reply ' + id++);
 
           for ( var i = 0; i < 100; ++i ) {
-            Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
+            Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
               Editor.log('reply ' + id++);
 
               for ( var i = 0; i < 100; ++i ) {
-                Editor.Ipc.sendRequestToCore('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
+                Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', 'foobar', (info) => {
                   Editor.log('reply 02 ' + id++);
                 });
               }
