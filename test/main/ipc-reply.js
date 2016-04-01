@@ -88,8 +88,47 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it.skip('should close the function when timeout', function (done) {
-      done();
+    it('should close the session when timeout in renderer process', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple-timeout.html');
+
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
+        setTimeout(() => {
+          event.reply(foo,bar);
+        }, 300);
+      });
+
+      ipc.on('foobar:success', () => {
+        done();
+      });
+
+      ipc.on('foobar:error', () => {
+        assert(false, 'this function should not be called');
+      });
+    });
+
+    it('should close the session when timeout in main process', function (done) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
+        setTimeout(() => {
+          event.reply(foo,bar);
+        }, 300);
+      });
+
+      ipc.on('foobar:success', () => {
+        done();
+      });
+
+      ipc.on('foobar:error', () => {
+        assert(false, 'this function should not be called');
+      });
+
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', () => {
+        Editor.Ipc.sendToMain('foobar:error');
+      }, 200);
+
+      setTimeout(() => {
+        Editor.Ipc.sendToMain('foobar:success');
+      }, 400);
     });
   });
 
@@ -128,8 +167,19 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it.skip('should close the function when timeout', function (done) {
-      done();
+    it('should close the session when timeout', function (done) {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple-timeout.html');
+
+      win.nativeWin.webContents.on('dom-ready', () => {
+        win.send('foobar:say-hello', 'foo', 'bar', () => {
+          assert(false, 'this function should not be called');
+        }, 200);
+
+        setTimeout(() => {
+          done();
+        }, 400);
+      });
     });
   });
 
