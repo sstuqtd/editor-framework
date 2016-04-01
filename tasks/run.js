@@ -4,7 +4,7 @@ const electron = require('electron-prebuilt');
 const spawn = require('child_process').spawn;
 
 let args = [
-  './demo',
+  './examples/demo/',
 ].concat(process.argv.slice(2));
 
 let app = spawn(electron, args, {
