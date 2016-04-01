@@ -1,0 +1,19 @@
+{
+  "name": "panel-ipc",
+  "version": "0.0.1",
+  "description": "A Simple Package Test Fixture",
+  "author": "Firebox Technology",
+  "main": "main.js",
+  "panels": {
+    "panel": {
+      "frame": "panel/panel.html",
+      "type": "dockable",
+      "title": "panel-ipc",
+      "width": 800,
+      "height": 600,
+      "messages": [
+        "foobar:say-hello"
+      ]
+    }
+  }
+}

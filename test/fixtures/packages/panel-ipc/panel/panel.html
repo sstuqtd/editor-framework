@@ -1,0 +1,22 @@
+<dom-module id="panel-ipc">
+  <style>
+    :host {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: stretch;
+      flex-direction: column;
+    }
+  </style>
+
+  <template>
+    This is a simple panel
+  </template>
+
+  <script>
+    Editor.registerPanel( 'panel-ipc.panel', {
+      'foobar:simple' ( event, foo, bar ) {
+        event.sender.send('foobar:reply', foo, bar);
+      }
+    });
+  </script>
+</dom-module>
