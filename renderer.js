@@ -9,7 +9,7 @@
     // init EditorR
     window.onerror = function ( message, filename, lineno, colno, err ) {
       if ( EditorR && EditorR.Ipc.sendToWins ) {
-        EditorR.Ipc.sendToWins('console:error', err.stack || err);
+        EditorR.Ipc.sendToWins('editor:renderer-console-error', err.stack || err);
       } else {
         console.error(err.stack || err);
       }
@@ -132,13 +132,13 @@
     //         // NOTE: do not use DockUtils.saveLayout() which will be invoked in requestAnimationFrame.
     //         // It will not be called in window.onunload
     //         EditorR.Ipc.sendToMain(
-    //           'window:save-layout',
+    //           'editor:window-save-layout',
     //           EditorR.Panel.dumpLayout()
     //         );
     //     }
     //     else {
     //         EditorR.Ipc.sendToMain(
-    //           'window:save-layout',
+    //           'editor:window-save-layout',
     //           null
     //         );
     //     }
