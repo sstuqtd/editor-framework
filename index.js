@@ -359,6 +359,11 @@ app.on('ready', () => {
       // connect to console to sending ipc to it
       EditorM.connectToConsole();
 
+      //
+      if ( yargv.dev ) {
+        EditorM.Debugger.startVorpal();
+      }
+
       // run user App
       if ( !EditorM.App.run ) {
         EditorM.error('Can not find function "run" in your app');
