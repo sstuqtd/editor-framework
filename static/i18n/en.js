@@ -40,7 +40,7 @@ module.exports = {
       'inspect': 'Inspect Element',
       'devtools': 'Developer Tools',
       'toggle_node_inspector': 'Debug Main Process (Node Inspector)',
-      'toggle_vorpal': 'Debug Main Process (Vorpal)',
+      'toggle_repl': 'Debug Main Process (Repl)',
       'ui_preview': 'UI Preview'
     },
     'help': {

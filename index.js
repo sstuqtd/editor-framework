@@ -361,7 +361,7 @@ app.on('ready', () => {
 
       //
       if ( yargv.dev ) {
-        EditorM.Debugger.startVorpal();
+        EditorM.Debugger.startRepl();
       }
 
       // run user App
