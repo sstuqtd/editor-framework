@@ -2,7 +2,7 @@
   "name": "editor-framework",
   "version": "0.5.0",
   "description": "A simple framework for making panel based applications.",
-  "homepage": "http://fireball-x.com",
+  "homepage": "https://github.com/cocos-creator/editor-framework",
   "repository": {
     "type": "git",
     "url": "https://github.com/cocos-creator/editor-framework.git"
