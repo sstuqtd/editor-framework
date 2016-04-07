@@ -38,9 +38,12 @@
    - remove `Editor.sendRequestXXX`, just add your callback directly in `sendToMain`, `Window.send` and `sendToPanel`
    - replace `EditorUI` with `Editor.UI`
    - put `EditorUI.bind` and several functions to `Editor.UI.PolymerUtils`
-   - all `panel:` message becomes `editor:panel-`
    - all `window:` message becomes `editor:window-`
+   - all `package:` message becomes `editor:package-`
+   - all `panel:` message becomes `editor:panel-`
    - all `console:` message becomes `editor:console-`
+   - the first parameter of the panel ipc message will be `event`
+   - replace `reply` callback with `event.reply` for `sendRequestXXX` replys
 
 ### v0.4.0
 

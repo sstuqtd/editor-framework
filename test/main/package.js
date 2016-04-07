@@ -44,7 +44,7 @@ describe('Editor.Package', function () {
 
     it('should send loaded ipc message', function (done) {
       Editor.Package.load(path, function () {
-        assert( Helper.sendToWins.calledWith('package:loaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('editor:package-loaded', 'simple') );
         done();
       });
     });
@@ -54,7 +54,7 @@ describe('Editor.Package', function () {
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ], function () {
-        assert( Helper.sendToWins.calledWith('package:unloaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('editor:package-unloaded', 'simple') );
         done();
       });
     });
@@ -236,15 +236,15 @@ describe('Editor.Package', function () {
 
     it('should load dependencies first', function (done) {
       Helper.spyMessages( 'sendToWins', [
-        'package:loaded',
+        'editor:package-loaded',
       ]);
-      let packageLoaded = Helper.message('sendToWins','package:loaded');
+      let packageLoaded = Helper.message('sendToWins','editor:package-loaded');
 
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);
-        assert( packageLoaded.getCall(0).calledWith('package:loaded', 'dep-02') );
-        assert( packageLoaded.getCall(1).calledWith('package:loaded', 'dep-01') );
-        assert( packageLoaded.getCall(2).calledWith('package:loaded', 'package-deps') );
+        assert( packageLoaded.getCall(0).calledWith('editor:package-loaded', 'dep-02') );
+        assert( packageLoaded.getCall(1).calledWith('editor:package-loaded', 'dep-01') );
+        assert( packageLoaded.getCall(2).calledWith('editor:package-loaded', 'package-deps') );
 
         done();
       });
