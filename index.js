@@ -283,11 +283,12 @@ app.on('ready', () => {
   // register protocol
   EditorM.Protocol.init(EditorM);
 
-  // reset submodules
+  // config submodules
   EditorM.Package.lang = yargv.lang;
   EditorM.Package.versions = EditorM.versions;
   EditorM.Menu.showDev = yargv.dev;
   EditorM.Debugger.debugPort = yargv.debug;
+  EditorM.Ipc.debug = yargv.dev;
 
   // ---------------------------
   // run editor

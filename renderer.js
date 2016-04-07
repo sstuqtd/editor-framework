@@ -185,6 +185,9 @@
     EditorR.appPath = _appPath;
     EditorR.frameworkPath = _frameworkPath;
 
+    // config submodules
+    EditorR.Ipc.debug = _remoteEditor.dev;
+
     // register protocol
     EditorR.Protocol.init(EditorR);
   } catch ( err ) {

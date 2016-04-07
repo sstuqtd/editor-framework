@@ -20,11 +20,12 @@
    - change the field to register main menu item in `package.json` from `menus` to `main-menu`
    - replace `Editor.runMode` with `Editor.argv._command`
    - replace `Editor.runOpts` with `Editor.argv`
+   - replace `Editor.isDev` with `Editor.dev`
    - replace `Editor.showDevtools` with `Editor.argv.showDevtools`
    - remove `Editor.events`, use `Editor.App` `on`, `off`, `once` and `emit` instead
    - replace `Editor.mainWindow` with `Editor.Window.main`
-   - replace `Editor.isDev` with `Editor.dev`
    - replace `Editor.loadProfile` with `Editor.Profile.load`
+   - replace `Editor.registerProfilePath` with `Editor.Profile.register`
    - replace `Editor.registerProtocol` with `Editor.Protocol.register`
    - replace `Editor.focused` with `Editor.App.focused`
    - replace `Editor.isCoreLevel` with `Editor.isMainProcess`
