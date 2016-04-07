@@ -34,6 +34,10 @@
    - replace `Editor.sendToCore` to `Editor.Ipc.sendToMain`
    - replace `Editor.sendToCoreSync` to `Editor.Ipc.sendToMainSync`
    - replace `Editor.sendToMainWindow` to `Editor.Ipc.sendToMainWin`
+   - replace `Editor.sendToPanel` to `Editor.Ipc.sendToPanel`
+   - replace `Editor.sendToPackage` to `Editor.Ipc.sendToPackage`
+   - replace `Editor.sendToWindows` to `Editor.Ipc.sendToWins`
+   - replace `Editor.sendToAll` to `Editor.Ipc.sendToAll`
    - replace `Editor.Window.sendToPage` to `Editor.Window.send`
    - remove `Editor.sendRequestXXX`, just add your callback directly in `sendToMain`, `Window.send` and `sendToPanel`
    - replace `EditorUI` with `Editor.UI`
