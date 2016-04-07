@@ -10,7 +10,7 @@
     <script>
       (() => {
         'use strict';
-        Editor.sendToCore( 'foobar:say-hello', 'foo', 'bar' );
+        Editor.Ipc.sendToMain( 'foobar:say-hello', 'foo', 'bar' );
       })();
     </script>
   </body>

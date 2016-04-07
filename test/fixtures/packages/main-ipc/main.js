@@ -8,16 +8,16 @@ module.exports = {
   },
 
   messages: {
-    'say-hello' ( event, reply ) {
-      reply('hello');
+    'say-hello' ( event ) {
+      event.reply('hello');
     },
 
-    'say-hello-02' ( event, reply ) {
-      reply('hello-02');
+    'say-hello-02' ( event ) {
+      event.reply('hello-02');
     },
 
-    'another:say-hello-03' ( event, reply ) {
-      reply('hello-03');
+    'another:say-hello-03' ( event ) {
+      event.reply('hello-03');
     },
   }
 };

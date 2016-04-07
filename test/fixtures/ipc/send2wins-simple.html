@@ -16,7 +16,7 @@
           event.sender.send('foobar:reply', foo, bar);
         });
 
-        Editor.sendToWindows('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToWins('foobar:say-hello', 'foo', 'bar');
       })();
     </script>
   </body>

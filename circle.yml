@@ -4,4 +4,4 @@ machine:
 
 dependencies:
   pre:
-    - npm install -g bower gulp node-gyp
+    - npm install -g node-gyp

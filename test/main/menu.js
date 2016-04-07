@@ -207,8 +207,8 @@ describe('Editor.Menu', function () {
   });
 
   it('should not add dev template in release mode', function (done) {
-    let oldDev = Editor.isDev;
-    Editor.isDev = false;
+    let oldDev = Editor.Menu.showDev;
+    Editor.Menu.showDev = false;
 
     let tmpl = [
       {
@@ -237,7 +237,7 @@ describe('Editor.Menu', function () {
     expect( testMenu.nativeMenu.items.length ).to.equal(1);
     expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('bar.02');
 
-    Editor.isDev = oldDev;
+    Editor.Menu.showDev = oldDev;
     done();
   });
 

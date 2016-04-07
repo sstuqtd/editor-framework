@@ -39,7 +39,8 @@ module.exports = {
       'reload_no_cache': '重新加载并清除缓存',
       'inspect': '检视页面元素',
       'devtools': '开发者工具',
-      'debug_main_process': '调试主进程',
+      'toggle_node_inspector': '调试主进程 (Node Inspector)',
+      'toggle_vorpal': '调试主进程 (Repl)',
       'ui_preview': 'UI 控件预览'
     },
     'help': {

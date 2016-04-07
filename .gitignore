@@ -27,13 +27,11 @@ profile
 api/
 apidocs/
 bin/
-bower_components/
-builtin/
-package-examples/
-ext/
+examples/
 node_modules/
+bower_components/
 local-setting.json
 
 # test files
-demo/.settings/
+examples/.settings/
 .settings/

@@ -39,7 +39,8 @@ module.exports = {
       'reload_no_cache': 'Reload Ignore Cache',
       'inspect': 'Inspect Element',
       'devtools': 'Developer Tools',
-      'debug_main_process': 'Debug Main Process',
+      'toggle_node_inspector': 'Debug Main Process (Node Inspector)',
+      'toggle_repl': 'Debug Main Process (Repl)',
       'ui_preview': 'UI Preview'
     },
     'help': {

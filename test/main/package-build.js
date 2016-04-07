@@ -11,7 +11,8 @@ describe('Editor.Package building test', function () {
     const path = Editor.url('editor-framework://test/fixtures/packages/needs-build');
 
     after(function (done) {
-      Del( Path.join(path,'bin'), done );
+      Del.sync( Path.join(path,'bin') );
+      done();
     });
 
     beforeEach(function (done) {

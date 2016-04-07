@@ -44,7 +44,7 @@ describe('Editor.Package', function () {
 
     it('should send loaded ipc message', function (done) {
       Editor.Package.load(path, function () {
-        assert( Helper.sendToWindows.calledWith('package:loaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('editor:package-loaded', 'simple') );
         done();
       });
     });
@@ -54,7 +54,7 @@ describe('Editor.Package', function () {
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ], function () {
-        assert( Helper.sendToWindows.calledWith('package:unloaded', 'simple') );
+        assert( Helper.sendToWins.calledWith('editor:package-unloaded', 'simple') );
         done();
       });
     });
@@ -69,19 +69,19 @@ describe('Editor.Package', function () {
       Editor.Package.load(path, function () {
         Async.series([
           next => {
-            Editor.sendRequestToCore('main-ipc:say-hello', function ( msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello', function ( msg ) {
               expect(msg).to.equal('hello');
               next();
             });
           },
           next => {
-            Editor.sendRequestToCore('main-ipc:say-hello-02', function ( msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello-02', function ( msg ) {
               expect(msg).to.equal('hello-02');
               next();
             });
           },
           next => {
-            Editor.sendRequestToCore('another:say-hello-03', function ( msg ) {
+            Editor.Ipc.sendToMain('another:say-hello-03', function ( msg ) {
               expect(msg).to.equal('hello-03');
               next();
             });
@@ -153,7 +153,7 @@ describe('Editor.Package', function () {
     const path = Path.join(testPackages,'localize');
 
     it('should load and unload en i18n file', function (done) {
-      Editor.lang = 'en';
+      Editor.Package.lang = 'en';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('Search');
         expect(Editor.T('localize.edit')).to.equal('Edit');
@@ -166,7 +166,7 @@ describe('Editor.Package', function () {
     });
 
     it('should load zh i18n file', function (done) {
-      Editor.lang = 'zh';
+      Editor.Package.lang = 'zh';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('搜索');
         expect(Editor.T('localize.edit')).to.equal('编辑');
@@ -235,16 +235,16 @@ describe('Editor.Package', function () {
     });
 
     it('should load dependencies first', function (done) {
-      Helper.spyMessages( 'sendToWindows', [
-        'package:loaded',
+      Helper.spyMessages( 'sendToWins', [
+        'editor:package-loaded',
       ]);
-      let packageLoaded = Helper.message('sendToWindows','package:loaded');
+      let packageLoaded = Helper.message('sendToWins','editor:package-loaded');
 
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);
-        assert( packageLoaded.getCall(0).calledWith('package:loaded', 'dep-02') );
-        assert( packageLoaded.getCall(1).calledWith('package:loaded', 'dep-01') );
-        assert( packageLoaded.getCall(2).calledWith('package:loaded', 'package-deps') );
+        assert( packageLoaded.getCall(0).calledWith('editor:package-loaded', 'dep-02') );
+        assert( packageLoaded.getCall(1).calledWith('editor:package-loaded', 'dep-01') );
+        assert( packageLoaded.getCall(2).calledWith('editor:package-loaded', 'package-deps') );
 
         done();
       });

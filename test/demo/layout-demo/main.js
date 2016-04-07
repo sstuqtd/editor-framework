@@ -8,6 +8,6 @@ module.exports = {
     'demo-layout:reset': function () {
         var Fs = require('fs');
         var layoutInfo = JSON.parse(Fs.readFileSync(Editor.url('packages://demo-layout/layout.json') ));
-        Editor.sendToMainWindow( 'editor:reset-layout', layoutInfo);
+        Editor.Ipc.sendToMainWin( 'editor:reset-layout', layoutInfo);
     },
 };

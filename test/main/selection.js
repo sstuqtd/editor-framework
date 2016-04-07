@@ -181,28 +181,28 @@ describe('Editor.Selection', function () {
       Editor.Selection.select('normal', 'b' );
 
       expect( Helper.sendToAll.args ).to.be.deep.eq([
-        ['_selection:selected', 'normal', ['a'], { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:selected', 'normal', ['a'], { __ipc__: true, excludeSelf: true } ],
         ['selection:selected', 'normal', ['a'] ],
 
-        ['_selection:activated', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:activated', 'normal', 'a', { __ipc__: true, excludeSelf: true } ],
         ['selection:activated', 'normal', 'a' ],
 
-        ['_selection:changed', 'normal', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:changed', 'normal', { __ipc__: true, excludeSelf: true } ],
         ['selection:changed', 'normal' ],
 
-        ['_selection:unselected', 'normal', ['a'], { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:unselected', 'normal', ['a'], { __ipc__: true, excludeSelf: true } ],
         ['selection:unselected', 'normal', ['a'] ],
 
-        ['_selection:selected', 'normal', ['b'], { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:selected', 'normal', ['b'], { __ipc__: true, excludeSelf: true } ],
         ['selection:selected', 'normal', ['b'] ],
 
-        ['_selection:deactivated', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:deactivated', 'normal', 'a', { __ipc__: true, excludeSelf: true } ],
         ['selection:deactivated', 'normal', 'a' ],
 
-        ['_selection:activated', 'normal', 'b', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:activated', 'normal', 'b', { __ipc__: true, excludeSelf: true } ],
         ['selection:activated', 'normal', 'b' ],
 
-        ['_selection:changed', 'normal', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:changed', 'normal', { __ipc__: true, excludeSelf: true } ],
         ['selection:changed', 'normal' ],
       ]);
 
@@ -269,16 +269,16 @@ describe('Editor.Selection', function () {
       Editor.Selection.hover('normal',null);
 
       expect(Helper.sendToAll.args).to.be.deep.eq([
-        ['_selection:hoverin', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:hoverin', 'normal', 'a', { __ipc__: true, excludeSelf: true } ],
         ['selection:hoverin', 'normal', 'a' ],
 
-        ['_selection:hoverout', 'normal', 'a', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:hoverout', 'normal', 'a', { __ipc__: true, excludeSelf: true } ],
         ['selection:hoverout', 'normal', 'a' ],
 
-        ['_selection:hoverin', 'normal', 'b', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:hoverin', 'normal', 'b', { __ipc__: true, excludeSelf: true } ],
         ['selection:hoverin', 'normal', 'b' ],
 
-        ['_selection:hoverout', 'normal', 'b', { '__is_ipc_option__': true, 'self-excluded': true } ],
+        ['_selection:hoverout', 'normal', 'b', { __ipc__: true, excludeSelf: true } ],
         ['selection:hoverout', 'normal', 'b' ],
       ]);
 

@@ -6,18 +6,18 @@ const BrowserWindow = Electron.BrowserWindow;
 const Async = require('async');
 
 //
-describe('Editor.Ipc', function () {
+describe('Editor.IpcListener', function () {
   Helper.run({
     enableIpc: true,
   });
 
-  let ipc = new Editor.Ipc();
+  let ipc = new Editor.IpcListener();
 
   afterEach(function () {
     ipc.clear();
   });
 
-  describe('Editor.sendToCore', function () {
+  describe('Editor.Ipc.sendToMain', function () {
     it('should work in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
@@ -46,8 +46,8 @@ describe('Editor.Ipc', function () {
         done();
       });
 
-      Editor.sendToCore('foobar:say-hello-no-param');
-      Editor.sendToCore('foobar:say-hello', 'foo', 'bar');
+      Editor.Ipc.sendToMain('foobar:say-hello-no-param');
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar');
     });
 
     it('should send ipc in order', function (done) {
@@ -89,7 +89,7 @@ describe('Editor.Ipc', function () {
     });
   });
 
-  describe('Editor.sendToWindows', function () {
+  describe('Editor.Ipc.sendToWins', function () {
     it('should send message to all windows in main process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -102,7 +102,7 @@ describe('Editor.Ipc', function () {
           next();
         });
       }, () => {
-        Editor.sendToWindows('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToWins('foobar:say-hello', 'foo', 'bar');
       });
 
       let cnt = 0;
@@ -144,7 +144,7 @@ describe('Editor.Ipc', function () {
 
     it('should send message to window exclude self', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2wins-self-excluded.html');
+      win.load('editor-framework://test/fixtures/ipc/send2wins-exclude-self.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -163,7 +163,7 @@ describe('Editor.Ipc', function () {
 
   });
 
-  describe('Editor.sendToAll', function () {
+  describe('Editor.Ipc.sendToAll', function () {
     it('should send message to all process in main process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
@@ -172,7 +172,7 @@ describe('Editor.Ipc', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -180,7 +180,7 @@ describe('Editor.Ipc', function () {
           next();
         });
       }, () => {
-        Editor.sendToAll('foobar:say-hello', 'foo', 'bar');
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar');
       });
 
       let cnt = 0;
@@ -206,7 +206,7 @@ describe('Editor.Ipc', function () {
       win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       let cnt = 0;
@@ -233,7 +233,7 @@ describe('Editor.Ipc', function () {
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
         assert(false, 'Main process should not recieve ipc event');
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       Async.each([win, win2], (w, next) => {
@@ -241,7 +241,9 @@ describe('Editor.Ipc', function () {
           next();
         });
       }, () => {
-        Editor.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.selfExcluded);
+        Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar', Editor.Ipc.option({
+          excludeSelf: true
+        }));
       });
 
       let cnt = 0;
@@ -263,13 +265,13 @@ describe('Editor.Ipc', function () {
 
     it('should send message to all process exclude self in renderer process', function (done) {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-self-excluded.html');
+      win.load('editor-framework://test/fixtures/ipc/send2all-exclude-self.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       ipc.on('foobar:say-hello', function ( event, foo, bar ) {
-        Editor.sendToCore('foobar:reply', foo, bar);
+        Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
       let cnt = 0;
@@ -295,7 +297,7 @@ describe('Editor.Ipc', function () {
     });
   });
 
-  describe('Editor.sendToPackage', function () {
+  describe('Editor.Ipc.sendToPackage', function () {
     it('should send message to package\'s main process in renderer process', function (done) {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2pkg-simple.html');
