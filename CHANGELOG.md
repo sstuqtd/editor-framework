@@ -4,9 +4,14 @@
 
  - remove polymer
 
+### v0.5.1 (developing)
+
+ - Provide `Editor.App.quit` callback for user to control the quiting phase in Editor
+ - Fix `Editor.Ipc.sendTo` will swallow last argument if it is a number
+
 ### v0.5.0
 
- - upgrade to Electron v0.37.4
+ - upgrade to Electron v0.37.5
  - modulize the code
  - use shadow dom for panel content
  - disableAutoHideCursor by default for Editor.Window
