@@ -8,6 +8,7 @@
 
  - Provide `Editor.App.quit` callback for user to control the quiting phase in Editor
  - Fix `Editor.Ipc.sendTo` will swallow last argument if it is a number
+ - Simplify `Editor.Ipc.sendToPanel` message
 
 ### v0.5.0
 
