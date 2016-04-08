@@ -245,7 +245,7 @@ app.on('ready', () => {
       json: false,
     });
 
-    console.log( Chalk.magenta('===== Initializing EditorM =====') );
+    console.log( Chalk.magenta('===== Initializing Editor =====') );
 
     let args = process.argv.slice(2);
     args = args.map(a => { return `  ${a}`; });
@@ -361,7 +361,7 @@ app.on('ready', () => {
       EditorM.connectToConsole();
 
       //
-      if ( yargv.dev ) {
+      if ( yargv.dev && process.platform !== 'win32' ) {
         EditorM.Debugger.startRepl();
       }
 
