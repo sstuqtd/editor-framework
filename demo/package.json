@@ -8,6 +8,7 @@
   "dependencies": {
   },
   "devDependencies": {
+    "check-dependencies": "0.11.0",
     "gulp": "3.9.0",
     "gulp-sequence": "0.4.4"
   },

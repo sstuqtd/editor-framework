@@ -33,7 +33,7 @@ gulp.task('update-hosts', function (cb) {
     return;
   }
 
-  let infos = [];
+  var infos = [];
   for ( var p in pjson.hosts ) {
     infos.push({ path: p, branch: pjson.hosts[p] });
   }
@@ -76,7 +76,7 @@ gulp.task('update-packages', function (cb) {
   }
 
   Fs.ensureDirSync('packages');
-  let infos = [];
+  var infos = [];
   for ( var p in pjson.packages ) {
     infos.push({ path: p, branch: pjson.packages[p] });
   }
@@ -110,7 +110,7 @@ gulp.task('update-packages', function (cb) {
 });
 
 gulp.task('clear-packages-bin', function (cb) {
-  let paths = [];
+  var paths = [];
   for ( var p in pjson.packages ) {
     paths.push(p);
   }
@@ -130,13 +130,13 @@ gulp.task('clear-packages-bin', function (cb) {
       return cb(err);
     }
 
-    console.log('Builtin Packages Cleaned! Will be rebuilt when editor-framework launches.');
+    console.log('Builtin Packages Cleaned! Will be rebuilt when editor launches.');
     cb();
   });
 });
 
 gulp.task('prune-packages', function (cb) {
-  let packages = [];
+  var packages = [];
   for ( var p in pjson.packages ) {
     packages.push(Path.basename(p));
   }
