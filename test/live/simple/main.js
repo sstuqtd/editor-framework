@@ -10,8 +10,15 @@ describe('ipc', function () {
   });
 
   it('is a demo', function ( done ) {
+    const Electron = require('electron');
+
+    Electron.ipcMain.on('foobar:open-panel', () => {
+      win.send('foobar:run', 'panel-id', 'some', 'args');
+    });
+
     let win = new Editor.Window();
     win.load('editor-framework://test/demo/simple/page.html');
+
 
     // win.nativeWin.webContents.on('dom-ready', () => {
     //   Editor.Ipc.sendToWins('foobar:say-hello', 'foo', 'bar');

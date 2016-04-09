@@ -32,11 +32,6 @@
     "fire-path": "0.1.8",
     "fire-url": "0.1.7",
     "globby": "^4.0.0",
-    "gulp": "3.9.0",
-    "gulp-babel": "6.1.1",
-    "gulp-less": "3.0.5",
-    "gulp-sequence": "0.4.4",
-    "gulp-stylus": "2.2.0",
     "highlight.js": "9.1.0",
     "lodash": "4.0.0",
     "mocha": "^2.4.5",
@@ -53,7 +48,12 @@
   },
   "devDependencies": {
     "electron-prebuilt": "0.37.5",
-    "firedoc": "1.13.7"
+    "firedoc": "1.13.7",
+    "gulp": "3.9.0",
+    "gulp-babel": "6.1.1",
+    "gulp-less": "3.0.5",
+    "gulp-sequence": "0.4.4",
+    "gulp-stylus": "2.2.0"
   },
   "nativeModules": [
     "chokidar"
