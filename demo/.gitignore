@@ -27,6 +27,8 @@ profile
 api/
 apidocs/
 bin/
+packages/
+package-examples/
 node_modules/
 bower_components/
 

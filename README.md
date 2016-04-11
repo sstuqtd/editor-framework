@@ -167,7 +167,19 @@ Run `npm install` in it:
 npm install
 ```
 
-### Run Editor-Framework Demo
+### Install & Run Editor-Framework Demo
+
+Editor Framework provide a demo project to help user developing packages. To use the demo project,
+first we need to install it. Go to the demo folder and run the following command:
+
+```bash
+cd ./demo
+npm install
+bower install
+gulp update
+```
+
+After you success to install it, you can run the demo in editor-framework root directory through the command:
 
 ```bash
 npm start
