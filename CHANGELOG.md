@@ -4,7 +4,9 @@
 
  - remove polymer
 
-### v0.5.1 (developing)
+### v0.5.2 (developing)
+
+### v0.5.1
 
  - Provide `Editor.App.quit` callback for user to control the quiting phase in Editor
  - Fix `Editor.Ipc.sendTo` will swallow last argument if it is a number
