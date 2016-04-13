@@ -11,13 +11,14 @@
       (() => {
         'use strict';
 
-        Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', (foo, bar) => {
+        Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', (err, foo, bar) => {
+          if ( err.code === 'ETIMEOUT' ) {
+            Editor.Ipc.sendToMain('foobar:timeout');
+            return;
+          }
+
           Editor.Ipc.sendToMain('foobar:error');
         }, 200);
-
-        setTimeout(() => {
-          Editor.Ipc.sendToMain('foobar:success');
-        }, 400);
       })();
     </script>
   </body>

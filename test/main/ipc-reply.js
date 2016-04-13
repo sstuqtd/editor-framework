@@ -27,7 +27,7 @@ describe('Editor.IpcListener Reply', function () {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        event.reply(foo,bar);
+        event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
@@ -47,10 +47,10 @@ describe('Editor.IpcListener Reply', function () {
         expect(bar).to.eql('bar');
         expect(event.reply).is.a('function');
 
-        event.reply( foo, bar );
+        event.reply( null, foo, bar );
       });
 
-      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', ( foo, bar ) => {
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', ( err, foo, bar ) => {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
@@ -67,7 +67,7 @@ describe('Editor.IpcListener Reply', function () {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        event.reply(foo,bar);
+        event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:say-hello-nested', (event, foo, bar) => {
@@ -75,7 +75,7 @@ describe('Editor.IpcListener Reply', function () {
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');
 
-        event.reply(foo,bar);
+        event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
@@ -94,27 +94,27 @@ describe('Editor.IpcListener Reply', function () {
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
-          event.reply(foo,bar);
+          event.reply(null,foo,bar);
         }, 300);
-      });
-
-      ipc.on('foobar:success', () => {
-        done();
       });
 
       ipc.on('foobar:error', () => {
         assert(false, 'this function should not be called');
+      });
+
+      ipc.on('foobar:timeout', () => {
+        done();
       });
     });
 
     it('should close the session when timeout in main process', function (done) {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
-          event.reply(foo,bar);
+          event.reply(null,foo,bar);
         }, 300);
       });
 
-      ipc.on('foobar:success', () => {
+      ipc.on('foobar:timeout', () => {
         done();
       });
 
@@ -122,13 +122,14 @@ describe('Editor.IpcListener Reply', function () {
         assert(false, 'this function should not be called');
       });
 
-      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', () => {
+      Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', (err) => {
+        if ( err.code === 'ETIMEOUT' ) {
+          Editor.Ipc.sendToMain('foobar:timeout');
+          return;
+        }
+
         Editor.Ipc.sendToMain('foobar:error');
       }, 200);
-
-      setTimeout(() => {
-        Editor.Ipc.sendToMain('foobar:success');
-      }, 400);
     });
   });
 
@@ -140,7 +141,7 @@ describe('Editor.IpcListener Reply', function () {
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
-        win.send('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
+        win.send('foobar:say-hello', 'foo', 'bar', (err,foo,bar) => {
           expect(foo).to.eql('foo');
           expect(bar).to.eql('bar');
 
@@ -155,8 +156,8 @@ describe('Editor.IpcListener Reply', function () {
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-nested.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
-        win.send('foobar:say-hello', 'foo', 'bar', (foo,bar) => {
-          win.send('foobar:say-hello-nested', foo, bar, (foo,bar) => {
+        win.send('foobar:say-hello', 'foo', 'bar', (err,foo,bar) => {
+          win.send('foobar:say-hello-nested', foo, bar, (err,foo,bar) => {
             expect(foo).to.eql('foo');
             expect(bar).to.eql('bar');
 
@@ -172,8 +173,9 @@ describe('Editor.IpcListener Reply', function () {
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple-timeout.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
-        win.send('foobar:say-hello', 'foo', 'bar', () => {
-          assert(false, 'this function should not be called');
+        win.send('foobar:say-hello', 'foo', 'bar', (err) => {
+          assert(err.code, 'ETIMEOUT');
+          assert(err.ipc, 'foobar:say-hello');
         }, 200);
 
         setTimeout(() => {
