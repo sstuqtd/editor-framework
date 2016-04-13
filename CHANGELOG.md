@@ -9,6 +9,10 @@
  - Provide `Editor.App.quit` callback for user to control the quiting phase in Editor
  - Fix `Editor.Ipc.sendTo` will swallow last argument if it is a number
  - Simplify `Editor.Ipc.sendToPanel` message
+ - Require the first argument for `event.reply` be `null` or instance of `Error`
+ - Add explicit timeout error for callback in `Editor.sendXXXX`
+ - Add explicit panel not found error for callback in `Editor.sendToPanel`
+ - Add explicit message not found error for callback in `Editor.sendToPanel`
 
 ### v0.5.0
 

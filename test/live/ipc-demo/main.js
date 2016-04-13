@@ -11,7 +11,7 @@ describe('ipc', function () {
 
   it('is a demo', function ( done ) {
     ipc.on ('foobar:say-hello', ( event ) => {
-      event.reply ({
+      event.reply (null, {
         foo: 'foo',
         bar: 'bar',
         foobar: 'foobar',

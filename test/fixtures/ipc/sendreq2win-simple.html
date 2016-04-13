@@ -13,7 +13,7 @@
         const Electron = require('electron');
 
         Electron.ipcRenderer.on('foobar:say-hello', (event, foo, bar) => {
-          event.reply(foo,bar);
+          event.reply(null,foo,bar);
         });
       })();
     </script>

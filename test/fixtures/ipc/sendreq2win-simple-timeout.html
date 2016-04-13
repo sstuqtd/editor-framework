@@ -14,7 +14,7 @@
 
         Electron.ipcRenderer.on('foobar:say-hello', (event, foo, bar) => {
           setTimeout(() => {
-            event.reply(foo,bar);
+            event.reply(null,foo,bar);
           }, 300);
         });
       })();
