@@ -15,6 +15,9 @@
  - deprecate `panels` in `package.json`, use `panel` instead. for multiple panel registry, use `panel.x` for the additional panel.
  - deprecate `Editor.registerPanel`, use `Editor.polymerPanel` instead
  - deprecate `Editor.registerElement`, use `Editor.polymerElement` instead
+ - BREAKING CHANGES
+   - Change panel ipc message registry from `package.json`'s `messages` field to panel's js file
+   - Change panel entry field from `frame` to `main` in `package.json`
 
 ### v0.5.1
 
