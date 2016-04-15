@@ -7,7 +7,14 @@
 ### v0.5.2 (developing)
 
  - Fix set break point in an ipc message in renderer will lead to devtools crash
+ - Fix console error stack will add main-process call stack when we raise a renderer process error
  - Add `Editor.Protocol.register` in renderer process
+ - Add `deprecate` function in global and window
+ - Add `Editor.trace` for trace log in main and renderer process
+ - deprecate `pkgDependencies` in `package.json`, use `packages` instead
+ - deprecate `panels` in `package.json`, use `panel` instead. for multiple panel registry, use `panel.x` for the additional panel.
+ - deprecate `Editor.registerPanel`, use `Editor.polymerPanel` instead
+ - deprecate `Editor.registerElement`, use `Editor.polymerElement` instead
 
 ### v0.5.1
 

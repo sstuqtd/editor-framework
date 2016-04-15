@@ -22,6 +22,7 @@
   ],
   "globals": {
     "unused": false,
+    "deprecate": false,
     "Editor": false,
     "Helper": false,
     "Polymer": false,

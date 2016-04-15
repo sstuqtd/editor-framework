@@ -13,7 +13,7 @@
   </template>
 
   <script>
-    Editor.registerPanel( 'panel-ipc.panel', {
+    Editor.polymerPanel( 'panel-ipc', {
       'foobar:simple' ( event, foo, bar ) {
         event.sender.send('foobar:reply', foo, bar);
       }
