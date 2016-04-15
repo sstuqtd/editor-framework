@@ -32,7 +32,7 @@ describe('Editor.IpcListener Panel', function () {
 
         // TODO: Panel.open should have callback
         setTimeout(() => {
-          Editor.Ipc.sendToPanel('panel-ipc.panel', 'foobar:simple', 'foo', 'bar');
+          Editor.Ipc.sendToPanel('panel-ipc', 'foobar:simple', 'foo', 'bar');
         }, 500);
       });
 

@@ -70,7 +70,7 @@ describe('Editor.Package building test', function () {
 
         let packageInfo = Editor.Package.packageInfo(path);
         // let widgetInfo = Editor.Package.widgetInfo('simple-widget');
-        let panelInfo = Editor.Package.panelInfo('needs-build.panel');
+        let panelInfo = Editor.Package.panelInfo('needs-build');
 
         expect( packageInfo._path ).to.be.equal( path );
         expect( packageInfo._destPath ).to.be.equal( Path.join(path,'bin/dev') );

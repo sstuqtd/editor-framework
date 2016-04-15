@@ -5,8 +5,8 @@
         {
           "active": 0,
           "panels": [
-            "tester.panel",
-            "ipc-debugger.panel"
+            "tester",
+            "ipc-debugger"
           ],
           "type": "panel",
           "width": 350
@@ -14,7 +14,7 @@
         {
           "active": 0,
           "panels": [
-            "package-manager.panel"
+            "package-manager"
           ],
           "type": "panel"
         }
@@ -25,7 +25,7 @@
     {
       "active": 0,
       "panels": [
-        "console.panel"
+        "console"
       ],
       "type": "panel",
       "height": 300

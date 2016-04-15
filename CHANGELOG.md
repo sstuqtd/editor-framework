@@ -8,6 +8,11 @@
 
  - Fix set break point in an ipc message in renderer will lead to devtools crash
  - Add `Editor.Protocol.register` in renderer process
+ - Add `deprecate` function in global and window
+ - deprecate `pkgDependencies` in `package.json`, use `packages` instead
+ - deprecate `panels` in `package.json`, use `panel` instead. for multiple panel registry, use `panel.x` for the additional panel.
+ - deprecate `Editor.registerPanel`, use `Editor.polymerPanel` instead
+ - deprecate `Editor.registerElement`, use `Editor.polymerElement` instead
 
 ### v0.5.1
 
