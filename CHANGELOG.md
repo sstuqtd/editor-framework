@@ -7,6 +7,7 @@
 ### v0.5.2 (developing)
 
  - Fix set break point in an ipc message in renderer will lead to devtools crash
+ - Add `Editor.Protocol.register` in renderer process
 
 ### v0.5.1
 
