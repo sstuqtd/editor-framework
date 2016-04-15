@@ -6,10 +6,9 @@ This module can be categorized into the following parts:
 
 Editor module provides following properties to give user access to common paths:
 
-  - `Editor.appPath`: The current app.js working directory path.
-  - `Editor.mainEntry`: Your main entry file. Usually it is `{your-app}/app.js`.
+  - `Editor.App.path`: The current app.js working directory path.
+  - `Editor.App.home`: Your application's home path. Usually it is `~/.{your-app-name}`
   - `Editor.frameworkPath`: The editor framework module path. Usually it is `{your-app}/editor-framework/`
-  - `Editor.appHome`: Your application's home path. Usually it is `~/.{your-app-name}`
 
 ## Protocols
 
@@ -33,7 +32,7 @@ var myFilePath = Editor.url('app://myfolder/myfile.js');
 
 ## Options
 
-  - `Editor.isDev`: Indicate if the application running with `--dev` option.
+  - `Editor.dev`: Indicate if the application running with `--dev` option.
   - `Editor.showDevtools`: Indicate if the application running with `--show-devtools`.
 
 ## Editor.App

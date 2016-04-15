@@ -6,6 +6,8 @@
 
 ### v0.5.2 (developing)
 
+ - Fix set break point in an ipc message in renderer will lead to devtools crash
+
 ### v0.5.1
 
  - Provide `Editor.App.quit` callback for user to control the quiting phase in Editor

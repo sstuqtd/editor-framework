@@ -1,15 +1,5 @@
-To run your app with editor-framework, you should download and put `editor-framework` into your app folder. You also need to create a `package.json` file in your app's root folder, and set its `main` field to your main entry script.
-
-Generally, an editor-framework app is structured like this
-
-```
-your-app-path/
-├── editor-framework/
-├── package.json
-└── main.js
-```
-
-The format of `package.json` is exactly the same as that of Node's modules, and the script specified by the main field is the startup script of your app, which will run the main process. An example of your package.json might look like this:
+In your `package.json`, you need to add `main` field, and assign your main-entry file to it.
+Here is an exmaple `package.json` file:
 
 ```json
 {
@@ -23,19 +13,19 @@ The format of `package.json` is exactly the same as that of Node's modules, and 
 
 ## Main Entry Script
 
-The main entry script should call `Editor.App.extend` and give it a definition.
+In your main entry script, extends `Editor.App` by calling `Editor.App.extend` and pass a definition to it.
 Here is an example:
 
 ```javascript
 'use strict';
 
 // require editor-framework at the beginning
-require('./editor-framework');
+Editor = require('editor-framework');
 
 // extends the app
 Editor.App.extend({
-  // optional, init commander before app inited
-  beforeInit ( commander ) {
+  // optional, init yargs before app inited
+  beforeInit ( yargs ) {
   },
 
   // init your app
@@ -71,4 +61,4 @@ Read more details about App definition in [App lifecycle and events](./app-lifec
 
 ## Yeoman Generator
 
-To make things simple, we also provide a yeoman generator to create an editor-framework app --- [generator-editor-framework](https://github.com/fireball-x/generator-editor-framework).
+To make things simple, we also provide a yeoman generator to create an editor-framework app --- [generator-editor-framework](https://github.com/cocos-creator/generator-editor-framework).

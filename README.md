@@ -31,6 +31,18 @@ npm install --save editor-framework
 
 ## Usage
 
+**package.json**
+
+```json
+{
+  "name": "your app name",
+  "version": "0.0.1",
+  "description": "A simple app based on editor-framework.",
+  "dependencies": {},
+  "main": "main.js"
+}
+```
+
 **main.js**
 
 ```javascript
