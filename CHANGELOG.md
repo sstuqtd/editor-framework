@@ -6,6 +6,8 @@
 
 ### v0.5.2 (developing)
 
+ - upgrade to Electron v0.37.6
+ - Support non-polymer panel by default
  - Fix set break point in an ipc message in renderer will lead to devtools crash
  - Fix console error stack will add main-process call stack when we raise a renderer process error
  - Add `Editor.Protocol.register` in renderer process
@@ -15,6 +17,10 @@
  - deprecate `panels` in `package.json`, use `panel` instead. for multiple panel registry, use `panel.x` for the additional panel.
  - deprecate `Editor.registerPanel`, use `Editor.polymerPanel` instead
  - deprecate `Editor.registerElement`, use `Editor.polymerElement` instead
+ - BREAKING CHANGES
+   - Change panel ipc message registry from `package.json`'s `messages` field to panel's js file
+   - Change panel entry field from `frame` to `main` in `package.json`
+   - Polymer panel needs add field `ui: "polymer"` in your panel define in `package.json`
 
 ### v0.5.1
 

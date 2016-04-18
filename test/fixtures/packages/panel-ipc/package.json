@@ -5,13 +5,24 @@
   "author": "Firebox Technology",
   "main": "main.js",
   "panel": {
-    "frame": "panel/panel.html",
+    "main": "panel/panel-01.js",
     "type": "dockable",
-    "title": "panel-ipc",
-    "width": 800,
-    "height": 600,
-    "messages": [
-      "foobar:simple"
-      ]
+    "title": "panel-01",
+    "width": 400,
+    "height": 300
+  },
+  "panel-02": {
+    "main": "panel/panel-02.js",
+    "type": "dockable",
+    "title": "panel-02",
+    "width": 400,
+    "height": 300
+  },
+  "panel-03": {
+    "main": "panel/panel-03.js",
+    "type": "dockable",
+    "title": "panel-03",
+    "width": 400,
+    "height": 300
   }
 }

@@ -9,7 +9,7 @@ module.exports = {
 
   messages: {
     open () {
-      Editor.Panel.open('localize.panel');
+      Editor.Panel.open('localize');
     },
   }
 };

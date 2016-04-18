@@ -11,14 +11,5 @@
     "Test Case/Simple": {
       "message": "demo-simple:open"
     }
-  },
-  "panel": {
-    "frame": "panel/panel.html",
-    "type": "dockable",
-    "title": "Simple",
-    "width": 800,
-    "height": 600,
-    "messages": [
-    ]
   }
 }
