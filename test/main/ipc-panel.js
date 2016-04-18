@@ -19,29 +19,67 @@ describe('Editor.IpcListener Panel', function () {
     ipc.clear();
   });
 
-  // TODO: currently, panel is depends on Polymer, fuuuuuuuuck.
   describe('Editor.Ipc.sendToPanel', function () {
     this.timeout(5000);
 
-    it.skip('should send message to panel from main process', function (done) {
+    it('should send message to panel from main process', function (done) {
       const path = Path.join(testPackages,'panel-ipc');
       assert.isTrue( Fs.existsSync(path) );
 
       Editor.Package.load(path, function () {
-        Editor.Panel.open('panel-ipc.panel');
+        Editor.Panel.open('panel-ipc');
 
         // TODO: Panel.open should have callback
         setTimeout(() => {
-          Editor.Ipc.sendToPanel('panel-ipc', 'foobar:simple', 'foo', 'bar');
+          Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
         }, 500);
       });
 
-      ipc.on('foobar:reply', ( event, foo, bar ) => {
-        expect(foo).to.be('foo');
-        expect(bar).to.be('bar');
+      ipc.on('panel-01:reply', ( event, foo, bar ) => {
+        expect(foo).to.eql('foo');
+        expect(bar).to.eql('bar');
 
         done();
       });
     });
+
+    it('should send message to panel and recieve reply from main process', function (done) {
+      const path = Path.join(testPackages,'panel-ipc');
+      assert.isTrue( Fs.existsSync(path) );
+
+      Editor.Package.load(path, function () {
+        Editor.Panel.open('panel-ipc-02');
+
+        // TODO: Panel.open should have callback
+        setTimeout(() => {
+          Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
+            expect(foo).to.eql('foo');
+            expect(bar).to.eql('bar');
+
+            done();
+          });
+        }, 500);
+      });
+    });
+
+    // it('should send message to panel and recieve reply from renderer process', function (done) {
+    //   const path = Path.join(testPackages,'panel-ipc');
+    //   assert.isTrue( Fs.existsSync(path) );
+
+    //   Editor.Package.load(path, function () {
+    //     Editor.Panel.open('panel-ipc-02');
+    //     Editor.Panel.open('panel-ipc-03');
+
+    //     // TODO: Panel.open should have callback
+    //     setTimeout(() => {
+    //       ipc.on('panel-03:reply', ( event, foo, bar ) => {
+    //         expect(foo).to.eql('foo');
+    //         expect(bar).to.eql('bar');
+
+    //         done();
+    //       });
+    //     }, 500);
+    //   });
+    // });
   });
 });

@@ -10,15 +10,11 @@
       "message": "demo-simple:open"
     }
   },
-  "widgets": {
-    "simple-widget": "widget/simple.html"
-  },
   "panel": {
-    "frame": "panel/panel.html",
+    "main": "panel/panel.js",
     "type": "dockable",
     "title": "Simple",
     "width": 800,
-    "height": 600,
-    "messages": []
+    "height": 600
   }
 }

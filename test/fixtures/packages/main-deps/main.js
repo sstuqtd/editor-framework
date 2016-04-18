@@ -12,7 +12,7 @@ module.exports = {
 
   messages: {
     open () {
-      Editor.Panel.open('demo-simple.panel');
+      Editor.Panel.open('main-deps');
     },
   }
 };
