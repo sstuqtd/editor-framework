@@ -37,7 +37,8 @@ const OsLocale = require('os-locale');
 
 let osLang = OsLocale.sync().indexOf('zh') !== -1 ? 'zh' : 'en';
 
-Yargs.strict()
+Yargs
+// .strict()
 .help('help')
 .version(app.getVersion())
 // for debug
