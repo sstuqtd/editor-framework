@@ -4,7 +4,7 @@
 
  - remove polymer
 
-### v0.5.2 (developing)
+### v0.5.2
 
  - upgrade to Electron v0.37.6
  - Support non-polymer panel by default

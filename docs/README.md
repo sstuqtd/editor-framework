@@ -12,6 +12,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
 
   - [Create Your Package](packages/create-your-package.md)
   - [Create Panels](packages/create-panels.md)
+  - [Create Polymer Panels](packages/create-polymer-panels.md)
   - [Register Shortcuts](packages/register-shortcuts.md)
   - [Create Widgets](packages/create-widgets.md)
   - [Load and Build Packages](packages/load-and-build.md)
