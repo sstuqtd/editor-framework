@@ -4,6 +4,12 @@
 
  - remove polymer
 
+### v0.5.3
+
+ - Remove strict mode for yargs
+ - Fix "build" command report error when search path not found
+ - Add `<panel-frame>` custom element as panel frame container
+
 ### v0.5.2
 
  - upgrade to Electron v0.37.6
