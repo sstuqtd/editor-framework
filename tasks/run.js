@@ -4,8 +4,8 @@ const electron = require('electron-prebuilt');
 const spawn = require('child_process').spawn;
 
 let args = [
-  './examples/demo/',
-].concat(process.argv.slice(2));
+  process.argv[2],
+].concat(process.argv.slice(3));
 
 let app = spawn(electron, args, {
   stdio: 'inherit'

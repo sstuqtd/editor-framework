@@ -194,7 +194,7 @@ gulp update
 After you success to install it, you can run the demo in editor-framework root directory through the command:
 
 ```bash
-npm start
+npm start ./demo
 ```
 
 ### Test Environment
@@ -214,25 +214,25 @@ npm test
 You can also run a single test or a bunch of tests in one directory by:
 
 ```bash
-npm start -- test ${your/test/path}
+npm start ./test -- test ${your/test/path}
 ```
 
 You can also force to run tests in renderer by `--renderer` option:
 
 ```bash
-npm start -- test --renderer ${your/test/path}
+npm start ./test -- test --renderer ${your/test/path}
 ```
 
 You can load specific package and run its tests by `--package` option:
 
 ```bash
-npm start -- test --package ${your/test/path}
+npm start ./test -- test --package ${your/test/path}
 ```
 
 To debug a test, use the `--detail` option:
 
 ```bash
-npm start -- test --detail ${your/test/path}
+npm start ./test -- test --detail ${your/test/path}
 ```
 
 ### Generate Documentation

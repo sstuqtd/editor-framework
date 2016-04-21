@@ -4,11 +4,11 @@ const electron = require('electron-prebuilt');
 const spawn = require('child_process').spawn;
 
 let args = [
-  './demo/',
+  process.argv[2],
   '--debug=3030',
   '--dev',
   '--show-devtools'
-].concat(process.argv.slice(2));
+].concat(process.argv.slice(3));
 
 let app = spawn(electron, args, {
   stdio: 'inherit'

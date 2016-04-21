@@ -29,6 +29,7 @@ apidocs/
 bin/
 node_modules/
 bower_components/
+example-apps/
 
 # test files
 .settings/
