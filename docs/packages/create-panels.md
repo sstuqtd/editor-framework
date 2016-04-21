@@ -58,31 +58,18 @@ Suppose we have the following `package.json` file:
 
 The file registers two panels `panel` and `panel.02`, so that we will have two panelID which are `foo` and `foo.02`.
 
-## Messages
+## Register Ipc Messages
 
 TODO:
 
-## Listeners
+## Register Listeners
 
 TODO:
 
-## Shortcuts
+## Register Shortcuts
 
 TODO:
 
-## Profiles
+## Register Profiles
 
 TODO:
-
-## Message: 'panel:open (argv)'
-
-Invoked when panel opens or panel shows up. The `argv` is an `Object` that you send through `Editor.Panel.open`.
-
-Example:
-
-```javascript
-Editor.Panel.open( 'your.panel.id', {
-  cwd: '~/editor-framework/',
-  file: 'foo/bar/foobar.js',
-});
-```
