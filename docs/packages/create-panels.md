@@ -62,6 +62,9 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
 
 TODO:
 
+## Listeners
+
+TODO:
 
 ## Shortcuts
 
