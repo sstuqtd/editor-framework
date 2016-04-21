@@ -17,6 +17,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   - [Create Widgets](packages/create-widgets.md)
   - [Load and Build Packages](packages/load-and-build.md)
   - [i18n](packages/i18n.md)
+  - [Panel Lifecycle and Events](packages/panel-lifecycle-and-events.md)
 
 ## UI Programming
 
