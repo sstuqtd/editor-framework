@@ -1,28 +1,6 @@
 {
   "docks": [
     {
-      "docks": [
-        {
-          "active": 0,
-          "panels": [
-            "tester",
-            "ipc-debugger"
-          ],
-          "type": "panel",
-          "width": 350
-        },
-        {
-          "active": 0,
-          "panels": [
-            "package-manager"
-          ],
-          "type": "panel"
-        }
-      ],
-      "row": true,
-      "type": "dock"
-    },
-    {
       "active": 0,
       "panels": [
         "console"

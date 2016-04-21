@@ -9,6 +9,10 @@
  - Remove strict mode for yargs
  - Fix "build" command report error when search path not found
  - Add `<panel-frame>` custom element as panel frame container
+ - Remove Polymer code from `<main-dock>`
+ - Add `Editor.App.loadPackage` and `Editor.App.unloadPackage`, user can use their custom keyword for additional extension of the package
+ - BREAKING CHANGES
+   - Remove `editor:panel-run` message from panel, use `run` function instead
 
 ### v0.5.2
 
