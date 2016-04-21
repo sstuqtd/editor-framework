@@ -9,14 +9,9 @@ In general, packages should have the following structure:
 ```plain
 MyPackage
   |--(optional)panel
-  |   |--mypanel.html
-  |   |--(optional)mypanel.js
-  |   |--(optional)mypanel.css
-  |--(optional)widget
-  | 	|--mywidget
-  |       |--mywidget.html
-  |       |--(optional)mywidget.js
-  |       |--(optional)mywidget.css
+  |   |--panel.js
+  |   |--(optional)template.html
+  |   |--(optional)style.css
   |--main.js
   |--package.json
 ```
@@ -25,10 +20,9 @@ Some key parts explained:
 
 - `main.js`: main entry file, read the [Main Entry](#main-entry) section.
 - `package.json`: package description file, not used for [npm](https://www.npmjs.com/), read [Package Description](#package-description) section.
-- `panel`: this folder is necessary if your package need to open a panel to work. You can create any number of panel html files or sub-folders in this `panel` folder, if you need more than one panel for your package.
-- `widget`: this folder is optional, it contains 'elements' you can use in your panels or in panels of other packages. For example buttons, drop-down menu, tabs, etc. You can organize widgets in this folder any way you like. We recommend creating a folder for each of your widget element.
+- `panel`: this folder is necessary if your package need to open a panel to work.
 
-For panels and widgets, you can combine script and styles to a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.html) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](load-and-build-packages.md) documentation for details.
+For panels and widgets, you can combine script and styles to a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.js) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](load-and-build-packages.md) documentation for details.
 
 ## Package Description
 
@@ -75,30 +69,28 @@ Explanation for each key-value pair:
     - `key` *String* - Menu path, example: `foo/bar/foobar`
     - `value` *Object* - Menu options
       - [Editor Menu Template](https://github.com/fireball-x/editor-framework/blob/master/docs/api/core/menu.md)
-  - `panels` *Object* (Optional) - The panel list.
-    - `key` *String* - Panel name, this name will be combined with package name to create an unique panelID (e.g. `PackageName.PanelName`).
-    - `value` *Object* - Panel options.
-      - `frame` *String* - The panel frame html file. ( It is recommended to define it as a Polymer element ).
-      - `type` *String* (Optional) - Default is `dockable`, can be `dockable`, `float`, `fixed-size`, `quick`, `simple`.
-      - `title` *String* (Optional) - The panel title shows in the tab label, default to the panelID.
-      - `popable` *Boolean* (Optional) - Default is `true`, indicate if the panel is popable.
-      - `width` *Integer* (Optional) - The width of the panel frame.
-      - `height` *Integer* (Optional) - The height of the panel frame.
-      - `min-width` *Integer* (Optional) - The min-width of the panel frame.
-      - `min-height` *Integer* (Optional) - The min-height of the panel frame.
-      - `shortcuts` *Object* (Optional) - The keyboard shortcut for the panel.
-        - `key` *String* - define the key combination (example: `command+k`).
-        - `value` *String* - The method name defined in the panel frame.
-      - `messages` *Array* (Optional) - The ipc message name list.
-      - `profiles` *Object* (Optional) - The list of default profile settings.
-        - `key` *String* - The profile type, by default it can be `local` or `global`. You can register more profile type through `Editor.registerProfilePath`.
-        - `value` *Object* - The default setting values.
+  - `panel[.sub-name]` *Object* (Optional) - Panel info
+    - `main` *String* - The panel main entry file.
+    - `ui` *String* (Optional) - The ui-framework used in this panel. Default is `none`, can be `polymer`.
+    - `type` *String* (Optional) - Default is `dockable`, can be `dockable`, `float`, `fixed-size`, `quick`, `simple`.
+    - `title` *String* (Optional) - The panel title shows in the tab label, default to the panelID.
+    - `popable` *Boolean* (Optional) - Default is `true`, indicate if the panel is popable.
+    - `width` *Integer* (Optional) - The width of the panel frame.
+    - `height` *Integer* (Optional) - The height of the panel frame.
+    - `min-width` *Integer* (Optional) - The min-width of the panel frame.
+    - `min-height` *Integer* (Optional) - The min-height of the panel frame.
+    - `shortcuts` *Object* (Optional) - The keyboard shortcut for the panel.
+      - `key` *String* - define the key combination (example: `command+k`).
+      - `value` *String* - The method name defined in the panel frame.
+    - `messages` *Array* (Optional) - The ipc message name list.
+    - `profiles` *Object* (Optional) - The list of default profile settings.
+      - `key` *String* - The profile type, by default it can be `local` or `global`. You can register more profile type through `Editor.registerProfilePath`.
+      - `value` *Object* - The default setting values.
   - `widgets` *Object* (Optional) - The widget list.
     - `key` *String* - Widget name, this name will be used as host name in `widgets://{host-name}/` protocol.
     - `value` *Object* - The widget folder path
-  - `dependencies` *Object* (Optional) - The dependencies list.
-  - `npmDependencies??` *Object* (Optional) - The npm dependencies list.
-  - `bowerDependencies??` *Object* (Optional) - The bower dependencies list.
+  - `packages` *Object* (Optional) - The editor-framework package dependencies list.
+  - `dependencies` *Object* (Optional) - The node module dependencies list.
 
 ## Main Entry
 
@@ -119,7 +111,7 @@ module.exports = {
   // an IPC message receiver
   messages: {
     open () {
-      Editor.Panel.open('demo-simple.panel');
+      Editor.Panel.open('demo-simple');
     },
   }
 };

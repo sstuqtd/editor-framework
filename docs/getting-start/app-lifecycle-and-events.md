@@ -110,3 +110,33 @@ Editor.App.extend({
   },
 });
 ```
+
+### loadPackage(pjson, callback)
+
+This function allow user hook their package loading process stuff:
+
+```javascript
+Editor.App.extend({
+  loadPackage ( pjson, callback ) {
+    if ( pjson.myKeyword ) {
+      // do your package load stuff
+    }
+
+    callback();
+  },
+});
+```
+
+### unloadPackage(pjson)
+
+This function allow user hook their package unloading process stuff:
+
+```javascript
+Editor.App.extend({
+  unloadPackage ( pjson ) {
+    if ( pjson.myKeyword ) {
+      // do your package unload stuff
+    }
+  },
+});
+```
