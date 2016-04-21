@@ -3,12 +3,22 @@
 const electron = require('electron-prebuilt');
 const spawn = require('child_process').spawn;
 
+let processArgv, appPath;
+
+if ( process.argv.length === 2 ) {
+  appPath = './demo/';
+  processArgv = process.argv.slice(2);
+} else {
+  appPath = process.argv[2];
+  processArgv = process.argv.slice(3);
+}
+
 let args = [
-  process.argv[2],
+  appPath,
   '--debug=3030',
   '--dev',
   '--show-devtools'
-].concat(process.argv.slice(3));
+].concat(processArgv);
 
 let app = spawn(electron, args, {
   stdio: 'inherit'
