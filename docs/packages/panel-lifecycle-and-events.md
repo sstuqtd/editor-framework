@@ -1,10 +1,28 @@
 ## DOM Event
 
-### panel-show
+### 'panel-show'
 
-### panel-hide
+Emitted when panel show
 
-### resize
+### 'panel-hide'
+
+Emitted when panel hide
+
+### 'panel-resize'
+
+Emitted when panel resize
+
+### panel-cut
+
+Emitted when panel cut
+
+### panel-copy
+
+Emitted when panel copy
+
+### panel-paste
+
+Emitted when panel paste
 
 ## Lifecycle Callback
 
