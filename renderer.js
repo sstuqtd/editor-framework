@@ -64,7 +64,7 @@
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.fire(focusedPanel, 'panel-copy', {
+        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-copy', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -85,7 +85,7 @@
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.fire(focusedPanel, 'panel-cut', {
+        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-cut', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -106,13 +106,31 @@
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.fire(focusedPanel, 'panel-paste', {
+        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-paste', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
           }
         });
       }
+    });
+
+    window.addEventListener('beforeunload', event => {
+      let frameELs = EditorR.Panel.panels;
+      let returnValue = true;
+
+      frameELs.forEach(el => {
+        let result = true;
+        if ( el.close ) {
+          result = el.close();
+        }
+
+        if ( result === false ) {
+          returnValue = false;
+        }
+      });
+
+      event.returnValue = returnValue;
     });
 
     // DISABLE: looks like setting the `body: { overflow: hidden; }` will solve the problem
