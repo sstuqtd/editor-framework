@@ -4,6 +4,8 @@
 
  - remove polymer
 
+### v0.5.4 (developing)
+
 ### v0.5.3
 
  - Remove strict mode for yargs
