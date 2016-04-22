@@ -11,8 +11,10 @@
  - Add `<panel-frame>` custom element as panel frame container
  - Remove Polymer code from `<main-dock>`
  - Add `Editor.App.loadPackage` and `Editor.App.unloadPackage`, user can use their custom keyword for additional extension of the package
+ - Add `listeners` in panel-frame for listening dom events
  - BREAKING CHANGES
    - Remove `editor:panel-run` message from panel, use `run` function instead
+   - Change dom event `resize` to `panel-resize` in `<panel-frame>`
 
 ### v0.5.2
 
