@@ -12,6 +12,7 @@
  - Remove Polymer code from `<main-dock>`
  - Add `Editor.App.loadPackage` and `Editor.App.unloadPackage`, user can use their custom keyword for additional extension of the package
  - Add `listeners` in panel-frame for listening dom events
+ - Add `close` lifecycle callback in `<panel-frame>`
  - BREAKING CHANGES
    - Remove `editor:panel-run` message from panel, use `run` function instead
    - Change dom event `resize` to `panel-resize` in `<panel-frame>`

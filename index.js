@@ -211,6 +211,14 @@ const levelToFormat = {
 // or we start some function that needs to run in a hidden window before main-window opened.
 app.on('window-all-closed', () => {});
 
+// NOTE: this only happends when you force quit by pressing ^C in terminal
+app.on('before-quit', () => {
+  let windows = EditorM.Window.windows;
+  windows.forEach(win => {
+    win.forceClose();
+  });
+});
+
 //
 app.on('gpu-process-crashed', () => {
   console.log( Chalk.red.inverse.bold('GPU Process Crashed!') );
