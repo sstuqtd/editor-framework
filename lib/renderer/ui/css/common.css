@@ -23,7 +23,7 @@ body {
   font-size: 13px;
   font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, Arial, sans-serif;
 
-  overflow: hidden;
+  overflow: hidden; /*NOTE: this will solve mac osx touch pad over scroll problem*/
 
   color: #ddd;
   background-color: #333;
