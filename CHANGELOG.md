@@ -6,6 +6,8 @@
 
 ### v0.5.4 (developing)
 
+ - Fix `Editor.log` will not show message on Console panel
+
 ### v0.5.3
 
  - Remove strict mode for yargs
