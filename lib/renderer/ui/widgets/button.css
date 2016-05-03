@@ -1,0 +1,38 @@
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  flex: none;
+
+  margin: 0 0.25rem 0 0;
+  min-width: 20px;
+  border: 1px solid #171717;
+  border-radius: 0.28571429rem;
+
+  font-weight: 700;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  line-height: 1em;
+
+  overflow: hidden;
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+
+  cursor: pointer;
+  color: #bdbdbd;
+  background-image: linear-gradient(#5a5a5a, #444);
+}
+
+:host(:hover) {
+  background-image: linear-gradient(#646464, #4e4e4e);
+  color: #cdcdcd;
+}
+
+:host(:focus) {
+  outline: none;
+  border-color: rgba(253, 148, 43, 1.0);
+}
+
+.inner {
+  padding: 0.4rem 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}

@@ -59,7 +59,7 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
@@ -80,7 +80,7 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
@@ -101,7 +101,7 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.Panel.getFocusedPanel();
+      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
       if ( focusedPanel ) {
         event.preventDefault();
         event.stopPropagation();
