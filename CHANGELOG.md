@@ -7,6 +7,7 @@
 ### v0.5.4 (developing)
 
  - Fix `Editor.log` will not show message on Console panel
+ - Add `Editor.UI.FocusMgr` to manage focus for panel
 
 ### v0.5.3
 
