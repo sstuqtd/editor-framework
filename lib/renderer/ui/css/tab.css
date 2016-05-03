@@ -88,8 +88,11 @@ span.right-tab-border {
   border-top: 1px solid #09f;
   border-left: 1px solid #09f;
   border-right: 1px solid #09f;
-
   background-color: #058;
+
+  /* border-top: 1px solid #f90;   */
+  /* border-left: 1px solid #f90;  */
+  /* border-right: 1px solid #f90; */
 }
 
 :host([out-of-date]) .border, :host(.active[out-of-date]) .border {
