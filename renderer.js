@@ -5,6 +5,7 @@
   try {
     const Electron = require('electron');
     const Path = require('fire-path');
+    let EditorR;
 
     // init EditorR
     window.onerror = function ( message, filename, lineno, colno, err ) {
@@ -174,7 +175,7 @@
     require('module').globalPaths.push(Path.join(_appPath,'node_modules'));
 
     // load editor-init.js
-    const EditorR = require(`${_frameworkPath}/lib/renderer`);
+    EditorR = require(`${_frameworkPath}/lib/renderer`);
     EditorR.remote = _remoteEditor;
 
     // DISABLE: use hash instead
