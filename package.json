@@ -14,10 +14,11 @@
   },
   "scripts": {
     "api": "firedoc build ./ --theme notab",
+    "build": "node ./tasks/build-css.js",
+    "clear": "sh ./tasks/remove-settings.sh",
     "start": "node ./tasks/run-dev.js",
     "start:no-dev": "node ./tasks/run.js",
-    "test": "node ./tasks/run-tests.js",
-    "clear": "sh ./tasks/remove-settings.sh"
+    "test": "node ./tasks/run-tests.js"
   },
   "dependencies": {
     "async": "^1.5.2",
@@ -48,7 +49,7 @@
     "gulp-babel": "6.1.1",
     "gulp-less": "3.0.5",
     "gulp-sequence": "0.4.4",
-    "gulp-stylus": "2.2.0"
+    "less": "^2.6.1"
   },
   "nativeModules": [
     "chokidar"

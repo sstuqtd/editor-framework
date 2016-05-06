@@ -177,15 +177,25 @@ Run `npm install` in it:
 
 ```bash
 npm install
+npm run build # build styles
 ```
 
-### Install & Run Editor-Framework Demo
+### Install and Run Examples
 
-Editor Framework provide a demo project to help user developing packages. To use the demo project,
+#### example-apps
+
+```bash
+git clone git@github.com:exsdk/example-apps.git
+npm start ./example-apps/${example-name}
+```
+
+#### example-apps/demo
+
+The example-apps provide a demo project to help user developing packages. To use the demo project,
 first we need to install it. Go to the demo folder and run the following command:
 
 ```bash
-cd ./demo
+cd ./example-apps/demo
 npm install
 bower install
 gulp update
@@ -194,16 +204,10 @@ gulp update
 After you success to install it, you can run the demo in editor-framework root directory through the command:
 
 ```bash
-npm start ./demo
+npm start ./example-apps/demo
 ```
 
 ### Test Environment
-
- - Mocha
- - Chai
- - Sinon
-
-**Note:** We need to install Mocha, Chai in both core and page; that’s why we put them in both Bower and npm dependencies. The core-level tests only run during the development phase, and will not go into the final product. The page-level test environment has integrated with the [tester](https://github.com/fireball-packages/tester) package and every developer can use it to test your panels.
 
 To test the editor-framework itself, just run:
 
