@@ -1,3 +1,6 @@
+@element: 'button';
+@import (multiple) 'theme.less';
+
 :host {
   display: inline-block;
   box-sizing: border-box;
@@ -9,7 +12,7 @@
   border-radius: 0.25rem;
 
   font-weight: 700;
-  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-family: @fonts;
   line-height: 1em;
 
   overflow: hidden;

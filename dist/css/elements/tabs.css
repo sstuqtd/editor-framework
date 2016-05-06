@@ -1,4 +1,4 @@
-@import url('editor-framework://dist/css/fontello.css');
+@import url('editor-framework://dist/css/globals/fontello.css');
 
 :host {
   position: relative;

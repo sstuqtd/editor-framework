@@ -1,3 +1,26 @@
+/*-------------------
+       Fonts
+--------------------*/
+/*-------------------
+      Base Sizes
+--------------------*/
+/* This is the single variable that controls them all */
+/* The size of page text  */
+/*-------------------
+        Page
+--------------------*/
+/*-------------------
+  Exact Pixel Values
+--------------------*/
+/*
+  These are used to specify exact pixel values in em
+  for things like borders that remain constantly
+  sized as emSize adjusts
+
+  Since there are many more sizes than names for sizes,
+  these are named by their original pixel values.
+
+*/
 * {
   user-select: none;
   -webkit-user-select: none;
@@ -15,10 +38,12 @@ body {
   margin: 3px;
   padding: 0px;
   border: 0px;
-  font-size: 13px;
-  font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, Arial, sans-serif;
   overflow: hidden;
   /*NOTE: this will solve mac osx touch pad over scroll problem*/
+  /* line-height: @lineHeight; */
+  font-size: 13px;
+  font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  font-smoothing: antialiased;
   color: #ddd;
   background-color: #333;
 }

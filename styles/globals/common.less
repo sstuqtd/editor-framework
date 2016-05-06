@@ -1,3 +1,6 @@
+@element: 'unknown';
+@import (multiple) 'theme.less';
+
 * {
   user-select: none;
   -webkit-user-select: none;
@@ -12,7 +15,7 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: @emSize;
 }
 
 body {
@@ -20,13 +23,15 @@ body {
   padding: 0px;
   border: 0px;
 
-  font-size: 13px;
-  font-family: 'Helvetica Neue', Helvetica, 'Lucida Grande', 'Segoe UI', Ubuntu, Cantarell, Arial, sans-serif;
-
   overflow: hidden; /*NOTE: this will solve mac osx touch pad over scroll problem*/
+  /* line-height: @lineHeight; */
 
-  color: #ddd;
-  background-color: #333;
+  font-size: @fontSize;
+  font-family: @fonts;
+  font-smoothing: @fontSmoothing;
+
+  color: @textColor;
+  background-color: @pageBackground;
 }
 
 ::-webkit-scrollbar {

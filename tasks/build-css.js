@@ -16,8 +16,11 @@ Fs.emptyDirSync(destDir);
 Async.series([
   // build less
   next => {
-    let paths = Globby.sync(`${srcDir}/**/*.less`);
-    Async.eachLimit( paths, 5, ( path, done ) => {
+    let paths = Globby.sync([
+      `${srcDir}/**/*.less`,
+      `!${srcDir}/theme.less`,
+    ]);
+    Async.eachSeries( paths, ( path, done ) => {
       path = Path.normalize(path);
 
       let relpath = Path.relative(absSrcDir, path);
@@ -25,16 +28,22 @@ Async.series([
       let dest = Path.join(destDir, Path.dirname(relpath), Path.basename(relpath, '.less')) + '.css';
 
       process.stdout.write(Chalk.blue('compile ') + Chalk.cyan(relpath) + ' ...... ');
-      Less.render(content, (e, output) => {
+      Less.render(content, {
+        paths: ['./styles']
+      }, (e, output) => {
+        if ( e ) {
+          process.stdout.write(Chalk.red('error\n'));
+          done(e);
+          return;
+        }
+
         Fs.ensureDirSync(Path.dirname(dest));
         Fs.writeFileSync(dest, output.css, 'utf8');
 
         process.stdout.write(Chalk.green('done\n'));
         done();
       });
-    }, err => {
-      next(err);
-    });
+    }, next);
   },
 
   // copy other files
@@ -57,14 +66,12 @@ Async.series([
 
       process.stdout.write(Chalk.green('done\n'));
       done();
-    }, err => {
-      next(err);
-    });
+    }, next);
   },
 
 ], err => {
   if ( err ) {
-    console.error(Chalk.red(err.stack));
+    console.error(Chalk.red(err));
   }
 
   console.log(Chalk.green('finish'));
