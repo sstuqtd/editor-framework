@@ -1,38 +1,37 @@
+@element: 'tabs';
+@import (multiple) 'theme.less';
+
 @import url('editor-framework://dist/css/globals/fontello.css');
 
 :host {
   position: relative;
   display: inline-block;
-  border-left: 1px solid #212121;
-  border-right: 1px solid #212121;
-  border-top: 1px solid #212121;
+  border-left: 1px solid @panelBorderColor;
+  border-right: 1px solid @panelBorderColor;
+  border-top: 1px solid @panelBorderColor;
   box-sizing: border-box;
 
   font-size: 12px;
 
   color: #aaa;
-  background-color: #333;
+  background-color: @tabbarBackground;
   z-index: 1;
 }
 
 .border {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
+  .layout-horizontal;
+  .layout-children(center);
 
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
 
   padding-right: 5px;
 }
 
 .tabs {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  flex: 1;
+  .layout-horizontal;
+  .flex(1);
 
   height: 22px;
   margin-bottom: -2px;

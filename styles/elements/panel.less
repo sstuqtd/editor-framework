@@ -1,35 +1,32 @@
+@element: 'panel';
+@import (multiple) 'theme.less';
+
 :host {
+  .layout-vertical;
+
   position: relative;
   box-sizing: border-box;
 
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  flex-direction: column;
-
-  color: #ddd;
+  color: @textColor;
   cursor: default;
 }
 
 .border {
+  .flex(1);
+
   position: relative;
-  flex: 1;
-  border: 1px solid #212121;
+  border: 1px solid @panelBorderColor;
 }
 
 .frame-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  .fit;
 
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
 
-  background-color: #474747;
+  background-color: @panelBackground;
 }
 
 .frame-wrapper:focus {

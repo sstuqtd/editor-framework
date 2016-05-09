@@ -1,31 +1,59 @@
+/**
+ * @param {align-items} - start, end, center, stretch, baseline
+ * @param {justify-content} - start, end, center, space-between, space-around
+ */
+.flex-auto {
+  flex: 1 1 auto;
+}
+/* .layout-strecth() {     */
+/*   align-items: stretch; */
+/* }                       */
+/*-------------------
+       Fonts
+--------------------*/
+/*-------------------
+      Base Sizes
+--------------------*/
+/* This is the single variable that controls them all */
+/* The size of page text  */
+/*-------------------
+        Page
+--------------------*/
+/*-------------------
+        Dock
+--------------------*/
+/*-------------------
+  Exact Pixel Values
+--------------------*/
+/*
+  These are used to specify exact pixel values in em
+  for things like borders that remain constantly
+  sized as emSize adjusts
+
+  Since there are many more sizes than names for sizes,
+  these are named by their original pixel values.
+
+*/
 :host {
   position: relative;
   box-sizing: border-box;
-
-  overflow: hidden;
-
   font-size: 14px;
-
+  overflow: hidden;
   color: #ddd;
 }
-
 .content {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  flex-direction: column;
-
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
-
 .content:focus {
   outline: none;
 }
-
 :host([row]) > .content {
   flex-direction: row;
 }

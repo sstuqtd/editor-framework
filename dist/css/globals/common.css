@@ -1,3 +1,13 @@
+/**
+ * @param {align-items} - start, end, center, stretch, baseline
+ * @param {justify-content} - start, end, center, space-between, space-around
+ */
+.flex-auto {
+  flex: 1 1 auto;
+}
+/* .layout-strecth() {     */
+/*   align-items: stretch; */
+/* }                       */
 /*-------------------
        Fonts
 --------------------*/
@@ -8,6 +18,9 @@
 /* The size of page text  */
 /*-------------------
         Page
+--------------------*/
+/*-------------------
+        Dock
 --------------------*/
 /*-------------------
   Exact Pixel Values
@@ -41,7 +54,7 @@ body {
   overflow: hidden;
   /*NOTE: this will solve mac osx touch pad over scroll problem*/
   /* line-height: @lineHeight; */
-  font-size: 13px;
+  font-size: 14px;
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   font-smoothing: antialiased;
   color: #ddd;

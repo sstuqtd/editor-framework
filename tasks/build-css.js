@@ -1,12 +1,24 @@
 'use strict';
 
 const Async = require('async');
-const Less = require('less');
 const Globby = require('globby');
 const Path = require('fire-path');
 const Fs = require('fire-fs');
 const Chalk = require('chalk');
 
+const Yargs = require('yargs');
+const Less = require('less');
+const LessPluginCleanCSS = require('less-plugin-clean-css');
+
+Yargs.help('help').options({
+  'dev': {
+    type: 'boolean',
+    global: true,
+    desc: 'Build no compress version.'
+  },
+});
+
+let yargv = Yargs.argv;
 let srcDir = './styles';
 let destDir = './dist/css';
 let absSrcDir = Path.resolve(srcDir);
@@ -28,8 +40,21 @@ Async.series([
       let dest = Path.join(destDir, Path.dirname(relpath), Path.basename(relpath, '.less')) + '.css';
 
       process.stdout.write(Chalk.blue('compile ') + Chalk.cyan(relpath) + ' ...... ');
+
+      let plugins;
+      if ( yargv.dev ) {
+        plugins = [];
+      } else {
+        plugins = [
+          new LessPluginCleanCSS({
+            advanced: true,
+          })
+        ];
+      }
+
       Less.render(content, {
-        paths: ['./styles']
+        paths: ['./styles'],
+        plugins: plugins,
       }, (e, output) => {
         if ( e ) {
           process.stdout.write(Chalk.red('error\n'));

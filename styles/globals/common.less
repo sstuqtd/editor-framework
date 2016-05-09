@@ -27,7 +27,7 @@ body {
   /* line-height: @lineHeight; */
 
   font-size: @fontSize;
-  font-family: @fonts;
+  font-family: @pageFont;
   font-smoothing: @fontSmoothing;
 
   color: @textColor;
@@ -38,20 +38,24 @@ body {
   height: 10px;
   width: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
   border: 3px solid transparent;
   background: rgba(255,255,255,0.3);
   background-clip: content-box;
 }
+
 ::-webkit-scrollbar-track {
   /* background: rgba(255,255,255,0.1); */
   background: transparent;
   /* background: #474747; */
 }
+
 ::-webkit-scrollbar-corner {
   background-color: transparent;
 }
+
 ::-webkit-scrollbar-button {
   display: none;
 }

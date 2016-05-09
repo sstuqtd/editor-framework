@@ -1,5 +1,40 @@
+/**
+ * @param {align-items} - start, end, center, stretch, baseline
+ * @param {justify-content} - start, end, center, space-between, space-around
+ */
 @import url('editor-framework://dist/css/globals/fontello.css');
+.flex-auto {
+  flex: 1 1 auto;
+}
+/* .layout-strecth() {     */
+/*   align-items: stretch; */
+/* }                       */
+/*-------------------
+       Fonts
+--------------------*/
+/*-------------------
+      Base Sizes
+--------------------*/
+/* This is the single variable that controls them all */
+/* The size of page text  */
+/*-------------------
+        Page
+--------------------*/
+/*-------------------
+        Dock
+--------------------*/
+/*-------------------
+  Exact Pixel Values
+--------------------*/
+/*
+  These are used to specify exact pixel values in em
+  for things like borders that remain constantly
+  sized as emSize adjusts
 
+  Since there are many more sizes than names for sizes,
+  these are named by their original pixel values.
+
+*/
 :host {
   position: relative;
   display: inline-block;
@@ -7,33 +42,27 @@
   border-right: 1px solid #212121;
   border-top: 1px solid #212121;
   box-sizing: border-box;
-
   font-size: 12px;
-
   color: #aaa;
   background-color: #333;
   z-index: 1;
 }
-
 .border {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: center;
-
+  justify-content: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
-
   padding-right: 5px;
 }
-
 .tabs {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
   flex: 1;
-
   height: 22px;
   margin-bottom: -2px;
   margin-left: -2px;
@@ -41,26 +70,21 @@
   padding-right: 20px;
   overflow: hidden;
 }
-
 .insert {
   display: none;
   position: absolute;
   border: 1px solid #c7722c;
   box-sizing: border-box;
   height: 100%;
-
   pointer-events: none;
 }
-
 .icon {
   color: #777;
   margin-left: 10px;
 }
-
 .icon.hide {
   display: none;
 }
-
 .icon:hover {
   color: #aaa;
   cursor: pointer;

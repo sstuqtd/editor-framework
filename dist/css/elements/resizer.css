@@ -1,19 +1,56 @@
+/**
+ * @param {align-items} - start, end, center, stretch, baseline
+ * @param {justify-content} - start, end, center, space-between, space-around
+ */
+.flex-auto {
+  flex: 1 1 auto;
+}
+/* .layout-strecth() {     */
+/*   align-items: stretch; */
+/* }                       */
+/*-------------------
+       Fonts
+--------------------*/
+/*-------------------
+      Base Sizes
+--------------------*/
+/* This is the single variable that controls them all */
+/* The size of page text  */
+/*-------------------
+        Page
+--------------------*/
+/*-------------------
+        Dock
+--------------------*/
+/*-------------------
+  Exact Pixel Values
+--------------------*/
+/*
+  These are used to specify exact pixel values in em
+  for things like borders that remain constantly
+  sized as emSize adjusts
+
+  Since there are many more sizes than names for sizes,
+  these are named by their original pixel values.
+
+*/
 :host {
-  flex: 0 0 11px; /*size*/
+  flex: 0 0 11px;
+  /*size*/
   position: relative;
   white-space: nowrap;
-
   z-index: 2;
-
   /* horizontal resizer */
-  margin-top: -4px; /*blank-size*/
-  margin-bottom: -4px; /*blank-size*/
+  margin-top: -4px;
+  /*blank-size*/
+  margin-bottom: -4px;
+  /*blank-size*/
   margin-left: 0px;
   margin-right: 0px;
   width: auto;
-  height: 11px; /*size*/
+  height: 11px;
+  /*size*/
 }
-
 .bar {
   position: absolute;
   top: 4px;
@@ -21,20 +58,20 @@
   height: 3px;
   width: 100%;
 }
-
 :host([active]) > .bar {
-  background-color: rgb(12,112,200);
+  background-color: #0c70c8;
 }
-
 :host([vertical]) {
   margin-top: 0px;
   margin-bottom: 0px;
-  margin-left: -4px; /*blank-size*/
-  margin-right: -4px; /*blank-size*/
-  width: 11px; /*size*/
+  margin-left: -4px;
+  /*blank-size*/
+  margin-right: -4px;
+  /*blank-size*/
+  width: 11px;
+  /*size*/
   height: auto;
 }
-
 :host([vertical]) > .bar {
   position: absolute;
   top: 0px;
@@ -42,35 +79,27 @@
   width: 3px;
   height: 100%;
 }
-
 :host(:hover) {
   cursor: row-resize;
 }
-
 :host(:hover) > .bar {
   cursor: row-resize;
 }
-
 :host([vertical]:hover) {
   cursor: col-resize;
 }
-
 :host([vertical]:hover) > .bar {
   cursor: col-resize;
 }
-
 :host(.platform-win:hover) {
   cursor: ns-resize;
 }
-
 :host(.platform-win:hover) > .bar {
   cursor: ns-resize;
 }
-
 :host(.platform-win[vertical]:hover) {
   cursor: ew-resize;
 }
-
 :host(.platform-win[vertical]:hover) > .bar {
   cursor: ew-resize;
 }

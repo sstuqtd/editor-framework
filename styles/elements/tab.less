@@ -1,0 +1,84 @@
+@element: 'tab';
+@import (multiple) 'theme.less';
+
+:host {
+  .layout-horizontal;
+  box-sizing: border-box;
+
+  height: 20px;
+  font-size: 12px;
+  margin-right: -1px;
+
+  color: #aaa;
+}
+
+.border {
+  border-top: 1px solid @panelBorderColor;
+  border-left: 1px solid @panelBorderColor;
+  border-right: 1px solid @panelBorderColor;
+}
+
+.inner {
+  display: inline-block;
+  box-sizing: border-box;
+
+  height: 19px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  background-color: @tabDeactiveBackground;
+}
+
+/* :host(.hover) .inner {     */
+/*     background-color: #555; */
+/* }                           */
+/* NOTE: there is a bug on css:hover for tab,                      */
+/* when we drop tab 'foo' on top of tab 'bar' to insert before it, */
+/* the tab 'bar' will keep css:hover state after.                  */
+.inner:hover {
+  background-color: @tabBackground + 10%;
+}
+
+.title {
+  .layout-horizontal;
+  .layout-children(center);
+
+  margin: 3px 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#icon {
+  display: inline-block;
+  margin-right: 5px;
+}
+
+#icon img {
+  width: 16px;
+  height: 16px;
+}
+
+:host(.active) {
+  height: 22px;
+  margin-top: -1px;
+  border-top: 1px solid @panelBorderColor;
+}
+
+:host(.active) .inner {
+  height: 21px;
+  background-color: @tabBackground;
+}
+
+:host(.active[focused]) .inner {
+  border-top: 1px solid @panelBorderColor_active;
+  border-left: 1px solid @panelBorderColor_active;
+  border-right: 1px solid @panelBorderColor_active;
+  background-color: @tabActiveBackground;
+}
+
+:host([out-of-date]) .inner,
+:host(.active[out-of-date]) .inner {
+  background-color: @tabDirtyBackground;
+}
