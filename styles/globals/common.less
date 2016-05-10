@@ -1,6 +1,25 @@
 @element: 'unknown';
 @import (multiple) 'theme.less';
 
+/*-------------------
+  font face
+--------------------*/
+
+@font-face {
+  font-family: 'fontello';
+  src: url('editor-framework://dist/css/font/fontello.eot?84433093');
+  src: url('editor-framework://dist/css/font/fontello.eot?84433093#iefix') format('embedded-opentype'),
+       url('editor-framework://dist/css/font/fontello.woff?84433093') format('woff'),
+       url('editor-framework://dist/css/font/fontello.ttf?84433093') format('truetype'),
+       url('editor-framework://dist/css/font/fontello.svg?84433093#fontello') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/*-------------------
+  *, html and body
+--------------------*/
+
 * {
   user-select: none;
   -webkit-user-select: none;
@@ -15,24 +34,30 @@
 }
 
 html {
-  font-size: @emSize;
+  font-size: @em_size;
 }
 
 body {
-  margin: 3px;
+  position: relative;
+
+  margin: 0px;
   padding: 0px;
   border: 0px;
 
   overflow: hidden; /*NOTE: this will solve mac osx touch pad over scroll problem*/
-  /* line-height: @lineHeight; */
+  /* line-height: @line_height; */
 
-  font-size: @fontSize;
-  font-family: @pageFont;
-  font-smoothing: @fontSmoothing;
+  font-size: @font_size;
+  font-family: @page_font;
+  -webkit-font-smoothing: @font_smoothing;
 
-  color: @textColor;
-  background-color: @pageBackground;
+  color: @text_color;
+  background-color: @page_bg;
 }
+
+/*-------------------
+  scroll bar
+--------------------*/
 
 ::-webkit-scrollbar {
   height: 10px;
@@ -47,9 +72,7 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  /* background: rgba(255,255,255,0.1); */
   background: transparent;
-  /* background: #474747; */
 }
 
 ::-webkit-scrollbar-corner {
@@ -60,13 +83,23 @@ body {
   display: none;
 }
 
-@font-face {
-  font-family: 'fontello';
-  src: url('editor-framework://dist/css/font/fontello.eot?84433093');
-  src: url('editor-framework://dist/css/font/fontello.eot?84433093#iefix') format('embedded-opentype'),
-       url('editor-framework://dist/css/font/fontello.woff?84433093') format('woff'),
-       url('editor-framework://dist/css/font/fontello.ttf?84433093') format('truetype'),
-       url('editor-framework://dist/css/font/fontello.svg?84433093#fontello') format('svg');
-  font-weight: normal;
-  font-style: normal;
+/*-------------------
+  dock-utils
+--------------------*/
+
+.dock-mask {
+  position: fixed;
+  pointer-events: none;
+  z-index: 999;
+  box-sizing: border-box;
+}
+
+.dock-mask.dock {
+  background: @dockmask_bg;
+  border: 2px solid @dockmask_border_color;
+}
+
+.dock-mask.tab {
+  background: @tabmask_bg;
+  border: '';
 }

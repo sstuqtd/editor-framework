@@ -2,9 +2,6 @@
  * @param {align-items} - start, end, center, stretch, baseline
  * @param {justify-content} - start, end, center, space-between, space-around
  */
-.flex-auto {
-  flex: 1 1 auto;
-}
 /* .layout-strecth() {     */
 /*   align-items: stretch; */
 /* }                       */
@@ -20,19 +17,35 @@
         Page
 --------------------*/
 /*-------------------
+        Element
+--------------------*/
+/*-------------------
         Dock
 --------------------*/
+/*-------------------
+        Sizes
+--------------------*/
+/*
+  Sizes are all expressed in terms of 14px/em (default em)
+  This ensures these "ratios" remain constant despite changes in EM
+*/
+/*-------------------
+       Em Sizes
+--------------------*/
+/*
+  This rounds @size values to the closest pixel then expresses that value in (r)em.
+  This ensures all size values round to exact pixels
+*/
 /*-------------------
   Exact Pixel Values
 --------------------*/
 /*
   These are used to specify exact pixel values in em
   for things like borders that remain constantly
-  sized as emSize adjusts
+  sized as em_size adjusts
 
   Since there are many more sizes than names for sizes,
   these are named by their original pixel values.
-
 */
 :host {
   position: relative;

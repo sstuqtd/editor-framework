@@ -31,6 +31,8 @@ Async.series([
     let paths = Globby.sync([
       `${srcDir}/**/*.less`,
       `!${srcDir}/theme.less`,
+      `!${srcDir}/mixins.less`,
+      `!${srcDir}/themes/**/*.less`,
     ]);
     Async.eachSeries( paths, ( path, done ) => {
       path = Path.normalize(path);

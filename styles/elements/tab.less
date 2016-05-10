@@ -5,29 +5,29 @@
   .layout-horizontal;
   box-sizing: border-box;
 
-  height: 20px;
-  font-size: 12px;
+  height: @tabbar_height - 2;
+  font-size: @tab_font_size;
   margin-right: -1px;
 
-  color: #aaa;
+  color: @tab_text_color;
 }
 
 .border {
-  border-top: 1px solid @panelBorderColor;
-  border-left: 1px solid @panelBorderColor;
-  border-right: 1px solid @panelBorderColor;
+  border-top: 1px solid @panel_border_color;
+  border-left: 1px solid @panel_border_color;
+  border-right: 1px solid @panel_border_color;
 }
 
 .inner {
   display: inline-block;
   box-sizing: border-box;
 
-  height: 19px;
+  height: @tabbar_height - 3;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   border-left: 1px solid rgba(255, 255, 255, 0.08);
   border-right: 1px solid rgba(255, 255, 255, 0.08);
 
-  background-color: @tabDeactiveBackground;
+  background-color: @tab_bg_deactive;
 }
 
 /* :host(.hover) .inner {     */
@@ -37,14 +37,14 @@
 /* when we drop tab 'foo' on top of tab 'bar' to insert before it, */
 /* the tab 'bar' will keep css:hover state after.                  */
 .inner:hover {
-  background-color: @tabBackground + 10%;
+  background-color: @tab_bg_active + 10%;
 }
 
 .title {
   .layout-horizontal;
   .layout-children(center);
 
-  margin: 3px 8px;
+  margin: 3px 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -56,29 +56,33 @@
 }
 
 #icon img {
-  width: 16px;
-  height: 16px;
+  width: @tab_icon_size;
+  height: @tab_icon_size;
 }
 
 :host(.active) {
-  height: 22px;
+  height: @tabbar_height;
   margin-top: -1px;
-  border-top: 1px solid @panelBorderColor;
+  border-top: 1px solid @panel_border_color;
+
+  .inner {
+    height: @tabbar_height - 1;
+    background-color: @tab_bg_active;
+  }
 }
 
-:host(.active) .inner {
-  height: 21px;
-  background-color: @tabBackground;
-}
+:host(.active[focused]) {
+  color: @tab_text_color + 80%;
 
-:host(.active[focused]) .inner {
-  border-top: 1px solid @panelBorderColor_active;
-  border-left: 1px solid @panelBorderColor_active;
-  border-right: 1px solid @panelBorderColor_active;
-  background-color: @tabActiveBackground;
+  .inner {
+    border-top: 1px solid @panel_border_color_focus;
+    border-left: 1px solid @panel_border_color_focus;
+    border-right: 1px solid @panel_border_color_focus;
+    background-color: @tab_bg_focus;
+  }
 }
 
 :host([out-of-date]) .inner,
 :host(.active[out-of-date]) .inner {
-  background-color: @tabDirtyBackground;
+  background-color: @tab_bg_dirty;
 }

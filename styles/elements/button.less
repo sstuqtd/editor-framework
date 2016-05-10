@@ -8,12 +8,12 @@
 
   margin: 0 0.25rem 0 0;
   min-width: 20px;
-  border: 1px solid #171717;
-  border-radius: 0.25rem;
+  border: 1px solid @el_border_color;
+  border-radius: @border_radius;
 
-  font-weight: 700;
-  font-family: @pageFont;
-  line-height: 1em;
+  font-weight: @font_weight;
+  font-family: @page_font;
+  line-height: @line_height;
 
   overflow: hidden;
   text-align: center;
@@ -21,22 +21,36 @@
   text-overflow: ellipsis;
 
   cursor: pointer;
-  color: #bdbdbd;
-  background-image: linear-gradient(#5a5a5a, #444);
-}
-
-:host(:hover) {
-  background-image: linear-gradient(#646464, #4e4e4e);
-  color: #cdcdcd;
-}
-
-:host(:focus) {
-  outline: none;
-  border-color: rgba(253, 148, 43, 1.0);
+  color: @text_color;
+  background-image: linear-gradient(@bg_top_color, @bg_bottom_color);
 }
 
 .inner {
   padding: 0.4rem 1.5rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:host(:hover) {
+  background-image: linear-gradient(@bg_top_color + 10%, @bg_bottom_color + 10%);
+  color: @text_color_hover;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+:host([focused]) {
+  border-color: @focus_color;
+}
+
+:host([pressed]) {
+  color: @text_color - 50%;
+  background: @bg_color - 20%;
+
+  .inner {
+    box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
 }
