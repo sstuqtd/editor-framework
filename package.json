@@ -14,10 +14,12 @@
   },
   "scripts": {
     "api": "firedoc build ./ --theme notab",
+    "build": "node ./tasks/build-css.js",
+    "build:dev": "node ./tasks/build-css.js --dev",
+    "clear": "sh ./tasks/remove-settings.sh",
     "start": "node ./tasks/run-dev.js",
     "start:no-dev": "node ./tasks/run.js",
-    "test": "node ./tasks/run-tests.js",
-    "clear": "sh ./tasks/remove-settings.sh"
+    "test": "node ./tasks/run-tests.js"
   },
   "dependencies": {
     "async": "^1.5.2",
@@ -42,13 +44,15 @@
     "yargs": "^4.3.1"
   },
   "devDependencies": {
-    "electron-prebuilt": "0.37.8",
+    "devtron": "^1.0.0",
+    "electron-prebuilt": "1.0.0",
     "firedoc": "1.13.7",
     "gulp": "3.9.0",
     "gulp-babel": "6.1.1",
     "gulp-less": "3.0.5",
     "gulp-sequence": "0.4.4",
-    "gulp-stylus": "2.2.0"
+    "less": "^2.6.1",
+    "less-plugin-clean-css": "^1.5.1"
   },
   "nativeModules": [
     "chokidar"

@@ -1,9 +1,9 @@
 'use strict';
 
-describe('<editor-dock-resizer>', function () {
+describe('<ui-dock-resizer>', function () {
   this.timeout(0);
 
-  describe('<editor-dock-resizer> horizontal', function () {
+  describe('<ui-dock-resizer> horizontal', function () {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'horizontal', '#container');
@@ -33,7 +33,7 @@ describe('<editor-dock-resizer>', function () {
     });
 
     it('should continue resize the next element if the first element reach the min-width', function ( done ) {
-      let resizer = Helper.targetEL.querySelector('editor-dock-resizer');
+      let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
       Helper.mousetrack(resizer, 'left', 1000,
@@ -51,7 +51,7 @@ describe('<editor-dock-resizer>', function () {
     });
 
     it('should not resize the last element when we resize in the reverse direction', function ( done ) {
-      let resizer = Helper.targetEL.querySelector('editor-dock-resizer');
+      let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
       Helper.mousetrack(resizer, 'left', 1000,
@@ -70,7 +70,7 @@ describe('<editor-dock-resizer>', function () {
     });
   });
 
-  describe('<editor-dock-resizer> vertical', function () {
+  describe('<ui-dock-resizer> vertical', function () {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'vertical', '#container');
@@ -100,7 +100,7 @@ describe('<editor-dock-resizer>', function () {
     });
 
     it('should continue resize the next element if the first element reach the min-width', function ( done ) {
-      let resizer = Helper.targetEL.querySelector('editor-dock-resizer');
+      let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
       Helper.mousetrack(resizer, 'left', 1000,
@@ -118,7 +118,7 @@ describe('<editor-dock-resizer>', function () {
     });
 
     it('should not resize the last element when we resize in the reverse direction', function ( done ) {
-      let resizer = Helper.targetEL.querySelector('editor-dock-resizer');
+      let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
       Helper.mousetrack(resizer, 'left', 1000,
