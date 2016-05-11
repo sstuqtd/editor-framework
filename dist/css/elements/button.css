@@ -67,7 +67,7 @@
   background-image: linear-gradient(#585858, #444444);
 }
 .inner {
-  padding: 0.4rem 1.5rem;
+  padding: 0.4em 1.5em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -89,4 +89,88 @@
   box-shadow: inset 0px 2px 5px rgba(0, 0, 0, 0.5);
   border-top: 1px solid rgba(0, 0, 0, 0.5);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+:host([disabled]) {
+  pointer-events: none;
+  border-color: #2b2b2b;
+  background-image: linear-gradient(#4e4e4e, #3a3a3a);
+  color: #636363;
+}
+/*-------------------
+        Size
+--------------------*/
+:host(.mini) {
+  font-size: 0.71428571rem;
+}
+:host(.tiny) {
+  font-size: 0.85714286rem;
+}
+:host(.small) {
+  font-size: 0.92857143rem;
+}
+:host {
+  font-size: 1rem;
+}
+:host(.large) {
+  font-size: 1.14285714rem;
+}
+:host(.big) {
+  font-size: 1.28571429rem;
+}
+:host(.huge) {
+  font-size: 1.42857143rem;
+}
+:host(.massive) {
+  font-size: 1.71428571rem;
+}
+/*-------------------
+        Colored
+--------------------*/
+:host(.red) {
+  color: #ddd;
+  background-image: linear-gradient(#bf4d4e, #ab393a);
+}
+:host(.red:hover) {
+  background-image: linear-gradient(#c95758, #b54344);
+  color: #f1f1f1;
+}
+:host(.red[pressed]) {
+  color: #ababab;
+  background: #a12f30;
+}
+:host(.red[disabled]) {
+  background-image: linear-gradient(#b54344, #a12f30);
+  color: #838383;
+}
+:host(.green) {
+  color: #fff;
+  background-image: linear-gradient(#75a85b, #619447);
+}
+:host(.green:hover) {
+  background-image: linear-gradient(#7fb265, #6b9e51);
+  color: #ffffff;
+}
+:host(.green[pressed]) {
+  color: #cdcdcd;
+  background: #578a3d;
+}
+:host(.green[disabled]) {
+  background-image: linear-gradient(#6b9e51, #578a3d);
+  color: #a5a5a5;
+}
+:host(.blue) {
+  color: #fff;
+  background-image: linear-gradient(#4c8bc0, #3877ac);
+}
+:host(.blue:hover) {
+  background-image: linear-gradient(#5695ca, #4281b6);
+  color: #ffffff;
+}
+:host(.blue[pressed]) {
+  color: #cdcdcd;
+  background: #2e6da2;
+}
+:host(.blue[disabled]) {
+  background-image: linear-gradient(#4281b6, #2e6da2);
+  color: #a5a5a5;
 }

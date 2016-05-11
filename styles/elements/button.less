@@ -26,7 +26,7 @@
 }
 
 .inner {
-  padding: 0.4rem 1.5rem;
+  padding: 0.4em 1.5em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
@@ -54,3 +54,78 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
+
+:host([disabled]) {
+  pointer-events: none;
+
+  border-color: @el_border_color + 20%;
+  background-image: linear-gradient(@bg_top_color - 10%, @bg_bottom_color - 10%);
+  color: @text_color - 90%;
+}
+
+/*-------------------
+        Size
+--------------------*/
+
+:host(.mini) {
+  font-size: @mini;
+}
+
+:host(.tiny) {
+  font-size: @tiny;
+}
+
+:host(.small) {
+  font-size: @small;
+}
+
+:host {
+  font-size: @medium;
+}
+
+:host(.large) {
+  font-size: @large;
+}
+
+:host(.big) {
+  font-size: @big;
+}
+
+:host(.huge) {
+  font-size: @huge;
+}
+
+:host(.massive) {
+  font-size: @massive;
+}
+
+/*-------------------
+        Colored
+--------------------*/
+
+.color(@clr, @text_color, @bg_color) {
+  @bg_top_color: @bg_color + 10%;
+  @bg_bottom_color: @bg_color - 10%;
+  @text_color_hover: @text_color + 20%;
+
+  :host(.@{clr}) {
+    color: @text_color;
+    background-image: linear-gradient(@bg_top_color, @bg_bottom_color);
+  }
+  :host(.@{clr}:hover) {
+    background-image: linear-gradient(@bg_top_color + 10%, @bg_bottom_color + 10%);
+    color: @text_color_hover;
+  }
+  :host(.@{clr}[pressed]) {
+    color: @text_color - 50%;
+    background: @bg_color - 20%;
+  }
+  :host(.@{clr}[disabled]) {
+    background-image: linear-gradient(@bg_top_color - 10%, @bg_bottom_color - 10%);
+    color: @text_color - 90%;
+  }
+}
+
+.color(red, #ddd, #b54344);
+.color(green, #fff, #6b9e51);
+.color(blue, #fff, #4281b6);
