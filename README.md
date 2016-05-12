@@ -190,7 +190,7 @@ npm run build # build styles
 #### example-apps
 
 ```bash
-git clone git@github.com:exsdk/example-apps.git
+git clone https://github.com/exsdk/example-apps
 npm start ./example-apps/${example-name}
 ```
 
