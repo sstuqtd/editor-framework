@@ -30,8 +30,7 @@ Async.series([
   next => {
     let paths = Globby.sync([
       `${srcDir}/**/*.less`,
-      `!${srcDir}/theme.less`,
-      `!${srcDir}/mixins.less`,
+      `!${srcDir}/*.less`,
       `!${srcDir}/themes/**/*.less`,
     ]);
     Async.eachSeries( paths, ( path, done ) => {

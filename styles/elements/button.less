@@ -5,8 +5,9 @@
   display: inline-block;
   box-sizing: border-box;
   flex: none;
+  outline: none;
 
-  margin: 0 0.25rem 0 0;
+  margin: 0 0.25em 0 0;
   min-width: 20px;
   border: 1px solid @el_border_color;
   border-radius: @border_radius;
@@ -34,10 +35,6 @@
 :host(:hover) {
   background-image: linear-gradient(@bg_top_color + 10%, @bg_bottom_color + 10%);
   color: @text_color_hover;
-}
-
-:host(:focus) {
-  outline: none;
 }
 
 :host([focused]) {

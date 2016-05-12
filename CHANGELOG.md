@@ -2,12 +2,11 @@
 
 ### v0.6.0 (developing)
 
- - remove polymer
-
-### v0.5.4 (developing)
-
+ - Upgrade to Electron v1.0.1
  - Fix `Editor.log` will not show message on Console panel
  - Add `Editor.UI.FocusMgr` to manage focus for panel
+ - Add default theme and ui-kit styles
+ - Add internal ui-kit
 
 ### v0.5.3
 
@@ -24,7 +23,7 @@
 
 ### v0.5.2
 
- - upgrade to Electron v0.37.6
+ - Upgrade to Electron v0.37.6
  - Support non-polymer panel by default
  - Fix set break point in an ipc message in renderer will lead to devtools crash
  - Fix console error stack will add main-process call stack when we raise a renderer process error
