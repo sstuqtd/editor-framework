@@ -1,8 +1,8 @@
 'use strict';
 
-describe('<ui-button>', function () {
+describe('<ui-checkbox>', function () {
   describe('html', function () {
-    Helper.runElement('editor-framework://test/fixtures/button.html', 'simple', '#element');
+    Helper.runElement('editor-framework://test/fixtures/checkbox.html', 'simple', '#element');
 
     beforeEach(function ( done ) {
       Editor.Window.center();
@@ -62,6 +62,27 @@ describe('<ui-button>', function () {
         done();
       });
       Helper.click( Helper.targetEL, 'left' );
+    });
+
+    it('should be checked when element clicked first time', function ( done ) {
+      Helper.click( Helper.targetEL, 'left' );
+
+      setTimeout(function () {
+        expect(Helper.targetEL.checked).to.equal(true);
+
+        done();
+      }, 100);
+    });
+
+    it('should be unchecked when element clicked two times', function ( done ) {
+      Helper.click( Helper.targetEL, 'left' );
+      Helper.click( Helper.targetEL, 'left' );
+
+      setTimeout(function () {
+        expect(Helper.targetEL.checked).to.equal(false);
+
+        done();
+      }, 100);
     });
   });
 });
