@@ -25,11 +25,16 @@ It is designed for full extensibility. In the main process, we achieve this by i
 
 ## Install
 
+Suppose you have an Electron project, if not, just create an empty directory and run `npm init` in it.
+After that, install editor-framework as a package of your project:
+
 ```bash
 npm install --save editor-framework
 ```
 
 ## Usage
+
+Here is a simple example to show you how to use editor-framework in your Electron project.
 
 **package.json**
 
