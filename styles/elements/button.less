@@ -5,8 +5,9 @@
   display: inline-block;
   box-sizing: border-box;
   flex: none;
+  outline: none;
 
-  margin: 0 0.25rem 0 0;
+  margin: 0 0.25em 0 0;
   min-width: 20px;
   border: 1px solid @el_border_color;
   border-radius: @border_radius;
@@ -36,10 +37,6 @@
   color: @text_color_hover;
 }
 
-:host(:focus) {
-  outline: none;
-}
-
 :host([focused]) {
   border-color: @focus_color;
 }
@@ -53,6 +50,10 @@
     border-top: 1px solid rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
+}
+
+:host([unnavigable]) {
+  border-color: @el_border_color;
 }
 
 :host([disabled]) {
