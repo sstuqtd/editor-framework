@@ -1,23 +1,13 @@
 'use strict';
 
-describe('ipc', function () {
+describe('canvas-focus', function () {
   this.timeout(0);
-
-  let ipc = new Editor.IpcListener();
-
-  afterEach(function () {
-    ipc.clear();
-  });
 
   it('is a demo', function ( done ) {
     const Electron = require('electron');
 
-    Electron.ipcMain.on('foobar:open-panel', () => {
-      win.send('foobar:run', 'panel-id', 'some', 'args');
-    });
-
     let win = new Editor.Window();
-    win.load('editor-framework://test/live/simple/page.html');
+    win.load('editor-framework://test/live/canvas-focus/page.html');
 
 
     // win.nativeWin.webContents.on('dom-ready', () => {

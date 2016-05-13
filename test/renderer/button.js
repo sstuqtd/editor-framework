@@ -36,21 +36,24 @@ describe('<ui-button>', function () {
       Helper.targetEL.addEventListener('click', function () {
         done();
       });
-      Helper.pressSpace( Helper.targetEL );
+      Helper.focus(Helper.targetEL);
+      Helper.pressSpace();
     });
 
     it('should send "click" event when "enter" key down on the element', function ( done ) {
       Helper.targetEL.addEventListener('click', function () {
         done();
       });
-      Helper.keydown( Helper.targetEL, 'enter' );
+      Helper.focus(Helper.targetEL);
+      Helper.keydown('enter');
     });
 
     it('should not send "click" event when only "space" key up on the element', function ( done ) {
       Helper.targetEL.addEventListener('click', function () {
         assert(false, 'should not recieve click event');
       });
-      Helper.keyup( Helper.targetEL, 'space' );
+      Helper.focus(Helper.targetEL);
+      Helper.keyup('space');
 
       setTimeout(function () {
         done();

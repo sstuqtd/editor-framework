@@ -14,3 +14,27 @@
 
   transition: all .5s ease;
 }
+
+.flash(@color, @duration) {
+  @keyframes anim_flash {
+    0% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .flash {
+    .fit();
+
+    pointer-events: none;
+    background: @color;
+    opacity: 0;
+  }
+
+  :host([focused]) .flash {
+    animation-duration: @duration;
+    animation-name: anim_flash;
+  }
+}

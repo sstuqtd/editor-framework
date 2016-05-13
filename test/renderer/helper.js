@@ -7,6 +7,7 @@ describe('Test ghost-tester', function () {
     testEL = document.createElement('div');
     testEL.classList.add('layout');
     testEL.classList.add('fit');
+    testEL.tabIndex = -1;
 
     document.body.appendChild(testEL);
     done();
@@ -20,32 +21,35 @@ describe('Test ghost-tester', function () {
   this.timeout(50);
 
   it('should respond keydown "a"', function ( done ) {
-    testEL.addEventListener( 'keydown', function ( event ) {
+    testEL.focus();
+    testEL.addEventListener('keydown', function ( event ) {
       expect(event.keyCode).to.be.eql(Editor.KeyCode('a'));
 
       done();
     });
 
-    Helper.keydown( testEL, 'a');
+    Helper.keydown('a');
   });
 
   it('should respond "command + t"', function ( done ) {
-    testEL.addEventListener( 'keydown', function ( event ) {
+    testEL.focus();
+    testEL.addEventListener('keydown', function ( event ) {
       assert(event.metaKey);
       expect(event.keyCode).to.be.eql(Editor.KeyCode('t'));
 
       done();
     });
-    Helper.keydown( testEL, 't', ['command'] );
+    Helper.keydown('t', ['command'] );
   });
 
   it('should respond keyup "b"', function ( done ) {
-    testEL.addEventListener( 'keyup', function ( event ) {
+    testEL.focus();
+    testEL.addEventListener('keyup', function ( event ) {
       expect(event.keyCode).to.be.eql(Editor.KeyCode('b'));
 
       done();
     });
-    Helper.keyup( testEL, 'b');
+    Helper.keyup('b');
   });
 
   it('should respond click', function ( done ) {

@@ -3,11 +3,15 @@
 
 @focus_color : @el_focus_color;
 
-@box_color_hover: #888;
-@box_bg_color : #232323;
+@box_color: #888;
+@box_color_hover: @box_color + 50%;
+@box_bg_color : #252525;
 @box_size : 17px;
 
 @checker_size: 14px;
-@checker_color: #fd942b;
+@checker_color: @page_text_primary_color;
+
+@lock_size: 10px;
+@lock_color: @box_color + 50%;
 
 @label_offset : 5px;
