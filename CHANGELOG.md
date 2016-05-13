@@ -7,6 +7,9 @@
  - Add `Editor.UI.FocusMgr` to manage focus for panel
  - Add default theme and ui-kit styles
  - Add internal ui-kit
+   - ui-button
+   - ui-checkbox
+   - ui-input
 
 ### v0.5.3
 
