@@ -60,12 +60,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
-      if ( focusedPanel ) {
+      let focusedPanelFrame = EditorR.UI.FocusMgr.focusedPanelFrame;
+      if ( focusedPanelFrame ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-copy', {
+        EditorR.UI.DomUtils.fire(focusedPanelFrame, 'panel-copy', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -81,12 +81,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
-      if ( focusedPanel ) {
+      let focusedPanelFrame = EditorR.UI.FocusMgr.focusedPanelFrame;
+      if ( focusedPanelFrame ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-cut', {
+        EditorR.UI.DomUtils.fire(focusedPanelFrame, 'panel-cut', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
@@ -102,12 +102,12 @@
       }
 
       // get current focused panel
-      let focusedPanel = EditorR.UI.FocusMgr.focusedPanel;
-      if ( focusedPanel ) {
+      let focusedPanelFrame = EditorR.UI.FocusMgr.focusedPanelFrame;
+      if ( focusedPanelFrame ) {
         event.preventDefault();
         event.stopPropagation();
 
-        EditorR.UI.DomUtils.fire(focusedPanel, 'panel-paste', {
+        EditorR.UI.DomUtils.fire(focusedPanelFrame, 'panel-paste', {
           bubbles: false,
           detail: {
             clipboardData: event.clipboardData,
