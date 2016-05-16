@@ -115,7 +115,8 @@ let _logpath = '';
 if ( process.platform === 'darwin' ) {
   _logpath = Path.join(app.getPath('home'), `Library/Logs/${EditorM.App.name}`);
 } else {
-  _logpath = Path.join(app.getPath('appData'), EditorM.App.name);
+  _logpath = Path.join(EditorM.App.home, 'logs');
+  Fs.ensureDirSync(_logpath);
 }
 const _logfile = Path.join(_logpath, `${EditorM.App.name}.log`);
 
