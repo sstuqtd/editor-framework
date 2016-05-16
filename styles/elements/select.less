@@ -24,13 +24,14 @@ select {
 
   border: 0;
   margin: 0;
+  width: 100%;
 
   padding: 0.2em 2.0em 0.4em 0.8em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: @border_radius;
 
-  font-weight: @font_weight;
+  /* font-weight: @font_weight; */
   font-family: @page_font;
 
   text-decoration: none;
@@ -38,7 +39,6 @@ select {
 
   cursor: pointer;
   color: @text_color;
-  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.2);
   background: none;
 }
 
@@ -58,6 +58,41 @@ select {
   margin-top: -3px;
 }
 
+:host(:hover) {
+  background-image: linear-gradient(@bg_top_color + 10%, @bg_bottom_color + 10%);
+
+  select {
+    color: @text_color_hover;
+  }
+
+  &::after {
+    border-top-color: @text_color_hover;
+  }
+}
+
+:host([focused]) {
+  border-color: @focus_color;
+}
+
+:host([unnavigable]) {
+  border-color: @el_border_color;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+
+  border-color: @el_border_color + 20%;
+  background-image: linear-gradient(@bg_top_color - 10%, @bg_bottom_color - 10%);
+
+  select {
+    color: @text_color - 90%;
+  }
+
+  &::after {
+    border-top-color: @text_color - 90%;
+  }
+}
+
 /*-------------------
         Size
 --------------------*/
@@ -65,9 +100,15 @@ select {
 :host(.mini) select {
   font-size: @mini;
 }
+:host(.mini)::after {
+  right: 0.5em;
+}
 
 :host(.tiny) select {
   font-size: @tiny;
+}
+:host(.tiny)::after {
+  right: 0.6em;
 }
 
 :host(.small) select {
