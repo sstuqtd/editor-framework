@@ -1,0 +1,84 @@
+@element: 'slider';
+@import (multiple) 'theme.less';
+
+:host {
+  display: inline-block;
+  position: relative;
+  outline: none;
+  flex: none;
+  box-sizing: border-box;
+
+  width: 100px;
+  min-width: 20px;
+  margin: 0 0.25em 0 0;
+
+  padding: @padding-vertical @padding-horizontal;
+}
+
+.wrapper {
+  position: relative;
+
+  width: 100%;
+  height: @track_size + @track_margin_size + @track_margin_size;
+  margin-top: -@track_margin_size;
+  margin-bottom: -@track_margin_size;
+
+  cursor: pointer;
+}
+
+.track {
+  position: relative;
+  box-sizing: border-box;
+
+  height: @track_size;
+  top: @track_margin_size;
+
+  border-radius: @tarck_border_radius;
+  border-top: 1px solid rgba(0, 0, 0, 1.0);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  background: @track_bg_color;
+}
+
+.nubbin {
+  display: inline-block;
+  position: absolute;
+  box-sizing: border-box;
+
+  width: @nubbin_size;
+  height: @nubbin_size;
+  top: 1px;
+  margin-left: -6px;
+
+  box-shadow:
+    0 1px 3px 1px rgb(0,0,0,0.5) inset,
+    0 1px 1px 0 rgba(0,0,0,0.9);
+  border-radius: 100%;
+  border: 2px solid @nubbin_border_color;
+  background: @nubbin_bg_color;
+}
+
+:host(:hover) {
+  .nubbin {
+    border-color: @nubbin_border_color_hover;
+  }
+}
+
+:host([focused]) {
+  .nubbin {
+    box-shadow:
+      0 1px 3px 1px rgba(255,128,0,0.2) inset,
+      0 1px 1px 0 rgba(0,0,0,0.9);
+    border-color: @nubbin_border_color_focus;
+  }
+}
+
+:host([disabled]) {
+  pointer-events: none;
+  opacity: 0.5;
+
+  .track {
+    background: @track_bg_color + 20%;
+    border-top: 1px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
