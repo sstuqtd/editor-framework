@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Test ghost-tester', function () {
+describe('Helper', function () {
   let testEL;
 
   beforeEach(function (done) {
