@@ -21,6 +21,7 @@
 .wrapper {
   display: inline-block;
   position: relative;
+  outline: none;
 
   width: 100%;
   height: @track_size + @track_margin_size + @track_margin_size;
@@ -68,7 +69,7 @@
 input {
   border: 0;
   margin: 0;
-  outline: 0;
+  outline: none;
   padding: 0.0em 0.4em;
 
   position: absolute;
@@ -87,19 +88,27 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+input::selection {
+  background: @select_color;
+}
 input:hover {
   border-color: @input_border_color;
 }
-input:focus {
-  border-color: @input_focus_color;
-}
+/* input:focus {                       */
+/*   border-color: @input_focus_color; */
+/* }                                   */
 
 :host([focused]) {
-  .wrapper .nubbin {
+  .wrapper:focus .nubbin {
     box-shadow:
       0 1px 3px 1px rgba(255,128,0,0.2) inset,
       0 1px 1px 0 rgba(0,0,0,0.9);
     border-color: @nubbin_border_color_focus;
+  }
+
+  input {
+    border-color: @input_focus_color;
   }
 }
 
