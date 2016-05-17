@@ -37,6 +37,15 @@ const OsLocale = require('os-locale');
 
 let osLang = OsLocale.sync().indexOf('zh') !== -1 ? 'zh' : 'en';
 
+// get log path
+let logpath;
+if ( process.platform === 'darwin' ) {
+  logpath = Path.join(app.getPath('home'), `Library/Logs/${EditorM.App.name}`);
+} else {
+  logpath = Path.join(EditorM.App.home, 'logs');
+}
+const logfile = Path.join(logpath, `${EditorM.App.name}.log`);
+
 Yargs
 // .strict()
 .help('help')
@@ -70,6 +79,12 @@ Yargs
     default: osLang,
     global: true,
     desc: 'Choose a language'
+  },
+  'logfile': {
+    type: 'string',
+    default: logfile,
+    global: true,
+    desc: 'Specific your logfile path'
   },
 })
 // command: test
@@ -110,24 +125,11 @@ const _frameworkPackageJson = JSON.parse(Fs.readFileSync(Path.join(_frameworkPat
 // MacOSX: ~/Library/Logs/{app-name}
 // Windows: %APPDATA%, some where like 'C:\Users\{your user name}\AppData\Local\...'
 
-// get log path
-let _logpath = '';
-if ( process.platform === 'darwin' ) {
-  _logpath = Path.join(app.getPath('home'), `Library/Logs/${EditorM.App.name}`);
-} else {
-  _logpath = Path.join(EditorM.App.home, 'logs');
-  Fs.ensureDirSync(_logpath);
-}
-const _logfile = Path.join(_logpath, `${EditorM.App.name}.log`);
-
 // make sure ~/.{app-name} exists
 Fs.ensureDirSync(EditorM.App.home);
 
 // make sure ~/.{app-name}/local/ exists
 Fs.ensureDirSync(Path.join(EditorM.App.home, 'local'));
-
-// make sure log path exists
-Fs.ensureDirSync(_logpath);
 
 // ---------------------------
 // initialize logs/
@@ -241,9 +243,12 @@ app.on('ready', () => {
   Winston.remove(Winston.transports.Console);
 
   if ( yargv._command !== 'test' ) {
-    if ( Fs.existsSync(_logfile) ) {
+    // make sure log path exists
+    Fs.ensureDirSync(Path.dirname(yargv.logfile));
+
+    if ( Fs.existsSync(yargv.logfile) ) {
       try {
-        Fs.unlinkSync(_logfile);
+        Fs.unlinkSync(yargv.logfile);
       } catch (e) {
         console.log(e);
       }
@@ -251,7 +256,7 @@ app.on('ready', () => {
 
     Winston.add(Winston.transports.File, {
       level: 'uncaught',
-      filename: _logfile,
+      filename: yargv.logfile,
       json: false,
     });
 
@@ -289,6 +294,7 @@ app.on('ready', () => {
   EditorM.argv = yargv;
   EditorM.dev = yargv.dev;
   EditorM.lang = yargv.lang;
+  EditorM.logfile = yargv.logfile;
 
   // register protocol
   EditorM.Protocol.init(EditorM);
@@ -419,7 +425,6 @@ EditorM.versions = {
  * @type string
  */
 EditorM.frameworkPath = _frameworkPath;
-EditorM.logfile = _logfile;
 
 //
 module.exports = EditorM;
