@@ -26,6 +26,7 @@
     "chai": "^3.5.0",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.3",
+    "chroma-js": "^1.1.1",
     "del": "^2.2.0",
     "diff": "^2.2.1",
     "find-up": "1.1.0",
@@ -44,7 +45,7 @@
     "yargs": "^4.3.1"
   },
   "devDependencies": {
-    "devtron": "^1.0.0",
+    "devtron": "^1.1.0",
     "electron-prebuilt": "1.1.0",
     "firedoc": "1.13.7",
     "gulp": "3.9.0",
