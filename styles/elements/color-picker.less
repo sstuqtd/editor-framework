@@ -45,6 +45,8 @@
 
 .ctrl {
   margin-right: 6px;
+  outline: 0;
+  border: 1px solid @el_border_color;
 }
 
 .ctrl:last-child {
@@ -55,7 +57,6 @@
   position: relative;
   width: 20px;
   height: 150px;
-  border: 1px solid @el_border_color;
 
   background-image: url('editor-framework://dist/css/img/hue.png');
   background-position: 0px 0px;
@@ -78,7 +79,6 @@
   position: relative;
   width: 150px;
   height: 150px;
-  border: 1px solid @el_border_color;
 
   background-image: url('editor-framework://dist/css/img/hue.png');
   background-position: -40px 0px;
@@ -96,23 +96,23 @@
   left: -8px;
 }
 
-.opacity {
+.alpha {
   position: relative;
   width: 20px;
   height: 150px;
-  border: 1px solid @el_border_color;
 
   background-image: url('editor-framework://dist/css/img/hue.png');
+  background-color: black;
   background-position: -20px 0px;
 }
 
-.opacity-handle {
+.alpha-handle {
   position: absolute;
   color: white;
   right: 0px;
 }
 
-.opacity i {
+.alpha i {
   position: absolute;
   font-size: 12px;
   top: -6px;
