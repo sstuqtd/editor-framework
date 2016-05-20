@@ -2,15 +2,25 @@
 @import (multiple) 'theme.less';
 
 :host {
-  .layout-horizontal();
-  .layout-children(center, flex-start);
+  .layout-vertical();
+  .layout-children(strecth, center);
 
   position: relative;
   box-sizing: border-box;
 
-  min-height: 30px;
-  margin: 3px;
-  outline: none;
+  outline: 0;
+}
+
+.wrapper {
+  position: relative;
+  box-sizing: border-box;
+
+  width: 100%;
+  min-height: 24px;
+  margin: 3px 0px;
+
+  .layout-horizontal();
+  .layout-children(center, flex-start);
 }
 
 span.label {
@@ -24,5 +34,5 @@ span.label {
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  font-size: 12px;
+  font-size: 1em;
 }
