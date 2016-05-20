@@ -1,0 +1,28 @@
+@element: 'prop';
+@import (multiple) 'theme.less';
+
+:host {
+  .layout-horizontal();
+  .layout-children(center, flex-start);
+
+  position: relative;
+  box-sizing: border-box;
+
+  min-height: 30px;
+  margin: 3px;
+  outline: none;
+}
+
+span.label {
+  box-sizing: border-box;
+
+  width: 25%;
+  margin-right: 10px;
+  flex-shrink: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  font-size: 12px;
+}
