@@ -26,13 +26,18 @@
 }
 
 .wrapper:hover {
-  .text {
-    color: #09f;
+  color: #09f;
+}
+
+:host([selected]) {
+  .wrapper {
+    color: @el_focus_color;
   }
 }
 
 .label {
-  display: inline-block;
+  .layout-horizontal();
+  .layout-children(center, flex-start);
 
   margin-right: 10px;
   flex-shrink: 0;
@@ -40,24 +45,40 @@
 
   box-sizing: border-box;
   width: 25%;
+  min-width: 100px;
 
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  width: 10px;
+  margin: 0px;
+}
+
 .fold {
+  margin-right: 3px;
   visibility: hidden;
-  color: #888;
+
+  cursor: pointer;
 }
 
 :host(.fixed) {
   .label {
     width: auto;
+    min-width: auto;
   }
 
   .fold {
     display: none;
+  }
+}
+
+:host([foldable]) {
+  .fold {
+    visibility: visible;
   }
 }
 
@@ -67,12 +88,6 @@
     padding: 0px 5px;
     border-radius: 3px;
     color: #ddd;
-  }
-
-  .wrapper:hover {
-    .text {
-      color: #ddd;
-    }
   }
 }
 
@@ -97,12 +112,6 @@
 :host(.gray) {
   .text {
     background: #333;
-  }
-}
-
-:host([foldable]) {
-  .fold {
-    visibility: visible;
   }
 }
 
