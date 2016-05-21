@@ -1,9 +1,11 @@
 @element: 'prop';
 @import (multiple) 'theme.less';
 
+@import url('editor-framework://dist/css/globals/fontello.css');
+
 :host {
   .layout-vertical();
-  .layout-children(strecth, center);
+  .layout-children(stretch, center);
 
   position: relative;
   box-sizing: border-box;
@@ -23,16 +25,91 @@
   .layout-children(center, flex-start);
 }
 
-span.label {
-  box-sizing: border-box;
+.wrapper:hover {
+  .text {
+    color: #09f;
+  }
+}
 
-  width: 25%;
+.label {
+  display: inline-block;
+
   margin-right: 10px;
   flex-shrink: 0;
+  font-size: 1em;
 
+  box-sizing: border-box;
+  width: 25%;
+
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+}
 
-  font-size: 1em;
+.fold {
+  visibility: hidden;
+  color: #888;
+}
+
+:host(.fixed) {
+  .label {
+    width: auto;
+  }
+
+  .fold {
+    display: none;
+  }
+}
+
+:host(.red), :host(.green), :host(.blue), :host(.gray) {
+  .text {
+    font-weight: bold;
+    padding: 0px 5px;
+    border-radius: 3px;
+    color: #ddd;
+  }
+
+  .wrapper:hover {
+    .text {
+      color: #ddd;
+    }
+  }
+}
+
+:host(.red) {
+  .text {
+    background: @red;
+  }
+}
+
+:host(.blue) {
+  .text {
+    background: @blue;
+  }
+}
+
+:host(.green) {
+  .text {
+    background: @green;
+  }
+}
+
+:host(.gray) {
+  .text {
+    background: #333;
+  }
+}
+
+:host([foldable]) {
+  .fold {
+    visibility: visible;
+  }
+}
+
+::content > ui-prop {
+  margin-right: 1.5em;
+}
+
+::content > ui-prop:last-child {
+  margin-right: 0;
 }

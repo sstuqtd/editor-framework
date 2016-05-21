@@ -124,7 +124,7 @@
 
   span {
     margin: 0 0.25em 0 0;
-    font-size: 12px;
+    font-weight: bold;
 
     color: #ddd;
     text-align: center;
@@ -135,15 +135,15 @@
   }
 
   .red {
-    background: #b54344;
+    background: @red;
   }
 
   .green {
-    background: #6b9e51;
+    background: @green;
   }
 
   .blue {
-    background: #4281b6;
+    background: @blue;
   }
 
   .gray {
@@ -161,7 +161,6 @@
 
   span {
     margin: 0 0.5em 0 0;
-    font-size: 12px;
   }
 
   ui-input {
@@ -174,10 +173,6 @@
   flex-wrap: wrap;
 
   .layout-children(center, center);
-}
-
-.title {
-  font-size: 12px;
 }
 
 .color-box {

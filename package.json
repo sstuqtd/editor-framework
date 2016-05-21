@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "devtron": "^1.1.0",
-    "electron-prebuilt": "1.1.0",
+    "electron-prebuilt": "1.1.1",
     "firedoc": "1.13.7",
     "gulp": "3.9.0",
     "gulp-babel": "6.1.1",
