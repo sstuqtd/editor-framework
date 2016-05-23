@@ -11,6 +11,7 @@
   box-sizing: border-box;
 
   outline: 0;
+  min-width: 240px;
 }
 
 .wrapper {
@@ -23,23 +24,39 @@
 
   .layout-horizontal();
   .layout-children(center, flex-start);
+
+  color: @text_color;
 }
 
-.wrapper:hover {
-  color: #09f;
+:host([hovering]) {
+  .wrapper {
+    color: @text_color_hover;
+  }
 }
 
 :host([selected]) {
   .wrapper {
-    color: @el_focus_color;
+    color: @text_color_focused;
+  }
+}
+
+:host([disabled]) {
+  .wrapper {
+    color: @text_color_disabled;
+  }
+}
+
+:host([readonly]) {
+  .lock {
+    display: inline-block;
   }
 }
 
 .label {
   .layout-horizontal();
-  .layout-children(center, flex-start);
+  .layout-children(baseline, flex-start);
 
-  margin-right: 10px;
+  margin-right: @label_span;
   flex-shrink: 0;
   font-size: 1em;
 
@@ -48,6 +65,17 @@
   min-width: 100px;
 
   white-space: nowrap;
+}
+
+.label > * {
+  margin-right: 3px;
+}
+
+.label > *:last-child {
+  margin-right: 0px;
+}
+
+.text {
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -59,13 +87,23 @@
 }
 
 .fold {
-  margin-right: 3px;
   visibility: hidden;
 
   cursor: pointer;
 }
 
-:host(.fixed) {
+.lock {
+  display: none;
+  flex: 1;
+
+  i {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+  }
+}
+
+:host(.fixed-label) {
   .label {
     width: auto;
     min-width: auto;
@@ -79,6 +117,12 @@
 :host([foldable]) {
   .fold {
     visibility: visible;
+  }
+}
+
+:host([folded]) {
+  ::content > .child {
+    display: none;
   }
 }
 
@@ -116,7 +160,8 @@
 }
 
 ::content > ui-prop {
-  margin-right: 1.5em;
+  margin-right: @prop_span;
+  min-width: auto;
 }
 
 ::content > ui-prop:last-child {
