@@ -40,7 +40,6 @@
     "mousetrap": "1.5.3",
     "node-polyglot": "1.0.0",
     "os-locale": "1.4.0",
-    "robotjs": "^0.4.2",
     "semver": "5.1.0",
     "sinon": "^1.17.3",
     "winston": "^2.2.0",
