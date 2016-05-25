@@ -2,7 +2,7 @@
 
 ### v0.6.0 (developing)
 
- - Upgrade to Electron v1.1.0
+ - Upgrade to Electron v1.1.2
  - Fix `Editor.log` will not show message on Console panel
  - Add `Editor.UI.FocusMgr` to manage focus for panel
  - Add default theme and ui-kit styles
@@ -13,6 +13,7 @@
    - ui-color-picker
    - ui-input
    - ui-num-input
+   - ui-prop
    - ui-select
    - ui-slider
 
