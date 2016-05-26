@@ -1,105 +1,101 @@
 'use strict';
 
-describe('Editor.UI.FocusMgr', function () {
-  describe('_getFocusableParent', () => {
-    Helper.runElement('editor-framework://test/fixtures/focus-mgr.html', 'nested-shadow-dom', '#wrapper');
-    let childEL = null;
+suite(tap, 'Editor.UI.FocusMgr', t => {
+  t.beforeEach(done => {
+    Editor.Window.center();
+    done();
+  });
 
-    beforeEach(done => {
-      Editor.Window.center();
+  t.afterEach(done => {
+    helper.reset();
+    done();
+  });
 
-      let div = document.createElement('div');
-      div.id = 'parent';
-      div.focusable = true;
-      let shadow = div.createShadowRoot();
+  t.test('_getFocusableParent', t => {
+    helper.runElement(
+      'editor-framework://test/fixtures/focus-mgr.html',
+      'nested-shadow-dom',
+      '#wrapper',
+      el => {
+        let div = document.createElement('div');
+        div.id = 'parent';
+        div.focusable = true;
+        let shadow = div.createShadowRoot();
 
-      let child = document.createElement('div');
-      child.id = 'child';
-      child.focusable = true;
-      shadow.appendChild(child);
+        let child = document.createElement('div');
+        child.id = 'child';
+        child.focusable = true;
+        shadow.appendChild(child);
 
-      Helper.targetEL.appendChild(div);
-      childEL = child;
+        el.appendChild(div);
+        let childEL = child;
+        let parent = Editor.UI.FocusMgr._getFocusableParent(childEL);
 
+        t.assert(parent, 'parent must exists');
+        t.equal(parent.id, 'parent');
+
+        t.end();
+      });
+  });
+
+  suite(t, '_getFirstFocusableFrom', t => {
+    t.afterEach(done => {
+      helper.reset();
       done();
     });
 
-    it('should get parent element', done => {
-      let parent = Editor.UI.FocusMgr._getFocusableParent(childEL);
+    t.test('get-focusable-from-01', t => {
+      helper.runElement(
+        'editor-framework://test/fixtures/focus-mgr.html',
+        'get-focusable-from-01',
+        '#g-0',
+        targetEL => {
+          let el = targetEL.querySelector('[focusable]');
+          if ( el ) {
+            el.focusable = true;
+          }
 
-      assert(parent, 'parent must exists');
-      expect(parent.id).to.eql('parent');
+          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          t.equal(resultEL.id, 'g-00100');
 
-      done ();
+          t.end();
+        });
     });
 
-  });
+    t.test('get-focusable-from-02', t => {
+      helper.runElement(
+        'editor-framework://test/fixtures/focus-mgr.html',
+        'get-focusable-from-02',
+        '#g-0',
+        targetEL => {
+          let el = targetEL.querySelector('[focusable]');
+          if ( el ) {
+            el.focusable = true;
+          }
 
-  describe('_getFirstFocusableFrom', () => {
-    describe('get-focusable-from-01', () => {
-      Helper.runElement('editor-framework://test/fixtures/focus-mgr.html', 'get-focusable-from-01', '#g-0');
+          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          t.equal(resultEL.id, 'g-002');
 
-      beforeEach(done => {
-        Editor.Window.center();
-
-        let el = Helper.targetEL.querySelector('[focusable]');
-        if ( el ) {
-          el.focusable = true;
-        }
-
-        done();
-      });
-
-      it('should get g-00100', done => {
-        let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(Helper.targetEL);
-        expect(resultEL.id).to.eql('g-00100');
-
-        done ();
-      });
+          t.end ();
+        });
     });
 
-    describe('get-focusable-from-02', () => {
-      Helper.runElement('editor-framework://test/fixtures/focus-mgr.html', 'get-focusable-from-02', '#g-0');
+    t.test('get-focusable-from-03', t => {
+      helper.runElement(
+        'editor-framework://test/fixtures/focus-mgr.html',
+        'get-focusable-from-03',
+        '#g-0',
+        targetEL => {
+          let el = targetEL.querySelector('[focusable]');
+          if ( el ) {
+            el.focusable = true;
+          }
 
-      beforeEach(done => {
-        Editor.Window.center();
+          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          t.equal(resultEL, null);
 
-        let el = Helper.targetEL.querySelector('[focusable]');
-        if ( el ) {
-          el.focusable = true;
-        }
-
-        done();
-      });
-
-      it('should get g-002', done => {
-        let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(Helper.targetEL);
-        expect(resultEL.id).to.eql('g-002');
-
-        done ();
-      });
-    });
-
-    describe('get-focusable-from-03', () => {
-      Helper.runElement('editor-framework://test/fixtures/focus-mgr.html', 'get-focusable-from-03', '#g-0');
-
-      beforeEach(done => {
-        Editor.Window.center();
-
-        let el = Helper.targetEL.querySelector('[focusable]');
-        if ( el ) {
-          el.focusable = true;
-        }
-
-        done();
-      });
-
-      it('should get null', done => {
-        let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(Helper.targetEL);
-        expect(resultEL).to.eql(null);
-
-        done ();
-      });
+          t.end ();
+        });
     });
   });
 });

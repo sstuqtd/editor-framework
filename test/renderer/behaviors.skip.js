@@ -1,6 +1,6 @@
 'use strict';
 
-describe('focusable', function () {
+suite(tap, 'focusable', t => {
   let targetEL = null;
 
   beforeEach(done => {

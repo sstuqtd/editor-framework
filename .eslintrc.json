@@ -25,7 +25,6 @@
     "Polymer": false,
     "deprecate": false,
     "helper": false,
-    "sinon": false,
     "tap": false,
     "unused": false
   }

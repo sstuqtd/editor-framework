@@ -4,23 +4,19 @@ const Fs = require('fire-fs');
 const Del = require('del');
 const Path = require('path');
 const Diff = require('diff');
+const Sinon = require('sinon');
 
 //
-describe('Editor.Package building test', function () {
-  describe('test fixtures/packages/needs-build (core-level)', () => {
+suite(tap, 'Editor.Package building test', t => {
+  suite(t, 'test fixtures/packages/needs-build (core-level)', t => {
     const path = Editor.url('editor-framework://test/fixtures/packages/needs-build');
 
-    after(done => {
-      Del.sync( Path.join(path,'bin') );
+    t.beforeEach(done => {
+      Sinon.spy( Editor.Package, 'build' );
       done();
     });
 
-    beforeEach(done => {
-      sinon.spy( Editor.Package, 'build' );
-      done();
-    });
-
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, () => {
         let pkgJsonPath = Path.join( path, 'package.json');
         let pkgJson = JSON.parse(Fs.readFileSync(pkgJsonPath));
@@ -32,10 +28,10 @@ describe('Editor.Package building test', function () {
       });
     });
 
-    it('should build package before loading it', done => {
+    t.test('it should build package before loading it', t => {
       Editor.Package.load(path, () => {
-        expect( Editor.Package.build.calledOnce ).to.be.equal(true);
-        expect( Fs.existsSync(Path.join(path,'bin/dev')) ).to.be.equal(true);
+        t.equal(Editor.Package.build.calledOnce, true);
+        t.equal(Fs.existsSync(Path.join(path,'bin/dev')), true);
 
         // check package.json
         let srcJsonObj = JSON.parse(Fs.readFileSync( Path.join( path, 'package.json')));
@@ -47,56 +43,59 @@ describe('Editor.Package building test', function () {
             realDiff.push(part);
           }
         });
-        expect( realDiff.length ).to.be.equal(1);
-        expect( realDiff[0].value ).to.be.equal('  "build": "true",\n');
-        expect( realDiff[0].removed ).to.be.equal(true);
+        t.equal(realDiff.length, 1);
+        t.equal(realDiff[0].value, '  "build": "true",\n');
+        t.equal(realDiff[0].removed, true);
 
-        done();
+        t.end();
       });
     });
 
-    it('should not build package if it is exists', done => {
+    t.test('it should not build package if it is exists', t => {
       Editor.Package.load(path, () => {
-        assert( Fs.existsSync(Path.join(path,'bin/dev')) );
-        expect( Editor.Package.build.callCount ).to.be.equal(0);
+        t.assert(Fs.existsSync(Path.join(path,'bin/dev')) );
+        t.equal(Editor.Package.build.callCount, 0);
 
-        done();
+        t.end();
       });
     });
 
-    it('should use the built path for resources loading', done => {
+    t.test('it should use the built path for resources loading', t => {
       Editor.Package.load(path, () => {
-        assert( Fs.existsSync(Path.join(path,'bin/dev')) );
+        t.assert( Fs.existsSync(Path.join(path,'bin/dev')) );
 
         let packageInfo = Editor.Package.packageInfo(path);
         // let widgetInfo = Editor.Package.widgetInfo('simple-widget');
         let panelInfo = Editor.Package.panelInfo('needs-build');
 
-        expect( packageInfo._path ).to.be.equal( path );
-        expect( packageInfo._destPath ).to.be.equal( Path.join(path,'bin/dev') );
-        // expect( widgetInfo.path ).to.be.equal( Path.join(path,'bin/dev/widget') );
-        expect( panelInfo.path ).to.be.equal( Path.join(path,'bin/dev') );
+        t.equal(packageInfo._path, path );
+        t.equal(packageInfo._destPath, Path.join(path,'bin/dev') );
+        // t.equal(widgetInfo.path, Path.join(path,'bin/dev/widget') );
+        t.equal(panelInfo.path, Path.join(path,'bin/dev') );
 
-        done();
+        t.end();
       });
     });
 
-    it('should re-build package if src package.json has a different version', done => {
+    t.test('it should re-build package if src package.json has a different version', t => {
       let pkgJsonPath = Path.join( path, 'package.json');
       let pkgJson = JSON.parse(Fs.readFileSync(pkgJsonPath));
       pkgJson.version = '0.0.2';
       Fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2));
 
       Editor.Package.load(path, () => {
-        expect( Editor.Package.build.calledOnce ).to.be.equal(true);
-        expect( Fs.existsSync(Path.join(path,'bin/dev')) ).to.be.equal(true);
+        t.equal(Editor.Package.build.calledOnce, true);
+        t.equal(Fs.existsSync(Path.join(path,'bin/dev')), true);
 
         let srcJsonObj = JSON.parse(Fs.readFileSync( Path.join( path, 'package.json')));
         let destJsonObj = JSON.parse(Fs.readFileSync( Path.join( path, 'bin/dev/package.json')));
-        expect( srcJsonObj.version ).to.be.equal(destJsonObj.version);
+        t.equal(srcJsonObj.version, destJsonObj.version);
 
-        done();
+        t.end();
       });
     });
+
+    // after all
+    Del.sync( Path.join(path,'bin') );
   });
 });

@@ -6,9 +6,8 @@ const Path = require('fire-path');
 // const Async = require('async');
 
 //
-tap.test('Editor.IpcListener Panel', t => {
+suite(tap, 'Editor.IpcListener Panel', t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
-  const test = t.test;
 
   helper.runEditor(t, {
     enableIpc: true,
@@ -22,9 +21,9 @@ tap.test('Editor.IpcListener Panel', t => {
     done();
   });
 
-  test('Editor.Ipc.sendToPanel', { timeout: 5000 }, t => {
+  t.test('Editor.Ipc.sendToPanel', {autoend: true, timeout: 5000}, t => {
 
-    test('it should send message to panel from main process', t => {
+    t.test('it should send message to panel from main process', t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
 
@@ -41,11 +40,12 @@ tap.test('Editor.IpcListener Panel', t => {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
 
+        Editor.Panel.close('panel-ipc');
         t.end();
       });
     });
 
-    test('it should send message to panel and recieve reply from main process', t => {
+    t.test('it should send message to panel and recieve reply from main process', t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
 
@@ -58,13 +58,14 @@ tap.test('Editor.IpcListener Panel', t => {
             t.equal(foo, 'foo');
             t.equal(bar, 'bar');
 
+            Editor.Panel.close('panel-ipc-02');
             t.end();
           });
         }, 500);
       });
     });
 
-    // test('it should send message to panel and recieve reply from renderer process', t => {
+    // t.test('it should send message to panel and recieve reply from renderer process', t => {
     //   const path = Path.join(testPackages,'panel-ipc');
     //   assert.isTrue( Fs.existsSync(path) );
 
@@ -83,9 +84,5 @@ tap.test('Editor.IpcListener Panel', t => {
     //     }, 500);
     //   });
     // });
-
-    t.end();
   });
-
-  t.end();
 });

@@ -1,90 +1,113 @@
 'use strict';
 
-describe('<ui-checkbox>', function () {
-  describe('html', () => {
-    Helper.runElement('editor-framework://test/fixtures/checkbox.html', 'simple', '#element');
+suite(tap, '<ui-checkbox>', t => {
+  function _newElement ( cb ) {
+    helper.runElement(
+      'editor-framework://test/fixtures/checkbox.html', 'simple', '#element', cb
+    );
+  }
 
-    beforeEach(done => {
-      Editor.Window.center();
+  t.beforeEach(done => {
+    Editor.Window.center();
+    done();
+  });
 
-      done();
+  t.afterEach(done => {
+    helper.reset();
+    done();
+  });
+
+  t.test('should have shadow root', t => {
+    _newElement(el => {
+      t.assert(el.shadowRoot);
+      t.end();
     });
+  });
 
-    it('should have shadow root', done => {
-      assert(Helper.targetEL.shadowRoot);
-
-      done();
-    });
-
-    it('should focus on element when left mouse down', done => {
-      Helper.mousedown( Helper.targetEL, 'left' );
+  t.test('should focus on element when left mouse down', t => {
+    _newElement(el => {
+      helper.mousedown( el, 'left' );
 
       setTimeout(() => {
-        expect(Helper.targetEL.focused).to.equal(true);
-        done();
+        t.equal(el.focused, true);
+        t.end();
       }, 1);
     });
+  });
 
-    it('should send "click" event when mouse click element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
+  t.test('should send "click" event when mouse click element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
       });
-      Helper.click( Helper.targetEL, 'left' );
+      helper.click( el, 'left' );
     });
+  });
 
-    it('should send "click" event when "space" key down and up on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
+  t.test('should send "click" event when "space" key down and up on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
       });
-      Helper.focus(Helper.targetEL);
-      Helper.pressSpace();
+      helper.focus(el);
+      helper.pressSpace();
     });
+  });
 
-    it('should send "click" event when "enter" key down on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
+  t.test('should send "click" event when "enter" key down on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
       });
-      Helper.focus(Helper.targetEL);
-      Helper.keydown('enter');
+      helper.focus(el);
+      helper.keydown('enter');
     });
+  });
 
-    it('should not send "click" event when only "space" key up on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        assert(false, 'should not recieve click event');
+  t.test('should not send "click" event when only "space" key up on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.assert(false, 'should not recieve click event');
       });
-      Helper.focus(Helper.targetEL);
-      Helper.keyup('space');
+      helper.focus(el);
+      helper.keyup('space');
 
       setTimeout(() => {
-        done();
+        t.end();
       }, 100);
     });
+  });
 
-    it('should send "end-editing" event when element clicked', done => {
-      Helper.targetEL.addEventListener('end-editing', () => {
-        done();
+  t.test('should send "end-editing" event when element clicked', t => {
+    _newElement(el => {
+      el.addEventListener('end-editing', () => {
+        t.end();
       });
-      Helper.click( Helper.targetEL, 'left' );
+      helper.click( el, 'left' );
     });
+  });
 
-    it('should be checked when element clicked first time', done => {
-      Helper.click( Helper.targetEL, 'left' );
+  t.test('should be checked when element clicked first time', t => {
+    _newElement(el => {
+      helper.click( el, 'left' );
 
       setTimeout(() => {
-        expect(Helper.targetEL.checked).to.equal(true);
+        t.equal(el.checked, true);
 
-        done();
+        t.end();
       }, 100);
     });
+  });
 
-    it('should be unchecked when element clicked two times', done => {
-      Helper.click( Helper.targetEL, 'left' );
-      Helper.click( Helper.targetEL, 'left' );
+  t.test('should be unchecked when element clicked two times', t => {
+    _newElement(el => {
+      helper.click( el, 'left' );
+      helper.click( el, 'left' );
 
       setTimeout(() => {
-        expect(Helper.targetEL.checked).to.equal(false);
+        t.equal(el.checked, false);
 
-        done();
+        t.end();
       }, 100);
     });
   });

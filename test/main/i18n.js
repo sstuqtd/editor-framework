@@ -1,8 +1,6 @@
 'use strict';
 
-tap.test('Editor.i18n', t => {
-  const test = t.test;
-
+suite(tap, 'Editor.i18n', t => {
   t.beforeEach(done => {
     Editor.i18n.extend({
       test: {
@@ -20,11 +18,9 @@ tap.test('Editor.i18n', t => {
     done();
   });
 
-  test('formatPath', t => {
+  t.test('formatPath', t => {
     t.equal(Editor.i18n.formatPath('i18n:test.foo/i18n:test.bar/foobar'), '腐/爸/foobar');
 
     t.end();
   });
-
-  t.end();
 });

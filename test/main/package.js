@@ -5,103 +5,101 @@ const Path = require('fire-path');
 const Async = require('async');
 
 //
-describe('Editor.Package', function () {
+suite(tap, 'Editor.Package', t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
-  Helper.run({
+  helper.runEditor(t, {
     'package-search-path': [
       Editor.url('editor-framework://test/fixtures/packages/')
     ],
   });
 
-  describe('fixtures/packages/simple', () => {
+  suite(t, 'fixtures/packages/simple', t => {
     const path = Path.join(testPackages,'simple');
 
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should load simple package', done => {
-      Editor.Package.load(path, done);
+    t.test('should load simple package', t => {
+      Editor.Package.load(path, t.end);
     });
 
-    it('should unload simple package', done => {
+    t.test('should unload simple package', t => {
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
-      ],done);
+      ], t.end);
     });
   });
 
-  describe('fixtures/packages/simple ipc-message', () => {
+  suite(t, 'fixtures/packages/simple ipc-message', t => {
     const path = Path.join(testPackages,'simple');
 
-    assert.isTrue( Fs.existsSync(path) );
+    t.assert( Fs.existsSync(path) );
 
-    beforeEach(() => {
-      Helper.reset();
+    t.beforeEach(done => {
+      helper.reset();
+      done();
     });
 
-    it('should send loaded ipc message', done => {
+    t.test('it should send loaded ipc message', t => {
       Editor.Package.load(path, () => {
-        assert( Helper.sendToWins.calledWith('editor:package-loaded', 'simple') );
-        done();
+        t.assert( helper.sendToWins.calledWith('editor:package-loaded', 'simple') );
+        t.end();
       });
     });
 
-    it('should send unload message', done => {
+    t.test('it should send unload message', t => {
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
       ], () => {
-        assert( Helper.sendToWins.calledWith('editor:package-unloaded', 'simple') );
-        done();
+        t.assert( helper.sendToWins.calledWith('editor:package-unloaded', 'simple') );
+        t.end();
       });
     });
   });
 
-  describe('fixtures/packages/main-ipc', () => {
+  suite(t, 'fixtures/packages/main-ipc', t => {
     const path = Path.join(testPackages,'main-ipc');
 
-    assert.isTrue( Fs.existsSync(path) );
+    t.assert( Fs.existsSync(path) );
 
-    it('should reply ipc messages', done => {
+    t.test('it should reply ipc messages', t => {
       Editor.Package.load(path, () => {
         Async.series([
           next => {
             Editor.Ipc.sendToMain('main-ipc:say-hello', (err, msg) => {
-              expect(msg).to.equal('hello');
+              t.equal(msg, 'hello');
               next();
             });
           },
           next => {
             Editor.Ipc.sendToMain('main-ipc:say-hello-02', (err, msg) => {
-              expect(msg).to.equal('hello-02');
+              t.equal(msg, 'hello-02');
               next();
             });
           },
           next => {
             Editor.Ipc.sendToMain('another:say-hello-03', (err, msg) => {
-              expect(msg).to.equal('hello-03');
+              t.equal(msg, 'hello-03');
               next();
             });
           },
-        ], () => {
-          done();
-        });
-
+        ], t.end);
       });
     });
   });
 
-  describe('fixtures/packages/main-deps', () => {
+  suite(t, 'fixtures/packages/main-deps', t => {
     const path = Path.join(testPackages,'main-deps');
 
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should unload main-deps package', done => {
+    t.test('it should unload main-deps package', t => {
       let cache = require.cache;
       let loadCacheList = [];
       Async.series([
@@ -121,7 +119,7 @@ describe('Editor.Package', function () {
           }
 
           // main.js | core/test.js
-          expect(loadCacheList).to.eql([
+          t.same(loadCacheList, [
             Path.join(path, 'main.js'),
             Path.join(path, 'core/test.js'),
             Path.join(path, 'core/foo/bar.js'),
@@ -130,93 +128,93 @@ describe('Editor.Package', function () {
 
           next();
         },
-      ], done);
+      ], t.end);
     });
   });
 
-  describe('fixtures/packages/package-json-broken', () => {
+  suite(t, 'fixtures/packages/package-json-broken', t => {
     const path = Path.join(testPackages,'package-json-broken');
 
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when package.json broken', done => {
+    t.test('it should report error when package.json broken', t => {
       Editor.Package.load(path, err => {
-        assert(err);
-        done();
+        t.assert(err);
+        t.end();
       });
     });
   });
 
-  describe('fixtures/packages/localize', () => {
+  suite(t, 'fixtures/packages/localize', t => {
     const path = Path.join(testPackages,'localize');
 
-    it('should load and unload en i18n file', done => {
+    t.test('it should load and unload en i18n file', t => {
       Editor.Package.lang = 'en';
       Editor.Package.load(path, () => {
-        expect(Editor.T('localize.search')).to.equal('Search');
-        expect(Editor.T('localize.edit')).to.equal('Edit');
+        t.equal(Editor.T('localize.search'), 'Search');
+        t.equal(Editor.T('localize.edit'), 'Edit');
 
         Editor.Package.unload(path, () => {
-          expect(Editor.i18n._phrases().localize).to.eql(undefined);
-          done();
+          t.equal(Editor.i18n._phrases().localize, undefined);
+          t.end();
         });
       });
     });
 
-    it('should load zh i18n file', done => {
+    t.test('it should load zh i18n file', t => {
       Editor.Package.lang = 'zh';
       Editor.Package.load(path, () => {
-        expect(Editor.T('localize.search')).to.equal('搜索');
-        expect(Editor.T('localize.edit')).to.equal('编辑');
+        t.equal(Editor.T('localize.search'), '搜索');
+        t.equal(Editor.T('localize.edit'), '编辑');
 
-        Editor.Package.unload(path, done);
+        Editor.Package.unload(path, t.end);
       });
     });
   });
 
-  describe('fixtures/packages/host-not-exists', () => {
+  suite(t, 'fixtures/packages/host-not-exists', t => {
     const path = Path.join(testPackages,'host-not-exists');
 
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when hosts not exists', done => {
+    t.test('it should report error when hosts not exists', t => {
       Editor.Package.load(path, err => {
-        assert(err);
-        done();
+        t.assert(err);
+        t.end();
       });
     });
   });
 
-  describe('fixtures/packages/main-js-broken', () => {
+  suite(t, 'fixtures/packages/main-js-broken', t => {
     const path = Path.join(testPackages,'main-js-broken');
 
-    afterEach(done => {
+    t.afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when failed to load main.js', done => {
+    t.test('it should report error when failed to load main.js', t => {
       Editor.Package.load(path, err => {
-        assert(err);
-        done();
+        t.assert(err);
+        t.end();
       });
     });
   });
 
-  describe('fixtures/packages/package-deps', () => {
+  suite(t, 'fixtures/packages/package-deps', t => {
     const path1 = Path.join(testPackages,'package-deps');
     const path2 = Path.join(testPackages,'dep-01');
     const path3 = Path.join(testPackages,'dep-02');
 
-    beforeEach(done => {
-      Helper.reset();
+    t.beforeEach(done => {
+      helper.reset();
       done();
     });
 
-    afterEach(done => {
+    t.afterEach(done => {
       Async.series([
         next => {
           Editor.Package.unload(path1, next);
@@ -234,26 +232,26 @@ describe('Editor.Package', function () {
       ], done);
     });
 
-    it('should load dependencies first', done => {
-      Helper.spyMessages( 'sendToWins', [
+    t.test('it should load dependencies first', t => {
+      helper.spyMessages( 'sendToWins', [
         'editor:package-loaded',
       ]);
-      let packageLoaded = Helper.message('sendToWins','editor:package-loaded');
+      let packageLoaded = helper.message('sendToWins','editor:package-loaded');
 
       Editor.Package.load(path1, () => {
         // console.log(packageLoaded.args);
-        assert( packageLoaded.getCall(0).calledWith('editor:package-loaded', 'dep-02') );
-        assert( packageLoaded.getCall(1).calledWith('editor:package-loaded', 'dep-01') );
-        assert( packageLoaded.getCall(2).calledWith('editor:package-loaded', 'package-deps') );
+        t.assert( packageLoaded.getCall(0).calledWith('editor:package-loaded', 'dep-02') );
+        t.assert( packageLoaded.getCall(1).calledWith('editor:package-loaded', 'dep-01') );
+        t.assert( packageLoaded.getCall(2).calledWith('editor:package-loaded', 'package-deps') );
 
-        done();
+        t.end();
       });
     });
   });
 
-  // it.skip('should build fixtures/packages/needs-build', done => {
+  // t.skip('should build fixtures/packages/needs-build', t => {
   // });
 
-  // it.skip('should remove bin/dev when unload fixtures/packages/needs-build', done => {
+  // t.skip('should remove bin/dev when unload fixtures/packages/needs-build', t => {
   // });
 });

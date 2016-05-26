@@ -6,9 +6,7 @@ const BrowserWindow = Electron.BrowserWindow;
 // const Async = require('async');
 
 //
-tap.test('Editor.IpcListener Reply', t => {
-  const test = t.test;
-
+suite(tap, 'Editor.IpcListener Reply', t => {
   helper.runEditor(t, {
     enableIpc: true,
   });
@@ -20,8 +18,8 @@ tap.test('Editor.IpcListener Reply', t => {
     done();
   });
 
-  test('Editor.Ipc.sendToMain', t => {
-    test('it should send message to main process and recieve a reply when starting a request in renderer process', t => {
+  suite(t, 'Editor.Ipc.sendToMain', t => {
+    t.test('it should send message to main process and recieve a reply when starting a request in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
 
@@ -38,12 +36,11 @@ tap.test('Editor.IpcListener Reply', t => {
         t.equal(bar, 'bar');
 
         win.close();
-
         t.end();
       });
     });
 
-    test('it should send message to main process and recieve a reply when starting a request in main process', t => {
+    t.test('it should send message to main process and recieve a reply when starting a request in main process', t => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         t.equal(event.senderType, 'main');
         t.equal(foo, 'foo');
@@ -61,7 +58,7 @@ tap.test('Editor.IpcListener Reply', t => {
       });
     });
 
-    test('it should work for nested case', t => {
+    t.test('it should work for nested case', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-nested.html');
 
@@ -91,7 +88,7 @@ tap.test('Editor.IpcListener Reply', t => {
       });
     });
 
-    test('it should close the session when timeout in renderer process', t => {
+    t.test('it should close the session when timeout in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple-timeout.html');
 
@@ -106,11 +103,12 @@ tap.test('Editor.IpcListener Reply', t => {
       });
 
       ipc.on('foobar:timeout', () => {
+        win.close();
         t.end();
       });
     });
 
-    test('it should close the session when timeout in main process', t => {
+    t.test('it should close the session when timeout in main process', t => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
           event.reply(null,foo,bar);
@@ -134,12 +132,10 @@ tap.test('Editor.IpcListener Reply', t => {
         Editor.Ipc.sendToMain('foobar:error');
       }, 200);
     });
-
-    t.end();
   });
 
-  test('Editor.Window.send', t => {
-    test('it should send message to renderer process and recieve a reply when starting a request in main process', t => {
+  suite(t, 'Editor.Window.send', t => {
+    t.test('it should send message to renderer process and recieve a reply when starting a request in main process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');
 
@@ -154,7 +150,7 @@ tap.test('Editor.IpcListener Reply', t => {
       });
     });
 
-    test('it should work for nested case', t => {
+    t.test('it should work for nested case', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-nested.html');
 
@@ -171,7 +167,7 @@ tap.test('Editor.IpcListener Reply', t => {
       });
     });
 
-    test('it should close the session when timeout', t => {
+    t.test('it should close the session when timeout', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple-timeout.html');
 
@@ -182,13 +178,10 @@ tap.test('Editor.IpcListener Reply', t => {
         }, 200);
 
         setTimeout(() => {
+          win.close();
           t.end();
         }, 400);
       });
     });
-
-    t.end();
   });
-
-  t.end();
 });

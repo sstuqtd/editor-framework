@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Editor.Menu', function () {
+suite(tap, 'Editor.Menu', t => {
   function getTemplate () {
     return [
       {
@@ -23,36 +23,36 @@ describe('Editor.Menu', function () {
     ];
   }
 
-  it('should be built from template', done => {
+  t.test('it should be built from template', t => {
     let testMenu = new Editor.Menu(getTemplate());
 
-    expect( testMenu.nativeMenu.items.length ).to.equal(2);
-    expect( testMenu.nativeMenu.items[0].label ).to.equal('foo');
+    t.equal( testMenu.nativeMenu.items.length, 2);
+    t.equal( testMenu.nativeMenu.items[0].label, 'foo');
 
-    done();
+    t.end();
   });
 
-  it('should be able to add menu item through template', done => {
+  t.test('it should be able to add menu item through template', t => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', getTemplate());
 
-    expect( testMenu.nativeMenu.items[0].label ).to.equal('foo');
-    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('bar');
+    t.equal( testMenu.nativeMenu.items[0].label, 'foo');
+    t.equal( testMenu.nativeMenu.items[0].submenu.items[0].label, 'bar');
 
-    done();
+    t.end();
   });
 
-  it('should be able to add menu item by path', done => {
+  t.test('should be able to add menu item by path', t => {
     let testMenu = new Editor.Menu();
     testMenu.add('tar/zom', {message: 'hint'});
 
-    expect( testMenu.nativeMenu.items[0].label ).to.equal('tar');
-    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('zom');
+    t.equal( testMenu.nativeMenu.items[0].label, 'tar');
+    t.equal( testMenu.nativeMenu.items[0].submenu.items[0].label, 'zom');
 
-    done();
+    t.end();
   });
 
-  it('should be able to add menu template array as submenu by path', done => {
+  t.test('it should be able to add menu template array as submenu by path', t => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', [
       { label: 'a', message: 'a' },
@@ -61,15 +61,15 @@ describe('Editor.Menu', function () {
     ]);
 
     let items = testMenu.nativeMenu.items[0].submenu.items[0].submenu.items;
-    expect(items.length).to.equal(3);
-    expect(items[0].label).to.equal('a');
-    expect(items[1].label).to.equal('b');
-    expect(items[2].label).to.equal('c');
+    t.equal(items.length, 3);
+    t.equal(items[0].label, 'a');
+    t.equal(items[1].label, 'b');
+    t.equal(items[2].label, 'c');
 
-    done();
+    t.end();
   });
 
-  it('should be able to expand menu template if it contains path field', done => {
+  t.test('it should be able to expand menu template if it contains path field', t => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', [
       { path: 'foobar/a', message: 'a' },
@@ -83,25 +83,25 @@ describe('Editor.Menu', function () {
       .items[0]
       ;
 
-    expect(foobarItem.label).to.equal('foobar');
-    expect(foobarItem.submenu.items[0].label).to.equal('a');
-    expect(foobarItem.submenu.items[1].label).to.equal('b');
-    expect(foobarItem.submenu.items[2].label).to.equal('c');
+    t.equal(foobarItem.label, 'foobar');
+    t.equal(foobarItem.submenu.items[0].label, 'a');
+    t.equal(foobarItem.submenu.items[1].label, 'b');
+    t.equal(foobarItem.submenu.items[2].label, 'c');
 
-    done();
+    t.end();
   });
 
-  it('should be able to remove menu item by path', done => {
+  t.test('it should be able to remove menu item by path', t => {
     let testMenu = new Editor.Menu(getTemplate());
-    expect( testMenu.nativeMenu.items[1].submenu.items.length ).to.equal(2);
+    t.equal(testMenu.nativeMenu.items[1].submenu.items.length, 2);
 
     testMenu.remove('bar/bar.01');
-    expect( testMenu.nativeMenu.items[1].submenu.items.length ).to.equal(1);
+    t.equal(testMenu.nativeMenu.items[1].submenu.items.length, 1);
 
-    done();
+    t.end();
   });
 
-  it('should be able to update exists sub-menu at root', done => {
+  t.test('it should be able to update exists sub-menu at root', t => {
     let tmpl = [
       {
         label: 'foo',
@@ -141,15 +141,15 @@ describe('Editor.Menu', function () {
       },
     ]);
 
-    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('foo.01.new');
-    expect( testMenu.nativeMenu.items[0].submenu.items[1].label ).to.equal('foo.02.new');
-    expect( testMenu.nativeMenu.items[0].submenu.items[2].label ).to.equal('foo.03.new');
-    expect( testMenu.nativeMenu.items[1].label ).to.equal('bar');
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[0].label, 'foo.01.new');
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[1].label, 'foo.02.new');
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[2].label, 'foo.03.new');
+    t.equal(testMenu.nativeMenu.items[1].label, 'bar');
 
-    done();
+    t.end();
   });
 
-  it('should be able to update exists sub-menu at path', done => {
+  t.test('it should be able to update exists sub-menu at path', t => {
     let tmpl = [
       {
         label: 'foo',
@@ -198,15 +198,15 @@ describe('Editor.Menu', function () {
     ]);
 
     let fooFoo01 = testMenu.nativeMenu.items[0].submenu.items[0];
-    expect( fooFoo01.submenu.items[0].label ).to.equal('foo.01.a.new');
-    expect( fooFoo01.submenu.items[1].label ).to.equal('foo.01.b.new');
-    expect( fooFoo01.submenu.items[2].label ).to.equal('foo.01.c.new');
-    expect( testMenu.nativeMenu.items[0].submenu.items[1].label ).to.equal('foo.02');
+    t.equal(fooFoo01.submenu.items[0].label, 'foo.01.a.new');
+    t.equal(fooFoo01.submenu.items[1].label, 'foo.01.b.new');
+    t.equal(fooFoo01.submenu.items[2].label, 'foo.01.c.new');
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[1].label, 'foo.02');
 
-    done();
+    t.end();
   });
 
-  it('should not add dev template in release mode', done => {
+  t.test('it should not add dev template in release mode', t => {
     let oldDev = Editor.Menu.showDev;
     Editor.Menu.showDev = false;
 
@@ -234,14 +234,14 @@ describe('Editor.Menu', function () {
 
     let testMenu = new Editor.Menu(tmpl);
 
-    expect( testMenu.nativeMenu.items.length ).to.equal(1);
-    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('bar.02');
+    t.equal(testMenu.nativeMenu.items.length, 1);
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[0].label, 'bar.02');
 
     Editor.Menu.showDev = oldDev;
-    done();
+    t.end();
   });
 
-  it('should be able to parse template with path', done => {
+  t.test('should be able to parse template with path', t => {
     let tmpl = [
       { label: 'foo', type: 'submenu', submenu: [] },
       { label: 'bar', type: 'submenu', submenu: [] },
@@ -257,22 +257,23 @@ describe('Editor.Menu', function () {
     let testMenu = new Editor.Menu(tmpl);
 
     // basic
-    expect( testMenu.nativeMenu.items[0].submenu.items[0].label ).to.equal('foo.01');
-    expect( testMenu.nativeMenu.items[1].submenu.items[0].label ).to.equal('bar.01');
-    expect( testMenu.nativeMenu.items[1].submenu.items[1].label ).to.equal('bar.02');
+    t.equal(testMenu.nativeMenu.items[0].submenu.items[0].label, 'foo.01');
+    t.equal(testMenu.nativeMenu.items[1].submenu.items[0].label, 'bar.01');
+    t.equal(testMenu.nativeMenu.items[1].submenu.items[1].label, 'bar.02');
 
     // test if path can add in order
-    expect( testMenu.nativeMenu.items[2].label ).to.equal('foobar');
-    expect( testMenu.nativeMenu.items[3].label ).to.equal('a menu item');
+    t.equal(testMenu.nativeMenu.items[2].label, 'foobar');
+    t.equal(testMenu.nativeMenu.items[3].label, 'a menu item');
 
     // test if first level path can be add correctly
-    expect( testMenu.nativeMenu.items[4].label ).to.equal('a menu path item');
+    t.equal(testMenu.nativeMenu.items[4].label, 'a menu path item');
 
     // test if second level path can be add correctly
-    expect( testMenu.nativeMenu.items[1].submenu.items[1].submenu.items[0].label )
-    .to.equal('bar.02.01');
+    t.equal(
+      testMenu.nativeMenu.items[1].submenu.items[1].submenu.items[0].label,
+      'bar.02.01'
+    );
 
-    done();
+    t.end();
   });
-
 });
