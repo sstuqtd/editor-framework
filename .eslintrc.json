@@ -21,13 +21,12 @@
   "plugins": [
   ],
   "globals": {
-    "unused": false,
-    "deprecate": false,
     "Editor": false,
-    "Helper": false,
     "Polymer": false,
-    "expect": false,
+    "deprecate": false,
+    "helper": false,
     "sinon": false,
-    "assert": false
+    "tap": false,
+    "unused": false
   }
 }

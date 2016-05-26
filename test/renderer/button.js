@@ -1,70 +1,94 @@
 'use strict';
 
-describe('<ui-button>', function () {
-  describe('html', () => {
-    Helper.runElement('editor-framework://test/fixtures/button.html', 'simple', '#element');
+tap.test('<ui-button>', t => {
+  const test = t.test;
+  const helper = tap.helper;
 
-    beforeEach(done => {
-      Editor.Window.center();
+  function _newElement ( cb ) {
+    helper.runElement(
+      'editor-framework://test/fixtures/button.html', 'simple', '#element', cb
+    );
+  }
 
-      done();
-    });
+  t.beforeEach(done => {
+    Editor.Window.center();
+    done();
+  });
 
-    it('should have shadow root', done => {
-      assert(Helper.targetEL.shadowRoot);
+  t.afterEach(done => {
+    helper.reset();
+    done();
+  });
 
-      done();
-    });
-
-    it('should focus on element when left mouse down', done => {
-      Helper.mousedown( Helper.targetEL, 'left' );
-
-      setTimeout(() => {
-        expect(Helper.targetEL.focused).to.equal(true);
-        done();
-      }, 1);
-    });
-
-    it('should send "click" event when mouse click element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
-      });
-      Helper.click( Helper.targetEL, 'left' );
-    });
-
-    it('should send "click" event when "space" key down and up on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
-      });
-      Helper.focus(Helper.targetEL);
-      Helper.pressSpace();
-    });
-
-    it('should send "click" event when "enter" key down on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        done();
-      });
-      Helper.focus(Helper.targetEL);
-      Helper.keydown('enter');
-    });
-
-    it('should not send "click" event when only "space" key up on the element', done => {
-      Helper.targetEL.addEventListener('click', () => {
-        assert(false, 'should not recieve click event');
-      });
-      Helper.focus(Helper.targetEL);
-      Helper.keyup('space');
-
-      setTimeout(() => {
-        done();
-      }, 100);
-    });
-
-    it('should send "end-editing" event when element clicked', done => {
-      Helper.targetEL.addEventListener('end-editing', () => {
-        done();
-      });
-      Helper.click( Helper.targetEL, 'left' );
+  test('should have shadow root', t => {
+    _newElement(el => {
+      t.assert(el.shadowRoot);
+      t.end();
     });
   });
+
+  test('should focus on element when left mouse down', t => {
+    _newElement(el => {
+      helper.mousedown( el, 'left' );
+
+      setTimeout(() => {
+        t.equal(el.focused, true);
+        t.end();
+      }, 1);
+    });
+  });
+
+  test('should send "click" event when mouse click element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
+      });
+      helper.click( el, 'left' );
+    });
+  });
+
+  test('should send "click" event when "space" key down and up on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
+      });
+      helper.focus(el);
+      helper.pressSpace();
+    });
+  });
+
+  test('should send "click" event when "enter" key down on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.end();
+      });
+      helper.focus(el);
+      helper.keydown('enter');
+    });
+  });
+
+  test('should not send "click" event when only "space" key up on the element', t => {
+    _newElement(el => {
+      el.addEventListener('click', () => {
+        t.assert(false, 'should not recieve click event');
+      });
+      helper.focus(el);
+      helper.keyup('space');
+
+      setTimeout(() => {
+        t.end();
+      }, 100);
+    });
+  });
+
+  test('should send "end-editing" event when element clicked', t => {
+    _newElement(el => {
+      el.addEventListener('end-editing', () => {
+        t.end();
+      });
+      helper.click( el, 'left' );
+    });
+  });
+
+  t.end();
 });

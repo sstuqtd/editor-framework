@@ -1,22 +1,30 @@
 'use strict';
 
-describe('Editor.i18n', function () {
-  beforeEach (() => {
+tap.test('Editor.i18n', t => {
+  const test = t.test;
+
+  t.beforeEach(done => {
     Editor.i18n.extend({
       test: {
         foo: '腐',
         bar: '爸'
       }
     });
-  });
-
-  afterEach (() => {
-    Editor.i18n.unset('test');
-  });
-
-  it('should format the path', done => {
-    expect(Editor.i18n.formatPath('i18n:test.foo/i18n:test.bar/foobar')).to.eql('腐/爸/foobar');
 
     done();
   });
+
+  t.afterEach(done => {
+    Editor.i18n.unset('test');
+
+    done();
+  });
+
+  test('formatPath', t => {
+    t.equal(Editor.i18n.formatPath('i18n:test.foo/i18n:test.bar/foobar'), '腐/爸/foobar');
+
+    t.end();
+  });
+
+  t.end();
 });
