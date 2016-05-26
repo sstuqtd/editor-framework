@@ -23,7 +23,7 @@ describe('Editor.Menu', function () {
     ];
   }
 
-  it('should be built from template', function (done) {
+  it('should be built from template', done => {
     let testMenu = new Editor.Menu(getTemplate());
 
     expect( testMenu.nativeMenu.items.length ).to.equal(2);
@@ -32,7 +32,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to add menu item through template', function (done) {
+  it('should be able to add menu item through template', done => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', getTemplate());
 
@@ -42,7 +42,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to add menu item by path', function (done) {
+  it('should be able to add menu item by path', done => {
     let testMenu = new Editor.Menu();
     testMenu.add('tar/zom', {message: 'hint'});
 
@@ -52,7 +52,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to add menu template array as submenu by path', function (done) {
+  it('should be able to add menu template array as submenu by path', done => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', [
       { label: 'a', message: 'a' },
@@ -69,7 +69,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to expand menu template if it contains path field', function (done) {
+  it('should be able to expand menu template if it contains path field', done => {
     let testMenu = new Editor.Menu();
     testMenu.add('foo/bar', [
       { path: 'foobar/a', message: 'a' },
@@ -91,7 +91,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to remove menu item by path', function (done) {
+  it('should be able to remove menu item by path', done => {
     let testMenu = new Editor.Menu(getTemplate());
     expect( testMenu.nativeMenu.items[1].submenu.items.length ).to.equal(2);
 
@@ -101,7 +101,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to update exists sub-menu at root', function (done) {
+  it('should be able to update exists sub-menu at root', done => {
     let tmpl = [
       {
         label: 'foo',
@@ -149,7 +149,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to update exists sub-menu at path', function (done) {
+  it('should be able to update exists sub-menu at path', done => {
     let tmpl = [
       {
         label: 'foo',
@@ -206,7 +206,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should not add dev template in release mode', function (done) {
+  it('should not add dev template in release mode', done => {
     let oldDev = Editor.Menu.showDev;
     Editor.Menu.showDev = false;
 
@@ -241,7 +241,7 @@ describe('Editor.Menu', function () {
     done();
   });
 
-  it('should be able to parse template with path', function (done) {
+  it('should be able to parse template with path', done => {
     let tmpl = [
       { label: 'foo', type: 'submenu', submenu: [] },
       { label: 'bar', type: 'submenu', submenu: [] },

@@ -8,6 +8,28 @@ const electron = require('electron-prebuilt');
 const globby = require('globby');
 const spawn = require('child_process').spawn;
 
+// ==========================
+// run single file
+// ==========================
+
+const yargs = require('yargs');
+
+let yargv = yargs.argv;
+if ( yargv._.length ) {
+  let file = yargv._[0];
+
+  let args = ['./test', 'test', file];
+  spawn(electron, args, {
+    stdio: 'inherit',
+  });
+
+  return;
+}
+
+// ==========================
+// run all tests
+// ==========================
+
 // get cwd
 let cwd = process.cwd();
 

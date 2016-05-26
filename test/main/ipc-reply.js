@@ -13,12 +13,12 @@ describe('Editor.IpcListener Reply', function () {
 
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  afterEach(() => {
     ipc.clear();
   });
 
-  describe('Editor.Ipc.sendToMain', function () {
-    it('should send message to main process and recieve a reply when starting a request in renderer process', function (done) {
+  describe('Editor.Ipc.sendToMain', () => {
+    it('should send message to main process and recieve a reply when starting a request in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
 
@@ -40,7 +40,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should send message to main process and recieve a reply when starting a request in main process', function (done) {
+    it('should send message to main process and recieve a reply when starting a request in main process', done => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(event.senderType).to.eql('main');
         expect(foo).to.eql('foo');
@@ -58,7 +58,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should work for nested case', function (done) {
+    it('should work for nested case', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-nested.html');
 
@@ -88,7 +88,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should close the session when timeout in renderer process', function (done) {
+    it('should close the session when timeout in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple-timeout.html');
 
@@ -107,7 +107,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should close the session when timeout in main process', function (done) {
+    it('should close the session when timeout in main process', done => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
           event.reply(null,foo,bar);
@@ -133,10 +133,10 @@ describe('Editor.IpcListener Reply', function () {
     });
   });
 
-  describe('Editor.Window.send', function () {
+  describe('Editor.Window.send', () => {
     this.timeout(0);
 
-    it('should send message to renderer process and recieve a reply when starting a request in main process', function (done) {
+    it('should send message to renderer process and recieve a reply when starting a request in main process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');
 
@@ -151,7 +151,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should work for nested case', function (done) {
+    it('should work for nested case', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-nested.html');
 
@@ -168,7 +168,7 @@ describe('Editor.IpcListener Reply', function () {
       });
     });
 
-    it('should close the session when timeout', function (done) {
+    it('should close the session when timeout', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple-timeout.html');
 

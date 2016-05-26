@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Helper', function () {
+describe('Helper', function() {
   let testEL;
 
-  beforeEach(function (done) {
+  beforeEach(done => {
     testEL = document.createElement('div');
     testEL.classList.add('layout');
     testEL.classList.add('fit');
@@ -13,16 +13,16 @@ describe('Helper', function () {
     done();
   });
 
-  afterEach(function (done) {
+  afterEach(done => {
     testEL.remove();
     done();
   });
 
   this.timeout(50);
 
-  it('should respond keydown "a"', function ( done ) {
+  it('should respond keydown "a"', done => {
     testEL.focus();
-    testEL.addEventListener('keydown', function ( event ) {
+    testEL.addEventListener('keydown', event => {
       expect(event.keyCode).to.be.eql(Editor.KeyCode('a'));
 
       done();
@@ -31,9 +31,9 @@ describe('Helper', function () {
     Helper.keydown('a');
   });
 
-  it('should respond "command + t"', function ( done ) {
+  it('should respond "command + t"', done => {
     testEL.focus();
-    testEL.addEventListener('keydown', function ( event ) {
+    testEL.addEventListener('keydown', event => {
       assert(event.metaKey);
       expect(event.keyCode).to.be.eql(Editor.KeyCode('t'));
 
@@ -42,9 +42,9 @@ describe('Helper', function () {
     Helper.keydown('t', ['command'] );
   });
 
-  it('should respond keyup "b"', function ( done ) {
+  it('should respond keyup "b"', done => {
     testEL.focus();
-    testEL.addEventListener('keyup', function ( event ) {
+    testEL.addEventListener('keyup', event => {
       expect(event.keyCode).to.be.eql(Editor.KeyCode('b'));
 
       done();
@@ -52,7 +52,7 @@ describe('Helper', function () {
     Helper.keyup('b');
   });
 
-  it('should respond click', function ( done ) {
+  it('should respond click', done => {
     testEL.addEventListener( 'click', event => {
       expect(event.which).to.be.eql(1);
 
@@ -62,7 +62,7 @@ describe('Helper', function () {
     Helper.click( testEL );
   });
 
-  it('should respond mousedown on right button', function ( done ) {
+  it('should respond mousedown on right button', done => {
     testEL.addEventListener('mousedown', event => {
       expect(event.which).to.be.eql(3);
 
@@ -72,7 +72,7 @@ describe('Helper', function () {
     Helper.mousedown( testEL, 'right' );
   });
 
-  it('should respond mouseup on left button', function ( done ) {
+  it('should respond mouseup on left button', done => {
     testEL.addEventListener( 'mouseup', event => {
       expect(event.which).to.be.eql(1);
 
@@ -82,7 +82,7 @@ describe('Helper', function () {
     Helper.mouseup( testEL, 'left' );
   });
 
-  it('should respond dblclick on left button', function ( done ) {
+  it('should respond dblclick on left button', done => {
     testEL.addEventListener( 'dblclick', event => {
       expect(event.which).to.be.eql(1);
 
@@ -92,7 +92,7 @@ describe('Helper', function () {
     Helper.dblclick( testEL, 'left' );
   });
 
-  it('should respond mousewheel', function ( done ) {
+  it('should respond mousewheel', done => {
     testEL.addEventListener( 'mousewheel', event => {
       expect(event.deltaY).to.be.equal(10);
       done();
@@ -101,7 +101,7 @@ describe('Helper', function () {
     Helper.mousewheel( testEL, null, 10 );
   });
 
-  it('should respond mousemove', function ( done ) {
+  it('should respond mousemove', function (done) {
     this.timeout(0);
 
     Helper.mousemove(
@@ -113,7 +113,7 @@ describe('Helper', function () {
     );
   });
 
-  it('should respond mousemove step', function ( done ) {
+  it('should respond mousemove step', function (done) {
     this.timeout(0);
 
     let results = [

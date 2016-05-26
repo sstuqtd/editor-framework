@@ -1,25 +1,25 @@
 'use strict';
 
 describe('<ui-slider>', function () {
-  describe('html', function () {
+  describe('html', () => {
     Helper.runElement('editor-framework://test/fixtures/slider.html', 'simple', '#element');
 
-    beforeEach(function ( done ) {
+    beforeEach(done => {
       Editor.Window.center();
 
       done();
     });
 
-    it('should have shadow root', function ( done ) {
+    it('should have shadow root', done => {
       assert(Helper.targetEL.shadowRoot);
 
       done();
     });
 
-    // it('should focus on element when left mouse down', function ( done ) {
+    // it('should focus on element when left mouse down', done => {
     //   Helper.mousedown( Helper.targetEL, 'left' );
 
-    //   setTimeout(function () {
+    //   setTimeout(() => {
     //     expect(Helper.targetEL.focused).to.equal(true);
     //     Helper.keydown( 'esc' );
     //     done();

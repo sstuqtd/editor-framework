@@ -218,6 +218,10 @@ To test the editor-framework itself, just run:
 
 ```bash
 npm test
+
+# or
+
+npm test ./your/test/file
 ```
 
 You can also run a single test or a bunch of tests in one directory by:
@@ -243,6 +247,41 @@ To debug a test, use the `--detail` option:
 ```bash
 npm start ./test -- test --detail ${your/test/path}
 ```
+
+### Write Your Test
+
+**Main Process**
+
+```js
+describe('Test Main Process', function () {
+  it ('should be ok', done => {
+    done();
+  })
+});
+```
+
+**Renderer Process**
+
+```html
+<template id="basic">
+  <div class="title">Hello World</div>
+</template>
+```
+
+```js
+describe('Test Renderer Process', function () {
+  Helper.runElement('app://test/my-template.html', 'basic', 'div.title');
+
+  it ('should be ok', done => {
+    assert(Helper.targetEL, 'element not found');
+    expect(Helper.targetEL.innertText).to.eql('Hello World');
+
+    done();
+  })
+});
+```
+
+**NOTE** The first describe callback can not use arrow function.
 
 ### Generate Documentation
 

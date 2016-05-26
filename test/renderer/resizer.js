@@ -1,18 +1,18 @@
 'use strict';
 
-describe('<ui-dock-resizer>', function () {
+describe('<ui-dock-resizer>', function() {
   this.timeout(0);
 
-  describe('<ui-dock-resizer> horizontal', function () {
+  describe('<ui-dock-resizer> horizontal', () => {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'horizontal', '#container');
 
-    beforeEach(function ( done ) {
+    beforeEach(done => {
       Editor.Window.resizeSync( 500, 200, true );
       Editor.Window.center();
 
-      setTimeout(function () {
+      setTimeout(() => {
         Helper.targetEL._finalizeSizeRecursively(true);
         Helper.targetEL._finalizeMinMaxRecursively();
         Helper.targetEL._finalizeStyleRecursively();
@@ -21,7 +21,7 @@ describe('<ui-dock-resizer>', function () {
       }, 100);
     });
 
-    it('should layout the elements in same size', function ( done ) {
+    it('should layout the elements in same size', done => {
       let size = totalSize/3;
       size = Math.round(size);
 
@@ -32,7 +32,7 @@ describe('<ui-dock-resizer>', function () {
       done();
     });
 
-    it('should continue resize the next element if the first element reach the min-width', function ( done ) {
+    it('should continue resize the next element if the first element reach the min-width', done => {
       let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
@@ -40,7 +40,7 @@ describe('<ui-dock-resizer>', function () {
         `M${rect.left},${rect.top+50}
          L${rect.left+400},${rect.top+50}
          `,
-        function () {
+        () => {
           expect(Helper.targetEL.querySelector('#box1').offsetWidth).to.eql(totalSize-100-100);
           expect(Helper.targetEL.querySelector('#box2').offsetWidth).to.eql(100);
           expect(Helper.targetEL.querySelector('#box3').offsetWidth).to.eql(100);
@@ -50,7 +50,7 @@ describe('<ui-dock-resizer>', function () {
       );
     });
 
-    it('should not resize the last element when we resize in the reverse direction', function ( done ) {
+    it('should not resize the last element when we resize in the reverse direction', done => {
       let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
@@ -59,7 +59,7 @@ describe('<ui-dock-resizer>', function () {
          L${rect.left+400},${rect.top+50}
          L${rect.left-400},${rect.top+50}
          `,
-        function () {
+        () => {
           expect(Helper.targetEL.querySelector('#box1').offsetWidth).to.eql(100);
           expect(Helper.targetEL.querySelector('#box2').offsetWidth).to.eql(totalSize-100-100);
           expect(Helper.targetEL.querySelector('#box3').offsetWidth).to.eql(100);
@@ -70,16 +70,16 @@ describe('<ui-dock-resizer>', function () {
     });
   });
 
-  describe('<ui-dock-resizer> vertical', function () {
+  describe('<ui-dock-resizer> vertical', () => {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
 
     Helper.runElement('editor-framework://test/fixtures/resizer.html', 'vertical', '#container');
 
-    beforeEach(function ( done ) {
+    beforeEach(done => {
       Editor.Window.resizeSync( 200, 500, true );
       Editor.Window.center();
 
-      setTimeout(function () {
+      setTimeout(() => {
         Helper.targetEL._finalizeSizeRecursively(true);
         Helper.targetEL._finalizeMinMaxRecursively();
         Helper.targetEL._finalizeStyleRecursively();
@@ -88,7 +88,7 @@ describe('<ui-dock-resizer>', function () {
       }, 100);
     });
 
-    it('should layout the elements in same size', function ( done ) {
+    it('should layout the elements in same size', done => {
       let size = totalSize/3;
       size = Math.round(size);
 
@@ -99,7 +99,7 @@ describe('<ui-dock-resizer>', function () {
       done();
     });
 
-    it('should continue resize the next element if the first element reach the min-width', function ( done ) {
+    it('should continue resize the next element if the first element reach the min-width', done => {
       let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
@@ -107,7 +107,7 @@ describe('<ui-dock-resizer>', function () {
         `M${rect.left+50},${rect.top}
          L${rect.left+50},${rect.top+400}
          `,
-        function () {
+        () => {
           expect(Helper.targetEL.querySelector('#box1').offsetHeight).to.eql(totalSize-100-100);
           expect(Helper.targetEL.querySelector('#box2').offsetHeight).to.eql(100);
           expect(Helper.targetEL.querySelector('#box3').offsetHeight).to.eql(100);
@@ -117,7 +117,7 @@ describe('<ui-dock-resizer>', function () {
       );
     });
 
-    it('should not resize the last element when we resize in the reverse direction', function ( done ) {
+    it('should not resize the last element when we resize in the reverse direction', done => {
       let resizer = Helper.targetEL.querySelector('ui-dock-resizer');
       let rect = resizer.getBoundingClientRect();
 
@@ -126,7 +126,7 @@ describe('<ui-dock-resizer>', function () {
          L${rect.left+50},${rect.top+400}
          L${rect.left+50},${rect.top-400}
          `,
-        function () {
+        () => {
           expect(Helper.targetEL.querySelector('#box1').offsetHeight).to.eql(100);
           expect(Helper.targetEL.querySelector('#box2').offsetHeight).to.eql(totalSize-100-100);
           expect(Helper.targetEL.querySelector('#box3').offsetHeight).to.eql(100);

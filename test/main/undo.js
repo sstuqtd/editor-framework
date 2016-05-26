@@ -26,7 +26,7 @@ class DummyCmd extends Editor.Undo.Command {
   dirty () { return false; }
 }
 
-describe('Editor.Undo', function () {
+describe('Editor.Undo', () => {
   Helper.run({
     'undo': {
       'foo': FooCmd,
@@ -35,7 +35,7 @@ describe('Editor.Undo', function () {
     }
   });
 
-  beforeEach(function () {
+  beforeEach(() => {
     _foo = {};
     _bar = {};
 
@@ -43,7 +43,7 @@ describe('Editor.Undo', function () {
     Helper.reset();
   });
 
-  it('should add the foo commands', function (done) {
+  it('should add the foo commands', done => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -69,7 +69,7 @@ describe('Editor.Undo', function () {
     done();
   });
 
-  it('should undo the foo object correctly', function (done) {
+  it('should undo the foo object correctly', done => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -111,7 +111,7 @@ describe('Editor.Undo', function () {
   });
 
 
-  it('should redo the foo object correctly', function (done) {
+  it('should redo the foo object correctly', done => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -173,7 +173,7 @@ describe('Editor.Undo', function () {
     done();
   });
 
-  it('should undo or redo different command in order', function (done) {
+  it('should undo or redo different command in order', done => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
@@ -276,7 +276,7 @@ describe('Editor.Undo', function () {
     done();
   });
 
-  it('should undo or redo batched command in correctly', function (done) {
+  it('should undo or redo batched command in correctly', done => {
     // undo 3
     let beforeF = JSON.stringify(_foo);
     let beforeB = JSON.stringify(_bar);
@@ -370,7 +370,7 @@ describe('Editor.Undo', function () {
     done();
   });
 
-  it('should work with dirty', function (done) {
+  it('should work with dirty', done => {
     // initial
     expect(Editor.Undo.dirty()).to.be.deep.eql(false);
 
@@ -406,7 +406,7 @@ describe('Editor.Undo', function () {
     done();
   });
 
-  it('should work with collapse', function (done) {
+  it('should work with collapse', done => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });

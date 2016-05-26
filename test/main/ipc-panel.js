@@ -15,18 +15,18 @@ describe('Editor.IpcListener Panel', function () {
 
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  afterEach(() => {
     ipc.clear();
   });
 
-  describe('Editor.Ipc.sendToPanel', function () {
+  describe('Editor.Ipc.sendToPanel', () => {
     this.timeout(5000);
 
-    it('should send message to panel from main process', function (done) {
+    it('should send message to panel from main process', done => {
       const path = Path.join(testPackages,'panel-ipc');
       assert.isTrue( Fs.existsSync(path) );
 
-      Editor.Package.load(path, function () {
+      Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc');
 
         // TODO: Panel.open should have callback
@@ -43,11 +43,11 @@ describe('Editor.IpcListener Panel', function () {
       });
     });
 
-    it('should send message to panel and recieve reply from main process', function (done) {
+    it('should send message to panel and recieve reply from main process', done => {
       const path = Path.join(testPackages,'panel-ipc');
       assert.isTrue( Fs.existsSync(path) );
 
-      Editor.Package.load(path, function () {
+      Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc-02');
 
         // TODO: Panel.open should have callback
@@ -62,11 +62,11 @@ describe('Editor.IpcListener Panel', function () {
       });
     });
 
-    // it('should send message to panel and recieve reply from renderer process', function (done) {
+    // it('should send message to panel and recieve reply from renderer process', done => {
     //   const path = Path.join(testPackages,'panel-ipc');
     //   assert.isTrue( Fs.existsSync(path) );
 
-    //   Editor.Package.load(path, function () {
+    //   Editor.Package.load(path, () => {
     //     Editor.Panel.open('panel-ipc-02');
     //     Editor.Panel.open('panel-ipc-03');
 

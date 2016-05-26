@@ -13,12 +13,12 @@ describe('Editor.IpcListener', function () {
 
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  afterEach(() => {
     ipc.clear();
   });
 
-  describe('Editor.Ipc.sendToMain', function () {
-    it('should work in renderer process', function (done) {
+  describe('Editor.Ipc.sendToMain', () => {
+    it('should work in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
       this.timeout(0);
@@ -33,7 +33,7 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should work in main process', function (done) {
+    it('should work in main process', done => {
       ipc.on('foobar:say-hello-no-param', (event) => {
         expect(event.senderType).to.eql('main');
       });
@@ -50,7 +50,7 @@ describe('Editor.IpcListener', function () {
       Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar');
     });
 
-    it('should send ipc in order', function (done) {
+    it('should send ipc in order', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-in-order.html');
 
@@ -89,8 +89,8 @@ describe('Editor.IpcListener', function () {
     });
   });
 
-  describe('Editor.Ipc.sendToWins', function () {
-    it('should send message to all windows in main process', function (done) {
+  describe('Editor.Ipc.sendToWins', () => {
+    it('should send message to all windows in main process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
 
@@ -120,7 +120,7 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should send message to all windows in renderer process', function (done) {
+    it('should send message to all windows in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
 
@@ -142,7 +142,7 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should send message to window exclude self', function (done) {
+    it('should send message to window exclude self', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-exclude-self.html');
 
@@ -163,15 +163,15 @@ describe('Editor.IpcListener', function () {
 
   });
 
-  describe('Editor.Ipc.sendToAll', function () {
-    it('should send message to all process in main process', function (done) {
+  describe('Editor.Ipc.sendToAll', () => {
+    it('should send message to all process in main process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
-      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
@@ -198,14 +198,14 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should send message to all process in renderer process', function (done) {
+    it('should send message to all process in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
 
-      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
@@ -224,14 +224,14 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should send message to all process exclude self in main process', function (done) {
+    it('should send message to all process exclude self in main process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
-      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         assert(false, 'Main process should not recieve ipc event');
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
@@ -263,14 +263,14 @@ describe('Editor.IpcListener', function () {
       });
     });
 
-    it('should send message to all process exclude self in renderer process', function (done) {
+    it('should send message to all process exclude self in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-exclude-self.html');
 
       let win2 = new Editor.Window();
       win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
 
-      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
@@ -297,12 +297,12 @@ describe('Editor.IpcListener', function () {
     });
   });
 
-  describe('Editor.Ipc.sendToPackage', function () {
-    it('should send message to package\'s main process in renderer process', function (done) {
+  describe('Editor.Ipc.sendToPackage', () => {
+    it('should send message to package\'s main process in renderer process', done => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2pkg-simple.html');
 
-      ipc.on('foobar:say-hello', function ( event, foo, bar ) {
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
         expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
         expect(foo).to.eql('foo');
         expect(bar).to.eql('bar');

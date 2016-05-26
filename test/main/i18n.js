@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Editor.i18n', function () {
-  beforeEach (function () {
+  beforeEach (() => {
     Editor.i18n.extend({
       test: {
         foo: '腐',
@@ -10,11 +10,11 @@ describe('Editor.i18n', function () {
     });
   });
 
-  afterEach (function () {
+  afterEach (() => {
     Editor.i18n.unset('test');
   });
 
-  it('should format the path', function ( done ) {
+  it('should format the path', done => {
     expect(Editor.i18n.formatPath('i18n:test.foo/i18n:test.bar/foobar')).to.eql('腐/爸/foobar');
 
     done();

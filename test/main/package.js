@@ -14,18 +14,18 @@ describe('Editor.Package', function () {
     ],
   });
 
-  describe('fixtures/packages/simple', function () {
+  describe('fixtures/packages/simple', () => {
     const path = Path.join(testPackages,'simple');
 
-    afterEach(function (done) {
+    afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should load simple package', function (done) {
+    it('should load simple package', done => {
       Editor.Package.load(path, done);
     });
 
-    it('should unload simple package', function (done) {
+    it('should unload simple package', done => {
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
@@ -33,60 +33,60 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/simple ipc-message', function () {
+  describe('fixtures/packages/simple ipc-message', () => {
     const path = Path.join(testPackages,'simple');
 
     assert.isTrue( Fs.existsSync(path) );
 
-    beforeEach(function () {
+    beforeEach(() => {
       Helper.reset();
     });
 
-    it('should send loaded ipc message', function (done) {
-      Editor.Package.load(path, function () {
+    it('should send loaded ipc message', done => {
+      Editor.Package.load(path, () => {
         assert( Helper.sendToWins.calledWith('editor:package-loaded', 'simple') );
         done();
       });
     });
 
-    it('should send unload message', function (done) {
+    it('should send unload message', done => {
       Async.series([
         next => { Editor.Package.load(path, next); },
         next => { Editor.Package.unload(path, next); },
-      ], function () {
+      ], () => {
         assert( Helper.sendToWins.calledWith('editor:package-unloaded', 'simple') );
         done();
       });
     });
   });
 
-  describe('fixtures/packages/main-ipc', function () {
+  describe('fixtures/packages/main-ipc', () => {
     const path = Path.join(testPackages,'main-ipc');
 
     assert.isTrue( Fs.existsSync(path) );
 
-    it('should reply ipc messages', function (done) {
-      Editor.Package.load(path, function () {
+    it('should reply ipc messages', done => {
+      Editor.Package.load(path, () => {
         Async.series([
           next => {
-            Editor.Ipc.sendToMain('main-ipc:say-hello', function ( err, msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello', (err, msg) => {
               expect(msg).to.equal('hello');
               next();
             });
           },
           next => {
-            Editor.Ipc.sendToMain('main-ipc:say-hello-02', function ( err, msg ) {
+            Editor.Ipc.sendToMain('main-ipc:say-hello-02', (err, msg) => {
               expect(msg).to.equal('hello-02');
               next();
             });
           },
           next => {
-            Editor.Ipc.sendToMain('another:say-hello-03', function ( err, msg ) {
+            Editor.Ipc.sendToMain('another:say-hello-03', (err, msg) => {
               expect(msg).to.equal('hello-03');
               next();
             });
           },
-        ], function () {
+        ], () => {
           done();
         });
 
@@ -94,14 +94,14 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/main-deps', function () {
+  describe('fixtures/packages/main-deps', () => {
     const path = Path.join(testPackages,'main-deps');
 
-    afterEach(function (done) {
+    afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should unload main-deps package', function (done) {
+    it('should unload main-deps package', done => {
       let cache = require.cache;
       let loadCacheList = [];
       Async.series([
@@ -134,14 +134,14 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/package-json-broken', function () {
+  describe('fixtures/packages/package-json-broken', () => {
     const path = Path.join(testPackages,'package-json-broken');
 
-    afterEach(function (done) {
+    afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when package.json broken', function (done) {
+    it('should report error when package.json broken', done => {
       Editor.Package.load(path, err => {
         assert(err);
         done();
@@ -149,10 +149,10 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/localize', function () {
+  describe('fixtures/packages/localize', () => {
     const path = Path.join(testPackages,'localize');
 
-    it('should load and unload en i18n file', function (done) {
+    it('should load and unload en i18n file', done => {
       Editor.Package.lang = 'en';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('Search');
@@ -165,7 +165,7 @@ describe('Editor.Package', function () {
       });
     });
 
-    it('should load zh i18n file', function (done) {
+    it('should load zh i18n file', done => {
       Editor.Package.lang = 'zh';
       Editor.Package.load(path, () => {
         expect(Editor.T('localize.search')).to.equal('搜索');
@@ -176,14 +176,14 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/host-not-exists', function () {
+  describe('fixtures/packages/host-not-exists', () => {
     const path = Path.join(testPackages,'host-not-exists');
 
-    afterEach(function (done) {
+    afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when hosts not exists', function (done) {
+    it('should report error when hosts not exists', done => {
       Editor.Package.load(path, err => {
         assert(err);
         done();
@@ -191,14 +191,14 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/main-js-broken', function () {
+  describe('fixtures/packages/main-js-broken', () => {
     const path = Path.join(testPackages,'main-js-broken');
 
-    afterEach(function (done) {
+    afterEach(done => {
       Editor.Package.unload(path, done);
     });
 
-    it('should report error when failed to load main.js', function (done) {
+    it('should report error when failed to load main.js', done => {
       Editor.Package.load(path, err => {
         assert(err);
         done();
@@ -206,17 +206,17 @@ describe('Editor.Package', function () {
     });
   });
 
-  describe('fixtures/packages/package-deps', function () {
+  describe('fixtures/packages/package-deps', () => {
     const path1 = Path.join(testPackages,'package-deps');
     const path2 = Path.join(testPackages,'dep-01');
     const path3 = Path.join(testPackages,'dep-02');
 
-    beforeEach(function (done) {
+    beforeEach(done => {
       Helper.reset();
       done();
     });
 
-    afterEach(function (done) {
+    afterEach(done => {
       Async.series([
         next => {
           Editor.Package.unload(path1, next);
@@ -234,7 +234,7 @@ describe('Editor.Package', function () {
       ], done);
     });
 
-    it('should load dependencies first', function (done) {
+    it('should load dependencies first', done => {
       Helper.spyMessages( 'sendToWins', [
         'editor:package-loaded',
       ]);
@@ -251,9 +251,9 @@ describe('Editor.Package', function () {
     });
   });
 
-  // it.skip('should build fixtures/packages/needs-build', function( done ) {
+  // it.skip('should build fixtures/packages/needs-build', done => {
   // });
 
-  // it.skip('should remove bin/dev when unload fixtures/packages/needs-build', function( done ) {
+  // it.skip('should remove bin/dev when unload fixtures/packages/needs-build', done => {
   // });
 });
