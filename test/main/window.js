@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec window', t => {
+suite(tap, 'spec window', {timeout: 10000}, t => {
   t.test('should open the window and load local file', t => {
     let editorWin = new Editor.Window();
     editorWin.load('editor-framework://test/fixtures/simple.html');
@@ -10,9 +10,7 @@ suite(tap, 'spec window', t => {
     });
   });
 
-  t.test('should open the window and load remote web-site', {
-    timeout: 10000
-  }, t => {
+  t.test('should open the window and load remote web-site', t => {
     let editorWin = new Editor.Window();
     editorWin.load('http://www.baidu.com');
 

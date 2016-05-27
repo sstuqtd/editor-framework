@@ -1,141 +1,168 @@
 'use strict';
 
-suite(tap, 'Helper', t => {
-  let testEL;
+suite(tap, 'spec helper', t => {
+  function _newElement (cb) {
+    let el = document.createElement('div');
+    el.classList.add('layout');
+    el.classList.add('fit');
+    el.tabIndex = -1;
 
-  t.beforeEach(done => {
-    testEL = document.createElement('div');
-    testEL.classList.add('layout');
-    testEL.classList.add('fit');
-    testEL.tabIndex = -1;
+    document.body.appendChild(el);
+    cb(el);
+  }
 
-    document.body.appendChild(testEL);
-    done();
-  });
+  t.test('should respond keydown "a"', t => {
+    _newElement(el => {
+      el.focus();
+      el.addEventListener('keydown', event => {
+        t.equal(event.keyCode, Editor.KeyCode('a'));
 
-  t.afterEach(done => {
-    testEL.remove();
-    done();
-  });
+        el.remove();
+        t.end();
+      });
 
-  this.timeout(50);
-
-  it('should respond keydown "a"', done => {
-    testEL.focus();
-    testEL.addEventListener('keydown', event => {
-      expect(event.keyCode).to.be.eql(Editor.KeyCode('a'));
-
-      done();
+      helper.keydown('a');
     });
-
-    Helper.keydown('a');
   });
 
-  it('should respond "command + t"', done => {
-    testEL.focus();
-    testEL.addEventListener('keydown', event => {
-      assert(event.metaKey);
-      expect(event.keyCode).to.be.eql(Editor.KeyCode('t'));
+  t.test('should respond "command + t"', t => {
+    _newElement(el => {
+      el.focus();
+      el.addEventListener('keydown', event => {
+        t.assert(event.metaKey);
+        t.equal(event.keyCode, Editor.KeyCode('t'));
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.keydown('t', ['command'] );
     });
-    Helper.keydown('t', ['command'] );
   });
 
-  it('should respond keyup "b"', done => {
-    testEL.focus();
-    testEL.addEventListener('keyup', event => {
-      expect(event.keyCode).to.be.eql(Editor.KeyCode('b'));
+  t.test('should respond keyup "b"', t => {
+    _newElement(el => {
+      el.focus();
+      el.addEventListener('keyup', event => {
+        t.equal(event.keyCode, Editor.KeyCode('b'));
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.keyup('b');
     });
-    Helper.keyup('b');
   });
 
-  it('should respond click', done => {
-    testEL.addEventListener( 'click', event => {
-      expect(event.which).to.be.eql(1);
+  t.test('should respond click', t => {
+    _newElement(el => {
+      el.addEventListener( 'click', event => {
+        t.equal(event.which, 1);
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.click( el );
     });
-
-    Helper.click( testEL );
   });
 
-  it('should respond mousedown on right button', done => {
-    testEL.addEventListener('mousedown', event => {
-      expect(event.which).to.be.eql(3);
+  t.test('should respond mousedown on right button', t => {
+    _newElement(el => {
+      el.addEventListener('mousedown', event => {
+        t.equal(event.which, 3);
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.mousedown( el, 'right' );
     });
-
-    Helper.mousedown( testEL, 'right' );
   });
 
-  it('should respond mouseup on left button', done => {
-    testEL.addEventListener( 'mouseup', event => {
-      expect(event.which).to.be.eql(1);
+  t.test('should respond mouseup on left button', t => {
+    _newElement(el => {
+      el.addEventListener( 'mouseup', event => {
+        t.equal(event.which, 1);
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.mouseup( el, 'left' );
     });
-
-    Helper.mouseup( testEL, 'left' );
   });
 
-  it('should respond dblclick on left button', done => {
-    testEL.addEventListener( 'dblclick', event => {
-      expect(event.which).to.be.eql(1);
+  t.test('should respond dblclick on left button', t => {
+    _newElement(el => {
+      el.addEventListener( 'dblclick', event => {
+        t.equal(event.which, 1);
 
-      done();
+        el.remove();
+        t.end();
+      });
+
+      helper.dblclick( el, 'left' );
     });
-
-    Helper.dblclick( testEL, 'left' );
   });
 
-  it('should respond mousewheel', done => {
-    testEL.addEventListener( 'mousewheel', event => {
-      expect(event.deltaY).to.be.equal(10);
-      done();
+  t.test('should respond mousewheel', t => {
+    _newElement(el => {
+      el.addEventListener( 'mousewheel', event => {
+        t.equal(event.deltaY, 10);
+
+        el.remove();
+        t.end();
+      });
+
+      helper.mousewheel( el, null, 10 );
     });
-
-    Helper.mousewheel( testEL, null, 10 );
   });
 
-  it('should respond mousemove', function (done) {
-    this.timeout(0);
-
-    Helper.mousemove(
-      testEL,
-      'left',
-      1000,
-      `M0,0, L100,100, C100,0, 200,0, 200,100`,
-      done
-    );
-  });
-
-  it('should respond mousemove step', function (done) {
-    this.timeout(0);
-
-    let results = [
-      { x: 0, y: 0 },
-      { x: 20, y: 20 },
-      { x: 40, y: 40 },
-      { x: 60, y: 60 },
-      { x: 80, y: 80 },
-      { x: 100, y: 100 },
-    ];
-    let idx = 0;
-    testEL.addEventListener( 'mousemove', event => {
-      expect( event.clientX ).to.equal(results[idx].x);
-      expect( event.clientY ).to.equal(results[idx].y);
-      idx += 1;
-
-      if ( idx >= results.length ) {
-        done();
-        return;
-      }
+  t.test('should respond mousemove', {timeout: 0}, t => {
+    _newElement(el => {
+      helper.mousemove(
+        el,
+        'left',
+        1000,
+        `M0,0, L100,100, C100,0, 200,0, 200,100`,
+        () => {
+          el.remove();
+          t.end();
+        }
+      );
     });
+  });
 
-    Helper.mousemoveStep( testEL, 'left', 5, `M0,0, L100,100` );
+  t.test('should respond mousemove step', {timeout: 0}, t => {
+    _newElement(el => {
+      // reset the mouse to 0,0
+      helper.mousemove(el, 'left', 100, `M0,0, 0,0`, () => {
+        let results = [
+          { x: 0, y: 0 },
+          { x: 20, y: 20 },
+          { x: 40, y: 40 },
+          { x: 60, y: 60 },
+          { x: 80, y: 80 },
+          { x: 100, y: 100 },
+        ];
+        let idx = 0;
+
+        el.addEventListener('mousemove', event => {
+          t.equal(event.clientX, results[idx].x, `idx = ${idx}`);
+          t.equal(event.clientY, results[idx].y, `idx = ${idx}`);
+          idx += 1;
+
+          if ( idx === results.length ) {
+            el.remove();
+            t.end();
+
+            return;
+          }
+        });
+
+        helper.mousemoveStep( el, 'left', 5, `M0,0, L100,100` );
+      });
+    });
   });
 });

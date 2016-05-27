@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'Editor.UI.FocusMgr', t => {
+suite(tap, 'spec focus-mgr', t => {
   t.beforeEach(done => {
     Editor.Window.center();
     done();
