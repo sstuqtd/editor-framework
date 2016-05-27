@@ -26,7 +26,7 @@ class DummyCmd extends Editor.Undo.Command {
   dirty () { return false; }
 }
 
-suite(tap, 'spec undo', t => {
+suite(tap, 'undo', {timeout: 2000}, t => {
   helper.runEditor(tap, {
     'undo': {
       'foo': FooCmd,

@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec <ui-checkbox>', t => {
+suite(tap, '<ui-checkbox>', {timeout: 2000}, t => {
   function _newElement ( cb ) {
     helper.runElement(
       'editor-framework://test/fixtures/checkbox.html', 'simple', '#element', cb

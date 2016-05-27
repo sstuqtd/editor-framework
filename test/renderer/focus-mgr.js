@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec focus-mgr', t => {
+suite(tap, 'focus-mgr', {timeout: 2000}, t => {
   t.beforeEach(done => {
     Editor.Window.center();
     done();

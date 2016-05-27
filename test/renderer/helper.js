@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec helper', t => {
+suite(tap, 'helper', {timeout: 2000}, t => {
   function _newElement (cb) {
     let el = document.createElement('div');
     el.classList.add('layout');

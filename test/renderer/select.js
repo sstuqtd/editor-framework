@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec <ui-select>', t => {
+suite(tap, '<ui-select>', {timeout: 2000}, t => {
   function _newElement ( cb ) {
     helper.runElement(
       'editor-framework://test/fixtures/select.html', 'simple', '#element', cb

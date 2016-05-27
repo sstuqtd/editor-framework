@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec <ui-slider>', t => {
+suite(tap, '<ui-slider>', {timeout: 2000}, t => {
   function _newElement ( cb ) {
     helper.runElement(
       'editor-framework://test/fixtures/slider.html', 'simple', '#element', cb

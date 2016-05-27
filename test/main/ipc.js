@@ -6,7 +6,7 @@ const BrowserWindow = Electron.BrowserWindow;
 const Async = require('async');
 
 //
-suite(tap, 'spec ipc', {timeout: 0}, t => {
+suite(tap, 'spec ipc', t => {
   helper.runEditor(t, {
     enableIpc: true,
   });
@@ -18,7 +18,7 @@ suite(tap, 'spec ipc', {timeout: 0}, t => {
     done();
   });
 
-  suite(t, 'Editor.Ipc.sendToMain', {timeout: 0}, t => {
+  suite(t, 'Editor.Ipc.sendToMain', t => {
     t.test('it should work in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
@@ -89,7 +89,7 @@ suite(tap, 'spec ipc', {timeout: 0}, t => {
     });
   });
 
-  suite(t, 'Editor.Ipc.sendToWins', {timeout: 0}, t => {
+  suite(t, 'Editor.Ipc.sendToWins', t => {
     t.test('it should send message to all windows in main process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
@@ -162,7 +162,7 @@ suite(tap, 'spec ipc', {timeout: 0}, t => {
     });
   });
 
-  suite(t, 'Editor.Ipc.sendToAll', {timeout: 0}, t => {
+  suite(t, 'Editor.Ipc.sendToAll', t => {
     t.test('it should send message to all process in main process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
@@ -296,7 +296,7 @@ suite(tap, 'spec ipc', {timeout: 0}, t => {
     });
   });
 
-  suite(t, 'Editor.Ipc.sendToPackage', {timeout: 0}, t => {
+  suite(t, 'Editor.Ipc.sendToPackage', t => {
     t.test('it should send message to package\'s main process in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2pkg-simple.html');

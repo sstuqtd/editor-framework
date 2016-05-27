@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec selection', t => {
+suite(tap, 'selection', {timeout: 2000}, t => {
   helper.runEditor(t, {
     'selection': ['normal', 'special'],
   });

@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec menu', t => {
+suite(tap, 'menu', {timeout: 2000}, t => {
   function getTemplate () {
     return [
       {

@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec i18n', t => {
+suite(tap, 'i18n', {timeout: 2000}, t => {
   t.beforeEach(done => {
     Editor.i18n.extend({
       test: {

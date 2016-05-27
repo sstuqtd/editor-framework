@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec <ui-button>', t => {
+suite(tap, '<ui-button>', {timeout: 2000}, t => {
   function _newElement ( cb ) {
     helper.runElement(
       'editor-framework://test/fixtures/button.html', 'simple', '#element', cb

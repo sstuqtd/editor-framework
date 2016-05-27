@@ -2,7 +2,7 @@
 
 const Path = require('fire-path');
 
-suite(tap, 'spec protocol', t => {
+suite(tap, 'protocol', {timeout: 2000}, t => {
   t.test('it should return original path if we don\'t provide protocol', t => {
     t.equal(Editor.url('foo/bar/foobar.js'), 'foo/bar/foobar.js');
 

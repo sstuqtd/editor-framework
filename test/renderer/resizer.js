@@ -1,7 +1,7 @@
 'use strict';
 
-suite(tap, 'spec <ui-dock-resizer>', {timeout: 0}, t => {
-  suite(t, '<ui-dock-resizer> horizontal', {timeout: 0}, t => {
+suite(tap, '<ui-dock-resizer>', t => {
+  suite(t, '<ui-dock-resizer> horizontal', t => {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
     let targetEL;
 
@@ -81,7 +81,7 @@ suite(tap, 'spec <ui-dock-resizer>', {timeout: 0}, t => {
     });
   });
 
-  suite(t, '<ui-dock-resizer> vertical', {timeout: 0}, t => {
+  suite(t, '<ui-dock-resizer> vertical', t => {
     let totalSize = 480 - Editor.UI.DockUtils.resizerSpace * 2;
     let targetEL;
 

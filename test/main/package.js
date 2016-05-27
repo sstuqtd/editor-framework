@@ -5,7 +5,7 @@ const Path = require('fire-path');
 const Async = require('async');
 
 //
-suite(tap, 'spec package', t => {
+suite(tap, 'package', {timeout: 2000}, t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
   helper.runEditor(t, {

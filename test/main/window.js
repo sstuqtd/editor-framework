@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'spec window', {timeout: 10000}, t => {
+suite(tap, 'window', {timeout: 10000}, t => {
   t.test('should open the window and load local file', t => {
     let editorWin = new Editor.Window();
     editorWin.load('editor-framework://test/fixtures/simple.html');
