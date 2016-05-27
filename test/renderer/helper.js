@@ -1,9 +1,9 @@
 'use strict';
 
-describe('Helper', function() {
+suite(tap, 'Helper', t => {
   let testEL;
 
-  beforeEach(done => {
+  t.beforeEach(done => {
     testEL = document.createElement('div');
     testEL.classList.add('layout');
     testEL.classList.add('fit');
@@ -13,7 +13,7 @@ describe('Helper', function() {
     done();
   });
 
-  afterEach(done => {
+  t.afterEach(done => {
     testEL.remove();
     done();
   });

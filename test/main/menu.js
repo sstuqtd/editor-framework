@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'Editor.Menu', t => {
+suite(tap, 'spec menu', t => {
   function getTemplate () {
     return [
       {

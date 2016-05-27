@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'Editor.Selection', t => {
+suite(tap, 'spec selection', t => {
   helper.runEditor(t, {
     'selection': ['normal', 'special'],
   });

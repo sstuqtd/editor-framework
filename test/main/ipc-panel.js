@@ -6,7 +6,7 @@ const Path = require('fire-path');
 // const Async = require('async');
 
 //
-suite(tap, 'Editor.IpcListener Panel', t => {
+suite(tap, 'spec ipc-panel', t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
   helper.runEditor(t, {

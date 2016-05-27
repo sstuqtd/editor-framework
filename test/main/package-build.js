@@ -7,7 +7,7 @@ const Diff = require('diff');
 const Sinon = require('sinon');
 
 //
-suite(tap, 'Editor.Package building test', t => {
+suite(tap, 'spec package-build', t => {
   suite(t, 'test fixtures/packages/needs-build (core-level)', t => {
     const path = Editor.url('editor-framework://test/fixtures/packages/needs-build');
 

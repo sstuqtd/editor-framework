@@ -1,6 +1,6 @@
 'use strict';
 
-suite(tap, 'Editor.i18n', t => {
+suite(tap, 'spec i18n', t => {
   t.beforeEach(done => {
     Editor.i18n.extend({
       test: {

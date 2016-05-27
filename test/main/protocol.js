@@ -2,7 +2,7 @@
 
 const Path = require('fire-path');
 
-suite(tap, 'Editor.url', t => {
+suite(tap, 'spec protocol', t => {
   t.test('it should return original path if we don\'t provide protocol', t => {
     t.equal(Editor.url('foo/bar/foobar.js'), 'foo/bar/foobar.js');
 

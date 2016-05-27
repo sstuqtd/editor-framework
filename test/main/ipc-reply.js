@@ -6,7 +6,7 @@ const BrowserWindow = Electron.BrowserWindow;
 // const Async = require('async');
 
 //
-suite(tap, 'Editor.IpcListener Reply', t => {
+suite(tap, 'spec ipc-reply', {timeout: 0}, t => {
   helper.runEditor(t, {
     enableIpc: true,
   });
