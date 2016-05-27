@@ -18,7 +18,7 @@ suite(tap, 'spec ipc-reply', {timeout: 0}, t => {
     done();
   });
 
-  suite(t, 'Editor.Ipc.sendToMain', t => {
+  suite(t, 'Editor.Ipc.sendToMain', {timeout: 0}, t => {
     t.test('it should send message to main process and recieve a reply when starting a request in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
@@ -134,7 +134,7 @@ suite(tap, 'spec ipc-reply', {timeout: 0}, t => {
     });
   });
 
-  suite(t, 'Editor.Window.send', t => {
+  suite(t, 'Editor.Window.send', {timeout: 0}, t => {
     t.test('it should send message to renderer process and recieve a reply when starting a request in main process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');

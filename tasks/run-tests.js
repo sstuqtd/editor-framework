@@ -13,12 +13,19 @@ const spawn = require('child_process').spawn;
 // ==========================
 
 const yargs = require('yargs');
+yargs.options({
+  'detail': { type: 'boolean', desc: 'Run test in debug mode (It will not quit the test, and open the devtools to help you debug it).' },
+});
 
 let yargv = yargs.argv;
 if ( yargv._.length ) {
   let file = yargv._[0];
 
   let args = ['./test', 'test', file];
+  if ( yargv.detail ) {
+    args.push('--detail');
+  }
+
   spawn(electron, args, {
     stdio: 'inherit',
   });

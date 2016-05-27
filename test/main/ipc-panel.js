@@ -6,7 +6,7 @@ const Path = require('fire-path');
 // const Async = require('async');
 
 //
-suite(tap, 'spec ipc-panel', t => {
+suite(tap, 'spec ipc-panel', {timeout: 5000}, t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
   helper.runEditor(t, {
@@ -21,7 +21,7 @@ suite(tap, 'spec ipc-panel', t => {
     done();
   });
 
-  t.test('Editor.Ipc.sendToPanel', {autoend: true, timeout: 5000}, t => {
+  suite(t, 'Editor.Ipc.sendToPanel', {timeout: 5000}, t => {
 
     t.test('it should send message to panel from main process', t => {
       const path = Path.join(testPackages,'panel-ipc');

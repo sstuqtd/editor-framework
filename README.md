@@ -253,10 +253,10 @@ npm start ./test -- test --detail ${your/test/path}
 **Main Process**
 
 ```js
-describe('Test Main Process', function () {
-  it ('should be ok', done => {
-    done();
-  })
+suite(tap, 'Test Main Process', t => {
+  t.test ('should be ok', t => {
+    t.end();
+  });
 });
 ```
 
@@ -269,15 +269,18 @@ describe('Test Main Process', function () {
 ```
 
 ```js
-describe('Test Renderer Process', function () {
-  Helper.runElement('app://test/my-template.html', 'basic', 'div.title');
+suite(tap, 'Test Renderer Process', t => {
+  t.test('should be ok', t => {
+    helper.runElement(
+      'app://test/my-template.html', 'basic', 'div.title',
+      el => {
+        t.assert(el, 'element not found');
+        t.equal(el.innertText, 'Hello World');
 
-  it ('should be ok', done => {
-    assert(Helper.targetEL, 'element not found');
-    expect(Helper.targetEL.innertText).to.eql('Hello World');
-
-    done();
-  })
+        t.end();
+      }
+    );
+  });
 });
 ```
 
