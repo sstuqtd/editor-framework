@@ -16,6 +16,8 @@
 
   padding-right: 50px;
   white-space: nowrap;
+
+  cursor: default;
 }
 
 .wrapper {
@@ -67,7 +69,6 @@
 }
 
 input {
-  border: 0;
   margin: 0;
   outline: none;
   padding: 0.0em 0.4em;
@@ -82,6 +83,8 @@ input {
 
   background: @input_bg_color;
   color: @input_text_color;
+
+  font-size: @medium;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -99,7 +102,7 @@ input:hover {
 /*   border-color: @input_focus_color; */
 /* }                                   */
 
-:host([focused]) {
+:host([focused]:not([disabled])) {
   .wrapper:focus .nubbin {
     box-shadow:
       0 1px 3px 1px rgba(255,128,0,0.2) inset,

@@ -1,22 +1,23 @@
 'use strict';
 
-describe('Editor.Window', function () {
-  it('should open the window and load local file', function ( done ) {
+suite(tap, 'window', {timeout: 10000}, t => {
+  t.test('should open the window and load local file', t => {
     let editorWin = new Editor.Window();
     editorWin.load('editor-framework://test/fixtures/simple.html');
     editorWin.nativeWin.webContents.on('dom-ready', () => {
-      done();
+      editorWin.close();
+      t.end();
     });
   });
 
-  it('should open the window and load remote web-site', function ( done ) {
-    this.timeout(10000);
+  t.test('should open the window and load remote web-site', t => {
     let editorWin = new Editor.Window();
     editorWin.load('http://www.baidu.com');
 
-    expect ( editorWin._url ).to.eql('http://www.baidu.com');
+    t.equal( editorWin._url, 'http://www.baidu.com');
     editorWin.nativeWin.webContents.on('dom-ready', () => {
-      done();
+      editorWin.close();
+      t.end();
     });
   });
 });

@@ -2,28 +2,29 @@
 
 const Path = require('fire-path');
 
-describe('Editor.url', function () {
-  it('should return original path if we don\'t provide protocol', function ( done ) {
-    expect(Editor.url('foo/bar/foobar.js')).to.eql('foo/bar/foobar.js');
+suite(tap, 'protocol', {timeout: 2000}, t => {
+  t.test('it should return original path if we don\'t provide protocol', t => {
+    t.equal(Editor.url('foo/bar/foobar.js'), 'foo/bar/foobar.js');
 
-    done();
+    t.end();
   });
 
-  it('should return original if the protocol is default protocol', function ( done ) {
-    expect(Editor.url('http://foo/bar/foobar.js')).to.eql('http://foo/bar/foobar.js');
-    expect(Editor.url('https://foo/bar/foobar.js')).to.eql('https://foo/bar/foobar.js');
-    expect(Editor.url('ftp://foo/bar/foobar.js')).to.eql('ftp://foo/bar/foobar.js');
-    expect(Editor.url('ssh://foo/bar/foobar.js')).to.eql('ssh://foo/bar/foobar.js');
-    expect(Editor.url('file:///foo/bar/foobar.js')).to.eql('file:///foo/bar/foobar.js');
+  t.test('it should return original if the protocol is default protocol', t => {
+    t.equal(Editor.url('http://foo/bar/foobar.js'), 'http://foo/bar/foobar.js');
+    t.equal(Editor.url('https://foo/bar/foobar.js'), 'https://foo/bar/foobar.js');
+    t.equal(Editor.url('ftp://foo/bar/foobar.js'), 'ftp://foo/bar/foobar.js');
+    t.equal(Editor.url('ssh://foo/bar/foobar.js'), 'ssh://foo/bar/foobar.js');
+    t.equal(Editor.url('file:///foo/bar/foobar.js'), 'file:///foo/bar/foobar.js');
 
-    done();
+    t.end();
   });
 
-  it('should return registerred protocol path', function ( done ) {
-    expect(Editor.url('app://foo/bar/foobar.js')).to.eql(
+  t.test('it should return registerred protocol path', t => {
+    t.equal(
+      Editor.url('app://foo/bar/foobar.js'),
       Path.join(Editor.App.path, 'foo/bar/foobar.js')
     );
 
-    done();
+    t.end();
   });
 });

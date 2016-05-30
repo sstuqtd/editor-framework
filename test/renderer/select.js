@@ -1,39 +1,52 @@
 'use strict';
 
-describe('<ui-select>', function () {
-  describe('html', function () {
-    Helper.runElement('editor-framework://test/fixtures/select.html', 'simple', '#element');
+suite(tap, '<ui-select>', {timeout: 2000}, t => {
+  function _newElement ( cb ) {
+    helper.runElement(
+      'editor-framework://test/fixtures/select.html', 'simple', '#element', cb
+    );
+  }
 
-    beforeEach(function ( done ) {
-      Editor.Window.center();
+  t.beforeEach(done => {
+    Editor.Window.center();
+    done();
+  });
 
-      done();
+  t.afterEach(done => {
+    helper.reset();
+    done();
+  });
+
+  t.test('should have shadow root', t => {
+    _newElement(el => {
+      t.assert(el.shadowRoot);
+      t.end();
     });
+  });
 
-    it('should have shadow root', function ( done ) {
-      assert(Helper.targetEL.shadowRoot);
+  t.test('should focus on element when left mouse down', t => {
+    _newElement(el => {
+      helper.mousedown( el, 'left' );
 
-      done();
-    });
-
-    it('should focus on element when left mouse down', function ( done ) {
-      Helper.mousedown( Helper.targetEL, 'left' );
-
-      setTimeout(function () {
-        expect(Helper.targetEL.focused).to.equal(true);
-        Helper.keydown( 'esc' );
-        done();
+      setTimeout(() => {
+        t.equal(el.focused, true);
+        helper.keydown( 'esc' );
+        t.end();
       }, 1);
     });
+  });
 
-    it('should get "1" from value property', function ( done ) {
-      expect(Helper.targetEL.value).to.equal('1');
-      done();
+  t.test('should get "1" from value property', t => {
+    _newElement(el => {
+      t.equal(el.value, '1');
+      t.end();
     });
+  });
 
-    it('should get "Bar" from selectedText property', function ( done ) {
-      expect(Helper.targetEL.selectedText).to.equal('Bar');
-      done();
+  t.test('should get "Bar" from selectedText property', t => {
+    _newElement(el => {
+      t.equal(el.selectedText, 'Bar');
+      t.end();
     });
   });
 });

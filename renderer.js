@@ -118,7 +118,7 @@
 
     window.addEventListener('beforeunload', event => {
       let frameELs = EditorR.Panel.panels;
-      let returnValue = true;
+      let stopUnload = false;
 
       frameELs.forEach(el => {
         let result = true;
@@ -127,11 +127,13 @@
         }
 
         if ( result === false ) {
-          returnValue = false;
+          stopUnload = true;
         }
       });
 
-      event.returnValue = returnValue;
+      if ( stopUnload ) {
+        event.returnValue = true;
+      }
     });
 
     // DISABLE: looks like setting the `body: { overflow: hidden; }` will solve the problem

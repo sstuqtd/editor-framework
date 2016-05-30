@@ -6,89 +6,89 @@ const BrowserWindow = Electron.BrowserWindow;
 // const Async = require('async');
 
 //
-describe('Editor.IpcListener Reply', function () {
-  Helper.run({
+suite(tap, 'ipc-reply', t => {
+  helper.runEditor(t, {
     enableIpc: true,
   });
 
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  t.afterEach(done => {
     ipc.clear();
+    done();
   });
 
-  describe('Editor.Ipc.sendToMain', function () {
-    it('should send message to main process and recieve a reply when starting a request in renderer process', function (done) {
+  suite(t, 'Editor.Ipc.sendToMain', t => {
+    t.test('it should send message to main process and recieve a reply when starting a request in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
-        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
         event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
         win.close();
-
-        done();
+        t.end();
       });
     });
 
-    it('should send message to main process and recieve a reply when starting a request in main process', function (done) {
+    t.test('it should send message to main process and recieve a reply when starting a request in main process', t => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
-        expect(event.senderType).to.eql('main');
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
-        expect(event.reply).is.a('function');
+        t.equal(event.senderType, 'main');
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
+        t.type(event.reply, 'function');
 
         event.reply( null, foo, bar );
       });
 
       Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', ( err, foo, bar ) => {
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
-        done();
+        t.end();
       });
     });
 
-    it('should work for nested case', function (done) {
+    t.test('it should work for nested case', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-nested.html');
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
-        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
         event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:say-hello-nested', (event, foo, bar) => {
-        expect(BrowserWindow.fromWebContents(event.sender)).to.eql(win.nativeWin);
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
         event.reply(null,foo,bar);
       });
 
       ipc.on('foobar:reply', (event, foo, bar) => {
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
         win.close();
 
-        done();
+        t.end();
       });
     });
 
-    it('should close the session when timeout in renderer process', function (done) {
+    t.test('it should close the session when timeout in renderer process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple-timeout.html');
 
@@ -99,15 +99,16 @@ describe('Editor.IpcListener Reply', function () {
       });
 
       ipc.on('foobar:error', () => {
-        assert(false, 'this function should not be called');
+        t.error(new Error(), 'this function should not be called');
       });
 
       ipc.on('foobar:timeout', () => {
-        done();
+        win.close();
+        t.end();
       });
     });
 
-    it('should close the session when timeout in main process', function (done) {
+    t.test('it should close the session when timeout in main process', t => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
           event.reply(null,foo,bar);
@@ -115,11 +116,11 @@ describe('Editor.IpcListener Reply', function () {
       });
 
       ipc.on('foobar:timeout', () => {
-        done();
+        t.end();
       });
 
       ipc.on('foobar:error', () => {
-        assert(false, 'this function should not be called');
+        t.error(new Error(), 'this function should not be called');
       });
 
       Editor.Ipc.sendToMain('foobar:say-hello', 'foo', 'bar', (err) => {
@@ -133,56 +134,54 @@ describe('Editor.IpcListener Reply', function () {
     });
   });
 
-  describe('Editor.Window.send', function () {
-    this.timeout(0);
-
-    it('should send message to renderer process and recieve a reply when starting a request in main process', function (done) {
+  suite(t, 'Editor.Window.send', t => {
+    t.test('it should send message to renderer process and recieve a reply when starting a request in main process', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
         win.send('foobar:say-hello', 'foo', 'bar', (err,foo,bar) => {
-          expect(foo).to.eql('foo');
-          expect(bar).to.eql('bar');
+          t.equal(foo, 'foo');
+          t.equal(bar, 'bar');
 
           win.close();
-          done();
+          t.end();
         });
       });
     });
 
-    it('should work for nested case', function (done) {
+    t.test('it should work for nested case', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-nested.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
         win.send('foobar:say-hello', 'foo', 'bar', (err,foo,bar) => {
           win.send('foobar:say-hello-nested', foo, bar, (err,foo,bar) => {
-            expect(foo).to.eql('foo');
-            expect(bar).to.eql('bar');
+            t.equal(foo, 'foo');
+            t.equal(bar, 'bar');
 
             win.close();
-            done();
+            t.end();
           });
         });
       });
     });
 
-    it('should close the session when timeout', function (done) {
+    t.test('it should close the session when timeout', t => {
       let win = new Editor.Window();
       win.load('editor-framework://test/fixtures/ipc/sendreq2win-simple-timeout.html');
 
       win.nativeWin.webContents.on('dom-ready', () => {
         win.send('foobar:say-hello', 'foo', 'bar', (err) => {
-          assert(err.code, 'ETIMEOUT');
-          assert(err.ipc, 'foobar:say-hello');
+          t.assert(err.code, 'ETIMEOUT');
+          t.assert(err.ipc, 'foobar:say-hello');
         }, 200);
 
         setTimeout(() => {
-          done();
+          win.close();
+          t.end();
         }, 400);
       });
     });
   });
-
 });

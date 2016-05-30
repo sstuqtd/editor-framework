@@ -1,27 +1,27 @@
 'use strict';
 
-describe('focusable', function () {
+suite(tap, 'focusable', t => {
   let targetEL = null;
 
-  beforeEach(function ( done ) {
-    Polymer.Base.importHref('editor-framework://test/fixtures/behaviors.html', function () {
+  beforeEach(done => {
+    Polymer.Base.importHref('editor-framework://test/fixtures/behaviors.html', () => {
       targetEL = document.createElement('test-focusable');
       document.body.appendChild(targetEL);
       done();
     });
   });
 
-  afterEach(function ( done ) {
+  afterEach(done => {
     document.body.removeChild(targetEL);
     targetEL = null;
     done();
   });
 
-  it('should focus target when focus event invoked', function ( done ) {
+  it('should focus target when focus event invoked', done => {
     sinon.spy(targetEL, '_onFocus');
     targetEL.setFocus();
 
-    setTimeout( function () {
+    setTimeout(() => {
       assert( targetEL._onFocus.calledOnce );
       expect( targetEL.focused ).to.be.equal(true);
 
@@ -29,12 +29,12 @@ describe('focusable', function () {
     }, 10);
   });
 
-  it('should blur target when blur event invoked', function ( done ) {
+  it('should blur target when blur event invoked', done => {
     sinon.spy(targetEL, '_onBlur');
     targetEL.setFocus();
     targetEL.setBlur();
 
-    setTimeout( function () {
+    setTimeout(() => {
       assert( targetEL._onBlur.calledOnce );
       expect( targetEL.focused ).to.be.equal(false);
 
@@ -42,11 +42,11 @@ describe('focusable', function () {
     }, 10);
   });
 
-  it('should focus target when $.focus.focus() called', function ( done ) {
+  it('should focus target when $.focus.focus() called', done => {
     sinon.spy(targetEL, '_onFocus');
     targetEL.$.focus.focus();
 
-    setTimeout( function () {
+    setTimeout(() => {
       assert( targetEL._onFocus.calledOnce );
       expect( targetEL.focused ).to.be.equal(true);
 
@@ -54,12 +54,12 @@ describe('focusable', function () {
     }, 10);
   });
 
-  it('should focus target when $.focus.blur() called', function ( done ) {
+  it('should focus target when $.focus.blur() called', done => {
     sinon.spy(targetEL, '_onBlur');
     targetEL.$.focus.focus();
     targetEL.$.focus.blur();
 
-    setTimeout( function () {
+    setTimeout(() => {
       assert( targetEL._onBlur.calledOnce );
       expect( targetEL.focused ).to.be.equal(false);
 
@@ -67,12 +67,12 @@ describe('focusable', function () {
     }, 10);
   });
 
-  it('should not invoke _onBlur when target already focused', function ( done ) {
+  it('should not invoke _onBlur when target already focused', done => {
     sinon.spy(targetEL, '_onBlur');
     targetEL.$.focus.focus();
     targetEL.$.focus.focus();
 
-    setTimeout( function () {
+    setTimeout(() => {
       expect( targetEL._onBlur.callCount ).to.be.equal(0);
       done();
     }, 10);

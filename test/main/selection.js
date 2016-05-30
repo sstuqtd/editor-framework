@@ -1,120 +1,122 @@
 'use strict';
 
-describe('Editor.Selection', function () {
-  Helper.run({
+suite(tap, 'selection', {timeout: 2000}, t => {
+  helper.runEditor(t, {
     'selection': ['normal', 'special'],
   });
 
-  beforeEach(function () {
+  t.beforeEach(done => {
     Editor.Selection.clear('normal');
     Editor.Selection.clear('special');
-    Helper.reset();
+    helper.reset();
+
+    done();
   });
 
-  describe('Editor.Selection.select', function () {
+  suite(t, 'Editor.Selection.select', t => {
 
-    it('should work for simple case', function (done) {
+    t.test('it should work for simple case', t => {
       Editor.Selection.select('normal', 'a' );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('a');
+      t.same(Editor.Selection.curSelection('normal'), ['a']);
+      t.equal(Editor.Selection.curActivate('normal'), 'a');
 
       Editor.Selection.select('normal', 'b' );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['b']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('b');
+      t.same(Editor.Selection.curSelection('normal'), ['b']);
+      t.equal(Editor.Selection.curActivate('normal'), 'b');
 
-      done();
+      t.end();
     });
 
-    it('should work with array', function (done) {
+    t.test('it should work with array', t => {
       Editor.Selection.select('normal', ['a','b'] );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('b');
+      t.same(Editor.Selection.curSelection('normal'), ['a','b']);
+      t.equal(Editor.Selection.curActivate('normal'), 'b');
 
       Editor.Selection.select('normal', ['c','d'] );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['c','d']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('d');
+      t.same(Editor.Selection.curSelection('normal'), ['c','d']);
+      t.equal(Editor.Selection.curActivate('normal'), 'd');
 
-      done();
+      t.end();
     });
 
-    it('should work with confirm', function (done) {
+    t.test('it should work with confirm', t => {
       Editor.Selection.select('normal', 'a', false, false );
       Editor.Selection.select('normal', 'b', false, false );
       Editor.Selection.select('normal', 'c', false, false );
       Editor.Selection.select('normal', 'd', false, false );
 
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','c','d']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq(null);
+      t.same(Editor.Selection.curSelection('normal'), ['a','b','c','d']);
+      t.equal(Editor.Selection.curActivate('normal'), null);
 
       Editor.Selection.confirm();
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('d');
+      t.equal(Editor.Selection.curActivate('normal'), 'd');
 
-      done();
+      t.end();
     });
 
-    it('should work with cancel', function (done) {
+    t.test('it should work with cancel', t => {
       Editor.Selection.select('normal', 'a' );
       Editor.Selection.select('normal', 'b', false, false );
       Editor.Selection.select('normal', 'c', false, false );
       Editor.Selection.select('normal', 'd', false, false );
 
       Editor.Selection.cancel();
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('a');
+      t.same(Editor.Selection.curSelection('normal'), ['a']);
+      t.equal(Editor.Selection.curActivate('normal'), 'a');
 
-      done();
+      t.end();
     });
 
-    it('should active none when nothing select', function (done) {
+    t.test('should active none when nothing select', t => {
       Editor.Selection.select('normal', ['a','b','c','d'] );
       Editor.Selection.select('normal', [] );
 
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq([]);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq(null);
+      t.same(Editor.Selection.curSelection('normal'), []);
+      t.equal(Editor.Selection.curActivate('normal'), null);
 
       Editor.Selection.select('normal', ['a','b','c','d'] );
       Editor.Selection.select('normal', null );
 
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq([]);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq(null);
+      t.same(Editor.Selection.curSelection('normal'), []);
+      t.equal(Editor.Selection.curActivate('normal'), null);
 
       Editor.Selection.select('normal', ['a','b','c','d'] );
       Editor.Selection.select('normal', '' );
 
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq([]);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq(null);
+      t.same(Editor.Selection.curSelection('normal'), []);
+      t.equal(Editor.Selection.curActivate('normal'), null);
 
-      done();
+      t.end();
     });
 
     // NOTE: I am argue about this
-    it('should not break the order of the selection when item already selected', function (done) {
+    t.test('it should not break the order of the selection when item already selected', t => {
       Editor.Selection.select('normal', ['a','b','c','d'] );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','c','d']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('d');
+      t.same(Editor.Selection.curSelection('normal'), ['a','b','c','d']);
+      t.equal(Editor.Selection.curActivate('normal'), 'd');
 
       Editor.Selection.select('normal', ['d','e','c','b'] );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['b','c','d','e']);
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('b');
+      t.same(Editor.Selection.curSelection('normal'), ['b','c','d','e']);
+      t.equal(Editor.Selection.curActivate('normal'), 'b');
 
-      done();
+      t.end();
     });
 
-    it('should not break the order of the selection when selection not confirmed', function (done) {
+    t.test('it should not break the order of the selection when selection not confirmed', t => {
       Editor.Selection.select('normal', ['a','b','c','d'], false );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','c','d']);
+      t.same(Editor.Selection.curSelection('normal'), ['a','b','c','d']);
 
       Editor.Selection.select('normal', ['d','e','c','b'], false );
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a', 'b','c','d','e']);
+      t.same(Editor.Selection.curSelection('normal'), ['a', 'b','c','d','e']);
 
       Editor.Selection.confirm();
-      expect(Editor.Selection.curActivate('normal')).to.be.eq('b');
+      t.equal(Editor.Selection.curActivate('normal'), 'b');
 
-      done();
+      t.end();
     });
 
-    it('should send ipc selection:selected when select item', function (done) {
-      Helper.spyMessages( 'sendToAll', [
+    t.test('it should send ipc selection:selected when select item', t => {
+      helper.spyMessages( 'sendToAll', [
         'selection:selected',
         'selection:unselected',
       ]);
@@ -122,45 +124,45 @@ describe('Editor.Selection', function () {
       //
       Editor.Selection.select('normal', 'a' );
 
-      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['a']) );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'a') );
+      t.assert( helper.sendToAll.calledWith('selection:selected', 'normal', ['a']) );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'a') );
 
       //
       Editor.Selection.select('normal', 'b' );
 
-      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['a']) );
-      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['b']) );
-      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'a') );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
+      t.assert( helper.sendToAll.calledWith('selection:unselected', 'normal', ['a']) );
+      t.assert( helper.sendToAll.calledWith('selection:selected', 'normal', ['b']) );
+      t.assert( helper.sendToAll.calledWith('selection:deactivated', 'normal', 'a') );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
 
       //
       Editor.Selection.select('normal', ['c','d'] );
 
-      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['b']) );
-      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['c','d']) );
-      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'b') );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
+      t.assert( helper.sendToAll.calledWith('selection:unselected', 'normal', ['b']) );
+      t.assert( helper.sendToAll.calledWith('selection:selected', 'normal', ['c','d']) );
+      t.assert( helper.sendToAll.calledWith('selection:deactivated', 'normal', 'b') );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
       //
       Editor.Selection.select('normal', ['a','b'] );
 
-      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['c','d']) );
-      assert( Helper.sendToAll.calledWith('selection:selected', 'normal', ['a','b']) );
-      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
+      t.assert( helper.sendToAll.calledWith('selection:unselected', 'normal', ['c','d']) );
+      t.assert( helper.sendToAll.calledWith('selection:selected', 'normal', ['a','b']) );
+      t.assert( helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'b') );
 
       //
-      expect( Helper.message('sendToAll','selection:selected').callCount ).to.be.equal(4);
-      expect( Helper.message('sendToAll','selection:unselected').callCount ).to.be.equal(3);
+      t.equal(helper.message('sendToAll','selection:selected').callCount, 4);
+      t.equal(helper.message('sendToAll','selection:unselected').callCount, 3);
 
-      done();
+      t.end();
     });
 
-    it('should not send ipc selection:selected when the item already selected', function (done) {
-      Helper.spyMessages( 'sendToAll', [
+    t.test('it should not send ipc selection:selected when the item already selected', t => {
+      helper.spyMessages( 'sendToAll', [
         'selection:selected',
       ]);
-      let ipcSelected = Helper.message('sendToAll','selection:selected');
+      let ipcSelected = helper.message('sendToAll','selection:selected');
 
       Editor.Selection.select('normal', 'a', false );
       Editor.Selection.select('normal', 'a', false );
@@ -168,19 +170,19 @@ describe('Editor.Selection', function () {
       Editor.Selection.select('normal', ['a','b'], false );
       Editor.Selection.select('normal', ['a','b','c','d'], false );
 
-      assert( ipcSelected.getCall(0).calledWith('selection:selected', 'normal', ['a']) );
-      assert( ipcSelected.getCall(1).calledWith('selection:selected', 'normal', ['b']) );
-      assert( ipcSelected.getCall(2).calledWith('selection:selected', 'normal', ['c','d']) );
-      expect( ipcSelected.callCount ).to.be.equal(3);
+      t.assert(ipcSelected.getCall(0).calledWith('selection:selected', 'normal', ['a']) );
+      t.assert(ipcSelected.getCall(1).calledWith('selection:selected', 'normal', ['b']) );
+      t.assert(ipcSelected.getCall(2).calledWith('selection:selected', 'normal', ['c','d']) );
+      t.equal(ipcSelected.callCount, 3);
 
-      done();
+      t.end();
     });
 
-    it('should send ipc message in order', function (done) {
+    t.test('it should send ipc message in order', t => {
       Editor.Selection.select('normal', 'a' );
       Editor.Selection.select('normal', 'b' );
 
-      expect( Helper.sendToAll.args ).to.be.deep.eq([
+      t.same(helper.sendToAll.args, [
         ['_selection:selected', 'normal', ['a'], { __ipc__: true, excludeSelf: true } ],
         ['selection:selected', 'normal', ['a'] ],
 
@@ -206,69 +208,69 @@ describe('Editor.Selection', function () {
         ['selection:changed', 'normal' ],
       ]);
 
-      done();
+      t.end();
     });
   });
 
-  describe('Editor.Selection.unselect', function () {
-    it('should work for simple case', function (done) {
+  suite(t, 'Editor.Selection.unselect', t => {
+    t.test('it should work for simple case', t => {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.unselect('normal','c');
 
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['a','b','d']);
+      t.same(Editor.Selection.curSelection('normal'), ['a','b','d']);
 
       Editor.Selection.unselect('normal',['d','a']);
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['b']);
+      t.same(Editor.Selection.curSelection('normal'), ['b']);
 
       Editor.Selection.unselect('normal','d');
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq(['b']);
+      t.same(Editor.Selection.curSelection('normal'), ['b']);
 
       Editor.Selection.unselect('normal',['a','b','c','d']);
-      expect(Editor.Selection.curSelection('normal')).to.be.deep.eq([]);
+      t.same(Editor.Selection.curSelection('normal'), []);
 
-      done();
+      t.end();
     });
 
-    it('should not sending non-selected items in the ipc message when unselect', function (done) {
+    t.test('it should not sending non-selected items in the ipc message when unselect', t => {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.unselect('normal',['d','e']);
 
-      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['d']) );
-      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
+      t.assert( helper.sendToAll.calledWith('selection:unselected', 'normal', ['d']) );
+      t.assert( helper.sendToAll.calledWith('selection:deactivated', 'normal', 'd') );
 
       Editor.Selection.unselect('normal',['b','c']);
-      assert( Helper.sendToAll.calledWith('selection:unselected', 'normal', ['b','c']) );
-      assert( Helper.sendToAll.calledWith('selection:deactivated', 'normal', 'c') );
+      t.assert( helper.sendToAll.calledWith('selection:unselected', 'normal', ['b','c']) );
+      t.assert( helper.sendToAll.calledWith('selection:deactivated', 'normal', 'c') );
 
-      done();
+      t.end();
     });
   });
 
-  describe('Editor.Selection.hover', function () {
-    it('should store the last hover item', function (done) {
+  suite(t, 'Editor.Selection.hover', t => {
+    t.test('it should store the last hover item', t => {
 
       Editor.Selection.hover('normal','a');
-      expect(Editor.Selection.hovering('normal')).to.be.deep.eq('a');
+      t.equal(Editor.Selection.hovering('normal'), 'a');
 
       Editor.Selection.hover('normal','b');
-      expect(Editor.Selection.hovering('normal')).to.be.deep.eq('b');
+      t.equal(Editor.Selection.hovering('normal'), 'b');
 
       Editor.Selection.hover('normal','c');
-      expect(Editor.Selection.hovering('normal')).to.be.deep.eq('c');
+      t.equal(Editor.Selection.hovering('normal'), 'c');
 
       Editor.Selection.hover('normal',null);
-      expect(Editor.Selection.hovering('normal')).to.be.deep.eq(null);
+      t.equal(Editor.Selection.hovering('normal'), null);
 
-      done();
+      t.end();
     });
 
-    it('should send hover and unhover ipc message in order', function (done) {
+    t.test('it should send hover and unhover ipc message in order', t => {
 
       Editor.Selection.hover('normal','a');
       Editor.Selection.hover('normal','b');
       Editor.Selection.hover('normal',null);
 
-      expect(Helper.sendToAll.args).to.be.deep.eq([
+      t.same(helper.sendToAll.args, [
         ['_selection:hoverin', 'normal', 'a', { __ipc__: true, excludeSelf: true } ],
         ['selection:hoverin', 'normal', 'a' ],
 
@@ -282,121 +284,122 @@ describe('Editor.Selection', function () {
         ['selection:hoverout', 'normal', 'b' ],
       ]);
 
-      done();
+      t.end();
     });
   });
 
-  describe('Editor.Selection.setContext', function () {
-    it('should store the context', function (done) {
+  suite(t, 'Editor.Selection.setContext', t => {
+    t.test('it should store the context', t => {
       Editor.Selection.select('normal',['a','b','c','d']);
       Editor.Selection.setContext('normal','e');
 
-      expect(Editor.Selection.contexts('normal')).to.be.deep.eq(['e']);
+      t.same(Editor.Selection.contexts('normal'), ['e']);
 
       Editor.Selection.setContext('normal','c');
-      expect(Editor.Selection.contexts('normal')).to.be.deep.eq(['c','a','b','d']);
+      t.same(Editor.Selection.contexts('normal'), ['c','a','b','d']);
 
-      done();
+      t.end();
     });
   });
 
-  describe('Editor.Selection.clear', function () {
-    it('should not send changed ipc message when clear multiple times', function (done) {
-      let ipcChanged = Helper.sendToAll.withArgs('selection:changed');
+  suite(t, 'Editor.Selection.clear', t => {
+    t.test('it should not send changed ipc message when clear multiple times', t => {
+      let ipcChanged = helper.sendToAll.withArgs('selection:changed');
 
       Editor.Selection.clear('normal');
       Editor.Selection.clear('normal');
       Editor.Selection.clear('normal');
       Editor.Selection.clear('normal');
-      expect( ipcChanged.callCount ).to.eql(0);
+      t.equal(ipcChanged.callCount, 0);
 
       Editor.Selection.select('normal',['a','b','c','d']);
-      expect( ipcChanged.callCount ).to.eql(1);
+      t.equal(ipcChanged.callCount, 1);
 
       Editor.Selection.clear('normal');
-      expect( ipcChanged.callCount ).to.eql(2);
+      t.equal(ipcChanged.callCount, 2);
 
       Editor.Selection.clear('normal');
-      expect( ipcChanged.callCount ).to.eql(2);
+      t.equal(ipcChanged.callCount, 2);
 
-      done();
+      t.end();
     });
   });
 
-  describe('Global Active', function () {
-    it('should change global active call selection confirmed in different type', function (done) {
+  suite(t, 'Global Active', t => {
+    t.test('it should change global active call selection confirmed in different type', t => {
       Editor.Selection.select('normal', ['a','b','c','d']);
-      expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      t.same(Editor.Selection.curGlobalActivate(), {
         type: 'normal',
         id: 'd',
       });
 
       Editor.Selection.select('special', ['a1','b1','c1','d1']);
-      expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      t.same(Editor.Selection.curGlobalActivate(), {
         type: 'special',
         id: 'd1',
       });
 
       Editor.Selection.select('normal', ['a','b','c','d']);
-      expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      t.same(Editor.Selection.curGlobalActivate(), {
         type: 'normal',
         id: 'd',
       });
 
       Editor.Selection.unselect('special', 'd1');
-      expect(Editor.Selection.curGlobalActivate()).to.be.deep.eq({
+      t.same(Editor.Selection.curGlobalActivate(), {
         type: 'special',
         id: 'c1',
       });
 
-      done();
+      t.end();
     });
 
-    it('should send activated and deactivated ipc message', function (done) {
-      Helper.spyMessages('sendToAll', ['selection:deactivated']);
-      let ipcDeactivated = Helper.message('sendToAll', 'selection:deactivated');
+    t.test('it should send activated and deactivated ipc message', t => {
+      helper.spyMessages('sendToAll', ['selection:deactivated']);
+      let ipcDeactivated = helper.message('sendToAll', 'selection:deactivated');
 
       Editor.Selection.select('normal', ['a','b','c','d']);
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
       Editor.Selection.select('special', ['a1','b1','c1','d1']);
-      assert( !ipcDeactivated.called );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'special', 'd1') );
+      t.assert( !ipcDeactivated.called );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'special', 'd1') );
 
       Editor.Selection.select('normal', ['a','b','c','d']);
-      assert( !ipcDeactivated.called );
-      assert( Helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
+      t.assert( !ipcDeactivated.called );
+      t.assert( helper.sendToAll.calledWith('selection:activated', 'normal', 'd') );
 
-      done();
+      t.end();
     });
   });
 
-  describe('Local Selection', function () {
+  suite(t, 'Local Selection', t => {
     let local = Editor.Selection.local();
 
-    beforeEach(function () {
+    t.beforeEach(done => {
       local.clear();
+      done();
     });
 
-    it('should not send ipc message', function (done) {
-      Helper.spyMessages( 'sendToAll', [
+    t.test('it should not send ipc message', t => {
+      helper.spyMessages( 'sendToAll', [
         'selection:selected',
         'selection:unselected',
       ]);
 
       //
       local.select('a');
-      expect(local.selection).to.be.deep.eq(['a']);
-      expect(local.lastActive).to.be.eq('a');
+      t.same(local.selection, ['a']);
+      t.equal(local.lastActive, 'a');
 
       local.select('b');
-      expect(local.selection).to.be.deep.eq(['b']);
-      expect(local.lastActive).to.be.eq('b');
+      t.same(local.selection, ['b']);
+      t.equal(local.lastActive, 'b');
 
-      assert( Helper.sendToAll.neverCalledWith('selection:selected') );
-      assert( Helper.sendToAll.neverCalledWith('selection:unselected') );
+      t.assert( helper.sendToAll.neverCalledWith('selection:selected') );
+      t.assert( helper.sendToAll.neverCalledWith('selection:unselected') );
 
-      done();
+      t.end();
     });
   });
 

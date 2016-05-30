@@ -17,10 +17,10 @@
 --------------------*/
 
 /* This is the single variable that controls them all */
-@em_size: 14px;
+@em_size: 12px;
 
 /* The size of page text  */
-@font_size: 14px;
+@font_size: 12px;
 
 @line_height: 1em;
 
@@ -32,6 +32,9 @@
 @page_text_primary_color: #fd942b;
 @page_select_color: #007acc;
 @page_bg: #333;
+
+@thumb_bg : #7d7d7d;
+@scrollbar_bg : rgba(0, 0, 0, 0.5);
 
 /*-------------------
         Element
@@ -81,14 +84,23 @@
   This ensures these "ratios" remain constant despite changes in EM
 */
 
-@mini_size    : (10 / 14);
-@tiny_size    : (12 / 14);
-@small_size   : (13 / 14);
-@medium_size  : (14 / 14);
-@large_size   : (16 / 14);
-@big_size     : (18 / 14);
-@huge_size    : (20 / 14);
-@massive_size : (24 / 14);
+/* @mini_size    : (10 / 14); */
+/* @tiny_size    : (12 / 14); */
+/* @small_size   : (13 / 14); */
+/* @medium_size  : (14 / 14); */
+/* @large_size   : (16 / 14); */
+/* @big_size     : (18 / 14); */
+/* @huge_size    : (20 / 14); */
+/* @massive_size : (24 / 14); */
+
+@mini_size    : (8 / 12);
+@tiny_size    : (10 / 12);
+@small_size   : (11 / 12);
+@medium_size  : (12 / 12);
+@large_size   : (14 / 12);
+@big_size     : (16 / 12);
+@huge_size    : (18 / 12);
+@massive_size : (22 / 12);
 
 /*-------------------
        Em Sizes
@@ -148,3 +160,11 @@
 @12px_em : unit((12 / @em_size), em );
 @13px_em : unit((13 / @em_size), em );
 @14px_em : unit((14 / @em_size), em );
+
+/*-------------------
+  Color
+--------------------*/
+
+@red : #b54344;
+@green : #6b9e51;
+@blue : #4281b6;

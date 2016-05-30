@@ -26,8 +26,8 @@ class DummyCmd extends Editor.Undo.Command {
   dirty () { return false; }
 }
 
-describe('Editor.Undo', function () {
-  Helper.run({
+suite(tap, 'undo', {timeout: 2000}, t => {
+  helper.runEditor(tap, {
     'undo': {
       'foo': FooCmd,
       'bar': BarCmd,
@@ -35,15 +35,17 @@ describe('Editor.Undo', function () {
     }
   });
 
-  beforeEach(function () {
+  t.beforeEach(done => {
     _foo = {};
     _bar = {};
 
     Editor.Undo.clear();
-    Helper.reset();
+    helper.reset();
+
+    done();
   });
 
-  it('should add the foo commands', function (done) {
+  t.test('it should add the foo commands', t => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -61,15 +63,15 @@ describe('Editor.Undo', function () {
 
     // ----------
 
-    expect( Editor.Undo._global._groups.length ).to.be.eql(3);
-    expect( Editor.Undo._global._groups[2]._commands[0].info.after ).to.be.eql(JSON.stringify({
+    t.equal(Editor.Undo._global._groups.length, 3);
+    t.equal(Editor.Undo._global._groups[2]._commands[0].info.after, JSON.stringify({
       a: 'a', b: 'b', c: 'c'
     }));
 
-    done();
+    t.end();
   });
 
-  it('should undo the foo object correctly', function (done) {
+  t.test('should undo the foo object correctly', t => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -87,31 +89,31 @@ describe('Editor.Undo', function () {
 
     // ----------
 
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
 
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
 
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
     });
 
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({});
+    t.same(_foo, {});
 
-    done();
+    t.end();
   });
 
 
-  it('should redo the foo object correctly', function (done) {
+  t.test('it should redo the foo object correctly', t => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -129,7 +131,7 @@ describe('Editor.Undo', function () {
 
     // ----------
 
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
@@ -138,25 +140,25 @@ describe('Editor.Undo', function () {
     Editor.Undo.undo();
     Editor.Undo.undo();
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({});
+    t.same(_foo, {});
 
     // again, will not over it
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({});
+    t.same(_foo, {});
 
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
     });
 
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
 
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
@@ -164,16 +166,16 @@ describe('Editor.Undo', function () {
 
     // again, will not over it
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
 
-    done();
+    t.end();
   });
 
-  it('should undo or redo different command in order', function (done) {
+  t.test('it should undo or redo different command in order', t => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) } );
@@ -206,77 +208,77 @@ describe('Editor.Undo', function () {
     // ----------
 
     // current snap-shot
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
       d: 'd',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
     // undo 1
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
     // undo 2
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
     // undo 3
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
     });
 
     // undo 4
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
     });
 
     // redo 1
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
     });
 
     // redo 2
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
-    done();
+    t.end();
   });
 
-  it('should undo or redo batched command in correctly', function (done) {
+  t.test('it should undo or redo batched command in correctly', t => {
     // undo 3
     let beforeF = JSON.stringify(_foo);
     let beforeB = JSON.stringify(_bar);
@@ -306,107 +308,107 @@ describe('Editor.Undo', function () {
     // ----------
 
     // current snap-shot
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
       b: 'b',
     });
 
     // undo 1
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
     // undo 2
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
     });
-    expect(_bar).to.be.deep.eql({});
+    t.same(_bar, {});
 
     // undo 3
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({});
-    expect(_bar).to.be.deep.eql({});
+    t.same(_foo, {});
+    t.same(_bar, {});
 
     // redo 1
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
     });
-    expect(_bar).to.be.deep.eql({});
+    t.same(_bar, {});
 
     // redo 2
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
     });
 
     // redo 3
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
-    expect(_bar).to.be.deep.eql({
+    t.same(_bar, {
       a: 'a',
       b: 'b',
     });
 
-    done();
+    t.end();
   });
 
-  it('should work with dirty', function (done) {
+  t.test('it should work with dirty', t => {
     // initial
-    expect(Editor.Undo.dirty()).to.be.deep.eql(false);
+    t.equal(Editor.Undo.dirty(), false);
 
     // 1
     Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
-    expect(Editor.Undo.dirty()).to.be.deep.eql(false);
+    t.equal(Editor.Undo.dirty(), false);
 
     // 2
     Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
-    expect(Editor.Undo.dirty()).to.be.deep.eql(false);
+    t.equal(Editor.Undo.dirty(), false);
 
     // 3
     Editor.Undo.add('foo', { before: {}, after: {} } );
     Editor.Undo.commit();
 
-    expect(Editor.Undo.dirty()).to.be.deep.eql(true);
+    t.equal(Editor.Undo.dirty(), true);
 
     // 4
     Editor.Undo.save();
-    expect(Editor.Undo.dirty()).to.be.deep.eql(false);
+    t.equal(Editor.Undo.dirty(), false);
 
     // 5
     Editor.Undo.add('foo', { before: {}, after: {} } );
     Editor.Undo.add('dummy');
     Editor.Undo.commit();
 
-    expect(Editor.Undo.dirty()).to.be.deep.eql(true);
+    t.equal(Editor.Undo.dirty(), true);
 
-    done();
+    t.end();
   });
 
-  it('should work with collapse', function (done) {
+  t.test('it should work with collapse', t => {
     let before = JSON.stringify(_foo);
     _foo.a = 'a';
     Editor.Undo.add('foo', { before: before, after: JSON.stringify(_foo) });
@@ -424,19 +426,18 @@ describe('Editor.Undo', function () {
 
     //
     Editor.Undo.collapseTo(0);
-    expect(Editor.Undo._global._groups.length).to.be.eql(1);
-    expect(Editor.Undo.dirty()).to.be.eql(true);
+    t.equal(Editor.Undo._global._groups.length, 1);
+    t.equal(Editor.Undo.dirty(), true);
 
     Editor.Undo.undo();
-    expect(_foo).to.be.deep.eql({});
+    t.same(_foo, {});
     Editor.Undo.redo();
-    expect(_foo).to.be.deep.eql({
+    t.same(_foo, {
       a: 'a',
       b: 'b',
       c: 'c',
     });
 
-    done();
+    t.end();
   });
-
 });

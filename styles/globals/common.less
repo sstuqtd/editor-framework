@@ -7,12 +7,12 @@
 
 @font-face {
   font-family: 'fontello';
-  src: url('editor-framework://dist/css/font/fontello.eot');
-  src: url('editor-framework://dist/css/font/fontello.eot#iefix') format('embedded-opentype'),
-       url('editor-framework://dist/css/font/fontello.woff2') format('woff2'),
-       url('editor-framework://dist/css/font/fontello.woff') format('woff'),
-       url('editor-framework://dist/css/font/fontello.ttf') format('truetype'),
-       url('editor-framework://dist/css/font/fontello.svg#fontello') format('svg');
+  src: url('../font/fontello.eot');
+  src: url('../font/fontello.eot#iefix') format('embedded-opentype'),
+       url('../font/fontello.woff2') format('woff2'),
+       url('../font/fontello.woff') format('woff'),
+       url('../font/fontello.ttf') format('truetype'),
+       url('../font/fontello.svg#fontello') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +31,7 @@
 }
 
 *:focus {
-  outline: none;
+  outline: 0;
 }
 
 html {
@@ -61,23 +61,38 @@ body {
 --------------------*/
 
 ::-webkit-scrollbar {
-  height: 10px;
-  width: 10px;
+  height: 11px;
+  width: 11px;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
+  border: 4px solid transparent;
+  background: @thumb_bg;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 5px;
   border: 3px solid transparent;
-  background: rgba(255,255,255,0.3);
+  background: @el_focus_color;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  border: 5px solid transparent;
+  background: @scrollbar_bg;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-track:hover {
+  border: 5px solid transparent;
+  background: @scrollbar_bg;
+  background-clip: content-box;
 }
 
 ::-webkit-scrollbar-corner {
-  background-color: transparent;
+  display: none;
 }
 
 ::-webkit-scrollbar-button {

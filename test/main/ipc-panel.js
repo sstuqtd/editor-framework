@@ -6,27 +6,28 @@ const Path = require('fire-path');
 // const Async = require('async');
 
 //
-describe('Editor.IpcListener Panel', function () {
+suite(tap, 'ipc-panel', {timeout: 5000}, t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
-  Helper.run({
+  helper.runEditor(t, {
     enableIpc: true,
   });
 
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  t.afterEach(done => {
     ipc.clear();
+
+    done();
   });
 
-  describe('Editor.Ipc.sendToPanel', function () {
-    this.timeout(5000);
+  suite(t, 'Editor.Ipc.sendToPanel', t => {
 
-    it('should send message to panel from main process', function (done) {
+    t.test('it should send message to panel from main process', t => {
       const path = Path.join(testPackages,'panel-ipc');
-      assert.isTrue( Fs.existsSync(path) );
+      t.ok( Fs.existsSync(path) );
 
-      Editor.Package.load(path, function () {
+      Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc');
 
         // TODO: Panel.open should have callback
@@ -36,47 +37,49 @@ describe('Editor.IpcListener Panel', function () {
       });
 
       ipc.on('panel-01:reply', ( event, foo, bar ) => {
-        expect(foo).to.eql('foo');
-        expect(bar).to.eql('bar');
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
 
-        done();
+        Editor.Panel.close('panel-ipc');
+        t.end();
       });
     });
 
-    it('should send message to panel and recieve reply from main process', function (done) {
+    t.test('it should send message to panel and recieve reply from main process', t => {
       const path = Path.join(testPackages,'panel-ipc');
-      assert.isTrue( Fs.existsSync(path) );
+      t.ok( Fs.existsSync(path) );
 
-      Editor.Package.load(path, function () {
+      Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc-02');
 
         // TODO: Panel.open should have callback
         setTimeout(() => {
           Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
-            expect(foo).to.eql('foo');
-            expect(bar).to.eql('bar');
+            t.equal(foo, 'foo');
+            t.equal(bar, 'bar');
 
-            done();
+            Editor.Panel.close('panel-ipc-02');
+            t.end();
           });
         }, 500);
       });
     });
 
-    // it('should send message to panel and recieve reply from renderer process', function (done) {
+    // t.test('it should send message to panel and recieve reply from renderer process', t => {
     //   const path = Path.join(testPackages,'panel-ipc');
     //   assert.isTrue( Fs.existsSync(path) );
 
-    //   Editor.Package.load(path, function () {
+    //   Editor.Package.load(path, () => {
     //     Editor.Panel.open('panel-ipc-02');
     //     Editor.Panel.open('panel-ipc-03');
 
     //     // TODO: Panel.open should have callback
     //     setTimeout(() => {
     //       ipc.on('panel-03:reply', ( event, foo, bar ) => {
-    //         expect(foo).to.eql('foo');
-    //         expect(bar).to.eql('bar');
+    //         t.equal(foo, 'foo');
+    //         t.equal(bar, 'bar');
 
-    //         done();
+    //         t.end();
     //       });
     //     }, 500);
     //   });

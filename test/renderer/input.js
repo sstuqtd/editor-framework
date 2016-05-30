@@ -1,66 +1,83 @@
 'use strict';
 
-describe('<ui-input>', function () {
-  describe('html', function () {
-    Helper.runElement('editor-framework://test/fixtures/input.html', 'simple', '#element');
+suite(tap, '<ui-input>', {timeout: 2000}, t => {
+  function _newElement ( cb ) {
+    helper.runElement(
+      'editor-framework://test/fixtures/input.html', 'simple', '#element', cb
+    );
+  }
 
-    beforeEach(function ( done ) {
-      Editor.Window.center();
+  t.beforeEach(done => {
+    Editor.Window.center();
+    done();
+  });
 
-      done();
+  t.afterEach(done => {
+    helper.reset();
+    done();
+  });
+
+  t.test('should have shadow root', t => {
+    _newElement(el => {
+      t.assert(el.shadowRoot);
+      t.end();
     });
+  });
 
-    it('should have shadow root', function ( done ) {
-      assert(Helper.targetEL.shadowRoot);
+  t.test('should focus on element when left mouse down', t => {
+    _newElement(el => {
+      helper.mousedown( el, 'left' );
 
-      done();
-    });
-
-    it('should focus on element when left mouse down', function ( done ) {
-      Helper.mousedown( Helper.targetEL, 'left' );
-
-      setTimeout(function () {
-        expect(Helper.targetEL.focused).to.equal(true);
-        done();
+      setTimeout(() => {
+        t.equal(el.focused, true);
+        t.end();
       }, 1);
     });
+  });
 
-    it('should get "Foobar" from value property', function ( done ) {
-      expect(Helper.targetEL.value).to.equal('Foobar');
-      done();
+  t.test('should get "Foobar" from value property', t => {
+    _newElement(el => {
+      t.equal(el.value, 'Foobar');
+      t.end();
     });
+  });
 
-    it('should send "cancel" when "esc" key down on the element', function ( done ) {
-      Helper.targetEL.addEventListener('cancel', function () {
-        done();
+  t.test('should send "cancel" when "esc" key down on the element', t => {
+    _newElement(el => {
+      el.addEventListener('cancel', () => {
+        t.end();
       });
 
-      Helper.mousedown( Helper.targetEL, 'left' );
-      setTimeout(function () {
-        Helper.keydown('esc' );
+      helper.mousedown( el, 'left' );
+      setTimeout(() => {
+        helper.keydown('esc' );
       }, 10);
     });
+  });
 
-    it('should send "confirm" when "enter" key down on the element', function ( done ) {
-      Helper.targetEL.addEventListener('confirm', function () {
-        done();
+  t.test('should send "confirm" when "enter" key down on the element', t => {
+    _newElement(el => {
+      el.addEventListener('confirm', () => {
+        t.end();
       });
 
-      Helper.mousedown( Helper.targetEL, 'left' );
-      setTimeout(function () {
-        Helper.keydown('enter' );
+      helper.mousedown( el, 'left' );
+      setTimeout(() => {
+        helper.keydown('enter' );
       }, 10);
     });
+  });
 
-    it('should directly change the text to "abc" when you click the element and type "abc"', function ( done ) {
-      Helper.mousedown( Helper.targetEL, 'left' );
-      Helper.keydown('a' );
-      Helper.keydown('b' );
-      Helper.keydown('c' );
+  t.test('should directly change the text to "abc" when you click the element and type "abc"', t => {
+    _newElement(el => {
+      helper.mousedown( el, 'left' );
+      helper.keydown('a' );
+      helper.keydown('b' );
+      helper.keydown('c' );
 
-      setTimeout(function () {
-        expect(Helper.targetEL.value).to.equal('Foobar');
-        done();
+      setTimeout(() => {
+        t.equal(el.value, 'Foobar');
+        t.end();
       }, 10);
     });
   });
