@@ -1,21 +1,27 @@
 ## CHANGELOG
 
-### v0.6.0 (developing)
+### v0.6.1
 
- - Upgrade to Electron v1.1.2
- - Fix `Editor.log` will not show message on Console panel
- - Add `Editor.UI.FocusMgr` to manage focus for panel
- - Add default theme and ui-kit styles
- - Add internal ui-kit
-   - ui-button
-   - ui-checkbox
+ - Upgrade to Electron v1.1.3
+ - Add more internal ui-kit
    - ui-color
    - ui-color-picker
-   - ui-input
    - ui-num-input
    - ui-prop
    - ui-select
    - ui-slider
+   - ui-text-area
+
+### v0.6.0
+
+ - Upgrade to Electron v1.0.1
+ - Fix `Editor.log` will not show message on Console panel
+ - Add `Editor.UI.FocusMgr` to manage focus for panel
+ - Add default styles sheets (dark theme) for internal ui-kit
+ - Add internal ui-kit
+   - ui-button
+   - ui-checkbox
+   - ui-input
 
 ### v0.5.3
 
