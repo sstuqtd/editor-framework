@@ -217,35 +217,41 @@ npm start ./example-apps/demo
 To test the editor-framework itself, just run:
 
 ```bash
-npm test
+npm test [./your/test/file] -- [options]
 
-# or
+## or
 
-npm test ./your/test/file
+npm start ./test -- test ./your/test/file [options]
 ```
 
 You can also run a single test or a bunch of tests in one directory by:
 
 ```bash
-npm start ./test -- test ${your/test/path}
+npm test ${your/test/path}
 ```
 
 You can also force to run tests in renderer by `--renderer` option:
 
 ```bash
-npm start ./test -- test --renderer ${your/test/path}
+npm test ${your/test/path} -- --renderer
 ```
 
 You can load specific package and run its tests by `--package` option:
 
 ```bash
-npm start ./test -- test --package ${your/test/path}
+npm test ${your/test/path} -- --package
 ```
 
-To debug a test, use the `--detail` option:
+To debug a test, use `--detail` option:
 
 ```bash
-npm start ./test -- test --detail ${your/test/path}
+npm test ${your/test/path} -- --detail
+```
+
+To change a reporter, use `--reporter name` option:
+
+```bash
+npm test ${your/test/path} -- --reporter classic
 ```
 
 ### Write Your Test

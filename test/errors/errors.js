@@ -1,17 +1,17 @@
 'use strict';
 
-describe('errors', function () {
-  this.timeout(0);
+suite(tap, 'errors', t => {
+  let obj;
 
-  it('should report error', function ( done ) {
-    expect(obj.nothing).to.eql('foobar');
-    done();
+  t.test('it should report error', t => {
+    t.equal(obj.nothing, 'foobar');
+    t.end();
   });
 
-  it('should report error in nested function', function ( done ) {
-    setTimeout( function () {
-      expect(obj.nothing).to.eql('foobar');
-      done();
+  t.test('it should report error in nested function', t => {
+    setTimeout(() => {
+      t.equal(obj.nothing, 'foobar');
+      t.end();
     }, 10 );
   });
 });
