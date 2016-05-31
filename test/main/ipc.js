@@ -6,7 +6,7 @@ const BrowserWindow = Electron.BrowserWindow;
 const Async = require('async');
 
 //
-suite(tap, 'spec ipc', t => {
+suite(tap, 'ipc', t => {
   helper.runEditor(t, {
     enableIpc: true,
   });
