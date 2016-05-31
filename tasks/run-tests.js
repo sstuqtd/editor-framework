@@ -14,7 +14,10 @@ const spawn = require('child_process').spawn;
 
 const yargs = require('yargs');
 yargs.options({
+  'renderer': { type: 'boolean', desc: 'Run tests in renderer.' },
+  'package': { type: 'boolean', desc: 'Run specific package tests.' },
   'detail': { type: 'boolean', desc: 'Run test in debug mode (It will not quit the test, and open the devtools to help you debug it).' },
+  'reporter': { type: 'string', desc: 'Mocha reporter, default is \'spec\'' },
 });
 
 let yargv = yargs.argv;
@@ -22,8 +25,28 @@ if ( yargv._.length ) {
   let file = yargv._[0];
 
   let args = ['./test', 'test', file];
+
+  // renderer
+  if ( yargv.renderer ) {
+    args.push('--renderer');
+  }
+
+  // package
+  if ( yargv.package ) {
+    args.push('--package');
+  }
+
+  // detail
   if ( yargv.detail ) {
     args.push('--detail');
+  }
+
+  // reporter
+  args.push('--reporter');
+  if ( yargv.reporter ) {
+    args.push(yargv.reporter);
+  } else {
+    args.push('spec');
   }
 
   spawn(electron, args, {
@@ -59,12 +82,28 @@ async.eachSeries([
   async.eachSeries(info.files, (file, done) => {
     console.log( chalk.magenta('Start test: ') + chalk.cyan( path.relative(cwd, file) ) );
 
-    let args = [];
+    let args = ['./test', 'test'];
+
+    // renderer
     if ( info.renderer ) {
-      args = ['./test', 'test', '--renderer', '--reporter', 'spec', file];
-    } else {
-      args = ['./test', 'test', '--reporter', 'spec', file];
+      args.push('--renderer');
     }
+
+    // detail
+    if ( yargv.detail ) {
+      args.push('--detail');
+    }
+
+    // reporter
+    args.push('--reporter');
+    if ( yargv.reporter ) {
+      args.push(yargv.reporter);
+    } else {
+      args.push('spec');
+    }
+
+    // file
+    args.push(file);
 
     let app = spawn(electron, args, {
       stdio: [ 0, 1, 2, 'ipc' ]

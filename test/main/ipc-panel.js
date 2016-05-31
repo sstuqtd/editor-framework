@@ -6,7 +6,7 @@ const Path = require('fire-path');
 // const Async = require('async');
 
 //
-suite(tap, 'ipc-panel', {timeout: 5000}, t => {
+suite(tap, 'ipc-panel', t => {
   const testPackages = Editor.url('editor-framework://test/fixtures/packages/');
 
   helper.runEditor(t, {
@@ -23,7 +23,7 @@ suite(tap, 'ipc-panel', {timeout: 5000}, t => {
 
   suite(t, 'Editor.Ipc.sendToPanel', t => {
 
-    t.test('it should send message to panel from main process', t => {
+    t.test('it should send message to panel from main process', {timeout: 5000}, t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
 
@@ -45,7 +45,7 @@ suite(tap, 'ipc-panel', {timeout: 5000}, t => {
       });
     });
 
-    t.test('it should send message to panel and recieve reply from main process', t => {
+    t.test('it should send message to panel and recieve reply from main process', {timeout: 5000}, t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
 
