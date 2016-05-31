@@ -175,6 +175,17 @@
   }
 }
 
+:host([auto-height]) {
+  .wrapper {
+    align-items: flex-start;
+    max-height: none;
+  }
+
+  .label {
+    margin-top: 3px;
+  }
+}
+
 :host(.red), :host(.green), :host(.blue), :host(.gray) {
   .text {
     font-weight: bold;

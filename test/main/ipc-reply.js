@@ -108,6 +108,24 @@ suite(tap, 'ipc-reply', t => {
       });
     });
 
+    t.test('it should not reply the renderer process when renderer window has been destroyed', t => {
+      let win = new Editor.Window();
+      win.load('editor-framework://test/fixtures/ipc/send2main-reply-simple.html');
+
+      ipc.on('foobar:say-hello', (event, foo, bar) => {
+        win.close();
+
+        setTimeout(() => {
+          event.reply(null,foo,bar);
+          t.end();
+        }, 100);
+      });
+
+      ipc.on('foobar:reply', () => {
+        t.error(new Error(), 'this function should not be called');
+      });
+    });
+
     t.test('it should close the session when timeout in main process', t => {
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         setTimeout(() => {
