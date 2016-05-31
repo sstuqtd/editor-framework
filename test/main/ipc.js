@@ -21,7 +21,6 @@ suite(tap, 'ipc', t => {
   suite(t, 'Editor.Ipc.sendToMain', t => {
     t.test('it should work in renderer process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
@@ -31,6 +30,8 @@ suite(tap, 'ipc', t => {
         win.close();
         t.end();
       });
+
+      win.load('editor-framework://test/fixtures/ipc/send2core-simple.html');
     });
 
     t.test('it should work in main process', t => {
@@ -52,8 +53,6 @@ suite(tap, 'ipc', t => {
 
     t.test('it should send ipc in order', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2core-in-order.html');
-
       let idx = 0;
 
       ipc.on('foobar:say-hello-01', ( event ) => {
@@ -86,19 +85,17 @@ suite(tap, 'ipc', t => {
         t.end();
       });
 
+      win.load('editor-framework://test/fixtures/ipc/send2core-in-order.html');
     });
   });
 
   suite(t, 'Editor.Ipc.sendToWins', t => {
     t.test('it should send message to all windows in main process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
-
       let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
 
       Async.each([win, win2], (w, next) => {
-        w.nativeWin.webContents.on('dom-ready', () => {
+        w.nativeWin.webContents.once('dom-ready', () => {
           next();
         });
       }, () => {
@@ -118,16 +115,16 @@ suite(tap, 'ipc', t => {
           t.end();
         }
       });
+
+      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+      win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
     });
 
     t.test('it should send message to all windows in renderer process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
-
-      let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2wins-simple.html');
-
+      let winSayHello = new Editor.Window();
       let cnt = 0;
+
       ipc.on('foobar:reply', (event, foo, bar) => {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
@@ -135,29 +132,36 @@ suite(tap, 'ipc', t => {
         cnt += 1;
         if ( cnt === 2 ) {
           win.close();
-          win2.close();
+          winSayHello.close();
 
           t.end();
         }
+      });
+
+      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+      win.nativeWin.webContents.once('dom-ready', () => {
+        winSayHello.load('editor-framework://test/fixtures/ipc/send2wins-simple.html');
       });
     });
 
     t.test('it should send message to window exclude self', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2wins-exclude-self.html');
-
-      let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+      let winSayHello = new Editor.Window();
 
       ipc.on('foobar:reply', (event, foo, bar) => {
-        t.equal(BrowserWindow.fromWebContents(event.sender), win2.nativeWin);
+        t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
 
         win.close();
-        win2.close();
+        winSayHello.close();
 
         t.end();
+      });
+
+      win.load('editor-framework://test/fixtures/ipc/send2wins-reply.html');
+      win.nativeWin.webContents.once('dom-ready', () => {
+        winSayHello.load('editor-framework://test/fixtures/ipc/send2wins-exclude-self.html');
       });
     });
   });
@@ -165,10 +169,8 @@ suite(tap, 'ipc', t => {
   suite(t, 'Editor.Ipc.sendToAll', t => {
     t.test('it should send message to all process in main process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
-
       let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      let cnt = 0;
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
@@ -182,7 +184,6 @@ suite(tap, 'ipc', t => {
         Editor.Ipc.sendToAll('foobar:say-hello', 'foo', 'bar');
       });
 
-      let cnt = 0;
       ipc.on('foobar:reply', (event, foo, bar) => {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
@@ -195,20 +196,20 @@ suite(tap, 'ipc', t => {
           t.end();
         }
       });
+
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
     });
 
     t.test('it should send message to all process in renderer process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
-
-      let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
+      let winSayHello = new Editor.Window();
+      let cnt = 0;
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
-      let cnt = 0;
       ipc.on('foobar:reply', (event, foo, bar) => {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
@@ -216,19 +217,22 @@ suite(tap, 'ipc', t => {
         cnt += 1;
         if ( cnt === 3 ) {
           win.close();
-          win2.close();
+          winSayHello.close();
 
           t.end();
         }
+      });
+
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      win.nativeWin.webContents.once('dom-ready', () => {
+        winSayHello.load('editor-framework://test/fixtures/ipc/send2all-simple.html');
       });
     });
 
     t.test('it should send message to all process exclude self in main process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
-
       let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      let cnt = 0;
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         t.error(new Error(), 'Main process should not recieve ipc event');
@@ -245,7 +249,6 @@ suite(tap, 'ipc', t => {
         }));
       });
 
-      let cnt = 0;
       ipc.on('foobar:reply', (event, foo, bar) => {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
@@ -260,20 +263,20 @@ suite(tap, 'ipc', t => {
           }, 500);
         }
       });
+
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
     });
 
     t.test('it should send message to all process exclude self in renderer process', t => {
       let win = new Editor.Window();
-      win.load('editor-framework://test/fixtures/ipc/send2all-exclude-self.html');
-
-      let win2 = new Editor.Window();
-      win2.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      let winSayHello = new Editor.Window();
+      let cnt = 0;
 
       ipc.on('foobar:say-hello', (event, foo, bar) => {
         Editor.Ipc.sendToMain('foobar:reply', foo, bar);
       });
 
-      let cnt = 0;
       ipc.on('foobar:reply', (event, foo, bar) => {
         if ( event.senderType === 'main' ) {
           cnt += 1;
@@ -282,16 +285,21 @@ suite(tap, 'ipc', t => {
 
         cnt += 1;
 
-        t.equal(BrowserWindow.fromWebContents(event.sender), win2.nativeWin);
+        t.equal(BrowserWindow.fromWebContents(event.sender), win.nativeWin);
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
 
         win.close();
-        win2.close();
+        winSayHello.close();
 
         if ( cnt === 2 ) {
           t.end();
         }
+      });
+
+      win.load('editor-framework://test/fixtures/ipc/send2all-reply.html');
+      win.nativeWin.webContents.once('dom-ready', () => {
+        winSayHello.load('editor-framework://test/fixtures/ipc/send2all-exclude-self.html');
       });
     });
   });
