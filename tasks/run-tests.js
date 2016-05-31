@@ -106,7 +106,7 @@ async.eachSeries([
     args.push(file);
 
     let app = spawn(electron, args, {
-      stdio: [ 0, 1, 2, 'ipc' ]
+      stdio: 'inherit',
     });
 
     app.on('message', data => {
