@@ -13,6 +13,14 @@
 @font_smoothing : subpixel-antialiased;
 
 /*-------------------
+  Color
+--------------------*/
+
+@red : #b54344;
+@green : #6b9e51;
+@blue : #4281b6;
+
+/*-------------------
       Base Sizes
 --------------------*/
 
@@ -73,7 +81,7 @@
 @tab_bg_focus: @panel_border_color_focus - 70%;
 
 // panel:dirty
-@tab_bg_dirty: #700;
+@tab_bg_dirty: @red;
 
 /*-------------------
         Sizes
@@ -160,11 +168,3 @@
 @12px_em : unit((12 / @em_size), em );
 @13px_em : unit((13 / @em_size), em );
 @14px_em : unit((14 / @em_size), em );
-
-/*-------------------
-  Color
---------------------*/
-
-@red : #b54344;
-@green : #6b9e51;
-@blue : #4281b6;
