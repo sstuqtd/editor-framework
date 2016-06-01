@@ -2,7 +2,7 @@
 @import (multiple) 'theme.less';
 
 :host {
-  .layout-horizontal;
+  .layout-horizontal();
   box-sizing: border-box;
 
   height: @tabbar_height - 2;
@@ -41,7 +41,7 @@
 }
 
 .title {
-  .layout-horizontal;
+  .layout-horizontal();
   .layout-children(center);
 
   margin: 3px 10px;
