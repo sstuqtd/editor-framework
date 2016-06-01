@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### v0.6.2 (developing)
+
+ - Fix package watcher not work
+
 ### v0.6.1
 
  - Upgrade to Electron v1.1.3
