@@ -44,13 +44,18 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
 
   t.test('should send "cancel" when "esc" key down on the element', t => {
     _newElement(el => {
-      el.addEventListener('cancel', () => {
+      el.addEventListener('cancel', event => {
+        t.equal(event.detail.value, 'Foobar');
         t.end();
       });
 
-      helper.mousedown( el, 'left' );
+      helper.click( el, 'left' );
+      helper.type('a');
+      helper.type('b');
+      helper.type('c');
+
       setTimeout(() => {
-        helper.keydown('esc' );
+        helper.keydown('esc');
       }, 10);
     });
   });
@@ -58,10 +63,15 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
   t.test('should send "confirm" when "enter" key down on the element', t => {
     _newElement(el => {
       el.addEventListener('confirm', () => {
+        t.equal(event.detail.value, 'abc');
         t.end();
       });
 
-      helper.mousedown( el, 'left' );
+      helper.click( el, 'left' );
+      helper.type('a');
+      helper.type('b');
+      helper.type('c');
+
       setTimeout(() => {
         helper.keydown('enter' );
       }, 10);
@@ -70,13 +80,13 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
 
   t.test('should directly change the text to "abc" when you click the element and type "abc"', t => {
     _newElement(el => {
-      helper.mousedown( el, 'left' );
-      helper.keydown('a' );
-      helper.keydown('b' );
-      helper.keydown('c' );
+      helper.click( el, 'left' );
+      helper.type('a');
+      helper.type('b');
+      helper.type('c');
 
       setTimeout(() => {
-        t.equal(el.value, 'Foobar');
+        t.equal(el.value, 'abc');
         t.end();
       }, 10);
     });

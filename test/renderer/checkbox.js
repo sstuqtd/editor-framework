@@ -78,9 +78,9 @@ suite(tap, '<ui-checkbox>', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should send "end-editing" event when element clicked', t => {
+  t.test('should send "confirm" event when element clicked', t => {
     _newElement(el => {
-      el.addEventListener('end-editing', () => {
+      el.addEventListener('confirm', () => {
         t.end();
       });
       helper.click( el, 'left' );
