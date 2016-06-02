@@ -16,9 +16,11 @@
     "build": "node ./tasks/build-css.js",
     "build:dev": "node ./tasks/build-css.js --dev",
     "build:native": "node ./tasks/build-native.js",
+    "build:node-inspector": "node ./tasks/build-node-inspector.js",
     "clear": "sh ./tasks/remove-settings.sh",
     "start": "node ./tasks/run-dev.js",
     "start:no-dev": "node ./tasks/run.js",
+    "start:node-inspector": "node ./tasks/run-node-inspector.js",
     "test": "node ./tasks/run-tests.js"
   },
   "dependencies": {
