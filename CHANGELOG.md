@@ -2,7 +2,9 @@
 
 ### v0.6.2 (developing)
 
+ - Upgrade to Electron v1.2.1
  - Fix package watcher not work
+ - Many bugs fixed in internal ui-kit
 
 ### v0.6.1
 
