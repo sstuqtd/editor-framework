@@ -95,61 +95,60 @@ function _drawBezier ( ctx, c1, c2, c3, c4 ) {
   }
 }
 
-describe('curve', function () {
-  this.timeout(0);
-
+suite(tap, 'curve', t => {
   Editor.Window.resizeSync( 640, 480 );
   // Editor.Window.center();
 
-  Helper.runElement('editor-framework://test/demo/curve/curve.html', 'simple', '#container');
+  t.test('demo', () => {
+    helper.runElement(
+      'editor-framework://test/live/curve/curve.html', 'simple', '#container',
+      el => {
+        let pointEL = el.querySelector('#point');
+        let canvas = el.querySelector('canvas');
+        canvas.width = el.offsetWidth;
+        canvas.height = el.offsetHeight;
 
-  it('is a demo', function ( done ) {
-    let pointEL = Helper.targetEL.querySelector('#point');
-    let canvas = Helper.targetEL.querySelector('canvas');
-    canvas.width = Helper.targetEL.offsetWidth;
-    canvas.height = Helper.targetEL.offsetHeight;
+        let ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
 
-    let ctx = canvas.getContext('2d');
-    ctx.imageSmoothingEnabled = false;
+        _drawGrid( ctx, canvas.width, canvas.height );
 
-    _drawGrid( ctx, canvas.width, canvas.height );
+        let c1 = { x: 50, y: 50 };
+        let c2 = { x: 50, y: 200 };
+        let c3 = { x: 0, y: 300 };
+        let c4 = { x: 500, y: 300 };
+        _drawBezier( ctx, c1, c2, c3, c4 );
 
-    let c1 = { x: 50, y: 50 };
-    let c2 = { x: 50, y: 200 };
-    let c3 = { x: 0, y: 300 };
-    let c4 = { x: 500, y: 300 };
-    _drawBezier( ctx, c1, c2, c3, c4 );
+        // for ( let x = c1.x; x <= c4.x; x += 1 ) {
+        //   let y1 = bezierY( c1, c2, c3, c4, x );
+        //   let t = Editor.Math.solveCubicBezier( c1.x, c2.x, c3.x, c4.x, x );
+        //   let y2 = Editor.Math.bezier( c1.y, c2.y, c3.y, c4.y, t );
+        //   Editor.log( `y1 = ${y1}, y2 = ${y2}` );
+        // }
 
-    // for ( let x = c1.x; x <= c4.x; x += 1 ) {
-    //   let y1 = bezierY( c1, c2, c3, c4, x );
-    //   let t = Editor.Math.solveCubicBezier( c1.x, c2.x, c3.x, c4.x, x );
-    //   let y2 = Editor.Math.bezier( c1.y, c2.y, c3.y, c4.y, t );
-    //   Editor.log( `y1 = ${y1}, y2 = ${y2}` );
-    // }
+        // animate
 
-    // animate
+        let start = null;
+        let duration = 5000;
 
-    let start = null;
-    let duration = 5000;
+        function step (timestamp) {
+          if (!start) {
+            start = timestamp;
+          }
+          let progress = timestamp - start;
+          let ratio = progress/duration;
+          ratio %= 1;
 
-    function step (timestamp) {
-      if (!start) {
-        start = timestamp;
-      }
-      let progress = timestamp - start;
-      let ratio = progress/duration;
-      ratio %= 1;
+          let x = Editor.Math.bezier( c1.x, c2.x, c3.x, c4.x, ratio );
+          let y = Editor.Math.bezier( c1.y, c2.y, c3.y, c4.y, ratio );
 
-      let x = Editor.Math.bezier( c1.x, c2.x, c3.x, c4.x, ratio );
-      let y = Editor.Math.bezier( c1.y, c2.y, c3.y, c4.y, ratio );
+          pointEL.style.left = `${x-3}px`;
+          pointEL.style.top = `${y-3}px`;
 
-      pointEL.style.left = `${x-3}px`;
-      pointEL.style.top = `${y-3}px`;
+          window.requestAnimationFrame(step);
+        }
 
-      window.requestAnimationFrame(step);
-    }
-
-    window.requestAnimationFrame(step);
-
+        window.requestAnimationFrame(step);
+      });
   });
 });

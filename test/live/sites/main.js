@@ -1,9 +1,7 @@
 'use strict';
 
-describe('sites', function () {
-  this.timeout(0);
-
-  it('choose a site', function ( done ) {
+suite(tap, 'sites', t => {
+  t.test('choose a site', () => {
     const Electron = require('electron');
     let win = new Electron.BrowserWindow({
       width: 800,

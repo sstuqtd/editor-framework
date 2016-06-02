@@ -1,15 +1,14 @@
 'use strict';
 
-describe('ipc', function () {
-  this.timeout(0);
-
+suite(tap, 'ipc', t => {
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  t.afterEach(done => {
     ipc.clear();
+    done();
   });
 
-  it('is a demo', function ( done ) {
+  t.test('demo', () => {
     ipc.on ('foobar:say-hello', ( event ) => {
       event.reply (null, {
         foo: 'foo',
@@ -19,6 +18,6 @@ describe('ipc', function () {
     });
 
     let win = new Editor.Window();
-    win.load('editor-framework://test/demo/ipc-demo/page.html');
+    win.load('editor-framework://test/live/ipc-demo/index.html');
   });
 });
