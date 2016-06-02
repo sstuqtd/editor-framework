@@ -28,6 +28,9 @@
 }
 
 .inner {
+  box-sizing: border-box;
+  height: 100%;
+
   padding: 0.4em 1.5em;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -70,36 +73,46 @@
         Size
 --------------------*/
 
+// NOTE: we need to explicit the height, otherwise button will be stretch in flex wrapper
+
 :host(.mini) {
   font-size: @mini;
+  height: 18px;
 }
 
 :host(.tiny) {
   font-size: @tiny;
+  height: 22px;
 }
 
 :host(.small) {
   font-size: @small;
+  height: 24px;
 }
 
 :host {
   font-size: @medium;
+  height: 26px;
 }
 
 :host(.large) {
   font-size: @large;
+  height: 29px;
 }
 
 :host(.big) {
   font-size: @big;
+  height: 33px;
 }
 
 :host(.huge) {
   font-size: @huge;
+  height: 36px;
 }
 
 :host(.massive) {
   font-size: @massive;
+  height: 44px;
 }
 
 /*-------------------
