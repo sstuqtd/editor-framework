@@ -1,19 +1,15 @@
 'use strict';
 
-let ipc = new Editor.IpcListener();
-let title = 'demo: lifetime';
+suite(tap, 'lifetime', t => {
+  let ipc = new Editor.IpcListener();
 
-describe(title, function () {
-  this.timeout(0);
-
-  afterEach(function () {
+  t.afterEach(done => {
     ipc.clear();
+    done();
   });
 
-  it(title, function ( done ) {
-    let win = new Editor.Window('main', {
-      title: title
-    });
+  t.test('demo', () => {
+    let win = new Editor.Window('main');
     let events = [
       'did-start-loading',
       'did-stop-loading',
@@ -29,6 +25,6 @@ describe(title, function () {
       });
     });
 
-    win.load('editor-framework://test/demo/lifetime/page.html');
+    win.load('editor-framework://test/live/lifetime/index.html');
   });
 });

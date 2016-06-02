@@ -1,14 +1,9 @@
 'use strict';
 
-describe('canvas-focus', function () {
-  this.timeout(0);
-
-  it('is a demo', function ( done ) {
-    const Electron = require('electron');
-
+suite(tap, 'canvas-focus', t => {
+  t.test('demo', () => {
     let win = new Editor.Window();
-    win.load('editor-framework://test/live/canvas-focus/page.html');
-
+    win.load('editor-framework://test/live/canvas-focus/index.html');
 
     // win.nativeWin.webContents.on('dom-ready', () => {
     //   Editor.Ipc.sendToWins('foobar:say-hello', 'foo', 'bar');

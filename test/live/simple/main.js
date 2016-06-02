@@ -1,15 +1,14 @@
 'use strict';
 
-describe('ipc', function () {
-  this.timeout(0);
-
+suite(tap, 'simple', t => {
   let ipc = new Editor.IpcListener();
 
-  afterEach(function () {
+  t.afterEach(done => {
     ipc.clear();
+    done();
   });
 
-  it('is a demo', function ( done ) {
+  t.test('demo', () => {
     const Electron = require('electron');
 
     Electron.ipcMain.on('foobar:open-panel', () => {
@@ -17,7 +16,7 @@ describe('ipc', function () {
     });
 
     let win = new Editor.Window();
-    win.load('editor-framework://test/live/simple/page.html');
+    win.load('editor-framework://test/live/simple/index.html');
 
 
     // win.nativeWin.webContents.on('dom-ready', () => {
