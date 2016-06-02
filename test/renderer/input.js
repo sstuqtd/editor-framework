@@ -17,14 +17,14 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     done();
   });
 
-  t.test('should have shadow root', t => {
+  t.test('it should have shadow root', t => {
     _newElement(el => {
       t.assert(el.shadowRoot);
       t.end();
     });
   });
 
-  t.test('should focus on element when left mouse down', t => {
+  t.test('it should focus on element when left mouse down', t => {
     _newElement(el => {
       helper.mousedown( el, 'left' );
 
@@ -35,17 +35,18 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should get "Foobar" from value property', t => {
+  t.test('it should get "Foobar" from value property', t => {
     _newElement(el => {
       t.equal(el.value, 'Foobar');
       t.end();
     });
   });
 
-  t.test('should send "cancel" when "esc" key down on the element', t => {
+  t.test('it should send "cancel" when type some text and press down "esc" key on the element', t => {
     _newElement(el => {
       el.addEventListener('cancel', event => {
         t.equal(event.detail.value, 'Foobar');
+        t.equal(el._input.value, 'Foobar');
         t.end();
       });
 
@@ -60,7 +61,23 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should send "confirm" when "enter" key down on the element', t => {
+  t.test('it should not send "cancel" when value not changed and press down "esc" key on the element', t => {
+    _newElement(el => {
+      el.addEventListener('cancel', () => {
+        t.assert(false, 'should not recieve cancel event');
+      });
+
+      helper.click( el, 'left' );
+      setTimeout(() => {
+        helper.keydown('esc');
+        setTimeout(() => {
+          t.end();
+        }, 100);
+      }, 10);
+    });
+  });
+
+  t.test('it should send "confirm" when type some text and press down "enter" key on the element', t => {
     _newElement(el => {
       el.addEventListener('confirm', () => {
         t.equal(event.detail.value, 'abc');
@@ -78,7 +95,23 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should directly change the text to "abc" when you click the element and type "abc"', t => {
+  t.test('it should not send "confirm" when value not changed and press down "enter" key on the element', t => {
+    _newElement(el => {
+      el.addEventListener('confirm', () => {
+        t.assert(false, 'should not recieve confirm event');
+      });
+
+      helper.click( el, 'left' );
+      setTimeout(() => {
+        helper.keydown('enter' );
+        setTimeout(() => {
+          t.end();
+        }, 100);
+      }, 10);
+    });
+  });
+
+  t.test('it should directly change the text to "abc" when you click the element and type "abc"', t => {
     _newElement(el => {
       helper.click( el, 'left' );
       helper.type('a');

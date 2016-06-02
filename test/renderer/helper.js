@@ -11,7 +11,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     cb(el);
   }
 
-  t.test('should respond keydown "a"', t => {
+  t.test('it should respond keydown "a"', t => {
     _newElement(el => {
       el.focus();
       el.addEventListener('keydown', event => {
@@ -25,7 +25,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond "command + t"', t => {
+  t.test('it should respond "command + t"', t => {
     _newElement(el => {
       el.focus();
       el.addEventListener('keydown', event => {
@@ -40,7 +40,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond keyup "b"', t => {
+  t.test('it should respond keyup "b"', t => {
     _newElement(el => {
       el.focus();
       el.addEventListener('keyup', event => {
@@ -54,7 +54,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond click', t => {
+  t.test('it should respond click', t => {
     _newElement(el => {
       el.addEventListener( 'click', event => {
         t.equal(event.which, 1);
@@ -67,7 +67,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond mousedown on right button', t => {
+  t.test('it should respond mousedown on right button', t => {
     _newElement(el => {
       el.addEventListener('mousedown', event => {
         t.equal(event.which, 3);
@@ -80,7 +80,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond mouseup on left button', t => {
+  t.test('it should respond mouseup on left button', t => {
     _newElement(el => {
       el.addEventListener( 'mouseup', event => {
         t.equal(event.which, 1);
@@ -93,7 +93,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond dblclick on left button', t => {
+  t.test('it should respond dblclick on left button', t => {
     _newElement(el => {
       el.addEventListener( 'dblclick', event => {
         t.equal(event.which, 1);
@@ -106,7 +106,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond mousewheel', t => {
+  t.test('it should respond mousewheel', t => {
     _newElement(el => {
       el.addEventListener( 'mousewheel', event => {
         t.equal(event.deltaY, 10);
@@ -119,7 +119,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond mousemove', {timeout: 0}, t => {
+  t.test('it should respond mousemove', {timeout: 0}, t => {
     _newElement(el => {
       helper.mousemove(
         el,
@@ -134,7 +134,7 @@ suite(tap, 'helper', {timeout: 2000}, t => {
     });
   });
 
-  t.test('should respond mousemove step', {timeout: 0}, t => {
+  t.test('it should respond mousemove step', {timeout: 0}, t => {
     _newElement(el => {
       // reset the mouse to 0,0
       helper.mousemove(el, 'left', 100, `M0,0, 0,0`, () => {
