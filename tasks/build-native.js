@@ -55,15 +55,15 @@ Async.eachSeries(nativePaths, (path, done) => {
   });
   child.on('exit', code => {
     if ( code !== 0 ) {
-      console.error(Chalk.red(`\n${Path.basename(path)} failed!\n`));
+      console.log(Chalk.red(`\n${Path.basename(path)} failed!\n`));
     } else {
-      console.error(Chalk.green(`\n${Path.basename(path)} success!\n`));
+      console.log(Chalk.green(`\n${Path.basename(path)} success!\n`));
     }
     done();
   });
 }, err => {
   if ( err ) {
-    console.error(Chalk.red(err));
+    console.log(Chalk.red(err));
   }
 });
 

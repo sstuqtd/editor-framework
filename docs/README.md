@@ -34,3 +34,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
 
   - [Unit Test](test/unit-test.md)
   - [Writing Tests](test/writing-tests.md)
+
+## Debug
+
+  - [Debug Main Process](debug/debug-main-process.md)
