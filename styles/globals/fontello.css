@@ -4,7 +4,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?12386978#fontello') format('svg');
+    src: url('../font/fontello.svg?74281922#fontello') format('svg');
   }
 }
 */
@@ -77,3 +77,5 @@
 .icon-record:before { content: '\e81e'; } /* '' */
 .icon-cancel:before { content: '\e81f'; } /* '' */
 .icon-eye:before { content: '\e820'; } /* '' */
+.icon-block:before { content: '\e821'; } /* '' */
+.icon-doc-text:before { content: '\e822'; } /* '' */

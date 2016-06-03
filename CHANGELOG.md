@@ -3,6 +3,7 @@
 ### v0.6.2 (developing)
 
  - Upgrade to Electron v1.2.1
+ - Friendly support node-inspector for debugging main process
  - Fix package watcher not work
  - Many bugs fixed in internal ui-kit
 

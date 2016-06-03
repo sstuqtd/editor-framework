@@ -35,6 +35,10 @@
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: @border_radius;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 :host(:hover) {
@@ -116,7 +120,7 @@
 }
 
 /*-------------------
-        Colored
+  Colored
 --------------------*/
 
 .color(@clr, @text_color, @bg_color) {
@@ -145,3 +149,56 @@
 .color(red, #ddd, @red);
 .color(green, #fff, @green);
 .color(blue, #fff, @blue);
+
+/*-------------------
+  Transparent
+--------------------*/
+
+:host(.transparent) {
+  background: none;
+  border: 0;
+
+  .inner {
+    border: 0;
+    padding: 0.4em 0.6em;
+  }
+}
+:host(.transparent:hover) {
+  color: @text_color_hover;
+  background: @bg_color + 10%;
+}
+:host(.transparent[pressed]) {
+  color: @text_color - 50%;
+  background: @bg_color - 20%;
+
+  .inner {
+    box-shadow: none;
+  }
+}
+:host(.transparent[disabled]) {
+  opacity: 0.25;
+  background: none;
+}
+
+.transparent_color(@clr, @text_color) {
+  @text_color_hover: @text_color + 20%;
+
+  :host(.transparent.@{clr}) {
+    color: @text_color;
+  }
+  :host(.transparent.@{clr}:hover) {
+    color: @text_color_hover;
+    background: @text_color - 50%;
+  }
+  :host(.transparent.@{clr}[pressed]) {
+    color: @text_color - 20%;
+    background: @text_color - 70%;
+  }
+  :host(.transparent.@{clr}[disabled]) {
+    opacity: 0.25;
+  }
+}
+
+.transparent_color(red, @red);
+.transparent_color(green, @green);
+.transparent_color(blue, @blue);
