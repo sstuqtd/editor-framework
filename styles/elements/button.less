@@ -167,6 +167,9 @@
   color: @text_color_hover;
   background: @bg_color + 10%;
 }
+:host(.transparent[focused]) {
+  color: @text_color_hover;
+}
 :host(.transparent[pressed]) {
   color: @text_color - 50%;
   background: @bg_color - 20%;
@@ -181,7 +184,7 @@
 }
 
 .transparent_color(@clr, @text_color) {
-  @text_color_hover: @text_color + 20%;
+  @text_color_hover: @text_color + 50%;
 
   :host(.transparent.@{clr}) {
     color: @text_color;
@@ -190,15 +193,18 @@
     color: @text_color_hover;
     background: @text_color - 50%;
   }
+  :host(.transparent.@{clr}[focused]) {
+    color: @text_color_hover;
+  }
   :host(.transparent.@{clr}[pressed]) {
-    color: @text_color - 20%;
-    background: @text_color - 70%;
+    color: @text_color - 50%;
+    background: @text_color - 100%;
   }
   :host(.transparent.@{clr}[disabled]) {
     opacity: 0.25;
   }
 }
 
-.transparent_color(red, @red);
-.transparent_color(green, @green);
-.transparent_color(blue, @blue);
+.transparent_color(red, @red + 50%);
+.transparent_color(green, @green + 50%);
+.transparent_color(blue, @blue + 50%);

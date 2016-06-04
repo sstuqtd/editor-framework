@@ -38,3 +38,15 @@
     animation-name: anim_flash;
   }
 }
+
+.outline(@color) {
+  text-shadow:
+     1px  1px 0 @color,
+    -1px -1px 0 @color,
+     1px -1px 0 @color,
+    -1px  1px 0 @color,
+     0px  1px 0 @color,
+     1px  0px 0 @color,
+     0px -1px 0 @color,
+    -1px  0px 0 @color;
+}
