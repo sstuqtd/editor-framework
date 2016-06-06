@@ -58,11 +58,23 @@ Suppose we have the following `package.json` file:
 
 The file registers two panels `panel` and `panel.02`, so that we will have two panelID which are `foo` and `foo.02`.
 
-## Register Ipc Messages
+## Register Template
 
 TODO:
 
-## Register Listeners
+## Register Style
+
+TODO:
+
+## Register Behaviors
+
+TODO:
+
+## Register Selectors ($)
+
+TODO:
+
+## Register Ipc Messages
 
 TODO:
 
