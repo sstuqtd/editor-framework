@@ -6,6 +6,11 @@
  - Friendly support node-inspector for debugging main process
  - Fix package watcher not work
  - Many bugs fixed in internal ui-kit
+ - Rename Editor.JS.mixin to Editor.JS.assign
+ - Rename Editor.JS.mixinExcept to Editor.JS.assignExcept
+ - Rename Editor.UI.DomUtils to Editor.UI._DomUtils, move all its properties to Editor.UI
+ - Rename Editor.UI.FocusMgr to Editor.UI._FocusMgr, move some of its properties to Editor.UI
+ - Rename Editor.UI.ResMgr to Editor.UI._ResMgr, move all its properties to Editor.UI
 
 ### v0.6.1
 
