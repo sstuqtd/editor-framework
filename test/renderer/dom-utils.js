@@ -45,7 +45,7 @@ suite(tap, 'dom-utils', t => {
           t.equal(event.target, shadowDOM);
         });
 
-        Editor.UI.DomUtils.fire(shadowChild, 'foobar', {bubble: false});
+        Editor.UI.fire(shadowChild, 'foobar', {bubble: false});
 
         setTimeout(() => {
           t.end();
@@ -60,7 +60,7 @@ suite(tap, 'dom-utils', t => {
       '#g-0',
       root => {
         let results = [];
-        Editor.UI.DomUtils.walk(root, el => {
+        Editor.UI.walk(root, el => {
           results.push(el.id);
         });
         t.same(results, [
@@ -78,7 +78,7 @@ suite(tap, 'dom-utils', t => {
 
         //
         results = [];
-        Editor.UI.DomUtils.walk(root, { excludeSelf: true }, el => {
+        Editor.UI.walk(root, { excludeSelf: true }, el => {
           results.push(el.id);
         });
         t.same(results, [

@@ -29,7 +29,7 @@ suite(tap, 'focus-mgr', {timeout: 2000}, t => {
 
         el.appendChild(div);
         let childEL = child;
-        let parent = Editor.UI.FocusMgr._getFocusableParent(childEL);
+        let parent = Editor.UI._FocusMgr._getFocusableParent(childEL);
 
         t.assert(parent, 'parent must exists');
         t.equal(parent.id, 'parent');
@@ -55,7 +55,7 @@ suite(tap, 'focus-mgr', {timeout: 2000}, t => {
             el.focusable = true;
           }
 
-          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          let resultEL = Editor.UI._FocusMgr._getFirstFocusableFrom(targetEL);
           t.equal(resultEL.id, 'g-00100');
 
           t.end();
@@ -73,7 +73,7 @@ suite(tap, 'focus-mgr', {timeout: 2000}, t => {
             el.focusable = true;
           }
 
-          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          let resultEL = Editor.UI._FocusMgr._getFirstFocusableFrom(targetEL);
           t.equal(resultEL.id, 'g-002');
 
           t.end ();
@@ -91,7 +91,7 @@ suite(tap, 'focus-mgr', {timeout: 2000}, t => {
             el.focusable = true;
           }
 
-          let resultEL = Editor.UI.FocusMgr._getFirstFocusableFrom(targetEL);
+          let resultEL = Editor.UI._FocusMgr._getFirstFocusableFrom(targetEL);
           t.equal(resultEL, null);
 
           t.end ();
