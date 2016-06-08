@@ -226,6 +226,15 @@
   }
 }
 
+:host(.red[disabled]),
+:host(.green[disabled]),
+:host(.blue[disabled]),
+:host(.gray[disabled]) {
+  .text {
+    opacity: 0.2;
+  }
+}
+
 ::content > ui-prop {
   margin-right: @prop_span;
   min-width: auto;
