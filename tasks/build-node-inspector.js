@@ -14,7 +14,12 @@ Async.series([
     console.log(Chalk.cyan('npm install node-inspector'));
     console.log(Chalk.cyan('========================================\n'));
 
-    let child = Spawn('npm', [
+    let cmd = 'npm';
+    if ( process.platform === 'win32' ) {
+      cmd = 'npm.cmd';
+    }
+
+    let child = Spawn(cmd, [
       'install', 'node-inspector'
     ], {
       stdio: 'inherit',
@@ -35,7 +40,12 @@ Async.series([
     console.log(Chalk.cyan('npm install node-pre-gyp'));
     console.log(Chalk.cyan('========================================\n'));
 
-    let child = Spawn('npm', [
+    let cmd = 'npm';
+    if ( process.platform === 'win32' ) {
+      cmd = 'npm.cmd';
+    }
+
+    let child = Spawn(cmd, [
       'install',
       'git+https://git@github.com/enlight/node-pre-gyp.git#detect-electron-runtime-in-find'
     ], {
@@ -57,12 +67,19 @@ Async.series([
     console.log(Chalk.cyan('recompile node-inspector'));
     console.log(Chalk.cyan('========================================\n'));
 
-    let child = Spawn('./node_modules/.bin/node-pre-gyp', [
+    let cmd = './node_modules/.bin/node-pre-gyp';
+    let dir = './node_modules/v8-debug/';
+    if ( process.platform === 'win32' ) {
+      cmd = '.\\node_modules\\.bin\\node-pre-gyp.cmd';
+      dir = '.\\node_modules\\v8-debug\\';
+    }
+
+    let child = Spawn(cmd, [
       `--target=${electronVersion}`,
       '--runtime=electron',
       '--fallback-to-build',
       '--directory',
-      'node_modules/v8-debug/',
+      dir,
       '--dist-url=https://atom.io/download/atom-shell',
       'reinstall',
     ], {
@@ -80,12 +97,19 @@ Async.series([
   },
 
   next => {
-    let child = Spawn('./node_modules/.bin/node-pre-gyp', [
+    let cmd = './node_modules/.bin/node-pre-gyp';
+    let dir = './node_modules/v8-profiler/';
+    if ( process.platform === 'win32' ) {
+      cmd = '.\\node_modules\\.bin\\node-pre-gyp.cmd';
+      dir = './node_modules/v8-profiler/';
+    }
+
+    let child = Spawn(cmd, [
       `--target=${electronVersion}`,
       '--runtime=electron',
       '--fallback-to-build',
       '--directory',
-      'node_modules/v8-profiler/',
+      dir,
       '--dist-url=https://atom.io/download/atom-shell',
       'reinstall',
     ], {
