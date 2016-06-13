@@ -111,6 +111,33 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     });
   });
 
+  t.test('it should send "confirm" when type some text, delete it and type the original value, then press down "enter" key on the element', t => {
+    _newElement(el => {
+      el.addEventListener('confirm', () => {
+        t.equal(event.detail.value, 'Foobar');
+        t.end();
+      });
+
+      helper.click( el, 'left' );
+      helper.type('a');
+      helper.type('b');
+      helper.type('c');
+      helper.type('backspace');
+      helper.type('backspace');
+      helper.type('backspace');
+      helper.type('F');
+      helper.type('o');
+      helper.type('o');
+      helper.type('b');
+      helper.type('a');
+      helper.type('r');
+
+      setTimeout(() => {
+        helper.keydown('enter' );
+      }, 10);
+    });
+  });
+
   t.test('it should directly change the text to "abc" when you click the element and type "abc"', t => {
     _newElement(el => {
       helper.click( el, 'left' );
