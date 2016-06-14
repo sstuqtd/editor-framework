@@ -11,6 +11,9 @@
  - Rename Editor.UI.DomUtils to Editor.UI._DomUtils, move all its properties to Editor.UI
  - Rename Editor.UI.FocusMgr to Editor.UI._FocusMgr, move some of its properties to Editor.UI
  - Rename Editor.UI.ResMgr to Editor.UI._ResMgr, move all its properties to Editor.UI
+ - Allow user register custom element by Editor.UI.registerElement
+ - Allow user register custom properties by Editor.UI.Prop.register
+ - Add dependencies keyword in panel frame definition
 
 ### v0.6.1
 
