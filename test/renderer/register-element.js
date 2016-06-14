@@ -18,6 +18,7 @@ suite(tap, 'Editor.UI.registerElement', {timeout: 2000}, t => {
 
     let el = new UITest();
     t.type(el, HTMLElement);
+    t.type(el, UITest);
     t.end();
   });
 
