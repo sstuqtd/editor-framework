@@ -20,10 +20,9 @@ To make multiple windows communicate easily, Editor Framework extends [Electronâ
 
 It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and providing a set of builtin ui-kit to help user extend the widgets and panels. We also allow user integrate their ui framework such as Polymer, Vue.js, React and so on.
 
-**NOTE: editor-framework is actively developing right now, the document is out of date so far, this will be fixed when I finish the builtin ui-kit.**
+**NOTE: editor-framework is currently under active developing. The document is a little bit out of date, but still can help you getting start. I will update the doc as soon as possible.**
 
 ![demo-01](https://cloud.githubusercontent.com/assets/174891/16065534/3480115a-32de-11e6-88ba-9bdb5f047602.png)
-
 
 ## Install
 
@@ -149,13 +148,7 @@ Editor.App.extend({
 
 ### Builtin UI-KIT
 
- - A builtin ui-kit to boost your developing
- - Use Custom Element and Shadow DOM to developing the ui-kit
- - Allow user custom theme for the ui-kit
- - Can be integrate with any other ui-framework (Polymer, Vue.js, React, ...)
- - Well designed with focus behavior (Use our own focus manager for better User Experience)
- - Well designed with Undo and Redo System by providing uniform events: `change`, `confirm` and `cancel`
- - Elements
+ - A bunch of ui elements to boost your developing
    - `<ui-button>`
    - `<ui-checkbox>`
    - `<ui-color>` and `<ui-color-picker>`
@@ -164,13 +157,19 @@ Editor.App.extend({
    - `<ui-select>`
    - `<ui-slider>`
    - `<ui-text-area>`
+ - Developing ui elements by Custom Element and Shadow DOM
+ - Allow user customize their theme for ui elements
+ - Can be integrate with any other UI frameworks (Polymer, Vue.js, React, ...)
+ - Well designed with focus behavior (Use our own focus manager for better user experience)
+ - Uniform events (`change`, `confirm` and `cancel`) in every ui element to make our ui-kit friendly for Undo/Redo system
 
 ### UI Property
 
- - A well designed `<ui-prop>` element to help user write properties or inspector panel
- - Detect and choose a view for the property by type
- - Register your property type and custom the view for it
+ - A `<ui-prop>` element to help user write properties/inspector panel
+ - Automatically detect and choose a view for the property by type
+ - Allow user register their own property type and customize the view for it
  - Support nested property (for `object` type and `array` type)
+ - Support disable, readonly property in hierarchy
 
 ### Profiles
 
@@ -329,8 +328,6 @@ suite(tap, 'Test Renderer Process', t => {
   });
 });
 ```
-
-**NOTE** The first describe callback can not use arrow function.
 
 ### Generate Documentation
 

@@ -27,7 +27,7 @@ gulp package-studio --path editor-framework/demo
 
 This way you can specify any folder you like to hold all your packages and they will be loaded by Package-studio automatically.
 
-## Building Package
+## Building Package **deprecated**
 
 You can enable building for any loaded package, just add the property `"build": "true"` to your package's `package.json` file.
 
