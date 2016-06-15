@@ -14,13 +14,15 @@
 
 Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
-The framework is based on top of [Electron](http://github.com/atom/electron) ~~and [Polymer](http://github.com/polymer/polymer)~~(Polymer will be removed soon, and editor-framework will be unlimited for any gui framework).
+The framework is based on top of [Electron](http://github.com/atom/electron).
 It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
 
-It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards. The user can extend the widgets and panels, then refresh the page to apply the changes.
+It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and providing a set of builtin ui-kit to help user extend the widgets and panels. We also allow user integrate their ui framework such as Polymer, Vue.js, React and so on.
 
-![screen shot](https://cloud.githubusercontent.com/assets/174891/11186940/24a90d74-8cbf-11e5-9ea5-fc2610ebbd79.png)
+**NOTE: editor-framework is actively developing right now, the document is out of date so far, this will be fixed when I finish the builtin ui-kit.**
+
+![demo-01](https://cloud.githubusercontent.com/assets/174891/16065534/3480115a-32de-11e6-88ba-9bdb5f047602.png)
 
 
 ## Install
