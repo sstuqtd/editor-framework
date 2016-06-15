@@ -21,6 +21,9 @@
 }
 
 select {
+  font-family: @page_font;
+  /* font-weight: @font_weight; */
+
   -webkit-appearance: none;
   display: flex;
   flex: 1;
@@ -33,9 +36,6 @@ select {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: @border_radius;
-
-  /* font-weight: @font_weight; */
-  font-family: @page_font;
 
   text-decoration: none;
   text-overflow: ellipsis;
