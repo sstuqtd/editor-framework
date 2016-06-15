@@ -1,7 +1,5 @@
 This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
-**NOTE: The document is a little bit out of date, but still can help you getting start with editor-framework. I will update it as soon as possible.**
-
 ## Getting Start
 
   - [Define Your App](getting-start/define-your-app.md)
@@ -12,18 +10,18 @@ This section shows you how to extend Fireball Editor by creating and modifying p
 
   - [Create Your Package](packages/create-your-package.md)
   - [Create Panels](packages/create-panels.md)
-  - [Create Polymer Panels](packages/create-polymer-panels.md)
   - [Register Shortcuts](packages/register-shortcuts.md)
-  - [Create Widgets](packages/create-widgets.md)
   - [Load and Build Packages](packages/load-and-build.md)
   - [i18n](packages/i18n.md)
   - [Panel Lifecycle and Events](packages/panel-lifecycle-and-events.md)
+  - [Create Polymer Panels](packages/create-polymer-panels.md) **deprecated**
+  - [Create Polymer Element](packages/create-polymer-element.md) **deprecated**
 
 ## UI Programming
 
-  - [Polymer Primer](ui/polymer-primer.md)
-  - [CSS Layout Helper](ui/css-layout.md)
-  - [Event Binding](ui/event-binding.md)
+  - [Polymer Primer](ui/polymer-primer.md) **deprecated & out of date**
+  - [CSS Layout Helper](ui/css-layout.md) **deprecated & out of date**
+  - [Event Binding](ui/event-binding.md) **deprecated & out of date**
 
 ## Usage of Editor Module
 

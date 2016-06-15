@@ -14,14 +14,15 @@
 
 Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
-The framework is based on top of [Electron](http://github.com/atom/electron) ~~and [Polymer](http://github.com/polymer/polymer)~~(Polymer will be removed soon, and editor-framework will be unlimited for any gui framework).
+The framework is based on top of [Electron](http://github.com/atom/electron).
 It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
 
-It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards. The user can extend the widgets and panels, then refresh the page to apply the changes.
+It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and providing a set of builtin ui-kit to help user extend the widgets and panels. We also allow user integrate their ui framework such as Polymer, Vue.js, React and so on.
 
-![screen shot](https://cloud.githubusercontent.com/assets/174891/11186940/24a90d74-8cbf-11e5-9ea5-fc2610ebbd79.png)
+**NOTE: editor-framework is currently under active developing. The document is a little bit out of date, but still can help you getting start. I will update the doc as soon as possible.**
 
+![demo-01](https://cloud.githubusercontent.com/assets/174891/16065534/3480115a-32de-11e6-88ba-9bdb5f047602.png)
 
 ## Install
 
@@ -123,50 +124,89 @@ Editor.App.extend({
 
 ## Features
 
- - Package Management
-   - Dynamically load and unload packages
-   - Can use any web language (Less, Sass, CoffeeScript, TypeScript, …) for your package; editor-framework will build it first before loading the package.
-   - Watch package changes and reload or notify changes immediately
-   - Manage your packages in [package manager](https://github.com/fireball-packages/package-manager)
- - Panel Management
-   - Freely docks panel anywhere in multiple windows
-   - Dynamically load user define panels from package
-   - Easily register and respond to ipc messages for your panel
-   - Easily register shortcuts (hotkeys) for your panel
-   - Save and load layout in json
-   - Save and load panel profiles
- - Menu Extends
-   - Dynamically add and remove menu item
-   - Dynamically change menu item state (enabled, checked, visible, …)
-   - Load user menu from packages
- - Commands (under development)
-   - Register and customize commands for your App
-   - A powerful command window (CmdP) for searching and executing your commands
- - Profiles
-   - Allow user to register different types of profile to their need (global, local, project, …)
-   - Load and save profiles through unified API
- - Logs
-   - Use Winston for low level logs
-   - Log to file
-   - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
- - Global Selection
-   - Selection cached and synced among windows
-   - User can register his own selection type
-   - Automatically filtering selections
- - Global Undo and Redo
- - Enhance the native Dialog (under development)
-   - Remember dialog last edit position
+### Extends Your App through Packages
+
+ - Dynamically load and unload packages
+ - Watch package changes and notify changes immediately
+ - Hot reload your packages
+
+### Manage Panels
+
+ - Freely docks panel anywhere in multiple windows
+ - Dynamically load user define panels from package
+ - Easily register and respond to ipc messages for your panel
+ - Easily register shortcuts (hotkeys) for your panel
+ - Save and load panel profiles
+ - Save and load panels layout in json
+
+### Menu Extends
+
+ - Manipulate menu items by menu path (`foo/bar/foobar` for example)
+ - Dynamically add and remove menu item
+ - Dynamically change menu item state (enabled, checked, visible, ...)
+ - Load user menu from packages
+
+### Builtin UI-KIT
+
+ - A bunch of ui elements to boost your developing
+   - `<ui-button>`
+   - `<ui-checkbox>`
+   - `<ui-color>` and `<ui-color-picker>`
+   - `<ui-input>`
+   - `<ui-num-input>`
+   - `<ui-select>`
+   - `<ui-slider>`
+   - `<ui-text-area>`
+ - A [ui-kit-preview](https://github.com/fireball-packages/ui-kit-preview) to help you learn and custom ui-kit
+ - Developing ui elements by Custom Element and Shadow DOM
+ - Allow user customize their theme for ui elements
+ - Can be integrate with any other UI frameworks (Polymer, Vue.js, React, ...)
+ - Well designed with focus behavior (Use our own focus manager for better user experience)
+ - Uniform events (`change`, `confirm` and `cancel`) in every ui element to make our ui-kit friendly for Undo/Redo system
+
+### UI Property
+
+ - A `<ui-prop>` element to help user write properties/inspector panel
+ - Automatically detect and choose a view for the property by type
+ - Allow user register their own property type and customize the view for it
+ - Support nested property (for `object` type and `array` type)
+ - Support disable, readonly property in hierarchy
+
+### Profiles
+
+ - Customize your profile for different scope (globa, local, project, ...)
+ - Load and save profiles through unified API
+
+### Logs
+
+ - Uniform log interface for main and renderer process
+ - Sort and store all windows and main process logs in one place
+ - Support log to file
+ - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
+
+### Selection
+
+ - Selection cached and synced among windows
+ - User can register his own selection type
+ - Automatically filtering selections
+
+### IPC
+
  - Enhance IPC Programming Experience
-   - Add more ipc methods to help sending and recieving ipc messages in different level
-   - Allow sending ipc message to specific panel
-   - Allow sending ipc message to specific window
-   - Allow sending ipc request and waiting for the reply in callback function
-   - Integrate with [ipc-debugger](https://github.com/fireball-packages/ipc-debugger) to help you writing better ipc code
- - An Auto-Test Workflow
-   - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
-   - Integrate [Mocha](mochajs.org), [Chai](http://chaijs.com/) and [Sinon](sinonjs.org) to our test framework
-   - A ghost-tester to simulate UI events and behaviours for testing
-   - Automatically recreate your test target (widgets, panels) after each test case
+ - Allow sending ipc message to specific panel
+ - Allow sending ipc message to specific window
+ - Allow sending ipc request and waiting for the reply in callback function
+
+### Undo & Redo
+
+ - Global Undo and Redo
+
+### Test Driven Workflow
+
+ - Integrate [node-tap](http://www.node-tap.org/) to the test framework
+ - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
+ - A helper module to simulate UI input (mouse, keyboard) to help user write panel tests
+ - Automatically recreate your test target (windows, widgets, panels, ...) after each test case
 
 ## Develop
 
@@ -289,8 +329,6 @@ suite(tap, 'Test Renderer Process', t => {
   });
 });
 ```
-
-**NOTE** The first describe callback can not use arrow function.
 
 ### Generate Documentation
 
