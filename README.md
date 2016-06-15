@@ -125,50 +125,88 @@ Editor.App.extend({
 
 ## Features
 
- - Package Management
-   - Dynamically load and unload packages
-   - Can use any web language (Less, Sass, CoffeeScript, TypeScript, …) for your package; editor-framework will build it first before loading the package.
-   - Watch package changes and reload or notify changes immediately
-   - Manage your packages in [package manager](https://github.com/fireball-packages/package-manager)
- - Panel Management
-   - Freely docks panel anywhere in multiple windows
-   - Dynamically load user define panels from package
-   - Easily register and respond to ipc messages for your panel
-   - Easily register shortcuts (hotkeys) for your panel
-   - Save and load layout in json
-   - Save and load panel profiles
- - Menu Extends
-   - Dynamically add and remove menu item
-   - Dynamically change menu item state (enabled, checked, visible, …)
-   - Load user menu from packages
- - Commands (under development)
-   - Register and customize commands for your App
-   - A powerful command window (CmdP) for searching and executing your commands
- - Profiles
-   - Allow user to register different types of profile to their need (global, local, project, …)
-   - Load and save profiles through unified API
- - Logs
-   - Use Winston for low level logs
-   - Log to file
-   - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
- - Global Selection
-   - Selection cached and synced among windows
-   - User can register his own selection type
-   - Automatically filtering selections
- - Global Undo and Redo
- - Enhance the native Dialog (under development)
-   - Remember dialog last edit position
+### Extends Your App through Packages
+
+ - Dynamically load and unload packages
+ - Watch package changes and notify changes immediately
+ - Hot reload your packages
+
+### Manage Panels
+
+ - Freely docks panel anywhere in multiple windows
+ - Dynamically load user define panels from package
+ - Easily register and respond to ipc messages for your panel
+ - Easily register shortcuts (hotkeys) for your panel
+ - Save and load panel profiles
+ - Save and load panels layout in json
+
+### Menu Extends
+
+ - Manipulate menu items by menu path (`foo/bar/foobar` for example)
+ - Dynamically add and remove menu item
+ - Dynamically change menu item state (enabled, checked, visible, ...)
+ - Load user menu from packages
+
+### Builtin UI-KIT
+
+ - A builtin ui-kit to boost your developing
+ - Use Custom Element and Shadow DOM to developing the ui-kit
+ - Allow user custom theme for the ui-kit
+ - Can be integrate with any other ui-framework (Polymer, Vue.js, React, ...)
+ - Well designed with focus behavior (Use our own focus manager for better User Experience)
+ - Well designed with Undo and Redo System by providing uniform events: `change`, `confirm` and `cancel`
+ - Elements
+   - `<ui-button>`
+   - `<ui-checkbox>`
+   - `<ui-color>` and `<ui-color-picker>`
+   - `<ui-input>`
+   - `<ui-num-input>`
+   - `<ui-select>`
+   - `<ui-slider>`
+   - `<ui-text-area>`
+
+### UI Property
+
+ - A well designed `<ui-prop>` element to help user write properties or inspector panel
+ - Detect and choose a view for the property by type
+ - Register your property type and custom the view for it
+ - Support nested property (for `object` type and `array` type)
+
+### Profiles
+
+ - Customize your profile for different scope (globa, local, project, ...)
+ - Load and save profiles through unified API
+
+### Logs
+
+ - Uniform log interface for main and renderer process
+ - Sort and store all windows and main process logs in one place
+ - Support log to file
+ - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
+
+### Selection
+
+ - Selection cached and synced among windows
+ - User can register his own selection type
+ - Automatically filtering selections
+
+### IPC
+
  - Enhance IPC Programming Experience
-   - Add more ipc methods to help sending and recieving ipc messages in different level
-   - Allow sending ipc message to specific panel
-   - Allow sending ipc message to specific window
-   - Allow sending ipc request and waiting for the reply in callback function
-   - Integrate with [ipc-debugger](https://github.com/fireball-packages/ipc-debugger) to help you writing better ipc code
- - An Auto-Test Workflow
-   - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
-   - Integrate [Mocha](mochajs.org), [Chai](http://chaijs.com/) and [Sinon](sinonjs.org) to our test framework
-   - A ghost-tester to simulate UI events and behaviours for testing
-   - Automatically recreate your test target (widgets, panels) after each test case
+ - Allow sending ipc message to specific panel
+ - Allow sending ipc message to specific window
+ - Allow sending ipc request and waiting for the reply in callback function
+
+### Undo & Redo
+
+ - Global Undo and Redo
+
+### Test Driven Workflow
+
+ - Integrate [node-tap](http://www.node-tap.org/) to the test framework
+ - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
+ - A helper module to simulate UI input (mouse, keyboard) to help user write panel tests
+ - Automatically recreate your test target (windows, widgets, panels, ...) after each test case
 
 ## Develop
 
