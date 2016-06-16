@@ -65,6 +65,7 @@ textarea::-webkit-input-placeholder {
 }
 
 textarea::selection {
+  color: white;
   background: @select_color;
 }
 
@@ -105,7 +106,7 @@ textarea::selection {
   }
 }
 
-:host([disabled]) {
+:host([is-disabled]) {
   pointer-events: none;
 
   textarea {
