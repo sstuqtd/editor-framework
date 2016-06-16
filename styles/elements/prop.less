@@ -129,13 +129,13 @@
   }
 }
 
-:host([disabled]) {
+:host([is-disabled]) {
   .wrapper {
     color: @text_color_disabled;
   }
 }
 
-:host([readonly]) {
+:host([is-readonly]) {
   .lock {
     display: inline-flex;
   }
@@ -226,10 +226,10 @@
   }
 }
 
-:host(.red[disabled]),
-:host(.green[disabled]),
-:host(.blue[disabled]),
-:host(.gray[disabled]) {
+:host(.red[is-disabled]),
+:host(.green[is-disabled]),
+:host(.blue[is-disabled]),
+:host(.gray[is-disabled]) {
   .text {
     opacity: 0.2;
   }
