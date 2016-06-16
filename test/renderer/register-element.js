@@ -22,9 +22,9 @@ suite(tap, 'Editor.UI.registerElement', {timeout: 2000}, t => {
     t.end();
   });
 
-  t.test('the created should be called', t => {
+  t.test('the factoryImpl should be called', t => {
     let UITest = Editor.UI.registerElement('ui-test-03', {
-      created ( foo, bar ) {
+      factoryImpl ( foo, bar ) {
         t.equal(foo, 'foo');
         t.equal(bar, 'bar');
         t.type(this, HTMLElement);
