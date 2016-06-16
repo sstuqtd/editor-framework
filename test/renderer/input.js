@@ -46,7 +46,7 @@ suite(tap, '<ui-input>', {timeout: 2000}, t => {
     _newElement(el => {
       el.addEventListener('cancel', event => {
         t.equal(event.detail.value, 'Foobar');
-        t.equal(el._input.value, 'Foobar');
+        t.equal(el.$input.value, 'Foobar');
         t.end();
       });
 

@@ -59,16 +59,16 @@ suite(tap, 'Editor.UI.registerElement', {timeout: 2000}, t => {
       },
 
       ready () {
-        t.equal(this.$.foo, this.shadowRoot.querySelector('#foo'));
-        t.equal(this.$.bar, this.shadowRoot.querySelector('#bar'));
+        t.equal(this.$foo, this.shadowRoot.querySelector('#foo'));
+        t.equal(this.$bar, this.shadowRoot.querySelector('#bar'));
       },
     });
 
     let el = new UITest();
     document.body.appendChild(el);
 
-    let computedFoo = window.getComputedStyle(el.$.foo);
-    let computedBar = window.getComputedStyle(el.$.bar);
+    let computedFoo = window.getComputedStyle(el.$foo);
+    let computedBar = window.getComputedStyle(el.$bar);
     t.equal(computedFoo.color, 'rgb(255, 0, 0)');
     t.equal(computedBar.color, 'rgb(0, 255, 0)');
 
