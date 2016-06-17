@@ -129,18 +129,6 @@
   }
 }
 
-:host([is-disabled]) {
-  .wrapper {
-    color: @text_color_disabled;
-  }
-}
-
-:host([is-readonly]) {
-  .lock {
-    display: inline-flex;
-  }
-}
-
 :host([slidable]) {
   .wrapper {
     cursor: ew-resize;
@@ -190,6 +178,19 @@
 
   .label {
     margin-top: 3px;
+  }
+}
+
+:host([is-disabled]) {
+  .wrapper {
+    color: @text_color_disabled;
+    cursor: default;
+  }
+}
+
+:host([is-readonly]) {
+  .lock {
+    display: inline-flex;
   }
 }
 
