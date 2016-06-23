@@ -94,9 +94,10 @@ a:active {
 --------------------*/
 
 hr {
-  height: 4px;
+  height: 1px;
   border: 0 none;
   padding: 0;
+  margin: 10px;
   background-color: @section_color;
 }
 
@@ -117,6 +118,49 @@ ul :first-child, ol :first-child {
 
 ul :last-child, ol :last-child {
   margin-bottom: 0;
+}
+
+/*-------------------
+  Blockquote
+--------------------*/
+
+blockquote {
+  margin: 0;
+  padding: 0 15px;
+  color: @text_color - 50%;
+  border-left: 4px solid @section_color;
+}
+
+/*-------------------
+  Blockquote
+--------------------*/
+
+table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+table th {
+  font-weight: bold;
+  color: black;
+  /* background-color: #d70; */
+  background-color: #007b32;
+}
+
+table th,
+table td {
+  padding: 6px 13px;
+}
+
+table tr {
+  background-color: @code_bg_color;
+}
+
+table tr:nth-child(2n) {
+  background-color: @code_bg_color + 20%;
 }
 
 /*-------------------
