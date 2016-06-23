@@ -154,7 +154,7 @@
 
 :host([folded]) {
   ::content > .child {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -243,4 +243,8 @@
 
 ::content > ui-prop:last-child {
   margin-right: 0;
+}
+
+::content > .user {
+  display: none;
 }

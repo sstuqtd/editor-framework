@@ -14,6 +14,8 @@
  - Allow user register custom element by Editor.UI.registerElement
  - Allow user register custom properties by Editor.UI.Prop.register
  - Add dependencies keyword in panel frame definition
+ - Add `<ui-loader>`
+ - Add `<ui-section>`
 
 ### v0.6.1
 

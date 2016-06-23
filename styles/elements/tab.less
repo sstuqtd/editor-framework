@@ -42,9 +42,12 @@
 
 .title {
   .layout-horizontal();
-  .layout-children(center);
+  .layout-children(center, flex-start);
 
-  margin: 3px 10px;
+  min-width: @tab_min_width;
+  height: @tabbar_height - 2; // NOTE: do not use 100%, cause when tab is unselect, the title height is different
+
+  margin: 0px 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
