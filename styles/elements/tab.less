@@ -45,7 +45,7 @@
   .layout-children(center, flex-start);
 
   min-width: @tab_min_width;
-  height: 100%;
+  height: @tabbar_height - 2; // NOTE: do not use 100%, cause when tab is unselect, the title height is different
 
   margin: 0px 10px;
   overflow: hidden;
