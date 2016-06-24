@@ -9,12 +9,11 @@
   overflow: auto;
 
   margin: 0px;
-  padding: 10px;
   margin-bottom: 10px;
 
   font-size: 14px;
   font-family: @font;
-  background: @bg_color;
+  background: transparent;
 
   cursor: auto;
 }
@@ -25,10 +24,6 @@
 
 :host::selection, *::selection {
   background: @select_color;
-}
-
-:host(.transparent) {
-  background: transparent;
 }
 
 /*-------------------
