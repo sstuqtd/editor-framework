@@ -27,6 +27,10 @@
   background: @select_color;
 }
 
+:host(.transparent) {
+  background: transparent;
+}
+
 /*-------------------
   Header
 --------------------*/
@@ -94,10 +98,11 @@ a:active {
 --------------------*/
 
 hr {
-  height: 1px;
-  border: 0 none;
+  border: 0;
   padding: 0;
-  margin: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 1px;
   background-color: @section_color;
 }
 
@@ -156,12 +161,12 @@ table td {
 }
 
 table tr {
-  background-color: @code_bg_color;
+  background-color: @table_bg_color;
 }
 
-table tr:nth-child(2n) {
-  background-color: @code_bg_color + 20%;
-}
+/* table tr:nth-child(2n) {                 */
+/*   background-color: @table_bg_color_alt; */
+/* }                                        */
 
 /*-------------------
   Syntax Highlighting
