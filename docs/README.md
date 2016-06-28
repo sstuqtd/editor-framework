@@ -22,6 +22,7 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   - [Polymer Primer](ui/polymer-primer.md) **deprecated & out of date**
   - [CSS Layout Helper](ui/css-layout.md) **deprecated & out of date**
   - [Event Binding](ui/event-binding.md) **deprecated & out of date**
+  - [Focusable](ui/focusable.md)
 
 ## Usage of Editor Module
 

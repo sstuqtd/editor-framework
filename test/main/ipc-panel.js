@@ -21,11 +21,28 @@ suite(tap, 'ipc-panel', t => {
     done();
   });
 
-  suite(t, 'Editor.Ipc.sendToPanel', t => {
+  suite(t, 'Init', t => {
+    // FIXME: after Electron 1.2.5, protocol will be failed if I don't run this code by default
+    let win = new Editor.Window();
+    win.load('editor-framework://static/blank.html');
+    win.nativeWin.webContents.on('dom-ready', () => {
+      win.close();
+      t.end();
+    });
+  });
 
-    t.test('it should send message to panel from main process', {timeout: 5000}, t => {
+  suite(t, 'Editor.Ipc.sendToPanel', t => {
+    t.test('it should send message to panel from main process', {timeout: -1}, t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
+
+      ipc.on('panel-01:reply', ( event, foo, bar ) => {
+        t.equal(foo, 'foo');
+        t.equal(bar, 'bar');
+
+        Editor.Panel.close('panel-ipc');
+        t.end();
+      });
 
       Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc');
@@ -34,14 +51,6 @@ suite(tap, 'ipc-panel', t => {
         setTimeout(() => {
           Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
         }, 500);
-      });
-
-      ipc.on('panel-01:reply', ( event, foo, bar ) => {
-        t.equal(foo, 'foo');
-        t.equal(bar, 'bar');
-
-        Editor.Panel.close('panel-ipc');
-        t.end();
       });
     });
 

@@ -4,7 +4,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?74281922#fontello') format('svg');
+    src: url('../font/fontello.svg?43497167#fontello') format('svg');
   }
 }
 */
@@ -79,3 +79,4 @@
 .icon-eye:before { content: '\e820'; } /* '' */
 .icon-block:before { content: '\e821'; } /* '' */
 .icon-doc-text:before { content: '\e822'; } /* '' */
+.icon-link-ext:before { content: '\e823'; } /* '' */
