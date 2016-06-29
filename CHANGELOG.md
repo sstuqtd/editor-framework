@@ -16,6 +16,7 @@
  - Add dependencies keyword in panel frame definition
  - Add `<ui-loader>`
  - Add `<ui-section>`
+ - Add `<ui-markdown>`
 
 ### v0.6.1
 
