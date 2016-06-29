@@ -32,7 +32,7 @@ suite(tap, 'ipc-panel', t => {
   });
 
   suite(t, 'Editor.Ipc.sendToPanel', t => {
-    t.test('it should send message to panel from main process', {timeout: -1}, t => {
+    t.test('it should send message to panel from main process', {timeout: 5000}, t => {
       const path = Path.join(testPackages,'panel-ipc');
       t.ok( Fs.existsSync(path) );
 
@@ -47,10 +47,13 @@ suite(tap, 'ipc-panel', t => {
       Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc');
 
-        // TODO: Panel.open should have callback
-        setTimeout(() => {
-          Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
-        }, 500);
+        let win = Editor.Panel.findWindow('panel-ipc');
+        win.nativeWin.webContents.on('dom-ready', () => {
+          // TODO: Panel.open should have callback
+          setTimeout(() => {
+            Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
+          }, 500);
+        });
       });
     });
 
@@ -61,16 +64,19 @@ suite(tap, 'ipc-panel', t => {
       Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc-02');
 
-        // TODO: Panel.open should have callback
-        setTimeout(() => {
-          Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
-            t.equal(foo, 'foo');
-            t.equal(bar, 'bar');
+        let win = Editor.Panel.findWindow('panel-ipc-02');
+        win.nativeWin.webContents.on('dom-ready', () => {
+          // TODO: Panel.open should have callback
+          setTimeout(() => {
+            Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
+              t.equal(foo, 'foo');
+              t.equal(bar, 'bar');
 
-            Editor.Panel.close('panel-ipc-02');
-            t.end();
-          });
-        }, 500);
+              Editor.Panel.close('panel-ipc-02');
+              t.end();
+            });
+          }, 500);
+        });
       });
     });
 
