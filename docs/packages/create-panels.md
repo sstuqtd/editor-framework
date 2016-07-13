@@ -58,6 +58,17 @@ Suppose we have the following `package.json` file:
 
 The file registers two panels `panel` and `panel.02`, so that we will have two panelID which are `foo` and `foo.02`.
 
+## Options
+
+ - `main`: String (path) - Panel's main entry file.
+ - `type`: String - Panel's type, can be 'dockable', 'float', 'fixed-size', 'quick' and 'simple'. Default is 'dockable'
+ - `title` String - Panel window's title in tab.
+ - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
+ - `width` Integer - Panel window’s width in pixels. Default is 400.
+ - `height` Integer - Panel window’s height in pixels. Default is 400.
+ - `minWidth` Integer - Panel window’s minimum width. Default is 200.
+ - `minHeight` Integer - Panel window’s minimum height. Default is 200.
+
 ## Register Template
 
 TODO:
