@@ -66,8 +66,10 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
  - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
  - `width` Integer - Panel window’s width in pixels. Default is 400.
  - `height` Integer - Panel window’s height in pixels. Default is 400.
- - `minWidth` Integer - Panel window’s minimum width. Default is 200.
- - `minHeight` Integer - Panel window’s minimum height. Default is 200.
+ - `min-width` Integer - Panel window’s minimum width. Default is 200.
+ - `min-height` Integer - Panel window’s minimum height. Default is 200.
+ - `max-width` Integer - Panel window’s maximum width.
+ - `max-height` Integer - Panel window’s maximum height.
 
 ## Register Template
 
