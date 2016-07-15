@@ -1,6 +1,6 @@
 {
   "name": "editor-framework",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "description": "A simple framework for making panel based applications.",
   "homepage": "https://github.com/cocos-creator/editor-framework",
   "repository": {
@@ -50,7 +50,7 @@
   },
   "devDependencies": {
     "devtron": "^1.1.0",
-    "electron-prebuilt": "1.2.6",
+    "electron-prebuilt": "1.2.7",
     "gulp": "3.9.0",
     "gulp-babel": "6.1.1",
     "gulp-less": "3.0.5",
