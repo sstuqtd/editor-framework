@@ -1,8 +1,10 @@
 ## CHANGELOG
 
-### v0.6.2 (developing)
+### v0.6.3 (developing)
 
- - Upgrade to Electron v1.2.1
+### v0.6.2
+
+ - Upgrade to Electron v1.2.7
  - Friendly support node-inspector for debugging main process
  - Fix package watcher not work
  - Many bugs fixed in internal ui-kit
