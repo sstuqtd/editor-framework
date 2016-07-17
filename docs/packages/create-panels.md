@@ -1,8 +1,11 @@
-Panel is the dockable "mini-windows" unit in Editor Framework. Each panel contains a panel frame.
+# Creating Panels
+
+A `Panel `is a dockable "mini-window" in Editor Framework. Each panel contains a panel frame.
 
 You can define a polymer element as your panel frame, and register it in `package.json`. The Editor Framework will dynamically load your polymer element when the panel is opened.
 
 To define a panel frame, just create a javascript file like this:
+
 
 ```javascript
 Editor.Panel.extend({
@@ -29,14 +32,14 @@ Then save it to your package's `panel` field. After that register the html file 
   "panel": {
     "main": "panel/panel.js",
     "type": "dockable",
-    "title": "Simple",
+    "title": "Simple Panel Title",
     "width": 800,
     "height": 600
   }
 }
 ```
 
-Once your package is loaded, you can use `Editor.Panel.open('simple')` to open your panel.
+Once your package is loaded, you can use `Editor.Panel.open('simple')` to open your panel. Note that the argument passed to `Editor.Panel.open` corresponds to the `name` field in the package's JSON definition.
 
 ## Panel ID
 
@@ -61,7 +64,7 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
 ## Options
 
  - `main`: String (path) - Panel's main entry file.
- - `type`: String - Panel's type, can be 'dockable', 'float', 'fixed-size', 'quick' and 'simple'. Default is 'dockable'
+ - `type`: String - Panel's type, can be `'dockable'`, `'float'`, `'fixed-size'`, `'quick'` and `'simple'`. Default is `'dockable'`
  - `title` String - Panel window's title in tab.
  - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
  - `width` Integer - Panel window’s width in pixels. Default is 400.
@@ -73,7 +76,9 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
 
 ## Register Template
 
-TODO:
+Template HTML can be defined within the panel's main JS file (eg package-name/panel/panel.js). 
+
+*TODO: Expand Example* 
 
 ## Register Style
 
@@ -98,3 +103,5 @@ TODO:
 ## Register Profiles
 
 TODO:
+
+## Example panel.js file:

@@ -1,8 +1,10 @@
+# Setting Focusable Behavior
+
 Focusable behavior allow the element manage its focus behavior by focus-manager.
 
 ## Initialize
 
-You need to add `Editor.UI.Focusable` to behaviors list to enable it. After that,
+You need to add `Editor.UI.Focusable` to the behaviors list to enable it. After that,
 add `_initFocusable` in your `ready` callback.
 
 ```javascript

@@ -1,6 +1,8 @@
+# Binding Events
+
 ## Register Listener
 
-One way for event binding is to register event listener in Polymer constructor:
+One way for to bind events is to register an event listener in the Polymer constructor:
 
 ```html
 <template>
@@ -26,11 +28,11 @@ Polymer({
  </script>
 ```
 
-We register event listener for current template in `listeners` property. Please notice you can use `nodeId.eventName` pattern to specify listener to one certain element.
+Here, we registered an event listener for the current template in `listeners` property. Please notice you can use `nodeId.eventName` pattern to specify the listener for a certain element.
 
-## DOM Attribute
+## DOM Attributes
 
-To add event listener to your element in editor web page, use `on-event` attribute on element DOM:
+To add event listener to your element in editor web page, use the `on-event` attribute in the element's DOM:
 
 ```html
 <dom-module id="simple-tag">
@@ -47,7 +49,8 @@ To add event listener to your element in editor web page, use `on-event` attribu
   })
 </script>
 ```
-The above example binds `on-click` event to a `h1` element. And call `changeText` function when event fires.
+
+The above example binds an `on-click` event to an `h1` element. And calls `changeText` function when event fires.
 
 Please notice the traditional `onclick=` pattern for DOM event binding will not work with methods defined in `Polymer()` constructor.
 
