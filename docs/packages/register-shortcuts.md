@@ -1,3 +1,5 @@
+# Registering Shortcuts
+
 You can define keyboard shortcuts for your panel in `package.json`. Here is a simple example:
 
 ```json
@@ -14,10 +16,10 @@ You can define keyboard shortcuts for your panel in `package.json`. Here is a si
 }
 ```
 
-The shortcut is directly bind to method in your panel frame. Just make sure your have defined the method otherwise the framework will raise a warning.
+The shortcut is directly bound to a method in your panel frame. Just make sure you have defined the method otherwise the framework will raise a warning.
 
-Editor Framework allows you to register shortcut for a specific element in your panel frame. In this way, you can have a better way to manage your key mappings when focused on different elements.
+Editor Framework allows you to register a shortcut for a specific element in your panel frame. In this way, you can better manage your key mappings when focused on different elements.
 
-To achieve this, just add an `id` in your sub-element, and write the id selector (a.k.a `#{your-id}`) as a key in the shortcut, and define the key mappings in it.
+To achieve this, just add an `id` in your sub-element, and write the id selector (a.k.a `#{your-id}`) as a key in the shortcut and define the key mappings within it.
 
-Learn more about this in [shortcuts-demo](https://github.com/fireball-x/editor-framework/tree/master/demo/shortcuts)
+You can learn more about this in [shortcuts-demo](https://github.com/fireball-x/editor-framework/tree/master/demo/shortcuts)

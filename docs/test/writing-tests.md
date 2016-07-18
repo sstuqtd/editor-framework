@@ -1,7 +1,7 @@
-## Writing Tests for App
+## Writing Tests for an App
 
 TODO
 
-## Writing Tests for Package
+## Writing Tests for a Package
 
 TODO

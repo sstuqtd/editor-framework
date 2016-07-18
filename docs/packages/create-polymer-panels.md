@@ -24,7 +24,7 @@ You can define a polymer element as your panel frame, just create a html file li
 ```
 
 After that in your `package.json`'s `panel` field, assign the html path to the `main` field, also add
-an additional `ui` field equal to "polymer". Here is the json file:
+an additional `ui` field equal to `"polymer"`. Here is the json file:
 
 ```json
 {

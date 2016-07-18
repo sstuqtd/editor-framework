@@ -1,8 +1,6 @@
-You can define lifecycle callbacks, events and ipc messages in the app definition.
+# Lifecycle callbacks
 
-## lifecycle callbacks
-
-You can define lifecycle callbacks directly in your app definition.
+You can define lifecycle callbacks, events, and IPC messages in the app definition by calling `Editor.App.extend`:
 
 ### beforeInit(yargs)
 
@@ -10,7 +8,7 @@ You can define lifecycle callbacks directly in your app definition.
 
 Invoked at the very beginning of the app, before Editor module initialization. No method in `Editor` module can be used in this phase.
 
-The `beforeInit` phase is designed for yargs initialization. You can add additional command for your app in it.
+The `beforeInit` phase is designed for setting command line options (defined within the `yargs` object). You can add additional commands for your app within this function.
 
 **Example:**
 
@@ -22,8 +20,7 @@ Editor.App.extend({
       .options({
         'path': { type: 'string', desc: 'Open a project by path' },
         'nologin': { type: 'boolean', desc: 'Do not require login in dev mode' },
-      })
-      ;
+      });
   },
 });
 ```
@@ -31,14 +28,14 @@ Editor.App.extend({
 ### init(opts, callback)
 
  - `opts` Object - The options parsed from `process.argv`
- - `callback` Function - The finished callback function
+ - `callback` Function - Calling this function will complete the initialization.
 
-This function will be invoked after `Editor` and its sub-modules has been initialized. The init phase is asynchronous and accept a callback to finish. It is recommended to put the following work in this function:
+This function will be invoked after `Editor` and its sub-modules have been initialized. The init phase is asynchronous and accepts a callback which is to be called to notify the app that initialization is complete. It is recommended to put the following steps in this function:
 
  - register your protocol
  - register your profile path
  - init your modules
- - invoke `Editor.init`
+ - invoke `Editor.init` to specify runtime-specific configuration for your application
 
 **Example:**
 
@@ -66,7 +63,7 @@ Editor.App.extend({
 
 ### run()
 
-This function will be invoked after all packages loaded. Basically you should open your main window in this function.
+This function will be invoked after all packages are loaded. A common use case is to open your main window within this function.
 
 **Example:**
 
@@ -113,7 +110,9 @@ Editor.App.extend({
 
 ### loadPackage(pjson, callback)
 
-This function allow user hook their package loading process stuff:
+A callback to be executed when a package has completed loading:
+
+*TODO: A more concrete example is needed here*
 
 ```javascript
 Editor.App.extend({
@@ -129,7 +128,9 @@ Editor.App.extend({
 
 ### unloadPackage(pjson)
 
-This function allow user hook their package unloading process stuff:
+A callback to be executed when a package has completed unloading:
+
+*TODO: A more concrete example is needed here*
 
 ```javascript
 Editor.App.extend({

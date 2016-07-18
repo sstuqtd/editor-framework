@@ -1,10 +1,10 @@
-This section shows you how to extend Fireball Editor by creating and modifying packages, with [Editor framework](https://github.com/fireball-x/editor-framework) API.
+This section explains how to extend Fireball Editor by creating and modifying packages with the [Editor framework](https://github.com/fireball-x/editor-framework) API.
 
-## Getting Start
+## Getting Started
 
-  - [Define Your App](getting-start/define-your-app.md)
-  - [App lifecycle and events](getting-start/app-lifecycle-and-events.md)
-  - [Introduction to IPC](getting-start/introduction-to-ipc.md)
+  - [Define Your App](getting-started/define-your-app.md)
+  - [App lifecycle and events](getting-started/app-lifecycle-and-events.md)
+  - [Introduction to IPC](getting-started/introduction-to-ipc.md)
 
 ## Writing A Package
 
@@ -24,16 +24,16 @@ This section shows you how to extend Fireball Editor by creating and modifying p
   - [Event Binding](ui/event-binding.md) **deprecated & out of date**
   - [Focusable](ui/focusable.md)
 
-## Usage of Editor Module
+## Usage of the Editor Module
 
   - [Editor Module](editor/editor-module.md)
   - [Online/Offline Event Detection](editor/online-offline-events.md)
 
-## Test
+## Testing
 
   - [Unit Test](test/unit-test.md)
   - [Writing Tests](test/writing-tests.md)
 
-## Debug
+## Debugging
 
   - [Debug Main Process](debug/debug-main-process.md)

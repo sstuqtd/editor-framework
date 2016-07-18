@@ -1,5 +1,8 @@
-In your `package.json`, you need to add `main` field, and assign your main-entry file to it.
-Here is an exmaple `package.json` file:
+# Define Your App
+
+The entry point to your application must be specified within the `"main"` field of your app's `package.json`: 
+
+Here is an example `package.json` file:
 
 ```json
 {
@@ -7,14 +10,14 @@ Here is an exmaple `package.json` file:
   "version": "0.0.1",
   "description": "A simple app based on editor-framework.",
   "dependencies": {},
-  "main": "main.js" //<== Important!!! Must have.
+  "main": "main.js" //<== Important!!! This is required!
 }
 ```
 
 ## Main Entry Script
 
-In your main entry script, extends `Editor.App` by calling `Editor.App.extend` and pass a definition to it.
-Here is an example:
+In your main entry script (specified as `main.js` in the above `package.json` definition), extend `Editor.App` by passing an object definition to the `Editor.App.extend` function: 
+
 
 ```javascript
 'use strict';
@@ -57,7 +60,7 @@ Editor.App.extend({
 });
 ```
 
-Read more details about App definition in [App lifecycle and events](./app-lifecycle-and-events.md).
+Read more details about specifying your App definition in [App lifecycle and events](./app-lifecycle-and-events.md).
 
 ## Yeoman Generator
 

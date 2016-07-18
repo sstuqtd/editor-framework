@@ -1,9 +1,11 @@
-Electron alread provide a way to detect online and offline for editor ---
+# Detecting if your app goes online or offline
+
+Electron already provides a way to detect online and offline events ---
 [Online/Offline Event Detection](https://github.com/atom/electron/blob/master/docs/tutorial/online-offline-events.md)
 
-Editor Framework make this even easy by wrapping it to a worker.
+Editor Framework makes this even easier by wrapping it to a worker.
 
-You can use it by putting the code in your editor init phase:
+You can use it by putting the following code in your editor `init` phase:
 
 ```javascript
 Editor.App.extend({
