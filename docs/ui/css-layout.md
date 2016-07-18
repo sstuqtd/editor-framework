@@ -87,7 +87,7 @@ You can import both or either of layout methods in your web page html:
 <link rel="import" href="app://bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 ```
 
-You can also import Editor Framework's [lite.html](https://github.com/fireball-x/editor-framework/blob/master/page/ui/lite.html) environment with standard editor page dependencies.
+You can also import Editor Framework's [lite.html](https://github.com/cocos-creator/editor-framework/blob/master/page/ui/lite.html) environment with standard editor page dependencies.
 
 ## CSS Layout Tricks
 

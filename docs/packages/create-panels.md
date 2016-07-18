@@ -76,9 +76,9 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
 
 ## Register Template
 
-Template HTML can be defined within the panel's main JS file (eg package-name/panel/panel.js). 
+Template HTML can be defined within the panel's main JS file (eg package-name/panel/panel.js).
 
-*TODO: Expand Example* 
+*TODO: Expand Example*
 
 ## Register Style
 

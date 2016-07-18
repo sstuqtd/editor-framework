@@ -20,15 +20,6 @@ To load packages into your Editor-Framework app, you must either:
 - By default, Editor-Framework loads all packages in the [/demo](/demo) folder. You can also create your packages here to quickly see it in the "Package Manager" list.
 - You can also put your packages into `~/.{app-name}/packages` folder, read [create packages](create-your-package.md#create-your-package) doc for more details.
 
-To load packages for [Fireball](https://github.com/fireball-x/fireball), you can open Package-studio with the following parameter:
-
-```bash
-# Open Fireball Package Studio with all packages in editor-framework/demo loaded
-gulp package-studio --path editor-framework/demo
-```
-
-This way you can specify any folder you'd like to hold your packages and they will be loaded by Package-studio automatically.
-
 ## Building a Package **(deprecated)**
 
 You can enable building for any loaded package, just add the property `"build": "true"` to your package's `package.json` file.
@@ -47,11 +38,11 @@ When Editor-framework is running, it will watch all loaded packages. If you modi
 - If the package has building enabled, the package will be rebuilt.
 - If building is disabled or the rebuild is successful, go through the dirty notify pipeline. Otherwise, if the rebuild failed, stop the process.
 
-A dirty notification has a different pipeline for `page-level` changes and `core-level` changes:
+A dirty notification has a different pipeline for renderer process changes and main process changes:
 
-- For `page-level` changes (for example you changed the html or style in your `panel.html` file) it will send an ipc message to the panel indicating panel out-of-date. And your panel's tab will turn red. You can reload the editor page to remove the 'out-of-date' state of the page by selecting `Developer/Reload` or by pressing Command+R (on Mac) or Control+R (on Windows).
+- For renderer process changes (for example you changed the html or style in your `panel.html` file) it will send an ipc message to the panel indicating panel out-of-date. And your panel's tab will turn red. You can reload the editor page to remove the 'out-of-date' state of the page by selecting `Developer/Reload` or by pressing Command+R (on Mac) or Control+R (on Windows).
 ![red tab](https://cloud.githubusercontent.com/assets/344547/8019179/70f804fe-0c73-11e5-8736-8df1a71e34a4.png)
-- For `core-level` changes (for example, a modification to the `main.js` file) Editor-Framework will unload and reload the package.
+- For main process changes (for example, a modification to the `main.js` file) Editor-Framework will unload and reload the package.
 
 ## Manually Reloading a Package
 

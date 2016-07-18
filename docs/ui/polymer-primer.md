@@ -1,24 +1,10 @@
 # Polymer Primer
 
-Fireball and Editor Framework use [Polymer](polymer-project.org) to build the whole editor front end. This doc is for crediting Polymer as the perfect UI system solution for building a complex game editor toolset. Also we'd like to point to some core polymer documentation that will help you get started with developing an app with the Editor Framework.
+Editor-Framework provides a way to use [Polymer](polymer-project.org) for ui programming. This doc is for crediting Polymer as the perfect UI system solution for building a complex game editor toolset. Also we'd like to point to some core polymer documentation that will help you get started with developing an app with the Editor Framework.
 
-## Why Polymer
+## UI Library and Packages Built With Polymer
 
-Fireball is a single cross-platform app with a lot of panels. We evaluated CSS frameworks such as Zurb Foundation and Semantic-UI. But they are all too heavy and not precise enough for a game editing tools. We decided to build our own lightweight custom element UI system, to populate panels with UI elements and components.
-
-The UI elements we created are not just for Fireball's core editor, we'd like our users to be able to reuse Fireball's custom-elements or even build their own elements to extend the editor UI and create tools to fit their exact needs.
-
-Currently there are several contenders in custom element domain, such as Angular, Ember and React. But they are all too heavy with MV* patterns. Polymer is the only one that keeps it light and focuses on UI creating.
-
-On another important note, Fireball's UI panels are designed to be extensible by users. We need to make sure there is no CSS pollution between core panels and user created panels. Shadow DOM technology used by Polymer is by far the best solution for our needs.
-
-Polymer utilizes the power of Custom Elements, the Shadow DOM and Data Binding without importing irrelevant functions. The design pattern is on the same track as Fireball. Fireball aims to use HTML5 web development technology (Elements, Styles, Data Attributes) to create the core of a powerful but flexible Editor UI system, and Polymer is the wheel we don't have to reinvent.
-
-## Fireball UI Library and Packages Built With Polymer
-
-- [UI-kit](https://github.com/fireball-packages/ui-kit) is the new standard Fireball UI component and widget library. It's also a builtin package of Editor Framework so any app you create with it can use these elements.
-- [Editor UI](https://github.com/fireball-x/deprecated-editor-ui) is the old UI library for Fireball 0.4 and previous versions. It's deprecated but you can still take them if you want.
-- Besides UI elements (widgets), we create all of our editor panels and tools (Such as scene editor, asset manager and console) as Polymer templates. Most packages from [fireball-packages](https://github.com/fireball-packages) organization are built with Polymer. Fell free to check them out and learn how to make your own!
+- [UI-kit](https://github.com/fireball-packages/ui-kit)
 
 ## Get Started With Polymer
 
