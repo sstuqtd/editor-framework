@@ -1,4 +1,4 @@
-This section explains how to extend Fireball Editor by creating and modifying packages with the [Editor framework](https://github.com/fireball-x/editor-framework) API.
+This section explains how to extend Editor-Framework by creating and modifying packages with the [Editor framework](https://github.com/cocos-creator/editor-framework) API.
 
 ## Getting Started
 
@@ -19,10 +19,10 @@ This section explains how to extend Fireball Editor by creating and modifying pa
 
 ## UI Programming
 
+  - [Focusable](ui/focusable.md)
   - [Polymer Primer](ui/polymer-primer.md) **deprecated & out of date**
   - [CSS Layout Helper](ui/css-layout.md) **deprecated & out of date**
   - [Event Binding](ui/event-binding.md) **deprecated & out of date**
-  - [Focusable](ui/focusable.md)
 
 ## Usage of the Editor Module
 
@@ -31,7 +31,6 @@ This section explains how to extend Fireball Editor by creating and modifying pa
 
 ## Testing
 
-  - [Unit Test](test/unit-test.md)
   - [Writing Tests](test/writing-tests.md)
 
 ## Debugging

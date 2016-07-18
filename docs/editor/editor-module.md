@@ -1,6 +1,6 @@
 # The Editor Module
 
-`Editor` is a module containing app-wide core editor functionality. You can access properties or methods of the `Editor ` module anytime, anywhere in your editor framework app (including Fireball).
+`Editor` is a module containing app-wide core editor functionality. You can access properties or methods of the `Editor ` module anytime, anywhere in your Editor-Framework app.
 
 This module can be categorized into the following parts:
 
@@ -14,7 +14,7 @@ The `Editor` module provides the following properties to give user access to com
 
 ## Protocols
 
-Due to the complicated nature of path lookup between core-level and page-level processes, we created the following custom protocols to provide easy and consistent access to key file locations -- both from within Editor-Framework and Fireball:
+Due to the complicated nature of path lookup between main and renderer processes, we created the following custom protocols to provide easy and consistent access to key file locations:
 
   - `editor-framework://`: Map to the editor framework module path.
   - `app://`: Map to the root path of your app.
@@ -23,7 +23,7 @@ Due to the complicated nature of path lookup between core-level and page-level p
 
 If you know exactly how to reference a resource in your script, you can use absolute path or relative path as well.
 
-A Url with custom protocols can also be used directly in HTML and CSS import. In page-level or core-level JavaScript, you should write:
+A Url with custom protocols can also be used directly in HTML and CSS import. In main/renderer process, you can write:
 
 ```js
 var myFilePath = Editor.url('app://myfolder/myfile.js');

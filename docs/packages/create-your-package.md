@@ -1,6 +1,6 @@
 # Creating a Package
 
-Editor Framework loads packages before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`. If you are working with [Fireball](https://github.com/fireball-x/fireball), then it will load packages from the `fireball/builtin` and `~/.fireball/packages` folders.
+Editor Framework loads packages before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`.
 
 You can customize the location it loads packages from through the `Editor.registerPackagePath` method in your `App.init` function.
 
@@ -70,7 +70,7 @@ Explanation for each key-value pair:
   - `menus` *Object* (Optional) - The menu list.
     - `key` *String* - Menu path, example: `foo/bar/foobar`
     - `value` *Object* - Menu options
-      - [Editor Menu Template](https://github.com/fireball-x/editor-framework/blob/master/docs/api/core/menu.md)
+      - [Editor Menu Template](https://github.com/cocos-creator/editor-framework/blob/master/docs/api/core/menu.md)
   - `panel[.sub-name]` *Object* (Optional) - Panel info
     - `main` *String* - The panel's main entry file.
     - `ui` *String* (Optional) - The ui-framework used in this panel. Default is `none`, can be `polymer`.
@@ -121,11 +121,11 @@ module.exports = {
 
 ### module.exports
 
-Fireball runs each package's main entry as a module with `require`, so you must expose properties and methods in your main entry using `module.exports`. See [iojs module API docs](https://iojs.org/api/modules.html#modules_module_exports) for details.
+Editor-Framework runs each package's main entry as a module with `require`, so you must expose properties and methods in your main entry using `module.exports`. See [iojs module API docs](https://iojs.org/api/modules.html#modules_module_exports) for details.
 
 ### IPC Message
 
-In the above example, the main entry listens to an IPC message `open` (it is short name for `demo-simple:open`) and calls `Editor.Panel.open` to open a package panel. This is the most common way to open a package panel. To learn more about IPC messages and how package communicate between core and page level, read [IPC Channel docs](ipc-channel.md).
+In the above example, the main entry listens to an IPC message `open` (it is short name for `demo-simple:open`) and calls `Editor.Panel.open` to open a package panel. This is the most common way to open a package panel. To learn more about IPC messages and how package communicate between main and renderer process, read [IPC Channel docs](ipc-channel.md).
 
 Note that the the initial `demo-simple:open` message is registered in the `main-menu['Examples/Simple'].message` property of `package.json`. See the above `package.json` example.
 

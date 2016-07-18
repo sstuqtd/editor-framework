@@ -24,4 +24,4 @@ If everything goes well, you will see a console log:
 node-inspector started: http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=3030
 ```
 
-Now you can open your Chrome browser and paste the url to start debugging the main process. 
+Now you can open your Chrome browser and paste the url to start debugging the main process.

@@ -22,4 +22,4 @@ Editor Framework allows you to register a shortcut for a specific element in you
 
 To achieve this, just add an `id` in your sub-element, and write the id selector (a.k.a `#{your-id}`) as a key in the shortcut and define the key mappings within it.
 
-You can learn more about this in [shortcuts-demo](https://github.com/fireball-x/editor-framework/tree/master/demo/shortcuts)
+You can learn more about this in [shortcuts-demo](https://github.com/cocos-creator/editor-framework/tree/master/demo/shortcuts)
