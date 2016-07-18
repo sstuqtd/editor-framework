@@ -4,96 +4,144 @@
 @border_size: 1px;
 @arrow_size: 8px;
 
-.arrowbox(@selector, @bgColor, @borderColor) {
-  @{selector} {
+:host {
+  display: block;
+  z-index: 1;
+  color: @text_color;
+
+  .box {
     position: relative;
-    background: @bgColor;
-    border: @border_size solid @borderColor;
+    background: @bg_color;
+    border: @border_size solid @border_color;
     border-radius: 3px;
     padding: 5px;
   }
 
-  @{selector}:after, @{selector}:before {
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
+  .arrow {
+    z-index: 2;
     position: absolute;
-    pointer-events: none;
   }
 
-  @{selector}:after {
-    border-width: @arrow_size;
+  .arrow:before {
+    position: absolute;
+    content: '';
+    transform: translateX(-50%) translateY(-50%) rotate(45deg);
+    background: @bg_color;
+    border-color: @border_color;
+    border-style: solid;
+    width: @arrow_size;
+    height: @arrow_size;
   }
-
-  @{selector}:before {
-    border-width: @arrow_size+1;
-  }
-}
-
-:host {
-  z-index: 1;
-  color: @text_color;
-
-  .arrowbox(~'.arrow-box', @bg_color, @border_color);
 }
 
 :host(.top) {
-  .arrow-box:after, .arrow-box:before {
-    left: 50%;
-    bottom: 100%;
+  margin-top: 10px;
+
+  .arrow {
+    margin-top: -1px;
+    top: 0;
   }
-  .arrow-box:after {
-    border-bottom-color: @bg_color;
-    margin-left: -@arrow_size;
-  }
-  .arrow-box:before {
-    border-bottom-color: @border_color;
-    margin-left: -(@arrow_size+1);
+  .arrow:before {
+    border-width: @border_size 0 0 @border_size;
   }
 }
 
 :host(.bottom) {
-  .arrow-box:after, .arrow-box:before {
-    left: 50%;
+  margin-bottom: 10px;
+
+  .arrow {
+    margin-top: 1px;
     top: 100%;
   }
-  .arrow-box:after {
-    border-top-color: @bg_color;
-    margin-left: -@arrow_size;
-  }
-  .arrow-box:before {
-    border-top-color: @border_color;
-    margin-left: -(@arrow_size+1);
+  .arrow:before {
+    border-width: 0 @border_size @border_size 0;
   }
 }
 
 :host(.left) {
-  .arrow-box:after, .arrow-box:before {
-    top: 50%;
-    right: 100%;
+  margin-left: 10px;
+
+  .arrow {
+    margin-left: -1px;
+    left: 0;
   }
-  .arrow-box:after {
-    border-right-color: @bg_color;
-    margin-top: -@arrow_size;
-  }
-  .arrow-box:before {
-    border-right-color: @border_color;
-    margin-top: -(@arrow_size+1);
+  .arrow:before {
+    border-width: 0 0 @border_size @border_size;
   }
 }
 
 :host(.right) {
-  .arrow-box:after, .arrow-box:before {
-    top: 50%;
+  margin-right: 10px;
+
+  .arrow {
+    margin-left: 1px;
     left: 100%;
   }
-  .arrow-box:after {
-    border-left-color: @bg_color;
-    margin-top: -@arrow_size;
-  }
-  .arrow-box:before {
-    border-left-color: @border_color;
-    margin-top: -(@arrow_size+1);
+  .arrow:before {
+    border-width: @border_size @border_size 0 0;
   }
 }
+
+/*-------------------
+        Size
+--------------------*/
+
+// NOTE: we need to explicit the height, otherwise button will be stretch in flex wrapper
+
+:host(.mini) {
+  font-size: @mini;
+}
+
+:host(.tiny) {
+  font-size: @tiny;
+}
+
+:host(.small) {
+  font-size: @small;
+}
+
+:host {
+  font-size: @medium;
+}
+
+:host(.large) {
+  font-size: @large;
+}
+
+:host(.big) {
+  font-size: @big;
+}
+
+:host(.huge) {
+  font-size: @huge;
+}
+
+:host(.massive) {
+  font-size: @massive;
+}
+
+/*-------------------
+  Colored
+--------------------*/
+
+.color(@clr, @text_color, @bg_color) {
+  @border_color: @bg_color + 50%;
+
+  :host(.@{clr}) {
+    color: @text_color;
+
+    .box {
+      border-color: @border_color;
+      background: @bg_color;
+    }
+
+    .arrow:before {
+      background: @bg_color;
+      border-color: @border_color;
+    }
+  }
+}
+
+.color(red, #ddd, @red);
+.color(green, #fff, @green);
+.color(blue, #fff, @blue);
