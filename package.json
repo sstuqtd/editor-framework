@@ -43,7 +43,7 @@
     "remarkable": "^1.6.2",
     "semver": "5.1.0",
     "sinon": "^1.17.3",
-    "tap": "5.x",
+    "tap": "6.x",
     "tap-mocha-reporter": "https://github.com/jwu/tap-mocha-reporter.git",
     "winston": "^2.2.0",
     "yargs": "^4.3.1"
