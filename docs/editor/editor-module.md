@@ -1,18 +1,20 @@
-`Editor` is a module contains app-wide core editor functionality. You can access properties or methods of Editor module anytime, anywhere in your editor framework app (including Fireball).
+# The Editor Module
+
+`Editor` is a module containing app-wide core editor functionality. You can access properties or methods of the `Editor ` module anytime, anywhere in your editor framework app (including Fireball).
 
 This module can be categorized into the following parts:
 
 ## Paths
 
-Editor module provides following properties to give user access to common paths:
+The `Editor` module provides the following properties to give user access to common paths:
 
-  - `Editor.App.path`: The current app.js working directory path.
+  - `Editor.App.path`: The current `app.js` working directory path.
   - `Editor.App.home`: Your application's home path. Usually it is `~/.{your-app-name}`
   - `Editor.frameworkPath`: The editor framework module path. Usually it is `{your-app}/editor-framework/`
 
 ## Protocols
 
-Due to the complicated situation of current working directory between core-level and page-level processes. We created the following custom protocols to give user easy access to key location inside editor-framework app and Fireball:
+Due to the complicated nature of path lookup between core-level and page-level processes, we created the following custom protocols to provide easy and consistent access to key file locations -- both from within Editor-Framework and Fireball:
 
   - `editor-framework://`: Map to the editor framework module path.
   - `app://`: Map to the root path of your app.
@@ -21,23 +23,23 @@ Due to the complicated situation of current working directory between core-level
 
 If you know exactly how to reference a resource in your script, you can use absolute path or relative path as well.
 
-Url with custom protocols can be used directly in HTML and CSS import. In page-level or core-level JavaScript, you should write:
+A Url with custom protocols can also be used directly in HTML and CSS import. In page-level or core-level JavaScript, you should write:
 
 ```js
 var myFilePath = Editor.url('app://myfolder/myfile.js');
 ```
 
-`Editor.url` method will convert your url to absolute path of the file system of your OS.
+Furthermore, the `Editor.url` method will convert your url to absolute path of the file system of your OS.
 
 
 ## Options
 
-  - `Editor.dev`: Indicate if the application running with `--dev` option.
-  - `Editor.showDevtools`: Indicate if the application running with `--show-devtools`.
+  - `Editor.dev`: Indicates if the application is running with `--dev` option.
+  - `Editor.showDevtools`: Indicates if the application is running with `--show-devtools`.
 
 ## Editor.App
 
-The Editor.App is your app.js module. Read more in [Define your application](../../manual/define-your-app.md).
+`Editor.App` refers to your `app.js` module. Read more in [Define your application](../../manual/define-your-app.md).
 
 
-## TODO: introduce the submodules in both main and renderer process
+## TODO: introduce submodules in both main and renderer process

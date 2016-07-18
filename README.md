@@ -12,19 +12,19 @@
 [![Dependency Status](https://david-dm.org/cocos-creator/editor-framework.svg)](https://david-dm.org/cocos-creator/editor-framework)
 [![devDependency Status](https://david-dm.org/cocos-creator/editor-framework/dev-status.svg)](https://david-dm.org/cocos-creator/editor-framework#info=devDependencies)
 
-Editor Framework gives you power to easily write professional multi-panel desktop software in HTML5 and node.js.
+Editor Framework gives you the power to easily write professional multi-panel desktop software in HTML5 and node.js.
 
-The framework is based on top of [Electron](http://github.com/atom/electron).
-It is designed conforming to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
+The framework is based on [Electron](http://github.com/atom/electron).
+It is designed to conform to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
 To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
 
-It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and providing a set of builtin ui-kit to help user extend the widgets and panels. We also allow user integrate their ui framework such as Polymer, Vue.js, React and so on.
+It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and provide a set of builtin ui-kit elements to help the user extend existing widgets and panels. We also allow the user integrate their own UI framework such as Polymer, Vue.js, React and so on.
 
-**NOTE: editor-framework is currently under active developing. The document is a little bit out of date, but still can help you getting start. I will update the doc as soon as possible.**
+**NOTE: editor-framework is currently under active development. The documentation is a little bit out of date, but still can help you get started. I will update the doc as soon as possible.**
 
 ![demo-01](https://cloud.githubusercontent.com/assets/174891/16065534/3480115a-32de-11e6-88ba-9bdb5f047602.png)
 
-## Install
+## Installation
 
 Suppose you have an Electron project, if not, just create an empty directory and run `npm init` in it.
 After that, install editor-framework as a package of your project:
@@ -35,7 +35,7 @@ npm install --save editor-framework
 
 ## Usage
 
-Here is a simple example to show you how to use editor-framework in your Electron project.
+Here is a simple example for using editor-framework in your Electron project:
 
 **package.json**
 
@@ -124,31 +124,31 @@ Editor.App.extend({
 
 ## Features
 
-### Extends Your App through Packages
+### App Customization and Extensibility through Packages
 
  - Dynamically load and unload packages
  - Watch package changes and notify changes immediately
  - Hot reload your packages
 
-### Manage Panels
+### Panel and Window Management
 
- - Freely docks panel anywhere in multiple windows
- - Dynamically load user define panels from package
+ - Freely dock panels anywhere in multiple windows
+ - Dynamically load user defined panels from a package
  - Easily register and respond to ipc messages for your panel
  - Easily register shortcuts (hotkeys) for your panel
  - Save and load panel profiles
  - Save and load panels layout in json
 
-### Menu Extends
+### Extensible Menus
 
  - Manipulate menu items by menu path (`foo/bar/foobar` for example)
- - Dynamically add and remove menu item
- - Dynamically change menu item state (enabled, checked, visible, ...)
- - Load user menu from packages
+ - Dynamically add and remove menu items
+ - Dynamically change a menu item's state (enabled, checked, visible, ...)
+ - Load user menus from packages
 
-### Builtin UI-KIT
+### Builtin UI-KIT Element Library
 
- - A bunch of ui elements to boost your developing
+ - Several UI elements are included to boost your development productivity
    - `<ui-button>`
    - `<ui-checkbox>`
    - `<ui-color>` and `<ui-color-picker>`
@@ -157,47 +157,47 @@ Editor.App.extend({
    - `<ui-select>`
    - `<ui-slider>`
    - `<ui-text-area>`
- - A [ui-kit-preview](https://github.com/fireball-packages/ui-kit-preview) to help you learn and custom ui-kit
- - Developing ui elements by Custom Element and Shadow DOM
- - Allow user customize their theme for ui elements
- - Can be integrate with any other UI frameworks (Polymer, Vue.js, React, ...)
- - Well designed with focus behavior (Use our own focus manager for better user experience)
- - Uniform events (`change`, `confirm` and `cancel`) in every ui element to make our ui-kit friendly for Undo/Redo system
+ - A [ui-kit-preview](https://github.com/fireball-packages/ui-kit-preview) is included to help you learn and custom ui-kit
+ - Develop ui elements by Custom Element and Shadow DOM
+ - Allow users to customize their theme for ui elements
+ - Can be integrated with any other UI frameworks (Polymer, Vue.js, React, ...)
+ - Well designed for focus behavior (Use our own focus manager for better user experience)
+ - Uniform events (`change`, `confirm` and `cancel`) in every ui element makes our ui-kit friendly for Undo/Redo functionality
 
-### UI Property
+### Customizable UI Properties
 
- - A `<ui-prop>` element to help user write properties/inspector panel
+ - `<ui-prop>` elements help users write properties/inspector panel
  - Automatically detect and choose a view for the property by type
- - Allow user register their own property type and customize the view for it
- - Support nested property (for `object` type and `array` type)
+ - Allow users to register their own property type and customize the view for it
+ - Support nested properties (for `object` type and `array` type)
  - Support disable, readonly property in hierarchy
 
-### Profiles
+### Customizable Profiles
 
  - Customize your profile for different scope (globa, local, project, ...)
  - Load and save profiles through unified API
 
-### Logs
+### Logging
 
  - Uniform log interface for main and renderer process
  - Sort and store all windows and main process logs in one place
  - Support log to file
- - Integrate with [console](https://github.com/fireball-packages/console) for display and query your logs
+ - Integrate with [console](https://github.com/fireball-packages/console) for displaying and querying your logs
 
-### Selection
+### Enhanced Selection
 
  - Selection cached and synced among windows
  - User can register his own selection type
  - Automatically filtering selections
 
-### IPC
+### Improved IPC
 
  - Enhance IPC Programming Experience
  - Allow sending ipc message to specific panel
  - Allow sending ipc message to specific window
  - Allow sending ipc request and waiting for the reply in callback function
 
-### Undo & Redo
+### Undo & Redo Actions
 
  - Global Undo and Redo
 
@@ -208,7 +208,7 @@ Editor.App.extend({
  - A helper module to simulate UI input (mouse, keyboard) to help user write panel tests
  - Automatically recreate your test target (windows, widgets, panels, ...) after each test case
 
-## Develop
+## Development
 
 ### Getting Start
 
@@ -218,7 +218,7 @@ Clone the repo:
 git clone https://github.com/cocos-creator/editor-framework
 ```
 
-Run `npm install` in it:
+Run `npm install`:
 
 ```bash
 npm install
@@ -236,8 +236,8 @@ npm start ./example-apps/${example-name}
 
 #### example-apps/demo
 
-The example-apps provide a demo project to help user developing packages. To use the demo project,
-first we need to install it. Go to the demo folder and run the following command:
+`example-apps` is a demo project to help users develop their own packages. To use the demo project,
+ first install it. Go to the demo folder and run the following command:
 
 ```bash
 cd ./example-apps/demo
@@ -246,7 +246,7 @@ bower install
 gulp update
 ```
 
-After you success to install it, you can run the demo in editor-framework root directory through the command:
+Once installed, you can run the demo in the editor-framework root directory through the following command:
 
 ```bash
 npm start ./example-apps/demo
