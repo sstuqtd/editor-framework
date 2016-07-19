@@ -3,6 +3,7 @@
 ### v0.6.3 (developing)
 
  - Add `<ui-hint>`
+ - Support tooltip in `<ui-prop>`
 
 ### v0.6.2
 
