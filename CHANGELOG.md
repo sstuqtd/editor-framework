@@ -2,6 +2,8 @@
 
 ### v0.6.3 (developing)
 
+ - Add `<ui-hint>`
+
 ### v0.6.2
 
  - Upgrade to Electron v1.2.7
