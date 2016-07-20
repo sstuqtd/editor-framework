@@ -5,6 +5,7 @@
  - Add `<ui-hint>`
  - Add `<ui-shadow>`
  - Support tooltip in `<ui-prop>`
+ - Support type="int" for `<ui-num-input>`
 
 ### v0.6.2
 
