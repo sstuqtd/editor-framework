@@ -1,6 +1,6 @@
 'use strict';
 
-// NOTE: this method still can not get the correct x points when the curve is nearly parallel with y-axis
+// NOTE: this method still cannot get the correct x points when the curve is nearly parallel with y-axis
 // EXAMPLE(FAILED): c1 = {x:50,y:50}; c2 = {x:50,y:200}; c3 = {x:0,y:300}; c4 = {x:500,y:300};
 function bezierY ( c1, c2, c3, c4, x ) {
   // adjust as you please

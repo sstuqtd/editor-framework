@@ -32,7 +32,7 @@ suite(tap, 'dom-utils', t => {
         // ---
 
         subWrapper.addEventListener('foobar', () => {
-          t.error(new Error(), 'wrapper should not recieve foobar');
+          t.error(new Error(), "wrapper should not receive 'foobar'");
         });
 
         shadowChild.addEventListener('foobar', event => {
