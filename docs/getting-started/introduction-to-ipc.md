@@ -1,25 +1,25 @@
 # Main and Renderer Process
 
-An editor-framework appication consists primarily of two types of processes:
+Like Electron, an Editor-Framework appication consists primarily of two types of processes:
 
 - Main Process: Creates window and web pages. Also shares data among renderer processes.
-- Renderer Process: Renders HTML web pages and runs client-side JavaScript. Each window is a separate renderer process.
+- Renderer Process: Renders HTML web pages and runs client-side JavaScript. Each window runs within a separate renderer process.
 
-To better understand these two types of processes, read [Electron's introduction document](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md). If you're still confused, think of the main process as a node.js server, and renderer process as a web client.
+Put simply, the main process acts like a node.js server, and the renderer process acts like JavaScript loaded from the web client. To better understand these two types of processes, read [Electron's introduction document](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md). 
 
-In short, an editor-framework application starts from the main process, and can have several renderer processes (windows) running on top of it.
+In short, an Editor-Framework application starts from the main process, and can have several renderer processes (windows) running on top of it.
 
 ## Inter-Process Communication (IPC)
 
-Each process has its own JavaScript context and you cannot directly access the memory data from other process. To exchange information, you must send messages in one process and listen for the specific message in the target process. Also known as inter-process communication (IPC).
+Each process has its own JavaScript context and cannot directly access the memory data from other processes. To exchange information, messages must be sent by one process and listened for in the target process. Messages are identified by a string identifier of your choosing. Also known as inter-process communication (IPC).
 
-Electron provides two IPC modules [ipcMain ](https://github.com/atom/electron/blob/master/docs/api/ipc-main.md) and [ipcRenderer](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md) to help users communicate between the main and renderer processes. The editor-framework encapsulates them to make it even easier for more complex scenarios.
+Electron provides two IPC modules [ipcMain ](https://github.com/atom/electron/blob/master/docs/api/ipc-main.md) and [ipcRenderer](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md) to provide communication between the main and renderer processes. Editor-Framework encapsulates them to simplify more complex use cases.
 
 ## IPC Message Identifier
 
-An IPC message is a string to identify the message between processes. The message sender sends the message with a specific identifier. A receiver in a separate process listens for the identifier code and executes a callback for that action.
+IPC messages consist of a short identifier string and a number of parameters which can be passed along with the message. Once sent by the sender, a receiver in a separate process listens for that identifier string and executes a callback for that action, passing the relevant message parameters as arguments to the callback.
 
-We recommend that you scope an IPC message identifier to the module or package that is responsible for it:
+For readability, we recommend that you scope an IPC message identifier to the module or package it belongs to:
 
 ```javascript
 'module-name:action-name'
@@ -27,7 +27,9 @@ We recommend that you scope an IPC message identifier to the module or package t
 'package-name:action-name'
 ```
 
-Basically, you can use any string as message identifier, but we strongly recommend you use your package name (if you are sending message in your package) or module name (if you are handling sub-module tasks) with a colon to make a message identifier. Let's see it in action:
+Basically, you can use any string as message identifier, but we strongly recommend you use your package name (if you are sending message in your package) or module name (if you are handling sub-module tasks) with a colon to make a message identifier. 
+
+Let's see it in action:
 
 ```javascript
 'app:save-file'

@@ -51,7 +51,9 @@ Editor.App.extend({
       'package-search-path': [
         Editor.url('app://my-packages/'),
         Path.join(Editor.App.home, 'packages'),
-      ]
+      ],
+      'panel-window': 'app://window.html',
+      'layout': Editor.url('app://layout.json')
     });
 
     if ( cb ) {
@@ -94,7 +96,7 @@ Editor.App.extend({
 
 ### quit(callback)
 
-This function will be invoked when Editor is closing. You need to manually invoke callback otherwise
+This function will be invoked when the Editor is closing. You need to manually invoke callback otherwise
 the application will not quit.
 
 ```javascript
@@ -118,7 +120,7 @@ A callback to be executed when a package has completed loading:
 Editor.App.extend({
   loadPackage ( pjson, callback ) {
     if ( pjson.myKeyword ) {
-      // do your package load stuff
+      // procedures to run after package finished loading
     }
 
     callback();
@@ -136,7 +138,7 @@ A callback to be executed when a package has completed unloading:
 Editor.App.extend({
   unloadPackage ( pjson ) {
     if ( pjson.myKeyword ) {
-      // do your package unload stuff
+      // procedures to run after package finished unloading
     }
   },
 });
