@@ -105,7 +105,7 @@ Yargs
 )
 // command: build
 .command(
-  'build [path]', 'Build specific pacakge',
+  'build [path]', 'Build specific package',
   yargs => {
     return yargs.usage('Command: build [path]');
   },
@@ -318,7 +318,11 @@ app.on('ready', () => {
     next => {
       // init user App
       if ( !EditorM.App.init ) {
-        EditorM.error('Can not find function "init" in your app');
+        EditorM.error(
+          'The `init` action was not found in your application. Please define it using the `Editor.App.Extend` function. \
+          See https://github.com/cocos-creator/editor-framework/blob/master/docs/getting-started/define-your-app.md \
+          for more information.'
+        );
         app.terminate();
         return;
       }
@@ -373,7 +377,7 @@ app.on('ready', () => {
       // load windows layout after local profile registered
       EditorM.Window.loadLayouts();
 
-      // connect to console to sending ipc to it
+      // connect to console to send ipc messages to it
       EditorM.connectToConsole();
 
       //
@@ -383,7 +387,11 @@ app.on('ready', () => {
 
       // run user App
       if ( !EditorM.App.run ) {
-        EditorM.error('Can not find function "run" in your app');
+        EditorM.error(
+          'The `run` action was not found in your application. Please define it using the `Editor.App.Extend` function. \
+          See https://github.com/cocos-creator/editor-framework/blob/master/docs/getting-started/define-your-app.md \
+          for more information.'
+        );
         app.terminate();
         return;
       }
