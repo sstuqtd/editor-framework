@@ -20,7 +20,7 @@ Yargs.help('help').options({
 
 let yargv = Yargs.argv;
 let srcDir = './styles';
-let destDir = './dist/css';
+let destDir = './themes/default';
 let absSrcDir = Path.resolve(srcDir);
 
 Fs.emptyDirSync(destDir);
