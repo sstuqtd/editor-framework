@@ -1,6 +1,6 @@
 # Creating a Package
 
-Editor Framework loads packages before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`.
+Editor-Framework loads packages before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`.
 
 You can customize the location it loads packages from through the `Editor.registerPackagePath` method in your `App.init` function.
 
@@ -91,7 +91,7 @@ Explanation for each key-value pair:
   - `widgets` *Object* (Optional) - The widget list.
     - `key` *String* - Widget name, this name will be used as host name in `widgets://{host-name}/` protocol.
     - `value` *Object* - The widget folder path
-  - `packages` *Object* (Optional) - The editor-framework package dependencies list.
+  - `packages` *Object* (Optional) - The Editor-Framework package dependencies list.
   - `dependencies` *Object* (Optional) - The node module dependencies list.
 
 ## Main Entry

@@ -2,7 +2,7 @@
 
 When creating new editor window or package panel, we recommend using flexbox to layout your web page.
 
-Editor Framework already has polymer's [iron-flex-layout](https://github.com/PolymerElements/iron-flex-layout) installed, with the CSS classes and properties it provides, we can easily create any layout that conforms to a CSS3 standard.
+Editor-Framework already has polymer's [iron-flex-layout](https://github.com/PolymerElements/iron-flex-layout) installed, with the CSS classes and properties it provides, we can easily create any layout that conforms to a CSS3 standard.
 
 ## Flexbox Basics
 
@@ -46,7 +46,7 @@ You can see it includes almost every possible flexbox layout and item setup. To 
 </style>
 ```
 
-To learn more about how mixins work in Editor Framework, check out the polymer docs [Custom CSS Mixins](https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-css-mixins).
+To learn more about how mixins work in Editor-Framework, check out the polymer docs [Custom CSS Mixins](https://www.polymer-project.org/1.0/docs/devguide/styling.html#custom-css-mixins).
 
 ### Class Layout
 
@@ -76,7 +76,7 @@ In general you can use either layout method as you like. But there are some basi
 
 ## Import Iron-Flex-Layout
 
-By default, Editor Framework install `iron-flex-layout` at `bower_components/iron-flex-layout`.
+By default, Editor-Framework installs `iron-flex-layout` at `bower_components/iron-flex-layout`.
 
 You can import both or either of layout methods in your web page html:
 
@@ -87,11 +87,11 @@ You can import both or either of layout methods in your web page html:
 <link rel="import" href="app://bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 ```
 
-You can also import Editor Framework's [lite.html](https://github.com/cocos-creator/editor-framework/blob/master/page/ui/lite.html) environment with standard editor page dependencies.
+You can also import Editor-Framework's [lite.html](https://github.com/cocos-creator/editor-framework/blob/master/page/ui/lite.html) environment with standard editor page dependencies.
 
 ## CSS Layout Tricks
 
-Here we've gathered CSS layout tricks that are helpful when developing web page with Editor Framework:
+Here we've gathered CSS layout tricks to help develop web page with Editor-Framework:
 
 - [A Guide to Flexbox](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)
 - [Centering in CSS: A Complete Guide](https://css-tricks.com/centering-css-complete-guide/)

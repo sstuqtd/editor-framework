@@ -2,7 +2,7 @@
 
 A `Panel `is a dockable "mini-window" in Editor Framework. Each panel contains a panel frame.
 
-You can define a polymer element as your panel frame, and register it in `package.json`. The Editor Framework will dynamically load your polymer element when the panel is opened.
+You can define a polymer element as your panel frame, and register it in `package.json`. Editor-Framework will dynamically load your polymer element when the panel is opened.
 
 To define a panel frame, just create a javascript file like this:
 

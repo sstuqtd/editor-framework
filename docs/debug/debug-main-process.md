@@ -18,7 +18,7 @@ It will automatically install and rebuild node-inspector by following Electron's
 
 Once you install the node-inspector above, run Editor-Framework, and go to the menu item: `Main Menu / Developer / Debug Main Process (Node Inspector)`.
 
-If everything goes well, you will see a console log:
+If all goes well, you will see a console log with something similar to:
 
 ```
 node-inspector started: http://127.0.0.1:8080/debug?ws=127.0.0.1:8080&port=3030

@@ -1,6 +1,6 @@
 # Polymer Primer
 
-Editor-Framework provides a way to use [Polymer](polymer-project.org) for ui programming. This doc is for crediting Polymer as the perfect UI system solution for building a complex game editor toolset. Also we'd like to point to some core polymer documentation that will help you get started with developing an app with the Editor Framework.
+Editor-Framework provides a way to use [Polymer](polymer-project.org) for ui programming. This doc is for crediting Polymer as the perfect UI system solution for building a complex game editor toolset. Also we'd like to point to some core polymer documentation that will help you get started with developing an app with the Editor-Framework.
 
 ## UI Library and Packages Built With Polymer
 
@@ -8,7 +8,7 @@ Editor-Framework provides a way to use [Polymer](polymer-project.org) for ui pro
 
 ## Get Started With Polymer
 
-Please read the following material to learn enough Polymer for building an app with Editor Framework.
+Please read the following material to learn enough Polymer for building an app with Editor-Framework.
 
 - [Polymer Quick Tour](https://www.polymer-project.org/1.0/docs/start/quick-tour.html) Get familiar with the structure and pattern of Polymer custom elements.
 - [Polymer Properties](https://www.polymer-project.org/1.0/docs/devguide/properties.html)

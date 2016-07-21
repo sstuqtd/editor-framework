@@ -10,26 +10,26 @@ The `Editor` module provides the following properties to give user access to com
 
   - `Editor.App.path`: The current `app.js` working directory path.
   - `Editor.App.home`: Your application's home path. Usually it is `~/.{your-app-name}`
-  - `Editor.frameworkPath`: The editor framework module path. Usually it is `{your-app}/editor-framework/`
+  - `Editor.frameworkPath`: The Editor-Framework module path. Usually it is `{your-app}/editor-framework/`
 
 ## Protocols
 
 Due to the complicated nature of path lookup between main and renderer processes, we created the following custom protocols to provide easy and consistent access to key file locations:
 
-  - `editor-framework://`: Map to the editor framework module path.
+  - `editor-framework://`: Map to the Editor-Framework module path.
   - `app://`: Map to the root path of your app.
   - `packages://{package-name}`: Map to the `{package-name}` path.
   - `packages://{package-name}/widget`: Map to a widget path.
 
-If you know exactly how to reference a resource in your script, you can use absolute path or relative path as well.
+If you know exactly how to reference a resource in your script, you can use an absolute path or relative path as well.
 
-A Url with custom protocols can also be used directly in HTML and CSS import. In main/renderer process, you can write:
+A Url with custom protocols can also be used directly in an HTML or CSS import. In the main/renderer process, you can write:
 
 ```js
 var myFilePath = Editor.url('app://myfolder/myfile.js');
 ```
 
-Furthermore, the `Editor.url` method will convert your url to absolute path of the file system of your OS.
+Furthermore, the `Editor.url` method will convert your url to an absolute path of the file system of your OS.
 
 
 ## Options
@@ -39,7 +39,7 @@ Furthermore, the `Editor.url` method will convert your url to absolute path of t
 
 ## Editor.App
 
-`Editor.App` refers to your `app.js` module. Read more in [Define your application](../../manual/define-your-app.md).
+`Editor.App` refers to your `app.js` module. Read more in [Define your application](../getting-started/define-your-app.md).
 
 
 ## TODO: introduce submodules in both main and renderer process
