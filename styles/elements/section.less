@@ -15,6 +15,8 @@
 }
 
 .wrapper {
+  cursor: pointer;
+
   position: relative;
   box-sizing: border-box;
   outline: 0;
@@ -41,6 +43,10 @@
 }
 
 ::content > .header {
+  .layout-horizontal();
+  .layout-children(center, flex-start);
+  flex: 1;
+
   h1,h2,h3,h4,h5 {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -72,7 +78,6 @@
 :host([is-disabled]) {
   .wrapper {
     color: @text_color_disabled;
-    cursor: default;
   }
 }
 
