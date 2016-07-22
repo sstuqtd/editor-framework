@@ -158,9 +158,31 @@
 
 .hex-field {
   .layout-horizontal();
-  .layout-children(center, flex-end);
+  .layout-children(center, flex-start);
 
-  span {
+  .color-block {
+    position: relative;
+    border: 1px solid @el_border_color;
+
+    background-image: url('theme://img/transparent-bg.png');
+    background-position: 0px 0px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .color-block.new {
+    border-left: 0px;
+  }
+
+  .color-inner {
+    .fit();
+  }
+
+  .space {
+    flex: 1;
+  }
+
+  .label {
     margin: 0 0.5em 0 0;
   }
 
