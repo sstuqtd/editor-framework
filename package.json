@@ -26,7 +26,7 @@
   "dependencies": {
     "async": "^2.0.0",
     "chalk": "^1.1.1",
-    "chokidar": "^1.4.3",
+    "chokidar": "^1.6.0",
     "chroma-js": "^1.1.1",
     "del": "^2.2.0",
     "diff": "^2.2.1",
