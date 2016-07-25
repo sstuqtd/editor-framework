@@ -1,8 +1,8 @@
 # Creating Panels
 
-A `Panel `is a dockable "mini-window" in Editor Framework. Each panel contains a panel frame.
+In Editor-Framework, a `Panel` acts like a dockable "mini-window". Each panel contains a panel frame.
 
-You can define a polymer element as your panel frame, and register it in `package.json`. Editor-Framework will dynamically load your polymer element when the panel is opened.
+You can define a polymer element as your panel frame, and register it in `package.json`. Editor-Framework will dynamically then load your polymer element when the panel is opened.
 
 To define a panel frame, just create a javascript file like this:
 
@@ -43,7 +43,7 @@ Once your package is loaded, you can use `Editor.Panel.open('simple')` to open y
 
 ## Panel ID
 
-A panelID is a string equals to `{package-name}.{sub-name}`. It is used in most of the functions in `Editor.Panel` that needs to operate on a specific panel.
+A panelID is a string of the format `{package-name}.{sub-name}`. It is used in most of the functions in `Editor.Panel` that need to operate on a specific panel.
 
 Suppose we have the following `package.json` file:
 
@@ -59,7 +59,7 @@ Suppose we have the following `package.json` file:
 }
 ```
 
-The file registers two panels `panel` and `panel.02`, so that we will have two panelID which are `foo` and `foo.02`.
+The file registers two panels `panel` and `panel.02`, which correspond to the two `panelID`s `foo` and `foo.02`.
 
 ## Options
 
@@ -76,7 +76,7 @@ The file registers two panels `panel` and `panel.02`, so that we will have two p
 
 ## Register Template
 
-Template HTML can be defined within the panel's main JS file (eg package-name/panel/panel.js).
+Template HTML can be defined within the panel's main JS file (eg `package-name/panel/panel.js`).
 
 *TODO: Expand Example*
 
