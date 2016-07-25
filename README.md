@@ -156,6 +156,7 @@ Editor.App.extend({
     - `<ui-select>`
     - `<ui-slider>`
     - `<ui-text-area>`
+    - and more...
  - A [ui-kit-preview](https://github.com/fireball-packages/ui-kit-preview) is included to help you learn and custom ui-kit
  - Develop ui elements by Custom Element and Shadow DOM
  - Allow users to customize their theme for ui elements
