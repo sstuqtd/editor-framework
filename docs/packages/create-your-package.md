@@ -131,11 +131,11 @@ Note that the the initial `demo-simple:open` message is registered in the `main-
 
 ### Main Process
 
-The Main entry runs in the main-process. You can do following things in main-process:
+The "main" entry in `package.json` specifies the entry for the main process. Within the main process you can:
 
-- Use full [Node.js API](https://nodejs.org/api/)
-- Use [Electron's API](https://github.com/atom/electron/tree/master/docs#api-references) that listed under 'modules for the main process' or 'modules for both processes'
-- Require any main, local or npm module. For npm modules.
+- Use the full [Node.js API](https://nodejs.org/api/)
+- Use [Electron's API](https://github.com/atom/electron/tree/master/docs#api-references) that is listed under 'modules for the main process' or 'modules for both processes'
+- Require any main, local or npm module (for npm modules).
 
 ## Menu Path
 
@@ -152,7 +152,7 @@ Menu paths are defined in the `main-menu` property of `pacakge.json`. Menu path 
 }
 ```
 
-A menu path looks like `MenuName/ItemName`. You can also write `MenuName/GroupName/ItemName`, results in the following menu:
+A menu path looks like `MenuName/ItemName`. You can also write `MenuName/GroupName/ItemName`, which results in the following menu:
 ![image](https://cloud.githubusercontent.com/assets/344547/8249697/89da532e-169f-11e5-9f69-d49731ea0ca6.png)
 
 When a menu item is clicked, it sends an IPC message from page-level. That's why we usually make a `"package-name:open"` IPC message receiver to actually open the package panel.
