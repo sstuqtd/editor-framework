@@ -26,8 +26,8 @@ It is designed for full extensibility. In the main process, we achieve this by i
 
 ## Installation
 
-Suppose you have an Electron project, if not, just create an empty directory and run `npm init` in it.
-After that, install editor-framework as a package of your project:
+Editor-Framework can simply be declared and imported like any other package in your project:
+
 
 ```bash
 npm install --save editor-framework
@@ -35,7 +35,7 @@ npm install --save editor-framework
 
 ## Usage
 
-Here is a simple example for using editor-framework in your Electron project:
+Here is a simple example for using Editor-Framework in your Electron project:
 
 **package.json**
 
@@ -124,7 +124,7 @@ Editor.App.extend({
 
 ## Features
 
-### App Customization and Extensibility through Packages
+### App Customization and Extensibility through modular Packages
 
  - Dynamically load and unload packages
  - Watch package changes and notify changes immediately
@@ -204,13 +204,13 @@ Editor.App.extend({
 ### Test Driven Workflow
 
  - Integrate [node-tap](http://www.node-tap.org/) to the test framework
- - Detect your package changes and automatically run tests under it in [tester](https://github.com/fireball-packages/tester)
+ - Detect your package changes and automatically run tests under it via [tester](https://github.com/fireball-packages/tester)
  - A helper module to simulate UI input (mouse, keyboard) to help user write panel tests
  - Automatically recreate your test target (windows, widgets, panels, ...) after each test case
 
 ## Development
 
-### Getting Start
+### Getting Started
 
 Clone the repo:
 
@@ -225,10 +225,13 @@ npm install
 npm run build # build styles
 ```
 
-### Install and Run Examples
+### Installing and Running the Examples
 
 #### example-apps
 
+See https://github.com/exsdk/example-apps for full repository of examples. 
+
+**Running the examples:**
 ```bash
 git clone https://github.com/exsdk/example-apps
 npm start ./example-apps/${example-name}
@@ -246,7 +249,7 @@ bower install
 gulp update
 ```
 
-Once installed, you can run the demo in the editor-framework root directory through the following command:
+Once installed, you can run the demo in the Editor-Framework root directory through the following command:
 
 ```bash
 npm start ./example-apps/demo
@@ -254,7 +257,7 @@ npm start ./example-apps/demo
 
 ### Test Environment
 
-To test the editor-framework itself, just run:
+To test the Editor-Framework itself, just run:
 
 ```bash
 npm test [./your/test/file] -- [options]
@@ -264,7 +267,7 @@ npm test [./your/test/file] -- [options]
 npm start ./test -- test ./your/test/file [options]
 ```
 
-You can also run a single test or a bunch of tests in one directory by:
+You can also run a single test or multiple tests in one directory by:
 
 ```bash
 npm test ${your/test/path}
@@ -288,13 +291,13 @@ To debug a test, use `--detail` option:
 npm test ${your/test/path} -- --detail
 ```
 
-To change a reporter, use `--reporter name` option:
+To change reporter, use `--reporter name` option:
 
 ```bash
 npm test ${your/test/path} -- --reporter classic
 ```
 
-### Write Your Test
+### Writing Your Test
 
 **Main Process**
 
@@ -329,16 +332,6 @@ suite(tap, 'Test Renderer Process', t => {
   });
 });
 ```
-
-### Generate Documentation
-
-To generate the document, just run:
-
-```bash
-npm run api
-```
-
-It will generate the API document in `./apidocs`, you can browse it by open `./apidocs/index.html`.
 
 ## License (MIT)
 

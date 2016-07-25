@@ -18,7 +18,7 @@ To load packages into your Editor-Framework app, you must either:
 
 - Specify a path to load your packages from by running the method `Editor.registerPackagePath` in your `App.init` function. Then put all your packages into that path folder.
 - By default, Editor-Framework loads all packages in the [/demo](/demo) folder. You can also create your packages here to quickly see it in the "Package Manager" list.
-- You can also put your packages into `~/.{app-name}/packages` folder, read [create packages](create-your-package.md#create-your-package) doc for more details.
+- You can also put your packages into `~/.{app-name}/packages` folder. Read the [create packages](create-your-package.md#create-your-package) doc for more details.
 
 ## Building a Package **(deprecated)**
 
