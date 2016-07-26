@@ -2,7 +2,7 @@
 
 [Documentation](https://github.com/cocos-creator/editor-framework/tree/master/docs) |
 [Downloads](https://github.com/cocos-creator/editor-framework/releases/) |
-[Install](#install) |
+[Installation](#installation) |
 [Features](#features)
 
 [![Circle CI](https://circleci.com/gh/cocos-creator/editor-framework.svg?style=svg)](https://circleci.com/gh/cocos-creator/editor-framework)
@@ -12,13 +12,12 @@
 [![Dependency Status](https://david-dm.org/cocos-creator/editor-framework.svg)](https://david-dm.org/cocos-creator/editor-framework)
 [![devDependency Status](https://david-dm.org/cocos-creator/editor-framework/dev-status.svg)](https://david-dm.org/cocos-creator/editor-framework#info=devDependencies)
 
-Editor Framework gives you the power to easily write professional multi-panel desktop software in HTML5 and node.js.
+Editor-Framework gives you the power to quickly and easily write professional multi-panel desktop software in HTML5 and Node.js on top of [Electron](http://github.com/atom/electron). 
 
-The framework is based on [Electron](http://github.com/atom/electron).
-It is designed to conform to Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
-To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes.
+At its core is a modular and extensible package management system and open-ended API that allow you to quickly prototype and build reusable UI components on the fly in a live, hot-reloadable development environment. 
 
-It is designed for full extensibility. In the main process, we achieve this by introducing a package management module and several registration APIs. The user can load or unload packages on the fly without closing or restarting the app. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and provide a set of builtin ui-kit elements to help the user extend existing widgets and panels. We also allow the user integrate their own UI framework such as Polymer, Vue.js, React and so on.
+Internally, Editor-Framework conforms with Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
+To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and provide a set of builtin UI-Kit elements which you can use to extend existing widgets and panels. It's also possible to extend any existing UI framework such as Polymer, Vue.js, React, or any other UI framework you'd prefer to use..
 
 **NOTE: editor-framework is currently under active development. The documentation is a little bit out of date, but still can help you get started. I will update the doc as soon as possible.**
 
@@ -124,13 +123,13 @@ Editor.App.extend({
 
 ## Features
 
-### App Customization and Extensibility through modular Packages
+- ### App Customization and Extensibility through modular Packages
 
  - Dynamically load and unload packages
  - Watch package changes and notify changes immediately
  - Hot reload your packages
 
-### Panel and Window Management
+- ### Panel and Window Management
 
  - Freely dock panels anywhere in multiple windows
  - Dynamically load user defined panels from a package
@@ -139,24 +138,25 @@ Editor.App.extend({
  - Save and load panel profiles
  - Save and load panels layout in json
 
-### Extensible Menus
+- ### Extensible Menus
 
  - Manipulate menu items by menu path (`foo/bar/foobar` for example)
  - Dynamically add and remove menu items
  - Dynamically change a menu item's state (enabled, checked, visible, ...)
  - Load user menus from packages
 
-### Builtin UI-KIT Element Library
+- ### Builtin UI-KIT Element Library
 
  - Several UI elements are included to boost your development productivity
-   - `<ui-button>`
-   - `<ui-checkbox>`
-   - `<ui-color>` and `<ui-color-picker>`
-   - `<ui-input>`
-   - `<ui-num-input>`
-   - `<ui-select>`
-   - `<ui-slider>`
-   - `<ui-text-area>`
+    - `<ui-button>`
+    - `<ui-checkbox>`
+    - `<ui-color>` and `<ui-color-picker>`
+    - `<ui-input>`
+    - `<ui-num-input>`
+    - `<ui-select>`
+    - `<ui-slider>`
+    - `<ui-text-area>`
+    - and more...
  - A [ui-kit-preview](https://github.com/fireball-packages/ui-kit-preview) is included to help you learn and custom ui-kit
  - Develop ui elements by Custom Element and Shadow DOM
  - Allow users to customize their theme for ui elements
@@ -164,7 +164,7 @@ Editor.App.extend({
  - Well designed for focus behavior (Use our own focus manager for better user experience)
  - Uniform events (`change`, `confirm` and `cancel`) in every ui element makes our ui-kit friendly for Undo/Redo functionality
 
-### Customizable UI Properties
+- ### Customizable UI Properties
 
  - `<ui-prop>` elements help users write properties/inspector panel
  - Automatically detect and choose a view for the property by type
@@ -172,36 +172,36 @@ Editor.App.extend({
  - Support nested properties (for `object` type and `array` type)
  - Support disable, readonly property in hierarchy
 
-### Customizable Profiles
+- ### Customizable Profiles
 
  - Customize your profile for different scope (globa, local, project, ...)
  - Load and save profiles through unified API
 
-### Logging
+- ### Logging
 
  - Uniform log interface for main and renderer process
  - Sort and store all windows and main process logs in one place
  - Support log to file
  - Integrate with [console](https://github.com/fireball-packages/console) for displaying and querying your logs
 
-### Enhanced Selection
+- ### Enhanced Selection
 
  - Selection cached and synced among windows
  - User can register his own selection type
  - Automatically filtering selections
 
-### Improved IPC
+- ### Improved IPC
 
  - Enhance IPC Programming Experience
  - Allow sending ipc message to specific panel
  - Allow sending ipc message to specific window
  - Allow sending ipc request and waiting for the reply in callback function
 
-### Undo & Redo Actions
+- ### Undo & Redo Actions
 
  - Global Undo and Redo
 
-### Test Driven Workflow
+- ### Test Driven Workflow
 
  - Integrate [node-tap](http://www.node-tap.org/) to the test framework
  - Detect your package changes and automatically run tests under it via [tester](https://github.com/fireball-packages/tester)
