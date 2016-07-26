@@ -1,44 +1,43 @@
-# Panel Lifecycle Events
+# Panel Callbacks and Events
 
-## DOM Event
+## Lifecycle Callbacks:
+*Called by Editor-Framework during the panel's lifecycle*
+- **'ready':** Invoked after the panel has been loaded successfully and is ready to be shown
+- **'run(argv)':** Invoked when panel opened or panel is shown through `Editor.Panel.open`. The `argv` is an `Object` that you send through the `Editor.Panel.open` call.
+- **'open':** Invoked after panel or is opened.
+- **'close':** Invoked after is panel or its parent window is closed.
 
-### 'panel-show'
+## Panel Events:
+*Events received in response to actions by a user*
+- **'panel-show':** Emitted immediately after any time the panel is shown
+- **'panel-hide':** Emitted immediately after any time the panel is hidden
+- **'panel-resize':** Emitted when the panel is resized
+- **'panel-cut':** Emitted when content in the panel is cut
+- **'panel-copy':** Emitted when content in the panel is copied
+- **'panel-paste':** Emitted when content is pasted in the panel
+- **'panel-click':** Emitted when the panel is clicked
 
-Emitted when the panel is shown
+## Example Usage:
 
-### 'panel-hide'
+**In panel/panel.js**
 
-Emitted when the panel is hidden
+```javascript
+Editor.Panel.extend({
+  // ...
+  listeners: {
+    click (event) {
+      event.stopPropagation();
+      console.log('click!');
+    },
 
-### 'panel-resize'
-
-Emitted when the panel is resized
-
-### panel-cut
-
-Emitted when the panel is cut
-
-### panel-copy
-
-Emitted when the panel is copy
-
-### panel-paste
-
-Emitted when the panel is pasted
-
-## Lifecycle Callback
-
-### ready()
-
-Invoked when panel frame loaded successfully.
-
-### run(argv)
-
-Invoked when panel opened or panel is shown through `Editor.Panel.open`.
-The `argv` is an `Object` that you send through the `Editor.Panel.open` call.
-
-### close()
-
-Invoked before panel close or window close.
-
-*TODO: Provide more information and context of when the above lifecycle action takes place (e.g. is `show` called before or after the close actually takes place?)*
+    open() {
+      console.log("Opened panel");
+    },
+    
+    'panel-resize' ( event ) {
+      console.log(event.target);
+    }
+  }
+  // ...
+})
+```
