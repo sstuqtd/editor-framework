@@ -7,6 +7,8 @@
  - Support tooltip in `<ui-prop>`
  - Support type="int" for `<ui-num-input>`
  - Support min, max for `<ui-num-input>`
+ - Fix mouse down on window (not panel) do not focus out elements
+ - Fix package search path not exists will not show the main window
 
 ### v0.6.2
 
