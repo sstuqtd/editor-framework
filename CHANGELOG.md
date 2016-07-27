@@ -9,6 +9,7 @@
  - Support min, max for `<ui-num-input>`
  - Fix mouse down on window (not panel) do not focus out elements
  - Fix package search path not exists will not show the main window
+ - Fix panel window size keep growing after open and close it for many times
 
 ### v0.6.2
 
