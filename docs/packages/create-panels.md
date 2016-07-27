@@ -31,30 +31,6 @@ Available options to be passed to `extend` include:
 - `template` (string): Raw HTML to be rendered as contents of panel.
 - `style` (string): Raw CSS Styles to be accessible within panel 
 - `listeners` (object): Mapping for IPC message definitions and their respective callbacks. The callback function will be executed whenever it's matching key is received by this package's listener.      
-- `behaviors` (array): Array of behaviors predefined by Editor-Framework in `lib/ui/behaviors`. Behaviors define common  functionality for UI elements. Can be one of the following types:
-  - `Disable`
-  - `Dockable`
-  - `Droppable`
-  - `Focusable`
-  - `ReadOnly`
-  - `Resizable`
-  
-  Keep in mind Behaviors must be imported before they can be used. For example:
-  
-  ```javascript
-  // In panel/panel.js:
-  
-  const Focusable = require('editor-framework/lib/renderer/ui/behaviors/focusable');
-  const Dockable = require('editor-framework/lib/renderer/ui/behaviors/dockable');
-  
-  Editor.Panel.extend({
-    // ...
-    behaviors: [Focusable, Dockable],  // Or any others you'd like to add
-    /// ...
-  });
-  
-  
-  ```
 - `$` (array of strings): List of DOM IDs within your template which will be stored in the selectors object (`$`). 
 For example, if your template HTML contained a selector `<span id="my_title">Title</span>`, then could access its DOM node from 
 the code code using `$.my_title`:
@@ -64,15 +40,19 @@ the code code using `$.my_title`:
   Editor.Panel.extend({
     //...
     
-    template: <div><span id="my_title">Title</span></div>
-    $: ["my_title"],
+    template: `
+      <div><span id="my_title">Title</span></div>
+    `,
+    $: {
+      my_title: "#my_title"
+    },
       
     /// ...
   });
   
   // In panel initializer:
   init ( panel ) {
-    let myTitleElm = panel.$.my_title;
+    let myTitleElm = panel.$my_title;
     // ...
   },
   ```
@@ -191,15 +171,15 @@ Editor.Panel.extend({
     },
   },
 
-  behaviors: [ Focusable ],
-
-  $: ["my_title"],
+  $: {
+    my_title: "#my_title"
+  },
 
   ready () {
   },
   
   init(panel) {
-    console.log(`Initialized Panel with title elm`,  panel.$.my_title);
+    console.log(`Initialized Panel with title elm`,  panel.$my_title);
   },
 
   run (argv) {
