@@ -4,7 +4,7 @@ In Editor-Framework, a `Panel` acts like a dockable "mini-window". Each panel co
 
 You can define a polymer element as your panel frame, and register it in `package.json`. Editor-Framework will dynamically then load your polymer element when the panel is opened.
 
-## Step 1: Define the main script for your panel 
+## Step 1: Define the main script for your panel
 
 To define a panel frame, first create a javascript file like this (for instance in `panel/panel.js`):
 
@@ -29,34 +29,34 @@ Editor.Panel.extend({
 Available options to be passed to `extend` include:
 
 - `template` (string): Raw HTML to be rendered as contents of panel.
-- `style` (string): Raw CSS Styles to be accessible within panel 
-- `listeners` (object): Mapping for IPC message definitions and their respective callbacks. The callback function will be executed whenever it's matching key is received by this package's listener.      
-- `$` (array of strings): List of DOM IDs within your template which will be stored in the selectors object (`$`). 
-For example, if your template HTML contained a selector `<span id="my_title">Title</span>`, then could access its DOM node from 
+- `style` (string): Raw CSS Styles to be accessible within panel
+- `listeners` (object): Mapping for IPC message definitions and their respective callbacks. The callback function will be executed whenever it's matching key is received by this package's listener.
+- `$` (array of strings): List of DOM IDs within your template which will be stored in the selectors object (`$`).
+For example, if your template HTML contained a selector `<span id="my_title">Title</span>`, then could access its DOM node from
 the code code using `$.my_title`:
- 
+
   ```javascript
   // In panel/panel.js:
   Editor.Panel.extend({
     //...
-    
+
     template: `
       <div><span id="my_title">Title</span></div>
     `,
     $: {
       my_title: "#my_title"
     },
-      
+
     /// ...
   });
-  
+
   // In panel initializer:
   init ( panel ) {
     let myTitleElm = panel.$my_title;
     // ...
   },
   ```
-   
+
 
 ## Step 2: Add the panel definition to your package.json
 
@@ -105,6 +105,7 @@ The file registers two panels `panel` and `panel.02`, which correspond to the tw
  - `type`: String - Panel's type, can be `'dockable'`, `'float'`, `'fixed-size'`, `'quick'` and `'simple'`. Default is `'dockable'`
  - `title` String - Panel window's title in tab.
  - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
+ - `resizable` Boolean - Indicate if the window can be resized. Default is true.
  - `width` Integer - Panel window’s width in pixels. Default is 400.
  - `height` Integer - Panel window’s height in pixels. Default is 400.
  - `min-width` Integer - Panel window’s minimum width. Default is 200.
@@ -177,13 +178,13 @@ Editor.Panel.extend({
 
   ready () {
   },
-  
+
   init(panel) {
     console.log(`Initialized Panel with title elm`,  panel.$my_title);
   },
 
   run (argv) {
-    
+
   },
 });
 
