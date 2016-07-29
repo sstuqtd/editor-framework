@@ -190,7 +190,7 @@
   }
 }
 
-:host([is-readonly]) {
+:host([is-readonly]:not([subset])) {
   .lock {
     display: inline-flex;
   }
