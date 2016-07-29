@@ -40,7 +40,7 @@ module.exports = {
       'inspect': '检视页面元素',
       'devtools': '开发者工具',
       'toggle_node_inspector': '调试主进程 (Node Inspector)',
-      'toggle_vorpal': '调试主进程 (Repl)',
+      'toggle_repl': '调试主进程 (Repl)',
       'ui_preview': 'UI 控件预览'
     },
     'help': {
