@@ -4,6 +4,7 @@
 
  - Add `<ui-hint>`
  - Add `<ui-shadow>`
+ - Add `<ui-progress>`
  - Support tooltip in `<ui-prop>`
  - Support type="int" for `<ui-num-input>`
  - Support min, max for `<ui-num-input>`
