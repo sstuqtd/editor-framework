@@ -14,16 +14,41 @@
 }
 
 .bar {
+  .layout-horizontal();
+  .layout-children(center, flex-end);
+
   box-sizing: border-box;
+  position: relative;
 
   background: @bar_color;
   border-radius: @border_radius;
   height: 100%;
 
   transition:
-    width .1s ease,
-    background-color .1s ease
+    width .3s ease,
+    background-color .3s ease
     ;
+}
+
+.label {
+  display: none;
+
+  margin-right: .5em;
+  font-weight: bold;
+  color: black;
+}
+
+:host(.label) .bar {
+  min-width: 30px;
+}
+
+:host(.label) .label {
+  display: block;
+}
+
+:host(.mini) .label,
+:host(.tiny) .label {
+  display: none;
 }
 
 /*-------------------
