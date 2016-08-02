@@ -81,7 +81,8 @@ Once your package is loaded, you can use `Editor.Panel.open('simple')` to open y
 
 ### Panel ID
 
-A panelID is a string of the format `{package-name}.{sub-name}`. It is used in most of the functions in `Editor.Panel` that need to operate on a specific panel.
+A Panel-ID is a string of the format `{package-name}{panel-suffix-name}`, where `panel-suffix-name` is the string after `panel`.
+It is used in most of the functions in `Editor.Panel` that need to operate on a specific panel.
 
 Suppose we have the following `package.json` file:
 
@@ -93,11 +94,18 @@ Suppose we have the following `package.json` file:
   },
   "panel.02": {
     "frame": "panel/simple.html"
+  },
+  "panel-03": {
+    "frame": "panel/simple.html"
+  },
+  "panel@04": {
+    "frame": "panel/simple.html"
   }
 }
 ```
 
-The file registers two panels `panel` and `panel.02`, which correspond to the two `panelID`s `foo` and `foo.02`.
+The file registers four panels `panel`, `panel.02`, `panel-03` and `panel@04`,
+which correspond to the four panel IDs: `foo`, `foo.02`, `foo-03` and `foo@04`.
 
 ## Additional `package.json` Options
 
