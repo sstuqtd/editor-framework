@@ -2,6 +2,7 @@
 
 ### v0.6.3 (developing)
 
+ - Upgrade to Electron v1.3.2
  - Add `<ui-hint>`
  - Add `<ui-shadow>`
  - Add `<ui-progress>`
