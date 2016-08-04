@@ -12,8 +12,6 @@ In general, packages should have the following structure:
 MyPackage
   |--(optional)panel
   |   |--panel.js
-  |   |--(optional)template.html
-  |   |--(optional)style.css
   |--main.js
   |--package.json
 ```
