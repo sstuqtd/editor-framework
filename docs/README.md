@@ -11,7 +11,7 @@ This section explains how to extend Editor-Framework by creating and modifying p
   - [Creating Your Package](packages/create-your-package.md)
   - [Creating Panels](packages/create-panels.md)
   - [Registering Shortcuts](packages/register-shortcuts.md)
-  - [Loading and Building Packages](packages/load-and-build.md)
+  - [Loading and Building Packages](packages/load-and-build-packages.md)
   - [i18n](packages/i18n.md)
   - [Panel Lifecycle and Events](packages/panel-lifecycle-and-events.md)
   - [Creating Polymer Panels](packages/create-polymer-panels.md) **deprecated**
