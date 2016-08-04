@@ -114,12 +114,21 @@ which correspond to the four panel IDs: `foo`, `foo.02`, `foo-03` and `foo@04`.
  - `title` String - Panel window's title in tab.
  - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
  - `resizable` Boolean - Indicate if the window can be resized. Default is true.
+ - `popable` Boolean - Default is `true`, indicates if the panel is popable.
+ - `shadow-dom` Boolean - Default is `true`, indicates if the panel-frame should use shadow-dom
  - `width` Integer - Panel window’s width in pixels. Default is 400.
  - `height` Integer - Panel window’s height in pixels. Default is 400.
  - `min-width` Integer - Panel window’s minimum width. Default is 200.
  - `min-height` Integer - Panel window’s minimum height. Default is 200.
  - `max-width` Integer - Panel window’s maximum width.
  - `max-height` Integer - Panel window’s maximum height.
+ - `shortcuts` Object - The keyboard shortcut for the panel.
+   - `key` String - defines the key combination (example: `command+k`).
+   - `value` String - The method name defined in the panel frame.
+ - `profiles` Object - The list of default profile settings.
+   - `key` String - The profile type, by default it can be `local` or `global`. You can register more profile types through `Editor.registerProfilePath`.
+   - `value` Object - The default setting values.
+ - `ui` String (Deprecated) - The ui-framework used in this panel. Default is `none`, can be `polymer`.
 
 ## Registering a Template
 
