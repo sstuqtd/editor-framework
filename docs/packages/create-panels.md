@@ -30,6 +30,7 @@ Available options to be passed to `extend` include:
 
 - `template` (string): Raw HTML to be rendered as contents of panel.
 - `style` (string): Raw CSS Styles to be accessible within panel
+- `dependencies` (array of strings): List of dependency paths to be loaded asynchronously and cache in `Editor.UI` for this panel.
 - `listeners` (object): Mapping for IPC message definitions and their respective callbacks. The callback function will be executed whenever it's matching key is received by this package's listener.
 - `$` (array of strings): List of DOM IDs within your template which will be stored in the selectors object (`$`).
 For example, if your template HTML contained a selector `<span id="my_title">Title</span>`, then could access its DOM node from
@@ -39,7 +40,9 @@ the code code using `$.my_title`:
   // In panel/panel.js:
   Editor.Panel.extend({
     //...
-
+    dependencies: [
+      'packages://code-editor/node_modules/jquery/dist/release.js'
+    ],
     template: `
       <div><span id="my_title">Title</span></div>
     `,
