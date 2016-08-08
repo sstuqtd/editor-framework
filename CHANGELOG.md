@@ -1,6 +1,8 @@
 ## CHANGELOG
 
-### v0.6.3 (developing)
+### v0.6.4 (developing)
+
+### v0.6.3
 
  - Upgrade to Electron v1.3.2
  - Add `<ui-hint>`
