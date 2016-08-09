@@ -29,6 +29,8 @@ apidocs/
 node_modules/
 bower_components/
 example-apps/
+example-packages/
+demo/
 
 # test files
 .settings/

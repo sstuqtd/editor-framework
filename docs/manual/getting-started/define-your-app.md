@@ -1,21 +1,21 @@
 Editor-Framework provides a rich and flexible toolset for building rich multi-window desktop application on top of Github's [Electron](https://github.com/electron/electron) platform.
 
-It was designed with reusability, extensibility, 
+It was designed with reusability, extensibility,
 
 
 # Defining Your App
 
-Since Editor-Framework is built on top of Electron, many of the Electron/Node.js workflow patterns you're used to will still apply. 
+Since Editor-Framework is built on top of Electron, many of the Electron/Node.js workflow patterns you're used to will still apply.
 However, there are some important conventions and configuration definitions Editor-Framework uses to load and run your app.
- 
+
 First, let's look at a typical file layout of an Editor-Framework app:
-  
+
 - `/your-application`
  - `entry_script.js`
  - `package.json`
 
 
-The entry point to your application must be specified within the `"main"` field of your app's `package.json`: 
+The entry point to your application must be specified within the `"main"` field of your app's `package.json`:
 
 Here is an example `package.json` file:
 
@@ -31,7 +31,7 @@ Here is an example `package.json` file:
 
 ## Main Entry Script
 
-In your main entry script (specified as `main.js` in the above `package.json` definition), extend `Editor.App` by passing an object definition to the `Editor.App.extend` function: 
+In your main entry script (specified as `main.js` in the above `package.json` definition), extend `Editor.App` by passing an object definition to the `Editor.App.extend` function:
 
 
 ```javascript
@@ -79,7 +79,7 @@ Read more details about specifying your App definition in [App lifecycle and eve
 
 ## Yeoman Generator
 
-To make things simple, we also provide a yeoman generator to create an Editor-Framework app --- [generator-editor-framework](https://github.com/cocos-creator/generator-editor-framework).
+To make things simple, we also provide a yeoman generator to create an Editor-Framework app --- [generator-editor-framework](http://github.com/editor-framework/generator).
 
 ## Example: A very basic Editor-Framework application
 
@@ -91,7 +91,7 @@ MyApplication/
   |--index.html
   |--package.json
 ```
-  
+
 
 **package.json**
 ```json
