@@ -12,8 +12,6 @@ In general, packages should have the following structure:
 MyPackage
   |--(optional)panel
   |   |--panel.js
-  |   |--(optional)template.html
-  |   |--(optional)style.css
   |--main.js
   |--package.json
 ```
@@ -44,16 +42,12 @@ For example:
       "message": "demo-simple:open"
     }
   },
-  "panels": {
-    "panel": {
-      "frame": "panel/panel.html",
-      "type": "dockable",
-      "title": "Simple",
-      "width": 800,
-      "height": 600,
-      "messages": [
-      ]
-    }
+  "panel": {
+    "main": "panel/index.js",
+    "type": "dockable",
+    "title": "Simple",
+    "width": 800,
+    "height": 600
   }
 }
 ```
@@ -72,25 +66,7 @@ Explanation for each key-value pair:
     - `value` *Object* - Menu options
       - [Editor Menu Template](https://github.com/cocos-creator/editor-framework/blob/master/docs/api/core/menu.md)
   - `panel[.sub-name]` *Object* (Optional) - Panel info
-    - `main` *String* - The panel's main entry file.
-    - `ui` *String* (Optional) - The ui-framework used in this panel. Default is `none`, can be `polymer`.
-    - `type` *String* (Optional) - Default is `dockable`, can be `dockable`, `float`, `fixed-size`, `quick`, `simple`.
-    - `title` *String* (Optional) - The panel title shows in the tab label (defaults to the panelID).
-    - `popable` *Boolean* (Optional) - Default is `true`, indicates if the panel is popable.
-    - `width` *Integer* (Optional) - The width of the panel frame.
-    - `height` *Integer* (Optional) - The height of the panel frame.
-    - `min-width` *Integer* (Optional) - The min-width of the panel frame.
-    - `min-height` *Integer* (Optional) - The min-height of the panel frame.
-    - `shortcuts` *Object* (Optional) - The keyboard shortcut for the panel.
-      - `key` *String* - defines the key combination (example: `command+k`).
-      - `value` *String* - The method name defined in the panel frame.
-    - `messages` *Array* (Optional) - The ipc message name list.
-    - `profiles` *Object* (Optional) - The list of default profile settings.
-      - `key` *String* - The profile type, by default it can be `local` or `global`. You can register more profile types through `Editor.registerProfilePath`.
-      - `value` *Object* - The default setting values.
-  - `widgets` *Object* (Optional) - The widget list.
-    - `key` *String* - Widget name, this name will be used as host name in `widgets://{host-name}/` protocol.
-    - `value` *Object* - The widget folder path
+    - [Detail of Panel Info](create-panels.md)
   - `packages` *Object* (Optional) - The Editor-Framework package dependencies list.
   - `dependencies` *Object* (Optional) - The node module dependencies list.
 

@@ -1,15 +1,24 @@
 ## CHANGELOG
 
-### v0.6.3 (developing)
+### v0.6.4 (developing)
 
+ - Support palette in `<ui-color-picker>`
+ - When user input white-space characters in `<ui-num-input>`, the value will be 0.
+ - When user input white-space characters in `<ui-slider>`, the value will be slider's min value.
+
+### v0.6.3
+
+ - Upgrade to Electron v1.3.2
  - Add `<ui-hint>`
  - Add `<ui-shadow>`
+ - Add `<ui-progress>`
  - Support tooltip in `<ui-prop>`
  - Support type="int" for `<ui-num-input>`
  - Support min, max for `<ui-num-input>`
  - Fix mouse down on window (not panel) do not focus out elements
  - Fix package search path not exists will not show the main window
  - Fix panel window size keep growing after open and close it for many times
+ - Add `shadow-dom` option in panel json registry
 
 ### v0.6.2
 

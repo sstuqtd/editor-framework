@@ -30,6 +30,7 @@ Available options to be passed to `extend` include:
 
 - `template` (string): Raw HTML to be rendered as contents of panel.
 - `style` (string): Raw CSS Styles to be accessible within panel
+- `dependencies` (array of strings): List of dependency paths to be loaded asynchronously and cache in `Editor.UI` for this panel.
 - `listeners` (object): Mapping for IPC message definitions and their respective callbacks. The callback function will be executed whenever it's matching key is received by this package's listener.
 - `$` (array of strings): List of DOM IDs within your template which will be stored in the selectors object (`$`).
 For example, if your template HTML contained a selector `<span id="my_title">Title</span>`, then could access its DOM node from
@@ -39,7 +40,9 @@ the code code using `$.my_title`:
   // In panel/panel.js:
   Editor.Panel.extend({
     //...
-
+    dependencies: [
+      'packages://code-editor/node_modules/jquery/dist/release.js'
+    ],
     template: `
       <div><span id="my_title">Title</span></div>
     `,
@@ -81,7 +84,8 @@ Once your package is loaded, you can use `Editor.Panel.open('simple')` to open y
 
 ### Panel ID
 
-A panelID is a string of the format `{package-name}.{sub-name}`. It is used in most of the functions in `Editor.Panel` that need to operate on a specific panel.
+A Panel-ID is a string of the format `{package-name}{panel-suffix-name}`, where `panel-suffix-name` is the string after `panel`.
+It is used in most of the functions in `Editor.Panel` that need to operate on a specific panel.
 
 Suppose we have the following `package.json` file:
 
@@ -93,11 +97,18 @@ Suppose we have the following `package.json` file:
   },
   "panel.02": {
     "frame": "panel/simple.html"
+  },
+  "panel-03": {
+    "frame": "panel/simple.html"
+  },
+  "panel@04": {
+    "frame": "panel/simple.html"
   }
 }
 ```
 
-The file registers two panels `panel` and `panel.02`, which correspond to the two `panelID`s `foo` and `foo.02`.
+The file registers four panels `panel`, `panel.02`, `panel-03` and `panel@04`,
+which correspond to the four panel IDs: `foo`, `foo.02`, `foo-03` and `foo@04`.
 
 ## Additional `package.json` Options
 
@@ -106,12 +117,21 @@ The file registers two panels `panel` and `panel.02`, which correspond to the tw
  - `title` String - Panel window's title in tab.
  - `frame` Boolean - Specify false to create a Frameless Window. Default is true.
  - `resizable` Boolean - Indicate if the window can be resized. Default is true.
+ - `popable` Boolean - Default is `true`, indicates if the panel is popable.
+ - `shadow-dom` Boolean - Default is `true`, indicates if the panel-frame should use shadow-dom
  - `width` Integer - Panel window’s width in pixels. Default is 400.
  - `height` Integer - Panel window’s height in pixels. Default is 400.
  - `min-width` Integer - Panel window’s minimum width. Default is 200.
  - `min-height` Integer - Panel window’s minimum height. Default is 200.
  - `max-width` Integer - Panel window’s maximum width.
  - `max-height` Integer - Panel window’s maximum height.
+ - `shortcuts` Object - The keyboard shortcut for the panel.
+   - `key` String - defines the key combination (example: `command+k`).
+   - `value` String - The method name defined in the panel frame.
+ - `profiles` Object - The list of default profile settings.
+   - `key` String - The profile type, by default it can be `local` or `global`. You can register more profile types through `Editor.registerProfilePath`.
+   - `value` Object - The default setting values.
+ - `ui` String (Deprecated) - The ui-framework used in this panel. Default is `none`, can be `polymer`.
 
 ## Registering a Template
 
