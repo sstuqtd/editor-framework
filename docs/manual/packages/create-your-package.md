@@ -22,7 +22,7 @@ Some key parts explained:
 - `package.json`: package description file, not used for [npm](https://www.npmjs.com/), read [Package Description](#package-description) section.
 - `panel`: this folder is necessary if your package needs to open a panel to work.
 
-For panels and widgets, you can combine scripts and styles into a single html file. See [this simple test case](/test/fixtures/packages/simple/panel/panel.js) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](load-and-build-packages.md) documentation for details.
+For panels and widgets, you can combine scripts and styles into a single html file. See [this simple test case](../../../test/fixtures/packages/simple/panel/panel.js) as an example. You can also write script and styles in any file format that compiles to JavaScript or CSS, such as [coffeescript](http://coffeescript.org/), [stylus](https://learnboost.github.io/stylus/), [less](http://lesscss.org/), [sass](http://sass-lang.com/). Check out [Building Packages](./load-and-build-packages.md) documentation for details.
 
 ## Package Description
 
@@ -64,9 +64,9 @@ Explanation for each key-value pair:
   - `menus` *Object* (Optional) - The menu list.
     - `key` *String* - Menu path, example: `foo/bar/foobar`
     - `value` *Object* - Menu options
-      - [Editor Menu Template](https://github.com/cocos-creator/editor-framework/blob/master/docs/api/core/menu.md)
+      - [Editor Menu Template](http://electron.atom.io/docs/api/menu-item/)
   - `panel[.sub-name]` *Object* (Optional) - Panel info
-    - [Detail of Panel Info](create-panels.md)
+    - [Detail of Panel Info](./create-panels.md)
   - `packages` *Object* (Optional) - The Editor-Framework package dependencies list.
   - `dependencies` *Object* (Optional) - The node module dependencies list.
 
@@ -97,7 +97,7 @@ module.exports = {
 
 ### module.exports
 
-Editor-Framework runs each package's main entry as a module with `require`, so you must expose properties and methods in your main entry using `module.exports`. See [iojs module API docs](https://iojs.org/api/modules.html#modules_module_exports) for details.
+Editor-Framework runs each package's main entry as a module with `require`, so you must expose properties and methods in your main entry using `module.exports`. See [Node.js module API docs](https://nodejs.org/api/modules.html#modules_module_exports) for details.
 
 ### IPC Message
 
@@ -110,7 +110,7 @@ Note that the the initial `demo-simple:open` message is registered in the `main-
 The "main" entry in `package.json` specifies the entry for the main process. Within the main process you can:
 
 - Use the full [Node.js API](https://nodejs.org/api/)
-- Use [Electron's API](https://github.com/atom/electron/tree/master/docs#api-references) that is listed under 'modules for the main process' or 'modules for both processes'
+- Use [Electron's API](http://electron.atom.io/docs/) that is listed under 'modules for the main process' or 'modules for both processes'
 - Require any main, local or npm module (for npm modules).
 
 ## Menu Path

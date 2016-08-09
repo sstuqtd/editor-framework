@@ -30,7 +30,7 @@ Create a element html file `simple-widget.html` in your package:
 
 Once you register the package in package.json, you can reference the widget with package name as the route path like this:
 
-```js
+```javascript
 `packages://${package-name}/${your-width-file}`
 ```
 

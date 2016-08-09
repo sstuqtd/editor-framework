@@ -1,7 +1,7 @@
 # Detecting if your app goes online or offline
 
 Electron already provides a way to detect online and offline events ---
-[Online/Offline Event Detection](https://github.com/atom/electron/blob/master/docs/tutorial/online-offline-events.md)
+[Online/Offline Event Detection](http://electron.atom.io/docs/tutorial/online-offline-events/)
 
 Editor-Framework makes this even easier by wrapping it in a worker.
 
@@ -21,4 +21,3 @@ Editor.App.extend({
   },
 });
 ```
-
