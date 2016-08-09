@@ -2,6 +2,10 @@
 
 ### v0.6.4 (developing)
 
+ - Support palette in `<ui-color-picker>`
+ - When user input white-space characters in `<ui-num-input>`, the value will be 0.
+ - When user input white-space characters in `<ui-slider>`, the value will be slider's min value.
+
 ### v0.6.3
 
  - Upgrade to Electron v1.3.2
