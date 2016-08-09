@@ -21,9 +21,11 @@
   color: @text_color;
 }
 
-[class^="icon-"]:before,
-[class*=" icon-"]:before {
-  width: 0px;
+.ctrl {
+  [class^="icon-"]:before,
+  [class*=" icon-"]:before {
+    width: 0px;
+  }
 }
 
 .hbox, .vbox {
@@ -191,27 +193,36 @@
   }
 }
 
-.presets {
+.title {
+  .layout-horizontal();
+  .layout-children(center, space-between);
+}
+
+.palette {
   width: 200px;
   flex-wrap: wrap;
 
-  .layout-children(center, center);
+  .layout-children(center, start);
 }
 
 .color-box {
+  position: relative;
   border: 1px solid @el_border_color;
-  border-radius: 3px;
 
   background-image: url('theme://img/transparent-bg.png');
-  width: 20px;
-  height: 20px;
+  width: 15px;
+  height: 15px;
 
-  margin-top: 5px;
-  margin-left: 5px;
+  margin-top: 3px;
+  margin-left: 3px;
 
   cursor: pointer;
 }
 
 .color-box:hover {
   border-color: @el_border_color_hover;
+}
+
+.color-box .inner {
+  .fit();
 }
