@@ -6,7 +6,7 @@ const spawn = require('child_process').spawn;
 let processArgv, appPath;
 
 if ( process.argv.length === 2 ) {
-  appPath = './example-apps/demo/';
+  appPath = './demo/';
   processArgv = process.argv.slice(2);
 } else {
   appPath = process.argv[2];

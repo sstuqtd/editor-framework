@@ -5,7 +5,7 @@ Like Electron, an Editor-Framework appication consists primarily of two types of
 - Main Process: Creates window and web pages. Also shares data among renderer processes.
 - Renderer Process: Renders HTML web pages and runs client-side JavaScript. Each window runs within a separate renderer process.
 
-Put simply, the main process acts like a node.js server, and the renderer process acts like JavaScript loaded from the web client. To better understand these two types of processes, read [Electron's introduction document](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md). 
+Put simply, the main process acts like a node.js server, and the renderer process acts like JavaScript loaded from the web client. To better understand these two types of processes, read [Electron's introduction document](http://electron.atom.io/docs/tutorial/quick-start/).
 
 In short, an Editor-Framework application starts from the main process, and can have several renderer processes (windows) running on top of it.
 
@@ -13,7 +13,7 @@ In short, an Editor-Framework application starts from the main process, and can 
 
 Each process has its own JavaScript context and cannot directly access the memory data from other processes. To exchange information, messages must be sent by one process and listened for in the target process. Messages are identified by a string identifier of your choosing. Also known as inter-process communication (IPC).
 
-Electron provides two IPC modules [ipcMain ](https://github.com/atom/electron/blob/master/docs/api/ipc-main.md) and [ipcRenderer](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md) to provide communication between the main and renderer processes. Editor-Framework encapsulates them to simplify more complex use cases.
+Electron provides two IPC modules [ipcMain ](http://electron.atom.io/docs/api/ipc-main/) and [ipcRenderer](http://electron.atom.io/docs/api/ipc-renderer/) to provide communication between the main and renderer processes. Editor-Framework encapsulates them to simplify more complex use cases.
 
 ## IPC Message Identifier
 
@@ -27,7 +27,7 @@ For readability, we recommend that you scope an IPC message identifier to the mo
 'package-name:action-name'
 ```
 
-Basically, you can use any string as message identifier, but we strongly recommend you use your package name (if you are sending message in your package) or module name (if you are handling sub-module tasks) with a colon to make a message identifier. 
+Basically, you can use any string as message identifier, but we strongly recommend you use your package name (if you are sending message in your package) or module name (if you are handling sub-module tasks) with a colon to make a message identifier.
 
 Let's see it in action:
 

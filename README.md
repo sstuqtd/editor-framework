@@ -12,12 +12,12 @@
 [![Dependency Status](https://david-dm.org/cocos-creator/editor-framework.svg)](https://david-dm.org/cocos-creator/editor-framework)
 [![devDependency Status](https://david-dm.org/cocos-creator/editor-framework/dev-status.svg)](https://david-dm.org/cocos-creator/editor-framework#info=devDependencies)
 
-Editor-Framework gives you the power to quickly and easily write professional multi-panel desktop software in HTML5 and Node.js on top of [Electron](http://github.com/atom/electron). 
+Editor-Framework gives you the power to quickly and easily write professional multi-panel desktop software in HTML5 and Node.js on top of [Electron](http://electron.atom.io).
 
-At its core is a modular and extensible package management system and open-ended API that allow you to quickly prototype and build reusable UI components on the fly in a live, hot-reloadable development environment. 
+At its core is a modular and extensible package management system and open-ended API that allow you to quickly prototype and build reusable UI components on the fly in a live, hot-reloadable development environment.
 
-Internally, Editor-Framework conforms with Electron’s [main and renderer process architecture](https://github.com/atom/electron/blob/master/docs/tutorial/quick-start.md).
-To make multiple windows communicate easily, Editor Framework extends [Electron’s IPC message API](https://github.com/atom/electron/blob/master/docs/api/ipc-renderer.md), making it easier to send and receive callbacks between the main and renderer processes. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and provide a set of builtin UI-Kit elements which you can use to extend existing widgets and panels. It's also possible to extend any existing UI framework such as Polymer, Vue.js, React, or any other UI framework you'd prefer to use..
+Internally, Editor-Framework conforms with Electron’s [main and renderer process architecture](http://electron.atom.io/docs/tutorial/quick-start/).
+To make multiple windows communicate easily, Editor Framework extends Electron’s [main](http://electron.atom.io/docs/api/ipc-main/) and [renderer](http://electron.atom.io/docs/api/ipc-renderer/) IPC API, making it easier to send and receive callbacks between the main and renderer processes. In the renderer process, we use HTML5 Web Component standards (Custom Element and Shadow DOM) by default, and provide a set of builtin UI-Kit elements which you can use to extend existing widgets and panels. It's also possible to extend any existing UI framework such as Polymer, Vue.js, React, or any other UI framework you'd prefer to use..
 
 **NOTE: editor-framework is currently under active development. The documentation is a little bit out of date, but still can help you get started. I will update the doc as soon as possible.**
 
@@ -174,7 +174,7 @@ Editor.App.extend({
 
 - ### Customizable Profiles
 
- - Customize your profile for different scope (globa, local, project, ...)
+ - Customize your profile for different scope (global, local, project, ...)
  - Load and save profiles through unified API
 
 - ### Logging
@@ -229,108 +229,40 @@ npm run build # build styles
 
 #### example-apps
 
-See https://github.com/exsdk/example-apps for full repository of examples. 
+[example-apps](https://github.com/editor-framework/example-apps) is a set of examples
+shows how to create Editor-Framework Apps.
+
+**Installing the examples:**
+
+```bash
+git clone https://github.com/editor-framework/example-apps
+```
 
 **Running the examples:**
+
 ```bash
-git clone https://github.com/exsdk/example-apps
 npm start ./example-apps/${example-name}
 ```
 
-#### example-apps/demo
+#### demo
 
-`example-apps` is a demo project to help users develop their own packages. To use the demo project,
- first install it. Go to the demo folder and run the following command:
+[demo](https://github.com/editor-framework/demo) is a demo project to help users develop their own packages.
+To use the demo project, clone it first and go to the demo folder to install it.
+
+**Installing the demo:**
 
 ```bash
-cd ./example-apps/demo
+git clone https://github.com/editor-framework/demo
+cd ./demo
 npm install
 bower install
 gulp update
 ```
 
-Once installed, you can run the demo in the Editor-Framework root directory through the following command:
+**Running the demo:**
 
 ```bash
-npm start ./example-apps/demo
-```
-
-### Test Environment
-
-To test the Editor-Framework itself, just run:
-
-```bash
-npm test [./your/test/file] -- [options]
-
-## or
-
-npm start ./test -- test ./your/test/file [options]
-```
-
-You can also run a single test or multiple tests in one directory by:
-
-```bash
-npm test ${your/test/path}
-```
-
-You can also force to run tests in renderer by `--renderer` option:
-
-```bash
-npm test ${your/test/path} -- --renderer
-```
-
-You can load specific package and run its tests by `--package` option:
-
-```bash
-npm test ${your/test/path} -- --package
-```
-
-To debug a test, use `--detail` option:
-
-```bash
-npm test ${your/test/path} -- --detail
-```
-
-To change reporter, use `--reporter name` option:
-
-```bash
-npm test ${your/test/path} -- --reporter classic
-```
-
-### Writing Your Test
-
-**Main Process**
-
-```js
-suite(tap, 'Test Main Process', t => {
-  t.test ('should be ok', t => {
-    t.end();
-  });
-});
-```
-
-**Renderer Process**
-
-```html
-<template id="basic">
-  <div class="title">Hello World</div>
-</template>
-```
-
-```js
-suite(tap, 'Test Renderer Process', t => {
-  t.test('should be ok', t => {
-    helper.runElement(
-      'app://test/my-template.html', 'basic', 'div.title',
-      el => {
-        t.assert(el, 'element not found');
-        t.equal(el.innertText, 'Hello World');
-
-        t.end();
-      }
-    );
-  });
-});
+npm start ./demo
 ```
 
 ## License (MIT)
