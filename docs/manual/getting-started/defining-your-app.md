@@ -2,10 +2,9 @@ Editor-Framework provides a rich and flexible toolset for building rich multi-wi
 
 It was designed with reusability, extensibility,
 
-
 # Defining Your App
 
-Since Editor-Framework is built on top of Electron, many of the Electron/Node.js workflow patterns you're used to will still apply.
+Since Editor-Framework is built on top of Electron, many of the Electron or Node.js workflow patterns you're used to will still apply.
 However, there are some important conventions and configuration definitions Editor-Framework uses to load and run your app.
 
 First, let's look at a typical file layout of an Editor-Framework app:
@@ -25,7 +24,7 @@ Here is an example `package.json` file:
   "version": "0.0.1",
   "description": "A simple app based on Editor-Framework.",
   "dependencies": {},
-  "main": "main.js" //<== Important!!! This is required!
+  "main": "main.js" // <== Important!!! This is required!
 }
 ```
 
@@ -47,10 +46,11 @@ Editor.App.extend({
   },
 
   // init your app
-  init ( opts, cb ) {
-    if ( cb ) {
-      cb ();
-    }
+  init ( opts, callback ) {
+    // NOTE: you must at least call Editor.init() in this function
+    Editor.init();
+
+    callback ();
   },
 
   // run your app
@@ -94,6 +94,7 @@ MyApplication/
 
 
 **package.json**
+
 ```json
 {
   "name": "your-app-name",
@@ -104,8 +105,8 @@ MyApplication/
 }
 ```
 
-
 **app.js**
+
 ```javascript
 'use strict';
 
@@ -135,8 +136,8 @@ Editor.App.extend({
       // An object defining application-level configuration options for initialization will go here  
     });
 
+    Editor.success('main.js: call to init() completed successfully');
 
-    Editor.success("main.js: call to init() completed successfully")
     // You'll need to call this directly to signal Editor-Framework that you're ready to run the application
     callback();
   },
@@ -181,52 +182,47 @@ Editor.App.extend({
 
     mainWin.focus();
 
-    Editor.success("main.js: call to run() completed successfully")
+    Editor.success('main.js: call to run() completed successfully');
   },
 });
 ```
 
-
 **index.html**
+
 ```html
 <html>
-<head>
-  <title>Welcome to Editor-Framework!</title>
-  <meta charset="utf-8">
+  <head>
+    <title>Welcome to Editor-Framework!</title>
+    <meta charset="utf-8">
 
-  <style>
-    body {
-      margin: 10px;
-    }
+    <style>
+      body {
+        margin: 10px;
+      }
 
-    h2 span {
-      color: #090;
-    }
-  </style>
-</head>
+      h2 span {
+        color: #090;
+      }
+    </style>
+  </head>
 
-<body class="layout vertical">
+  <body class="layout vertical">
+    <h1>Welcome to Editor-Framework!</h1>
+    <h3><em>This is a basic demo of an Editor-Framework application</em></h3>
+    <pre>
+      Application path:  <script>document.write(Editor.appPath)</script>
+      NodeJS version:    <script>document.write(process.versions.node)</script>
+      Chromium version:  <script>document.write(process.versions.chrome)</script>
+      Electron version:  <script>document.write(process.versions.electron)</script>
+    </pre>
 
-<h1>Welcome to Editor-Framework!</h1>
-
-<h3><em>This is a basic demo of an Editor-Framework application</em></h3>
-
-<pre>
-  Application path:  <script>document.write(Editor.appPath)</script>
-  NodeJS version:    <script>document.write(process.versions.node)</script>
-  Chromium version:  <script>document.write(process.versions.chrome)</script>
-  Electron version:  <script>document.write(process.versions.electron)</script>
-</pre>
-
-<script>
-
-  Editor.success("index.html: \tWelcome to Editor-Framework!")
-  Editor.log("index.html: \tApplication Path: ",  Editor.appPath)
-  Editor.log("index.html: \tNodeJS version: ",    process.versions.node)
-  Editor.log("index.html: \tChromium version: ",  process.versions.chrome)
-  Editor.log("index.html: \tElectron version: ",  process.versions.electron)
-</script>
-
-</body>
+    <script>
+      Editor.success('index.html: \tWelcome to Editor-Framework!')
+      Editor.log(`index.html: \tApplication Path: ${Editor.appPath}`)
+      Editor.log(`index.html: \tNodeJS version: ${process.versions.node}`)
+      Editor.log(`index.html: \tChromium version: ${process.versions.chrome}`)
+      Editor.log(`index.html: \tElectron version: ${process.versions.electron}`)
+    </script>
+  </body>
 </html>
 ```
