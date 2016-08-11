@@ -2,7 +2,7 @@
 
 Editor-Framework loads packages before App runs. By default it loads packages from `editor-framework://builtin/` and `~/.{app-name}/packages/`.
 
-You can customize the location it loads packages from through the `Editor.registerPackagePath` method in your `App.init` function.
+You can customize the location it loads packages from through the `package-search-path` option in `Editor.init(opts)` method in your `App.init` function.
 
 ## Structure
 
@@ -10,8 +10,8 @@ In general, packages should have the following structure:
 
 ```plain
 MyPackage
-  |--(optional)panel
-  |   |--panel.js
+  |--panel(optional)
+  |  |--panel.js
   |--main.js
   |--package.json
 ```
@@ -61,12 +61,12 @@ Explanation for each key-value pair:
   - `build` *Boolean* (Optional) - If build the package to `bin/dev`
   - `hosts` *Object* (Optional) - The version of the hosts required for this package.
   - `main` *String* (Optional) - A file path to the main entry javascript. Usually `main.js`, you can also use another filename and specify it here.
-  - `menus` *Object* (Optional) - The menu list.
+  - `main-menu` *Object* (Optional) - The main menu registry list.
     - `key` *String* - Menu path, example: `foo/bar/foobar`
     - `value` *Object* - Menu options
       - [Editor Menu Template](http://electron.atom.io/docs/api/menu-item/)
-  - `panel[.sub-name]` *Object* (Optional) - Panel info
-    - [Detail of Panel Info](./create-panels.md)
+  - `panel[.sub-name]` *Object* (Optional) - Pa nel info
+    - [Detail of Panel Info](./creating-panels.md)
   - `packages` *Object* (Optional) - The Editor-Framework package dependencies list.
   - `dependencies` *Object* (Optional) - The node module dependencies list.
 
@@ -112,23 +112,3 @@ The "main" entry in `package.json` specifies the entry for the main process. Wit
 - Use the full [Node.js API](https://nodejs.org/api/)
 - Use [Electron's API](http://electron.atom.io/docs/) that is listed under 'modules for the main process' or 'modules for both processes'
 - Require any main, local or npm module (for npm modules).
-
-## Menu Path
-
-Menu paths are defined in the `main-menu` property of `pacakge.json`. Menu path definitions look like this:
-
-```json
-"main-menu": {
-  "Examples/Simple": {
-    "message": "demo-simple:open"
-  },
-  "Examples/Advanced": {
-    "message": "demo-simple:advance"
-  }
-}
-```
-
-A menu path looks like `MenuName/ItemName`. You can also write `MenuName/GroupName/ItemName`, which results in the following menu:
-![image](https://cloud.githubusercontent.com/assets/344547/8249697/89da532e-169f-11e5-9f69-d49731ea0ca6.png)
-
-When a menu item is clicked, it sends an IPC message from page-level. That's why we usually make a `"package-name:open"` IPC message receiver to actually open the package panel.

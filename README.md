@@ -232,13 +232,13 @@ npm run build # build styles
 [example-apps](https://github.com/editor-framework/example-apps) is a set of examples
 shows how to create Editor-Framework Apps.
 
-**Installing the examples:**
+Installation:
 
 ```bash
 git clone https://github.com/editor-framework/example-apps
 ```
 
-**Running the examples:**
+Run:
 
 ```bash
 npm start ./example-apps/${example-name}
@@ -249,7 +249,7 @@ npm start ./example-apps/${example-name}
 [demo](https://github.com/editor-framework/demo) is a demo project to help users develop their own packages.
 To use the demo project, clone it first and go to the demo folder to install it.
 
-**Installing the demo:**
+Installation:
 
 ```bash
 git clone https://github.com/editor-framework/demo
@@ -259,7 +259,7 @@ bower install
 gulp update
 ```
 
-**Running the demo:**
+Run:
 
 ```bash
 npm start ./demo

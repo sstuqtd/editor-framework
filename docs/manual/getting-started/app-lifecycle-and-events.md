@@ -43,7 +43,7 @@ This function will be invoked after `Editor` and its sub-modules have been initi
 const Path = require('path');
 
 Editor.App.extend({
-  init ( opts, cb ) {
+  init ( opts, callback ) {
     Editor.init({
       'profile': {
         local: Path.join(Editor.App.path, '.settings'),
@@ -56,9 +56,7 @@ Editor.App.extend({
       'layout': Editor.url('app://layout.json')
     });
 
-    if ( cb ) {
-      cb ();
-    }
+    callback ();
   },
 });
 ```

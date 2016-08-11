@@ -5,24 +5,34 @@ This section explains how to extend Editor-Framework by creating and modifying p
 ## Manual
 
   - Getting Started
-    - [Defining Your App](manual/getting-started/define-your-app.md)
+    - [Defining Your App](manual/getting-started/defining-your-app.md)
     - [App Lifecycle and Events](manual/getting-started/app-lifecycle-and-events.md)
     - [Introduction to IPC](manual/getting-started/introduction-to-ipc.md)
   - Writing A Package
-    - [Creating Your Package](manual/packages/create-your-package.md)
-    - [Creating Panels](manual/packages/create-panels.md)
+    - [Creating A Package](manual/packages/creating-a-package.md)
+    - [Extending Main Menu](manual/packages/extending-main-menu.md)
+    - [Creating Panels](manual/packages/creating-panels.md)
+    - [Panel Frame Reference](manual/packages/panel-frame-reference.md)
     - [Registering Shortcuts](manual/packages/register-shortcuts.md)
-    - [Loading and Building Packages](manual/packages/load-and-build-packages.md)
     - [i18n](manual/packages/i18n.md)
-    - [Panel Lifecycle and Events](manual/packages/panel-lifecycle-and-events.md)
-    - [Creating Polymer Panels](manual/packages/create-polymer-panels.md) **deprecated**
-    - [Creating Polymer Element](manual/packages/create-polymer-element.md) **deprecated**
+    - [Creating Single Page Panel](manual/packages/creating-single-page-panel.md)
+    - [Loading and Building Packages](manual/packages/load-and-build-packages.md) **out of date & deprecated**
+  - Customize Your Application
+    - [Editor Configuration](manual/customization/editor-configuration.md)
+    - Default Layout **todo**
+    - Custom Commands **todo**
+    - [Custom Protocol](manual/customization/custom-protocol.md)
   - UI Programming
     - [Focusable Module](manual/ui/focusable.md)
-    - [Polymer Primer](manual/ui/polymer-primer.md) **deprecated & out of date**
-    - [CSS Layout Helper](manual/ui/css-layout.md) **deprecated & out of date**
-    - [Event Binding](manual/ui/event-binding.md) **deprecated & out of date**
-  - Usage of the Editor Module
+    - [CSS Layout Helper](manual/ui/css-layout.md) **out of date**
+  - Work With Vue
+    - Creating Vue Panels **todo**
+  - Work With Polymer
+    - [Polymer Primer](manual/polymer/polymer-primer.md) **deprecated**
+    - [Creating Polymer Panels](manual/polymer/create-polymer-panels.md) **deprecated**
+    - [Creating Polymer Element](manual/polymer/create-polymer-element.md) **deprecated**
+    - [Event Binding](manual/polymer/event-binding.md) **deprecated**
+  - Misc
     - [Editor Module](manual/editor/editor-module.md)
     - [Online/Offline Event Detection](manual/editor/online-offline-events.md)
 

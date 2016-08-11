@@ -13,7 +13,7 @@ In short, an Editor-Framework application starts from the main process, and can 
 
 Each process has its own JavaScript context and cannot directly access the memory data from other processes. To exchange information, messages must be sent by one process and listened for in the target process. Messages are identified by a string identifier of your choosing. Also known as inter-process communication (IPC).
 
-Electron provides two IPC modules [ipcMain ](http://electron.atom.io/docs/api/ipc-main/) and [ipcRenderer](http://electron.atom.io/docs/api/ipc-renderer/) to provide communication between the main and renderer processes. Editor-Framework encapsulates them to simplify more complex use cases.
+Electron provides two IPC modules [ipcMain](http://electron.atom.io/docs/api/ipc-main/) and [ipcRenderer](http://electron.atom.io/docs/api/ipc-renderer/) to provide communication between the main and renderer processes. Editor-Framework encapsulates them to simplify more complex use cases.
 
 ## IPC Message Identifier
 
