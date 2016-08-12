@@ -23,8 +23,10 @@ This section explains how to extend Editor-Framework by creating and modifying p
     - Custom Commands **todo**
     - [Custom Protocol](manual/customization/custom-protocol.md)
   - UI Programming
+    - [Writing UI for Panel](manual/ui/writing-ui-for-panel.md)
+    - [Using UI Kit](manual/ui/using-ui-kit.md) **todo**
     - [Focusable Module](manual/ui/focusable.md)
-    - [CSS Layout Helper](manual/ui/css-layout.md) **out of date**
+    - [UI Layout](manual/ui/ui-layout.md)
   - Work With Vue
     - Creating Vue Panels **todo**
   - Work With Polymer
