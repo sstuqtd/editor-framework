@@ -10,7 +10,7 @@ suite(tap, 'package', {timeout: 2000}, t => {
 
   helper.runEditor(t, {
     'package-search-path': [
-      Editor.url('editor-framework://test/fixtures/packages/')
+      'editor-framework://test/fixtures/packages/'
     ],
   });
 

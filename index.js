@@ -291,9 +291,40 @@ app.on('ready', () => {
   }
 
   // apply arguments to EditorM
+
+  /**
+   * @property argv
+   * @type object
+   *
+   * An [yargs.argv](https://github.com/yargs/yargs) value.
+   */
   EditorM.argv = yargv;
+
+  /**
+   * @property dev
+   * @type boolean
+   *
+   * Indicates if the application is running with `--dev` option.
+   */
   EditorM.dev = yargv.dev;
+
+  /**
+   * @property lang
+   * @type string
+   *
+   * Indicates the language used in `--lang` option.
+   */
   EditorM.lang = yargv.lang;
+
+  /**
+   * @property logfile
+   * @type string
+   *
+   * Specify the log file path. By default it is saving in:
+   *
+   *   - Windows: `~/.{app-name}/logs/{app-home}.log`
+   *   - Mac: `~/Library/Logs/{app-name}.log`
+   */
   EditorM.logfile = yargv.logfile;
 
   // register protocol
@@ -418,9 +449,11 @@ app.on('ready', () => {
 // ---------------------------
 
 /**
- * versions of your app and submodules
  * @property versions
  * @type Object
+ *
+ * A table contains all version info for app and sub-modules.
+ * By default it contains App and Editor-Framework version info.
  */
 EditorM.versions = {
   [app.getName()]: app.getVersion(),
@@ -428,9 +461,10 @@ EditorM.versions = {
 };
 
 /**
- * The editor framework module path. Usually it is `{your-app}/editor-framework/`
  * @property frameworkPath
  * @type string
+ *
+ * The Editor-Framework module path. Usually it is `{your-app}/editor-framework/`
  */
 EditorM.frameworkPath = _frameworkPath;
 
