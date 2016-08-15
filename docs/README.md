@@ -35,10 +35,28 @@ This section explains how to extend Editor-Framework by creating and modifying p
     - [Creating Polymer Element](manual/polymer/create-polymer-element.md) **deprecated**
     - [Event Binding](manual/polymer/event-binding.md) **deprecated**
   - Misc
-    - [Editor Module](manual/editor/editor-module.md)
-    - [Online/Offline Event Detection](manual/editor/online-offline-events.md)
+    - [Online/Offline Event Detection](manual/misc/online-offline-events.md)
 
 ## API
+
+  - Modules for the Main Process
+    - [Editor](api/main/editor.md)
+    - [Editor.App](api/main/app.md)
+    - [Editor.Debugger](api/main/debugger.md)
+    - [Editor.DevTools](api/main/devtools.md)
+    - [Editor.Dialog](api/main/dialog.md)
+    - [Editor.Ipc](api/main/ipc.md)
+    - [Editor.MainMenu](api/main/main-menu.md)
+    - [Editor.Menu](api/main/menu.md)
+    - [Editor.Package](api/main/package.md)
+    - [Editor.Panel](api/main/panel.md)
+    - [Editor.Profile](api/main/profile.md)
+    - [Editor.Protocol](api/main/protocol.md)
+    - [Editor.Window](api/main/window.md)
+    - [Editor.Worker](api/main/worker.md)
+    - [Editor.i18n](api/main/i18n.md)
+  - Modules for the Renderer Process (Web Page)
+  - Modules for Both Processes
 
 ## Development
 
