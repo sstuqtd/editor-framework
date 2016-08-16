@@ -24,8 +24,6 @@ profile
 *.log
 
 # project files
-api/
-apidocs/
 node_modules/
 bower_components/
 example-apps/
