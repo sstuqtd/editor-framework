@@ -41,6 +41,7 @@ This section explains how to extend Editor-Framework by creating and modifying p
 
   - Modules for the Main Process
     - [Editor](api/main/editor.md)
+    - [Editor (Console Module)](api/main/console.md)
     - [Editor.App](api/main/app.md)
     - [Editor.Debugger](api/main/debugger.md)
     - [Editor.DevTools](api/main/devtools.md)
@@ -57,6 +58,7 @@ This section explains how to extend Editor-Framework by creating and modifying p
     - [Editor.i18n](api/main/i18n.md)
   - Modules for the Renderer Process (Web Page)
   - Modules for Both Processes
+    - [Editor](api/share/editor.md)
 
 ## Development
 

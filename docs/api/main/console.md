@@ -1,8 +1,8 @@
-# Editor.Console
+# Editor (Console Module)
 
 ## Static Methods
 
-### Editor.Console.clearLog(pattern, useRegex)
+### Editor.clearLog(pattern, useRegex)
 
  - `pattern` String - Specify the clear pattern
  - `useRegex` Boolean - If we use regex for the clear pattern
@@ -10,59 +10,59 @@
 Clear the logs. If we specify `pattern` for the method, it will clear the match pattern.
 The method will send ipc message `editor:console-clear` to all windows.
 
-### Editor.Console.connectToConsole()
+### Editor.connectToConsole()
 
 After we call this function, all the incoming logs will be stored in the memory, and can be queried by ipc message `editor:console-query`.
 
-### Editor.Console.error([...args])
+### Editor.error([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the error message and show on the console, it also shows the call stack start from the function call it.
 The method will sends ipc message `editor:console-error` to all windows.
 
-### Editor.Console.fatal([...args])
+### Editor.fatal([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the fatal message and show on the console, the app will quit immediately after that.
 
-### Editor.Console.failed([...args])
+### Editor.failed([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the failed message and show on the console
 The method will send ipc message `editor:console-failed` to all windows.
 
-### Editor.Console.info([...args])
+### Editor.info([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the info message and show on the console
 The method will send ipc message `editor:console-info` to all windows.
 
-### Editor.Console.log([...args])
+### Editor.log([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the normal message and show on the console.
 The method will send ipc message `editor:console-log` to all windows.
 
-### Editor.Console.success([...args])
+### Editor.success([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
 Log the success message and show on the console
 The method will send ipc message `editor:console-success` to all windows.
 
-### Editor.Console.trace(level[, ...args])
+### Editor.trace(level[, ...args])
 
  - `level` String - The log level
  - `...args` ... - Whatever arguments the message needs
 
 Trace the log
 
-### Editor.Console.warn([...args])
+### Editor.warn([...args])
 
  - `...args` ... - Whatever arguments the message needs
 
