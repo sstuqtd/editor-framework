@@ -236,6 +236,12 @@ app.on('ready', () => {
   // get options from yargs
   let yargv = Yargs.argv;
 
+  // if show help, quit the app
+  if ( yargv.help ) {
+    app.quit();
+    return;
+  }
+
   // ---------------------------
   // initialize EditorM
   // ---------------------------
@@ -349,12 +355,12 @@ app.on('ready', () => {
     next => {
       // init user App
       if ( !EditorM.App.init ) {
-        EditorM.error(
+        EditorM.error (
           'The `init` action was not found in your application. Please define it using the `Editor.App.Extend` function. \
           See https://github.com/cocos-creator/editor-framework/blob/master/docs/getting-started/define-your-app.md \
           for more information.'
         );
-        app.terminate();
+        app.quit();
         return;
       }
 
@@ -362,7 +368,7 @@ app.on('ready', () => {
         EditorM.App.init(yargv, next);
       } catch ( err ) {
         EditorM.error(err.stack || err);
-        app.terminate();
+        app.quit();
         return;
       }
     },
@@ -423,7 +429,7 @@ app.on('ready', () => {
           See https://github.com/cocos-creator/editor-framework/blob/master/docs/getting-started/define-your-app.md \
           for more information.'
         );
-        app.terminate();
+        app.quit();
         return;
       }
 
@@ -432,14 +438,14 @@ app.on('ready', () => {
         next();
       } catch ( err ) {
         EditorM.error(err.stack || err);
-        app.terminate();
+        app.quit();
         return;
       }
     },
   ], err => {
     if ( err ) {
       EditorM.error(err.stack || err);
-      app.terminate();
+      app.quit();
     }
   });
 });
