@@ -8,7 +8,7 @@ const Async = require('async');
 const Chalk = require('chalk');
 
 const pjson = JSON.parse(Fs.readFileSync('./package.json'));
-const electronVersion = pjson.devDependencies['electron-prebuilt'];
+const electronVersion = pjson.devDependencies['electron'];
 
 let cmdstr;
 let env = process.env;
