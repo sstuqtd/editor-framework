@@ -2,9 +2,11 @@
 
 ### v0.6.4 (developing)
 
- - Support palette in `<ui-color-picker>`
+ - Support palette in `<ui-color-picker>`.
  - When user input white-space characters in `<ui-num-input>`, the value will be 0.
  - When user input white-space characters in `<ui-slider>`, the value will be slider's min value.
+ - Add `<ui-webview>`.
+ - Use `electron` instead of `electron-prebuilt`. Detail in [Electron's Blog](http://electron.atom.io/blog/2016/08/16/npm-install-electron).
 
 ### v0.6.3
 

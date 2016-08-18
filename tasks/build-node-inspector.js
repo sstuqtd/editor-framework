@@ -6,7 +6,7 @@ const Chalk = require('chalk');
 const Fs = require('fire-fs');
 
 const pjson = JSON.parse(Fs.readFileSync('./package.json'));
-const electronVersion = pjson.devDependencies['electron-prebuilt'];
+const electronVersion = pjson.devDependencies['electron'];
 
 Async.series([
   next => {
