@@ -12,6 +12,7 @@
       - `fixed-size`: Indicate the window is standalone, float on top and non-resizable.
       - `quick`: Indicate the window will never destroyed, it only hides itself when it close which make it quick to show the next time.
     - `save` Boolean - Indicate if save the window position and size.
+    - `disableDevTools` Boolean - Indicate if disable devtools for the window.
 
 Window class for operating editor window.
 
