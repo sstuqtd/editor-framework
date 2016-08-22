@@ -4,10 +4,6 @@ The main menu module for manipulating main menu items.
 
 ## Methods
 
-### Editor.MainMenu.init ()
-
-Init main menu.
-
 ### Editor.MainMenu.apply ()
 
 Apply main menu changes.
@@ -19,12 +15,9 @@ Apply main menu changes.
 
 Build a `template` into menu item and add it to `path`
 
-### Editor.MainMenu.update ( path, template )
+### Editor.MainMenu.init ()
 
-  - `path` String - Menu path
-  - `template` Array|Object - Menu template
-
-Build a `template` into menu item and update it to `path`
+Init main menu.
 
 ### Editor.MainMenu.remove ( path )
 
@@ -43,6 +36,13 @@ Remove menu item at `path`.
 
 Set options of a menu item at `path`.
 
+### Editor.MainMenu.update ( path, template )
+
+  - `path` String - Menu path
+  - `template` Array|Object - Menu template
+
+Build a `template` into menu item and update it to `path`
+
 ## Properties
 
 ### Editor.MainMenu.menu
@@ -51,14 +51,14 @@ Get main menu instance for debug purpose
 
 ## IPC Messages
 
-### Message: 'main-menu:init'
-
 ### Message: 'main-menu:add'
+
+### Message: 'main-menu:apply'
+
+### Message: 'main-menu:init'
 
 ### Message: 'main-menu:remove'
 
 ### Message: 'main-menu:set'
 
 ### Message: 'main-menu:update'
-
-### Message: 'main-menu:apply'

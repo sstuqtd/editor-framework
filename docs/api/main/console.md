@@ -1,6 +1,6 @@
 # Editor (Console Module)
 
-## Static Methods
+## Methods
 
 ### Editor.clearLog(pattern, useRegex)
 

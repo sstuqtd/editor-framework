@@ -1,6 +1,6 @@
 # Editor.Package
 
-Package module for manipulating packages
+Package module for manipulating packages.
 
 ## Methods
 
@@ -39,16 +39,60 @@ Find and get panel info via panelID, the panel info is the JSON object that defi
 
   - `path` String - The package path
 
-Find and get package info via path, the package info is the JSON object of your `package.json` file
+Find and get package info via path, the package info is the JSON object of your `package.json` file.
 
 ### Editor.Package.packagePath (name)
 
   - `name` String - The package name
 
-Return the path of the package by name
+Return the path of the package by name.
 
 ### Editor.Package.build (name)
 
   - `name` String - The package name
 
-Return the path of the package by name
+Return the path of the package by name.
+
+### Editor.Package.addPath (path)
+
+  - `path` String|Array - Path to add
+
+Add package search path.
+
+### Editor.Package.removePath (path)
+
+  - `path` String - Path to remove
+
+Remove package search path.
+
+### Editor.Package.resetPath ()
+
+Reset path.
+
+### Editor.Package.find (name)
+
+  - `name` String - Package name
+
+Find and return the package path via `name`.  
+
+## Properties
+
+### Editor.Package.lang
+
+Return current language setting.
+
+### Editor.Package.path
+
+Return package search path list.
+
+### Editor.Package.versions
+
+Return the version of sub modules.
+
+## IPC Messages
+
+### Message: 'editor:package-query-info'
+
+### Message: 'editor:package-query-infos'
+
+### Message: 'editor:package-reload'
