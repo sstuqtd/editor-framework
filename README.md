@@ -244,6 +244,23 @@ Run:
 npm start ./example-apps/${example-name}
 ```
 
+#### example-packages
+
+[example-packages](https://github.com/editor-framework/example-packages) is a set of examples
+shows how to create Editor-Framework Apps.
+
+Installation:
+
+```bash
+git clone https://github.com/editor-framework/example-packages
+```
+
+Run:
+
+```bash
+npm start ./example-packages/
+```
+
 #### demo
 
 [demo](https://github.com/editor-framework/demo) is a demo project to help users develop their own packages.
