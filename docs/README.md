@@ -61,13 +61,13 @@ This section explains how to extend Editor-Framework by creating and modifying p
     - [Editor (Console Module)](api/renderer/console.md)
     - [Editor.Audio](api/renderer/audio.md)
     - [Editor.Dialog](api/renderer/dialog.md)
-    - [Editor.Ipc](api/main/ipc.md)
-    - [Editor.MainMenu](api/main/main-menu.md)
-    - [Editor.Menu](api/main/menu.md)
-    - [Editor.Package](api/main/package.md)
-    - [Editor.Panel](api/main/panel.md)
-    - [Editor.Protocol](api/main/protocol.md)
-    - [Editor.Window](api/main/window.md)
+    - [Editor.Ipc](api/renderer/ipc.md)
+    - [Editor.MainMenu](api/renderer/main-menu.md)
+    - [Editor.Menu](api/renderer/menu.md)
+    - [Editor.Package](api/renderer/package.md)
+    - [Editor.Panel](api/renderer/panel.md)
+    - [Editor.Protocol](api/renderer/protocol.md)
+    - [Editor.Window](api/renderer/window.md)
     - [Editor.UI](api/renderer/ui/ui.md)
       - Utils
         - [Editor.UI.DockUtils](api/renderer/ui/dock-utils.md)
@@ -110,6 +110,15 @@ This section explains how to extend Editor-Framework by creating and modifying p
         - [Editor.UI.WebView](api/renderer/ui/webview.md)
   - Modules for Both Processes
     - [Editor](api/share/editor.md)
+    - [Editor.Easing](api/share/easing.md)
+    - [Editor.IpcListener](api/share/ipc-listener.md)
+    - [Editor.JS](api/share/js.md)
+    - [Editor.KeyCode](api/share/key-code.md)
+    - [Editor.Math](api/share/math.md)
+    - [Editor.Selection](api/share/selection.md)
+    - [Editor.Undo](api/share/undo.md)
+    - [Editor.Utils](api/share/utils.md)
+    - [Editor.i18n](api/share/i18n.md)
 
 ## Development
 
