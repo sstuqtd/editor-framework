@@ -13,21 +13,9 @@
     - `dev` String - Only show when Menu.showDev is true.
   - `webContents` Object - A [WebContents](http://electron.atom.io/docs/api/web-contents/) object.
 
-### Editor.Menu.dispose ()
+## Instance Methods
 
-De-reference the native menu.
-
-### Editor.Menu.reset (template)
-
-  - `template` Array|Object
-
-Reset the menu from the template.
-
-### Editor.Menu.clear ()
-
-Clear all menu item in it.
-
-### Editor.Menu.add (path, template)
+### menu.add (path, template)
 
   - `path` String - The menu path
   - `template` Array|Object
@@ -53,7 +41,15 @@ editorMenu.add( 'foo/bar/foobar', {
 });
 ```
 
-### Editor.Menu.insert (path, pos, template)
+### menu.clear ()
+
+Clear all menu item in it.
+
+### menu.dispose ()
+
+De-reference the native menu.
+
+### menu.insert (path, pos, template)
 
   - `path` String - The menu path
   - `pos` Number
@@ -61,18 +57,17 @@ editorMenu.add( 'foo/bar/foobar', {
 
 Build a template into menu item and insert it to path at specific position
 
-### Editor.Menu.remove (path)
+### menu.remove (path)
 
 Remove menu item at path.
 
-### Editor.Menu.update (path, template)
+### menu.reset (template)
 
-  - `path` String - The menu path
   - `template` Array|Object
 
-Update menu item at path.
+Reset the menu from the template.
 
-### Editor.Menu.set (path, options)
+### menu.set (path, options)
 
   - `path` - The menu path
   - `options`
@@ -80,6 +75,13 @@ Update menu item at path.
     - `enabled` Boolean
     - `visible` Boolean
     - `checked` Boolean -  NOTE: You must set your menu-item type to 'checkbox' to make it work
+
+### menu.update (path, template)
+
+  - `path` String - The menu path
+  - `template` Array|Object
+
+Update menu item at path.
 
 ## Static Properties
 
@@ -97,6 +99,10 @@ Indicate if show dev menu
 Convert the menu template to process additional keyword we added for Electron.
 If webContents provided, the `template.message` will send to the target webContents.
 
+### Editor.Menu.getMenu (name)
+
+  - `name` String - Name of the register menu
+
 ### Editor.Menu.register (name, fn[, force])
 
   - `name` String - Name of the register menu
@@ -104,10 +110,6 @@ If webContents provided, the `template.message` will send to the target webConte
   - `force` Boolean - Force to register a menu even it was registered before
 
 ### Editor.Menu.unregister (name)
-
-  - `name` String - Name of the register menu
-
-### Editor.Menu.getMenu (name)
 
   - `name` String - Name of the register menu
 

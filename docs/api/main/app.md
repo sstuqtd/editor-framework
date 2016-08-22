@@ -1,6 +1,6 @@
 # Editor.App
 
-## Static Properties
+## Properties
 
 ### Editor.App.focused
 
@@ -22,7 +22,7 @@ Your path of your application.
 
 The version of your app loaded from the `version` field in `package.json`.
 
-## Static Methods
+## Methods
 
 ### Editor.App.emit(eventName[, ...args])
 

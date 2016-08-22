@@ -1,6 +1,6 @@
 # Editor
 
-## Static Properties
+## Properties
 
 ### Editor.argv
 
@@ -33,7 +33,7 @@ Specify the log file path. By default it is saving in:
 
 A table contains all version info for app and sub-modules. By default it contains App and Editor-Framework version info.
 
-## Static Methods
+## Methods
 
 ### Editor.init(opts)
 
