@@ -1,4 +1,4 @@
-# Editor.UI
+# Editor.UI (DOM Utils Module)
 
 ## Methods
 
@@ -136,7 +136,7 @@ Remove hit mask
   - `options` Object
   - `onclick` Function
 
-Add loading mask  
+Add loading mask
 
 ### Editor.UI.removeLoadingMask ()
 
@@ -146,16 +146,16 @@ Remove loading mask
 
   - `text` String
 
-Convert a string to human friendly text. For example, `fooBar` will be `Foo bar`  
+Convert a string to human friendly text. For example, `fooBar` will be `Foo bar`
 
 ### Editor.UI.camelCase (text)
 
   - `text` String
 
-Convert a string to camel case text. For example, `foo-bar` will be `fooBar`  
+Convert a string to camel case text. For example, `foo-bar` will be `fooBar`
 
 ### Editor.UI.kebabCase (text)
 
   - `text` String
 
-Convert a string to kebab case text. For example, `fooBar` will be `foo-bar`  
+Convert a string to kebab case text. For example, `fooBar` will be `foo-bar`

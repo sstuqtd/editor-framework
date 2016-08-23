@@ -1,5 +1,13 @@
 # Editor
 
+## Static Methods
+
+### Editor.KeyCode (key)
+
+ - `key` Number|String - Can be number(key-code) or string(key-name)
+
+Convenience method returns corresponding value for given keyName or keyCode.
+
 ## Static Properties
 
 ### Editor.isDarwin
