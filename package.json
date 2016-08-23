@@ -1,6 +1,6 @@
 {
   "name": "editor-framework",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "A simple framework for making panel based applications.",
   "homepage": "https://github.com/cocos-creator/editor-framework",
   "repository": {

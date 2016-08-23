@@ -1,6 +1,8 @@
 ## CHANGELOG
 
-### v0.6.4 (developing)
+### v0.7.0 (developing)
+
+### v0.6.4
 
  - Support palette in `<ui-color-picker>`.
  - When user input white-space characters in `<ui-num-input>`, the value will be 0.
