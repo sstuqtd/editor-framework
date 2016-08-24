@@ -47,13 +47,10 @@ suite(tap, 'ipc-panel', t => {
       Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc');
 
-        let win = Editor.Panel.findWindow('panel-ipc');
-        win.nativeWin.webContents.on('dom-ready', () => {
-          // TODO: Panel.open should have callback
-          setTimeout(() => {
-            Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
-          }, 500);
-        });
+        // TODO: Panel.open should have callback
+        setTimeout(() => {
+          Editor.Ipc.sendToPanel('panel-ipc', 'panel-01:simple', 'foo', 'bar');
+        }, 1000);
       });
     });
 
@@ -64,19 +61,16 @@ suite(tap, 'ipc-panel', t => {
       Editor.Package.load(path, () => {
         Editor.Panel.open('panel-ipc-02');
 
-        let win = Editor.Panel.findWindow('panel-ipc-02');
-        win.nativeWin.webContents.on('dom-ready', () => {
-          // TODO: Panel.open should have callback
-          setTimeout(() => {
-            Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
-              t.equal(foo, 'foo');
-              t.equal(bar, 'bar');
+        // TODO: Panel.open should have callback
+        setTimeout(() => {
+          Editor.Ipc.sendToPanel('panel-ipc-02', 'panel-02:simple-reply', 'foo', 'bar', (err, foo, bar) => {
+            t.equal(foo, 'foo');
+            t.equal(bar, 'bar');
 
-              Editor.Panel.close('panel-ipc-02');
-              t.end();
-            });
-          }, 500);
-        });
+            Editor.Panel.close('panel-ipc-02');
+            t.end();
+          });
+        }, 1000);
       });
     });
 

@@ -1,9 +1,9 @@
 {
-  "name": "needs-build",
+  "name": "entry-dir",
   "version": "0.0.1",
-  "description": "This package needs compile to bin/dev to use",
+  "description": "Redirect the loading dir to ./bin",
   "author": "Firebox Technology",
-  "build": "true",
+  "entry-dir": "./bin",
   "main": "main.js",
   "main-menu": {
     "Demos/Simple": {

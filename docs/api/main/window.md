@@ -122,6 +122,10 @@ If this is a main window.
 
 If the window is minimized.
 
+### win.panels
+
+Returns the id list of the panel dock on this window.
+
 ## Static Properties
 
 ### Editor.Window.defaultLayout

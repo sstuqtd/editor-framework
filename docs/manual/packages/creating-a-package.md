@@ -58,7 +58,7 @@ Explanation for each key-value pair:
   - `version` *String* - The version number that follows [semver](http://semver.org/) pattern.
   - `description` *String* (Optional) - A simple description of what your package does.
   - `author` *String* (Optional) - Who created this package.
-  - `build` *Boolean* (Optional) - If build the package to `bin/dev`
+  - `entry-dir` *String* (Optional) - Redirect package entry point to the specific path.
   - `hosts` *Object* (Optional) - The version of the hosts required for this package.
   - `main` *String* (Optional) - A file path to the main entry javascript. Usually `main.js`, you can also use another filename and specify it here.
   - `main-menu` *Object* (Optional) - The main menu registry list.
