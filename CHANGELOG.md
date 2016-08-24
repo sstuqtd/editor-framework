@@ -3,6 +3,7 @@
 ### v0.7.0 (developing)
 
  - Upgrade to Electron v1.3.4
+ - Add `panels` property for `Editor.Window` instance.
 
 ### v0.6.4
 
