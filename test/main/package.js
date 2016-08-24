@@ -249,6 +249,22 @@ suite(tap, 'package', {timeout: 2000}, t => {
     });
   });
 
+  suite(t, 'fixtures/packages/entry-dir', t => {
+    const path = Path.join(testPackages,'entry-dir');
+
+    t.afterEach(done => {
+      Editor.Package.unload(path, done);
+    });
+
+    t.test('it should redirect the loading directory to ./bin', t => {
+      Editor.Package.load(path, () => {
+        let info = Editor.Package.packageInfo(path);
+        t.equal( info._destPath, Path.join(path, 'bin') );
+        t.end();
+      });
+    });
+  });
+
   // t.skip('should build fixtures/packages/needs-build', t => {
   // });
 

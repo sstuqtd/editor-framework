@@ -20,23 +20,18 @@ To load packages into your Editor-Framework app, you must either:
 - By default, Editor-Framework loads all packages in the [/demo](../../../demo) folder. You can also create your packages here to quickly see it in the "Package Manager" list.
 - You can also put your packages into `~/.{app-name}/packages` folder. Read the [create packages](./create-your-package.md#create-your-package) doc for more details.
 
-## Building a Package **(deprecated)**
+## Building and Redirecting Packages
 
-You can enable building for any loaded package, just add the property `"build": "true"` to your package's `package.json` file.
+Sometimes you may have your own building pipeline for developing a package, and you would like to compile the result to a specific directory. Nothing to stop you doing that, the only thing you need do is specific the entry dir for your compiled results by setting the `"entry-dir"` property in `package.json`.
 
-If a package has building enabled(`"build":"true"`), Editor-framework will build the package and put the compiled file into `package-name/bin/dev` folder. Then load the package from `package-name/bin/dev`.  The `"build": "true"` property will also be removed from the compiled package's `package.json` file, making it ready to ship.
-
-A package will also be rebuild when `package-name/bin/dev/package.json` has a different version number than `package-name/package.json`.
-
-If a package has no `build` property or has it disabled, Editor-framework will load the package as it is from `package-name` folder. No build or rebuild process will be applied to this package.
+You can redirect the loading path by add the property `"entry-dir": "./your/path"` to your package's `package.json` file. If a package has `"entry-dir": "./your/path"`, Editor Framework will load the package at `package-name/your/path` folder.
 
 ## File Change Watcher
 
 When Editor-framework is running, it will watch all loaded packages. If you modify any files in your package:
 
 - A File change notification will be fired by the package watcher.
-- If the package has building enabled, the package will be rebuilt.
-- If building is disabled or the rebuild is successful, go through the dirty notify pipeline. Otherwise, if the rebuild failed, stop the process.
+- Then go through the dirty notify pipeline.
 
 A dirty notification has a different pipeline for renderer process changes and main process changes:
 

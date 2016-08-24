@@ -385,8 +385,7 @@ app.on('ready', () => {
         const Tester = require('./lib/tester');
         Tester.run( yargv.path, yargv );
       } else if ( yargv._command === 'build' ) {
-        const Builder = require('./lib/builder');
-        Builder.run( yargv.path, yargv );
+        // build( yargv.path, yargv );
       }
     },
 
