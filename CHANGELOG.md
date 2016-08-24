@@ -2,6 +2,8 @@
 
 ### v0.7.0 (developing)
 
+ - Upgrade to Electron v1.3.4
+
 ### v0.6.4
 
  - Support palette in `<ui-color-picker>`.

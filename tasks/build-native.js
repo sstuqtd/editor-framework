@@ -26,7 +26,17 @@ if (process.platform === 'win32') {
   arch = 'x64';
 }
 
-let nativePaths = _findNativeModulePathRecursive('./');
+let processArgv = process.argv.slice(2);
+
+let nativePaths;
+if ( processArgv.length === 0 ) {
+  nativePaths = _findNativeModulePathRecursive('./');
+} else {
+  nativePaths = processArgv.filter(path => {
+    return Fs.existsSync(path);
+  });
+}
+
 console.log(Chalk.blue('native modules:'));
 nativePaths.forEach(path => {
   console.log(Chalk.blue(` - ${Path.basename(path)}`));
