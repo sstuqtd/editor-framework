@@ -7,6 +7,7 @@
  - Add `entry-dir` in `package.json` for panel.
  - Remove `build` in `package.json` for panel.
  - Remove the parameter `opts` in `Editor.Package.load` and `Editor.Package.reload`.
+ - Support add or remove folder in packages will automatically load or unload package.
 
 ### v0.6.4
 
