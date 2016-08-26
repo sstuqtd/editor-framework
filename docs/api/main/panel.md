@@ -23,6 +23,12 @@ Find and return an editor window that contains the panelID.
 
 Open a panel via `panelID` and pass `argv` to it. The `argv` will be execute in panel's run function in renderer process.
 
+### Editor.Panel.popup (panelID)
+
+  - `panelID` String - The panelID.
+
+Popup an exists panel via `panelID`.
+
 ## Properties
 
 ### templateUrl
@@ -38,6 +44,8 @@ The html entry file used for standalone panel window. Default is 'editor-framewo
 ### Message: 'editor:panel-dock'
 
 ### Message: 'editor:panel-open'
+
+### Message: 'editor:panel-popup'
 
 ### Message: 'editor:panel-query-info'
 
