@@ -36,6 +36,7 @@
     "fire-url": "^0.1.7",
     "globby": "^6.0.0",
     "highlight.js": "^9.4.0",
+    "js-yaml": "^3.6.0",
     "lodash": "^4.13.0",
     "mousetrap": "^1.6.0",
     "node-polyglot": "^2.0.0",
