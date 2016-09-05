@@ -2,12 +2,13 @@
 
 ### v0.7.0 (developing)
 
- - Upgrade to Electron v1.3.4
+ - Upgrade to Electron v1.3.5
  - Add `panels` property for `Editor.Window` instance.
  - Add `entry-dir` in `package.json` for panel.
  - Remove `build` in `package.json` for panel.
  - Remove the parameter `opts` in `Editor.Package.load` and `Editor.Package.reload`.
  - Support add or remove folder in packages will automatically load or unload package.
+ - A huge refine to panel layout system.
 
 ### v0.6.4
 
