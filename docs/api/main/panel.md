@@ -4,9 +4,10 @@ Panel module for operating panels
 
 ## Methods
 
-### Editor.Panel.close (panelID)
+### Editor.Panel.close (panelID, cb)
 
   - `panelID` String - The panelID.
+  - `cb` Function
 
 Close a panel via `panelID`.
 
@@ -37,8 +38,6 @@ The html entry file used for standalone panel window. Default is 'editor-framewo
 
 ## IPC Messages
 
-### Message: 'editor:panel-argv'
-
 ### Message: 'editor:panel-close'
 
 ### Message: 'editor:panel-dock'
@@ -48,5 +47,3 @@ The html entry file used for standalone panel window. Default is 'editor-framewo
 ### Message: 'editor:panel-popup'
 
 ### Message: 'editor:panel-query-info'
-
-### Message: 'editor:panel-wait-for-close'
