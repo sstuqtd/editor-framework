@@ -35,9 +35,7 @@ Close the window.
 
 Closes the devtools.
 
-### win.commitWindowState (layoutInfo)
-
-  - `layoutInfo` Object
+### win.commitWindowState ()
 
 Commit the current window state.
 
@@ -148,10 +146,6 @@ The current opened windows.
 
 Add an Editor.Window to window list.
 
-### Editor.Window.commitWindowStates ()
-
-Commit all opened window's state.
-
 ### Editor.Window.find ( param )
 
   - `param` String|BrowserWindow|WebContents
@@ -163,10 +157,6 @@ Find window by name, by `BrowserWindow` instance or by `WebContents` instance. R
   - `win` Editor.Window
 
 Remove an Editor.Window from window list.
-
-### Editor.Window.saveWindowStates ()
-
-Save current window's state to profile `layout.windows.json` at `local`.
 
 ## IPC Messages
 
@@ -181,6 +171,8 @@ Save current window's state to profile `layout.windows.json` at `local`.
 ### Message: 'editor:window-open'
 
 ### Message: 'editor:window-query-layout'
+
+### Message: 'editor:window-remove-all-panels'
 
 ### Message: 'editor:window-resize'
 

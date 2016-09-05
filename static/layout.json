@@ -1,15 +1,14 @@
 {
-  "docks": [
+  "type": "dock-v",
+  "children": [
     {
-      "active": 0,
-      "panels": [
-        "console"
-      ],
       "type": "panel",
-      "height": 300
+      "height": 300,
+      "active": 0,
+      "children": [
+        "console",
+        "tester"
+      ]
     }
-  ],
-  "no-collapse": true,
-  "row": false,
-  "type": "dock"
+  ]
 }

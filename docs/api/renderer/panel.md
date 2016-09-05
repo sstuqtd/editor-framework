@@ -8,9 +8,23 @@
 
 Close a panel via `panelID`.
 
+### Editor.Panel.dock (panelID, frameEL)
+
+  - `panelID` String - The panel ID
+  - `frameEL` HTMLElement - The panel frame
+
+Cache a panel frame and send `editor:panel-dock` to main
+
 ### Editor.Panel.dumpLayout ()
 
 Dump the layout of the panels in current window.
+
+### Editor.Panel.newFrame (panelID, cb)
+
+  - `panelID` String - The panel ID
+  - `cb` Function
+
+Create a simple panel frame via `panelID`.
 
 ### Editor.Panel.extend (proto)
 
@@ -46,13 +60,6 @@ Get panel info via `panelID`.
 
 Check if the specific panel is dirty.
 
-### Editor.Panel.load (panelID, cb)
-
-  - `panelID` String - The panel ID
-  - `cb` Function
-
-Load and create panel frame via `panelID`.
-
 ### Editor.Panel.open (panelID, argv)
 
   - `panelID` String - The panel ID
@@ -72,14 +79,16 @@ Popup an exists panel via `panelID`.
 
 Remove a panel element from document but do not close it.
 
-### Editor.Panel.unload (panelID)
-
-  - `panelID` String - The panel ID
-
-Unload a panel via `panelID`.
-
 ## Properties
 
 ### Editor.Panel.panels
 
 Get panels docked in current window.
+
+## IPC Messages
+
+### Message: 'editor:panel-run'
+
+### Message: 'editor:panel-unload'
+
+### Message: 'editor:panel-out-of-date'

@@ -411,7 +411,7 @@ app.on('ready', () => {
       EditorM.log('Run Application');
 
       // load windows layout after local profile registered
-      EditorM.Window.loadLayouts();
+      EditorM.Window._loadWindowStates();
 
       // connect to console to send ipc messages to it
       EditorM.connectToConsole();
